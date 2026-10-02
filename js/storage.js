@@ -78,6 +78,8 @@ export function saveToStorage() {
 }
 
 export function loadFromStorage() {
+  // PROJECT BEACON: Reconcile saved edits onto current config by _configName;
+  // visible task names are user-editable and are not durable identity keys.
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return;

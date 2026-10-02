@@ -199,6 +199,8 @@ document.addEventListener('keydown', e => {
   }
 });
 
+// PROJECT BEACON: Bootstrap is the client composition boundary. Keep config
+// loading, stable task identity, and persistence hydration in this order.
 // ── Bootstrap: load config.json, then start ───────────────────────────────────
 function bootstrapWithConfig(config) {
   setOrgData(config.orgData);

@@ -231,6 +231,8 @@ function stopAutoSync() {
 }
 
 async function runSyncTick(manual) {
+  // PROJECT BEACON: This comparison is the sync decision point—dirty clients
+  // push with an expected version; clean clients only check/pull newer state.
   if (!sync.connected || sync.busy) return;
   sync.busy = true;
   try {

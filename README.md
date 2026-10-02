@@ -22,6 +22,8 @@ See it in action on [my portfolio](#) — or run it yourself in under a minute, 
 
 PM Ops Map is a free browser app that gives a property management company a complete operating system on day one — without signing up for anything.
 
+The product is built around a practical operator problem: important work is often spread across spreadsheets, inboxes, individual memory, and property-management software screens, so leadership can see activity without seeing clear ownership. PM Ops Map turns that ambiguity into an editable responsibility map: what the company does, who owns each task, what is blocked, and where operating risk is accumulating.
+
 Open it, enter your company name, and you get:
 
 - **260+ standard PM tasks** across 17 departments, all editable to match your company
@@ -329,6 +331,23 @@ Add a new department the same way, using a new `id`.
 ### Fork and brand it
 
 Change the company name on first launch (it's saved to `localStorage`). To re-run the setup, open DevTools → Application → localStorage → delete `pm-ops-company-name` and reload.
+
+---
+
+## Documentation
+
+Use the README for the product overview and setup path. Use the architecture notes when you want to understand, maintain, or explain the implementation.
+
+| Document | Best for |
+|----------|----------|
+| [Site walkthrough](docs/architecture/site-walkthrough.md) | Following startup, state hydration, and each main user journey from screen to code |
+| [Problem, algorithm, pseudocode, and flowchart](docs/architecture/problem-algorithm-pseudocode-flowchart.md) | Understanding the operating problem and the affinity-first workload-balancing algorithm |
+| [Code glossary](docs/architecture/code-glossary.md) | Looking up important files, functions, models, routes, and repository patterns |
+| [Explain-the-code practice guide](docs/architecture/explain-the-code-practice-guide.md) | Preparing a recruiter walkthrough, technical interview explanation, or portfolio demo |
+| [Sync server guide](server/README.md) | Running or deploying the optional shared-workspace service |
+| [Contributing guide](CONTRIBUTING.md) | Making and validating changes |
+
+If you are reviewing the repository for the first time, read the site walkthrough next and keep the code glossary open as a reference.
 
 ---
 

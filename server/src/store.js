@@ -54,6 +54,8 @@ class WorkspaceStore {
   // Runs fn exclusively per-slug so two concurrent requests for the same
   // workspace can't interleave a read-modify-write and drop an update.
   _withLock(slug, fn) {
+    // PROJECT BEACON: File writes are serialized per workspace in this process;
+    // this is not a cross-process/distributed lock.
     const tail = (this._locks.get(slug) || Promise.resolve()).then(fn, fn);
     this._locks.set(slug, tail.catch(() => {}));
     return tail;
