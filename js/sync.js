@@ -4,7 +4,7 @@
 // here is additive and opt-in.
 import { orgData, teamData, workOrders, portfolio } from './state.js';
 import {
-  getCompanyName, saveBackupSnapshot, logAudit, _showActionToast,
+  getCompanyName, saveBackupSnapshot, logAudit, _showActionToast, RESET_EVENT,
 } from './storage.js';
 import { buildStatePayload, validateImportedState, formatImportReport } from './stateSchema.js';
 import { openImportReview, _applyImportedState, _saveUndoSnapshot } from './io.js';
@@ -43,6 +43,7 @@ function loadSyncConfig() {
 }
 
 function saveSyncConfig() {
+  if (!sync.connected) return; // never re-create the saved connection after a reset/disconnect
   try {
     localStorage.setItem(SYNC_CONFIG_KEY, JSON.stringify({
       serverUrl: sync.serverUrl,
@@ -229,6 +230,13 @@ function stopAutoSync() {
   if (sync.timer) clearInterval(sync.timer);
   sync.timer = null;
 }
+
+// A local reset removes the saved connection (including the passphrase). Stop
+// syncing first so an in-flight tick cannot write it back before the reload.
+window.addEventListener(RESET_EVENT, () => {
+  stopAutoSync();
+  Object.assign(sync, { connected: false, passphrase: '' });
+});
 
 async function runSyncTick(manual) {
   // PROJECT BEACON: This comparison is the sync decision point—dirty clients

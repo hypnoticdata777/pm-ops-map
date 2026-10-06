@@ -7,7 +7,7 @@
 import fs from 'node:fs';
 import { test, expect } from '@playwright/test';
 import {
-  buildEvilWorkspace, evil, prepare, importWorkspace, scan, call, poke,
+  buildEvilWorkspace, evil, prepare, importWorkspace, scan, call, poke, writeTemp,
 } from './helpers/security.js';
 
 async function loadEvilApp(page, testInfo) {
@@ -15,7 +15,7 @@ async function loadEvilApp(page, testInfo) {
   await prepare(page);
   await page.goto('/index.html');
   await page.waitForSelector('#departments .department');
-  await importWorkspace(page, buildEvilWorkspace(), testInfo.outputDir);
+  await importWorkspace(page, buildEvilWorkspace());
 }
 
 const expectClean = async (page, where) => {
@@ -33,8 +33,7 @@ test.describe('hostile import is inert', () => {
     await prepare(page);
     await page.goto('/index.html');
     await page.waitForSelector('#departments .department');
-    const file = `${testInfo.outputDir}/evil.json`;
-    fs.writeFileSync(file, JSON.stringify(buildEvilWorkspace()));
+    const file = writeTemp('evil.json', JSON.stringify(buildEvilWorkspace()));
     await page.setInputFiles('#import-file-input', file);
     await page.waitForSelector('#import-review-modal.visible');
     await expectClean(page, 'import review');
@@ -179,8 +178,7 @@ test.describe('hostile text is displayed, not executed', () => {
     await prepare(page);
     await page.goto('/index.html');
     await page.waitForSelector('#departments .department');
-    const file = `${testInfo.outputDir}/evil.json`;
-    fs.writeFileSync(file, JSON.stringify(buildEvilWorkspace()));
+    const file = writeTemp('evil.json', JSON.stringify(buildEvilWorkspace()));
     await page.setInputFiles('#import-file-input', file);
     await page.waitForSelector('#import-review-modal.visible');
     const body = await page.locator('#import-review-body').innerText();
@@ -203,7 +201,7 @@ test.describe('historical exploits stay dead', () => {
       id: '" onmouseover="__pwn=1" onfocus="__pwn=1" x="', property: 'Maple', title: 'Leaky faucet',
       status: 'submitted', priority: 'medium', assignee: 'UNASSIGNED',
     }];
-    await importWorkspace(page, ws, testInfo.outputDir);
+    await importWorkspace(page, ws);
     await page.locator('#wo-tab').click();
     const btn = page.locator('.wo-edit-btn').first();
     await btn.hover();

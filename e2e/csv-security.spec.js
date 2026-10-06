@@ -2,7 +2,7 @@
 // nothing imported can become markup, and oversized files are refused.
 import fs from 'node:fs';
 import { test, expect } from '@playwright/test';
-import { config, prepare, importWorkspace, scan, call } from './helpers/security.js';
+import { config, prepare, importWorkspace, scan, call, writeTemp } from './helpers/security.js';
 
 // Deliberately NOT the app's own parser, so a bug in parseCSV can't hide a bug in export.
 function parseCsv(text) {
@@ -57,7 +57,7 @@ async function start(page, testInfo, workspace = formulaWorkspace()) {
   await prepare(page);
   await page.goto('/index.html');
   await page.waitForSelector('#departments .department');
-  await importWorkspace(page, workspace, testInfo.outputDir);
+  await importWorkspace(page, workspace);
 }
 
 async function exportCsv(page, fn) {
@@ -103,8 +103,7 @@ test.describe('CSV round trip is lossless', () => {
   test('export -> import returns the original values (guard removed)', async ({ page }, testInfo) => {
     await start(page, testInfo);
     const csv = await exportCsv(page, 'exportPropertiesCSV');
-    const file = `${testInfo.outputDir}/properties.csv`;
-    fs.writeFileSync(file, csv);
+    const file = writeTemp('properties.csv', csv);
 
     await page.locator('#portfolio-tab').click();
     await page.locator('input[type=file][onchange*="importPropertiesCSV"]').setInputFiles(file);
@@ -118,8 +117,7 @@ test.describe('CSV round trip is lossless', () => {
     await start(page, testInfo);
     const csv = await exportCsv(page, 'exportVendorsCSV');
     expect(csv).toContain("\"'+1 555 0100\"");
-    const file = `${testInfo.outputDir}/vendors.csv`;
-    fs.writeFileSync(file, csv);
+    const file = writeTemp('vendors.csv', csv);
     await page.locator('#portfolio-tab').click();
     await page.locator('input[type=file][onchange*="importVendorsCSV"]').setInputFiles(file);
     await expect(page.locator('.portfolio-card small', { hasText: '+1 555 0100' })).toHaveCount(2);
@@ -149,8 +147,7 @@ test.describe('hostile CSV files are inert', () => {
     ].join('\r\n');
 
     for (const [name, csv, handler] of [['p', propertyCsv, 'importPropertiesCSV'], ['t', tenantCsv, 'importTenantsCSV'], ['v', vendorCsv, 'importVendorsCSV']]) {
-      const file = `${testInfo.outputDir}/${name}.csv`;
-      fs.writeFileSync(file, csv);
+      const file = writeTemp(`${name}.csv`, csv);
       await page.locator(`input[type=file][onchange*="${handler}"]`).setInputFiles(file);
       await page.waitForTimeout(150);
     }
@@ -169,8 +166,7 @@ test.describe('hostile CSV files are inert', () => {
   test('a million-character cell is truncated to the field limit', async ({ page }, testInfo) => {
     await start(page, testInfo);
     await page.locator('#portfolio-tab').click();
-    const file = `${testInfo.outputDir}/huge.csv`;
-    fs.writeFileSync(file, `"Property","Units"\r\n"${'A'.repeat(1_000_000)}","2"\r\n`);
+    const file = writeTemp('huge.csv', `"Property","Units"\r\n"${'A'.repeat(1_000_000)}","2"\r\n`);
     await page.locator('input[type=file][onchange*="importPropertiesCSV"]').setInputFiles(file);
     const huge = page.locator('.portfolio-card strong', { hasText: /^A{50}/ });
     await expect(huge).toHaveCount(1);
@@ -187,8 +183,7 @@ test.describe('oversized import files are refused', () => {
     await page.goto('/index.html');
     await page.waitForSelector('#departments .department');
     await page.locator('#portfolio-tab').click();
-    const file = `${testInfo.outputDir}/too-big.csv`;
-    fs.writeFileSync(file, `"Property"\r\n${'x'.repeat(6 * 1024 * 1024)}\r\n`);
+    const file = writeTemp('too-big.csv', `"Property"\r\n${'x'.repeat(6 * 1024 * 1024)}\r\n`);
     await page.locator('input[type=file][onchange*="importPropertiesCSV"]').setInputFiles(file);
     await expect.poll(() => alerts.join(' ')).toMatch(/too large/i);
   });
@@ -200,8 +195,7 @@ test.describe('oversized import files are refused', () => {
     await prepare(page);
     await page.goto('/index.html');
     await page.waitForSelector('#departments .department');
-    const file = `${testInfo.outputDir}/too-big.json`;
-    fs.writeFileSync(file, JSON.stringify({ schema: 'pm-ops-map-state', departments: [], pad: 'x'.repeat(6 * 1024 * 1024) }));
+    const file = writeTemp('too-big.json', JSON.stringify({ schema: 'pm-ops-map-state', departments: [], pad: 'x'.repeat(6 * 1024 * 1024) }));
     await page.setInputFiles('#import-file-input', file);
     await expect.poll(() => alerts.join(' ')).toMatch(/too large/i);
     await expect(page.locator('#import-review-modal.visible')).toHaveCount(0);

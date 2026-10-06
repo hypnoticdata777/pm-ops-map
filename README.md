@@ -197,7 +197,9 @@ Pick a template, enter a property name and due date, and the app creates the mat
 
 The app automatically saves a snapshot before every import, every auto-assign run, and every Team Sync update. Click **Backups** in the stats bar to see the last 5 snapshots and restore any of them with one click.
 
-Each backup captures: all tasks and their state, the full team roster, all work orders, and the portfolio registry.
+Each backup captures: all tasks and their state (including per-task notes and custom fields), the full team roster, all work orders, and the portfolio registry. Restoring one brings all of that back.
+
+Backups are full copies of your workspace — tenant records included — and live in this browser's `localStorage`. They are removed by the **Operating workspace** and **Everything** resets (see [Resetting and deleting your data](#resetting-and-deleting-your-data)).
 
 ---
 
@@ -294,7 +296,7 @@ No backend needed — use **Copy State** and **Paste State** in the stats bar to
 For a team of more than one, Copy/Paste State is a manual chore. **Team Sync** in the stats bar connects this device to a small self-hosted sync server so your whole team shares one live workspace instead — no accounts, just a workspace name and a passphrase your team keeps between yourselves.
 
 - The first device to connect to a workspace name creates it with its current data. Everyone else who connects with the same name and passphrase joins it.
-- Changes sync automatically in the background every ~8 seconds. If your local edits and a teammate's collide, you get the same import-preview-and-confirm screen used for file imports before anything overwrites your device.
+- Changes (including per-task notes and custom fields) sync automatically in the background every ~8 seconds. If your local edits and a teammate's collide, you get the same import-preview-and-confirm screen used for file imports before anything overwrites your device.
 - Skip this entirely and the app works exactly as it always has, saved only to this browser.
 
 The server lives in [`server/`](server/) — see [`server/README.md`](server/README.md) for how to run it locally, deploy it with Docker Compose for durable team use, or one-click deploy a free trial instance to Render.
@@ -306,6 +308,19 @@ The server lives in [`server/`](server/) — see [`server/README.md`](server/REA
 Grant browser notification permission from the stats bar (**🔔 Alerts**). On each page load, the app checks for overdue tasks and sends one grouped notification per session if any are found.
 
 ---
+
+## Resetting and deleting your data
+
+**Stats bar → Reset** offers four scopes. Each one asks for confirmation and only touches this browser:
+
+| Scope | Removes | Keeps |
+|-------|---------|-------|
+| **Tasks only** | Task names, owners, statuses, due dates, dependencies, notes, custom fields | Team, work orders, portfolio, **automatic backups**, company setup |
+| **Operating workspace** | Tasks, team, portfolio, work orders, audit log, launch checklist, **automatic backups** | Company setup, Team Sync connection |
+| **Company setup** | Company profile, preferences, guide state, **the saved Team Sync connection (including its passphrase)** | Workspace data |
+| **Everything** | All of the above — every PM Ops Map key in this browser | — |
+
+A reset does **not** touch files you exported earlier (JSON, CSV, handbooks, playbooks), text you copied to the clipboard, or any copy of the workspace on a Team Sync server. Delete those separately.
 
 ## Customizing for Your Company
 

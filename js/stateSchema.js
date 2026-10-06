@@ -1,6 +1,7 @@
 import { normalizeSavedTask, sanitizeWorkspace } from './normalize.js';
 
-export const STATE_SCHEMA_VERSION = 2;
+// v3 adds per-task notes and customFields to the portable payload (v2 files still import).
+export const STATE_SCHEMA_VERSION = 3;
 export const STATE_SCHEMA_NAME = 'pm-ops-map-state';
 
 export function buildStatePayload({
@@ -28,6 +29,8 @@ export function buildStatePayload({
         priority: task.priority || 'medium',
         dueDate: task.dueDate || null,
         blockedBy: task.blockedBy || null,
+        notes: task.notes || null,
+        customFields: task.customFields ? { ...task.customFields } : null,
       })),
     })),
     team,

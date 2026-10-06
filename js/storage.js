@@ -111,48 +111,55 @@ export function closeResetModal() {
   document.getElementById('reset-modal')?.classList.remove('visible');
 }
 
-export function confirmResetStorage(choice) {
-  const resetGroups = {
-    '1': {
-      label: 'task names, owners, statuses, due dates, and dependencies',
-      keys: [STORAGE_KEY],
-    },
-    '2': {
-      label: 'operating workspace data',
-      keys: [STORAGE_KEY, TEAM_KEY, WORKORDERS_KEY, PORTFOLIO_KEY, AUDIT_KEY, LAUNCH_CHECKLIST_KEY],
-    },
-    '3': {
-      label: 'company setup and preferences',
-      keys: [COMPANY_KEY, OPS_PROFILE_KEY, NAV_COMPACT_KEY, GUIDE_KEY, NOTIF_DATE_KEY, SYNC_CONFIG_KEY],
-    },
-    '4': {
-      label: 'all PM Ops Map data on this device',
-      keys: [
-        STORAGE_KEY,
-        COMPANY_KEY,
-        OPS_PROFILE_KEY,
-        NAV_COMPACT_KEY,
-        TEAM_KEY,
-        WORKORDERS_KEY,
-        PORTFOLIO_KEY,
-        AUDIT_KEY,
-        GUIDE_KEY,
-        NOTIF_DATE_KEY,
-        LAUNCH_CHECKLIST_KEY,
-        SYNC_CONFIG_KEY,
-      ],
-    },
-  };
+// Full-page reloads go through this object so tests can observe them (jsdom
+// cannot navigate, and window.location.reload is not mockable).
+export const pageControl = { reload: () => location.reload() };
 
-  const selected = resetGroups[choice.trim()];
+// Fired just before a local reset so other modules (Team Sync) stop writing to
+// localStorage while keys are being removed.
+export const RESET_EVENT = 'pm-ops-reset';
+
+// Every localStorage key the app writes. The "Everything" reset is derived from
+// this list, and a unit test checks that every exported *_KEY constant is in it,
+// so a newly added key cannot be forgotten and silently survive a reset.
+export const ALL_STORAGE_KEYS = [
+  STORAGE_KEY, COMPANY_KEY, OPS_PROFILE_KEY, NAV_COMPACT_KEY, TEAM_KEY, WORKORDERS_KEY,
+  PORTFOLIO_KEY, AUDIT_KEY, GUIDE_KEY, NOTIF_DATE_KEY, LAUNCH_CHECKLIST_KEY, BACKUP_KEY,
+  SYNC_CONFIG_KEY,
+];
+
+// Automatic backups are full copies of the workspace (tenant records included),
+// so any reset that claims to remove the workspace must remove them too.
+export const RESET_GROUPS = {
+  '1': {
+    label: 'task names, owners, statuses, due dates, dependencies, notes, and custom fields (automatic backups are kept)',
+    keys: [STORAGE_KEY],
+  },
+  '2': {
+    label: 'operating workspace data, including automatic backups',
+    keys: [STORAGE_KEY, TEAM_KEY, WORKORDERS_KEY, PORTFOLIO_KEY, AUDIT_KEY, LAUNCH_CHECKLIST_KEY, BACKUP_KEY],
+  },
+  '3': {
+    label: 'company setup and preferences, including the saved Team Sync connection',
+    keys: [COMPANY_KEY, OPS_PROFILE_KEY, NAV_COMPACT_KEY, GUIDE_KEY, NOTIF_DATE_KEY, SYNC_CONFIG_KEY],
+  },
+  '4': {
+    label: 'all PM Ops Map data on this device, including automatic backups and the saved Team Sync connection',
+    keys: ALL_STORAGE_KEYS,
+  },
+};
+
+export function confirmResetStorage(choice) {
+  const selected = RESET_GROUPS[String(choice).trim()];
   if (!selected) {
     alert('Reset canceled. Please choose 1, 2, 3, or 4.');
     return;
   }
-  if (!confirm(`Reset ${selected.label}?\n\nThis only affects local data stored in this browser.`)) return;
+  if (!confirm(`Reset ${selected.label}?\n\nThis only affects data stored in this browser. Files you exported earlier, and any copy on a Team Sync server, are not touched.`)) return;
   closeResetModal();
+  window.dispatchEvent(new Event(RESET_EVENT));
   selected.keys.forEach(key => localStorage.removeItem(key));
-  location.reload();
+  pageControl.reload();
 }
 
 // ── Team data persistence ─────────────────────────────────────────────────────
@@ -387,7 +394,7 @@ export function restoreBackupSnapshot(index) {
     _showActionToast('✓ Backup restored', 'save-toast--success');
 
     // Trigger a full UI refresh via page reload so all views sync cleanly
-    setTimeout(() => location.reload(), 800);
+    setTimeout(() => pageControl.reload(), 800);
   } catch (e) {
     alert('Could not restore this backup — the data may be corrupted.');
   }

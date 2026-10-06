@@ -21,6 +21,7 @@ let pendingImport = null;
 
 // ── Undo stack (single-level, before bulk ops) ────────────────────────────────
 export function _saveUndoSnapshot() {
+  // Same shape as saved/imported tasks, so undo restores through applySavedTasks.
   setUndoSnapshot(orgData.departments.map(dept => ({
     id: dept.id,
     tasks: dept.tasks.map(t => ({
@@ -30,27 +31,17 @@ export function _saveUndoSnapshot() {
       status:      t.status   || 'todo',
       priority:    t.priority || 'medium',
       dueDate:     t.dueDate  || null,
-      blockedBy:   t.blockedBy || null
+      blockedBy:   t.blockedBy ? { ...t.blockedBy } : null,
+      notes:       t.notes || null,
+      customFields: t.customFields ? { ...t.customFields } : null,
     }))
   })));
 }
 
 export function undoLastAction() {
   if (!_undoSnapshot) return;
-  _undoSnapshot.forEach(snap => {
-    const dept = orgData.departments.find(d => d.id === snap.id);
-    if (!dept) return;
-    snap.tasks.forEach(snapTask => {
-      const task = dept.tasks.find(t => t._configName === snapTask._configName);
-      if (!task) return;
-      task.name     = snapTask.name;
-      task.owner    = snapTask.owner;
-      task.status   = snapTask.status;
-      task.priority = snapTask.priority;
-      task.dueDate  = snapTask.dueDate;
-      task.blockedBy = snapTask.blockedBy || null;
-    });
-  });
+  // fill: true — undo must put back exactly what was there, including "no notes".
+  applySavedTasks(orgData.departments, _undoSnapshot, { fill: true });
   setUndoSnapshot(null);
   saveToStorage();
   renderTrackingView();
@@ -341,7 +332,7 @@ export function confirmPendingImport() {
 function buildImportReviewHTML(report, source) {
   return `
     <p class="import-review-note">
-      ${{ clipboard: 'Clipboard state', sync: 'Your team sync server' }[source] || 'JSON file'} will replace matching task assignments, statuses, due dates, dependencies, team data, work orders, and portfolio data on this device.
+      ${{ clipboard: 'Clipboard state', sync: 'Your team sync server' }[source] || 'JSON file'} will replace matching task assignments, statuses, due dates, dependencies, notes, custom fields, team data, work orders, and portfolio data on this device.
     </p>
     <div class="import-review-summary">
       ${buildImportMetric('Schema', String(report.schemaVersion))}

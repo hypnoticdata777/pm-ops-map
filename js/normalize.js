@@ -313,7 +313,8 @@ export function normalizeSavedTask(saved, { fill = false } = {}) {
 
   if (saved.dueDate !== undefined || fill) patch.dueDate = isValidISODate(saved.dueDate) ? saved.dueDate : null;
   if (saved.blockedBy !== undefined || fill) patch.blockedBy = normalizeBlockedBy(saved.blockedBy);
-  if (typeof saved.notes === 'string' || fill) patch.notes = cleanText(saved.notes, LIMITS.taskNotes, { multiline: true }) || null;
+  // null means "no notes" (a note cleared on another device); undefined means "this file predates notes" — leave alone.
+  if (typeof saved.notes === 'string' || saved.notes === null || fill) patch.notes = cleanText(saved.notes, LIMITS.taskNotes, { multiline: true }) || null;
   if (saved.customFields !== undefined || fill) patch.customFields = normalizeCustomFields(saved.customFields);
 
   return patch;

@@ -101,7 +101,7 @@ The portable workspace contract. The browser and the Vitest suite import this sa
 | Symbol | Meaning |
 |---|---|
 | `STATE_SCHEMA_NAME` / `STATE_SCHEMA_VERSION` | Identifies compatible PM Ops Map payloads. |
-| `buildStatePayload(...)` | Serializes supported task, team, work-order, and portfolio fields. |
+| `buildStatePayload(...)` | Serializes supported task (including `notes` and `customFields`, schema v3), team, work-order, and portfolio fields. |
 | `validateImportedState(data, orgData)` | Reports matched/skipped departments and tasks, bad dates, and incompatible structure before application. |
 | `formatImportReport(report)` | Converts validation results to readable text. |
 

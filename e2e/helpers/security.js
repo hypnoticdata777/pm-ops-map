@@ -10,6 +10,7 @@
 //   3. executed script      -> window.__pwn was set
 // The tag in each payload tells us exactly which field/sink failed.
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { tokenizer, parse } from 'acorn';
@@ -103,10 +104,22 @@ export async function prepare(page) {
   });
 }
 
+/**
+ * Writes an upload fixture to a plain temp directory. Playwright derives each test's
+ * output directory from its title, and a title containing non-ASCII characters (an em
+ * dash, say) produced a path the browser's file chooser silently ignored — so uploads
+ * never come from there.
+ */
+export function writeTemp(name, content) {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'pm-ops-e2e-'));
+  const file = path.join(dir, name);
+  fs.writeFileSync(file, content);
+  return file;
+}
+
 /** Import a workspace through the real "Import JSON" UI path, confirming the review modal. */
-export async function importWorkspace(page, workspace, tmpDir) {
-  const file = path.join(tmpDir, `evil-${Date.now()}-${Math.random().toString(36).slice(2)}.json`);
-  fs.writeFileSync(file, JSON.stringify(workspace));
+export async function importWorkspace(page, workspace) {
+  const file = writeTemp('workspace.json', JSON.stringify(workspace));
   await page.setInputFiles('#import-file-input', file);
   await page.waitForSelector('#import-review-modal.visible');
   await page.click('#import-confirm-btn');
