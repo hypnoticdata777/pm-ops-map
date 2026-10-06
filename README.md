@@ -378,7 +378,7 @@ pm-ops-map/
 │   │   ├── portfolio.js    Property, tenant, and vendor registry
 │   │   ├── workorders.js   Work Orders kanban board
 │   │   └── recurring.js    Recurring work order templates
-│   └── __tests__/
+│   └── __tests__/          Vitest unit tests — import the shipped ES modules directly
 │       ├── data.test.js    config.json structure tests
 │       ├── utils.test.js   Utility function tests
 │       ├── stateSchema.test.js
@@ -390,6 +390,7 @@ pm-ops-map/
 ├── CONTRIBUTING.md
 ├── SECURITY.md
 ├── LICENSE.txt
+├── vitest.config.mjs         Test runner config (jsdom environment)
 └── webpack.config.*.js       Optional build configs (not needed to run)
 ```
 
@@ -447,11 +448,12 @@ ES modules do not automatically place functions on `window`. Every `onclick="fn(
 ```bash
 npm install
 npm start          # webpack-dev-server with live reload → localhost:8080
-npm test           # Jest unit test suite
+npm test           # Vitest unit tests (run against the same ES modules the browser loads)
+npm run test:coverage   # same, with a V8 coverage report
 npm run build      # Production bundle → dist/
 ```
 
-Requires Node.js 20.9+. The optional sync server has its own independent test suite — see [`server/README.md`](server/README.md).
+Requires Node.js 22.12+ for development, tests, and the optional build (the app itself only needs a browser). The optional sync server has its own independent test suite — see [`server/README.md`](server/README.md).
 
 CI runs two jobs on every push and pull request: the app (`npm ci` → `npm test` → `npm audit --omit=dev` → `npm run build`) and the sync server (`cd server && npm ci && npm test && npm audit --omit=dev`).
 

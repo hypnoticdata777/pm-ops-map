@@ -1,9 +1,8 @@
 // Pure utility functions — no DOM side-effects, no shared state.
 //
 // Maintainer note:
-// Browser modules import this file directly. Jest tests import utils.cjs instead
-// because the test suite runs in CommonJS mode. If behavior changes here, mirror
-// the same change in utils.cjs or tests and browser behavior can diverge.
+// Browser modules and the Vitest suite (js/__tests__/utils.test.js) import this
+// exact file — there is no second copy to keep in sync.
 
 function escapeHtml(str) {
   return String(str == null ? '' : str)

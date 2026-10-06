@@ -180,7 +180,7 @@ This is suitable for a small trusted team or product trial, not enterprise multi
 - Change startup order or add a new main screen in [`js/app.js`](../../js/app.js).
 - Change a screen inside its matching file in [`js/views/`](../../js/views/).
 - Change browser persistence or backups in [`js/storage.js`](../../js/storage.js).
-- Change portable workspace compatibility in both [`js/stateSchema.js`](../../js/stateSchema.js) and its CommonJS test mirror [`js/stateSchema.cjs`](../../js/stateSchema.cjs).
+- Change portable workspace compatibility in [`js/stateSchema.js`](../../js/stateSchema.js) and its tests in [`js/__tests__/stateSchema.test.js`](../../js/__tests__/stateSchema.test.js).
 - Change Team Sync behavior in [`js/sync.js`](../../js/sync.js) and the server contract under [`server/src/`](../../server/src/).
 
 For the important symbols inside those files, continue with the [code glossary](code-glossary.md).

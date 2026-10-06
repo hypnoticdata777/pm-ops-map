@@ -16,7 +16,7 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
-      - run: npm test -- --runInBand
+      - run: npm test
       - run: npm audit --audit-level=moderate --omit=dev
       - run: npm run build
 

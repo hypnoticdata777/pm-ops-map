@@ -39,7 +39,7 @@ python -m http.server 8000
 # then open http://localhost:8000
 
 # Option B — dev server with live reload
-# Requires Node.js 20.9 or newer
+# Requires Node.js 22.12 or newer
 npm install
 npm start       # runs at localhost:8080
 ```
@@ -67,8 +67,8 @@ pm-ops-map/
 │   ├── sync.js         Optional team sync client — talks to server/
 │   ├── launchPlan.js   Beginner setup dashboard and readiness checks
 │   ├── handbook.js     Markdown handbook export
-│   ├── data.js         Jest-only config.json shim
-│   └── views/          Tracking, map, team, portfolio, and work order screens
+│   ├── views/          Tracking, map, team, portfolio, and work order screens
+│   └── __tests__/      Vitest unit tests — they import the shipped ES modules directly
 └── server/             Optional sync server — separate package.json, own deps, own tests
 ```
 
@@ -82,6 +82,7 @@ Starter operating data lives in `config.json`. Runtime state is loaded by `app.j
 - If you're editing a view, keep changes in the relevant `js/views/` module when possible
 - No new runtime dependencies in the client app (`index.html`, `js/`, `css/`) — it should keep working as browser-native HTML, CSS, and JavaScript with zero installs. `server/` is a separate package and may have its own minimal dependencies.
 - Run `npm test` before submitting — tests must pass. If you touched `server/`, also run `npm test` inside `server/`.
+- Test the real modules: import from `js/*.js` in your tests. Don't add `.cjs` mirrors or test-only copies of browser code.
 
 ## Code Style
 

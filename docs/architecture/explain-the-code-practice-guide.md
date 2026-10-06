@@ -23,7 +23,7 @@ Use this sequence while sharing the repository:
 5. **Explain one algorithm well.** In [`runAutoAssign`](../../js/views/team.js), trace affinity filtering, least-loaded selection, immediate workload increments, fallback, backup, undo, audit, and refresh.
 6. **Show product depth without listing everything.** Use Tracking, Work Orders, and Portfolio as three connected examples: responsibility, execution, and operating context.
 7. **Explain sync honestly.** Show [`js/sync.js`](../../js/sync.js) and [`server/src/store.js`](../../server/src/store.js). Call it optimistic whole-snapshot sync for trusted teams, not real-time enterprise collaboration.
-8. **Close with verification and limitations.** Point to Jest coverage, server API/store tests, CI build/audit steps, and the production-readiness gaps in the README.
+8. **Close with verification and limitations.** Point to Vitest coverage, server API/store tests, CI build/audit steps, and the production-readiness gaps in the README.
 
 ## Strong answers to common questions
 
@@ -87,7 +87,7 @@ Why this works: it names the user, pain, workflow, and proof instead of saying �
 
 **Strong answer:**
 
-> Client Jest tests cover the starter data contract, date/escaping/CSV/domain utilities, import schema compatibility, and template/demo generation. Server tests cover both the store and HTTP API, including authentication failures, invalid inputs, payload limits, stale-version conflicts, and concurrent pushes. CI runs client tests, an audit, and the production build, then runs the independent server tests and audit. The largest remaining quality gap is browser end-to-end testing for the inline DOM workflows.
+> Client Vitest tests (which import the same ES modules the browser loads) cover the starter data contract, date/escaping/CSV/domain utilities, import schema compatibility, and template/demo generation. Server tests cover both the store and HTTP API, including authentication failures, invalid inputs, payload limits, stale-version conflicts, and concurrent pushes. CI runs client tests, an audit, and the production build, then runs the independent server tests and audit. The largest remaining quality gap is browser end-to-end testing for the inline DOM workflows.
 
 ### “What would you change for production?”
 
@@ -110,7 +110,7 @@ Answer each in 60–90 seconds without reading the sample answers.
 3. What is the source of truth for configured tasks versus user edits?
 4. What invariants does auto-assignment preserve?
 5. How does a task edit travel from a click to durable storage and back to the screen?
-6. Why are there `.js` and `.cjs` copies of some modules?
+6. Why do the tests import the shipped modules directly instead of keeping test-only copies?
 7. What happens if two teammates push at the same time?
 8. What failure does `_configName` prevent, and what weakness remains?
 9. Which user inputs are security-sensitive at render time?
@@ -178,7 +178,7 @@ Avoid saying “fully production-ready,” “real-time collaboration,” “sec
 
 Before an interview or recruiter call:
 
-1. Run `npm test -- --runInBand` and `npm run build`.
+1. Run `npm test` and `npm run build`.
 2. Run the server tests separately from `server/`.
 3. Start the client with `npm start` or a simple HTTP server.
 4. Use fictional demo data; do not expose real tenant or owner details.

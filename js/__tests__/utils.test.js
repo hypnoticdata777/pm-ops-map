@@ -1,5 +1,6 @@
 
-const utils = require('../utils.cjs');
+import { describe, test, expect } from 'vitest';
+import * as utils from '../utils.js';
 
 describe('isValidISODate', () => {
   test('valid date returns true', () => {

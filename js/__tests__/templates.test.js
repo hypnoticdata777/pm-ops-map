@@ -1,4 +1,5 @@
-const { ROLE_TEMPLATES, SOP_TEMPLATES, buildDemoWorkspace } = require('../templates.cjs');
+import { describe, test, expect } from 'vitest';
+import { ROLE_TEMPLATES, SOP_TEMPLATES, buildDemoWorkspace } from '../templates.js';
 
 describe('beginner templates', () => {
   test('role templates include expected starter shapes', () => {
