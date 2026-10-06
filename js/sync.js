@@ -8,6 +8,7 @@ import {
 } from './storage.js';
 import { buildStatePayload, validateImportedState, formatImportReport } from './stateSchema.js';
 import { openImportReview, _applyImportedState, _saveUndoSnapshot } from './io.js';
+import { parseVersionedState, parseVersionInfo, parsePushResult } from './syncEnvelope.js';
 import { escapeHtml } from './utils.js';
 import { DEMO_MODE } from './demoMode.js';
 
@@ -89,7 +90,9 @@ function currentSnapshot() {
 // targets the live workspace. connectSync()/createWorkspace() pass an explicit
 // candidate URL instead, so a reconnect attempt never touches `sync`'s fields
 // (and can't race the background loop) until it actually succeeds.
-async function apiCall(path, body, baseUrl = sync.serverUrl) {
+// `parse` checks the shape of a successful reply (see syncEnvelope.js) and throws a
+// SyncResponseError for anything else, so callers never touch a malformed response.
+async function apiCall(path, body, baseUrl = sync.serverUrl, parse = reply => reply) {
   const res = await fetch(`${baseUrl}${path}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -103,7 +106,7 @@ async function apiCall(path, body, baseUrl = sync.serverUrl) {
     err.body = json;
     throw err;
   }
-  return json;
+  return parse(json);
 }
 
 // ── Public: connect / disconnect ──────────────────────────────────────────────
@@ -159,7 +162,7 @@ export async function connectSync() {
   setSyncModalBusy(true, 'Connecting…');
 
   try {
-    const remote = await apiCall(`/api/workspaces/${workspace}/pull`, { passphrase }, serverUrl);
+    const remote = await apiCall(`/api/workspaces/${workspace}/pull`, { passphrase }, serverUrl, parseVersionedState);
     setSyncModalBusy(false);
     // Existing workspace — let the user review before it overwrites this device.
     const report = validateImportedState(remote.state, orgData);
@@ -188,7 +191,7 @@ async function createWorkspace(serverUrl, workspace, passphrase) {
       passphrase,
       state: currentPayload(),
       expectedVersion: 0,
-    }, serverUrl);
+    }, serverUrl, parsePushResult);
     setSyncModalBusy(false);
     closeSyncModal();
     commitConnection({ serverUrl, workspace, passphrase, version: result.version });
@@ -284,7 +287,7 @@ async function pushTick(snapshot, manual) {
       passphrase: sync.passphrase,
       state: JSON.parse(snapshot),
       expectedVersion: sync.version,
-    });
+    }, undefined, parsePushResult);
     sync.version = result.version;
     sync.lastSyncedSnapshot = snapshot;
     sync.lastSyncedAt = Date.now();
@@ -304,8 +307,16 @@ async function pushTick(snapshot, manual) {
   }
 }
 
-function handlePushConflict(current, localSnapshot, manual) {
-  if (!current) return;
+function handlePushConflict(rawCurrent, localSnapshot, manual) {
+  if (!rawCurrent) return;
+  let current;
+  try {
+    current = parseVersionedState(rawCurrent);
+  } catch (err) {
+    sync.lastError = err.message;
+    if (manual) alert(`Sync conflict could not be shown: ${err.message}`);
+    return;
+  }
   const alreadySeen = sync.lastConflict
     && sync.lastConflict.version === current.version
     && sync.lastConflict.localSnapshot === localSnapshot;
@@ -325,7 +336,7 @@ function handlePushConflict(current, localSnapshot, manual) {
 }
 
 async function pullIfNewerTick(manual) {
-  const versionInfo = await apiCall(`/api/workspaces/${sync.workspace}/version`, { passphrase: sync.passphrase })
+  const versionInfo = await apiCall(`/api/workspaces/${sync.workspace}/version`, { passphrase: sync.passphrase }, undefined, parseVersionInfo)
     .catch(err => {
       if (err.status === 403) { disconnectOnAuthFailure(); return null; }
       throw err;
@@ -338,7 +349,7 @@ async function pullIfNewerTick(manual) {
     return;
   }
 
-  const remote = await apiCall(`/api/workspaces/${sync.workspace}/pull`, { passphrase: sync.passphrase });
+  const remote = await apiCall(`/api/workspaces/${sync.workspace}/pull`, { passphrase: sync.passphrase }, undefined, parseVersionedState);
 
   // The version check and this pull were two separate round trips. If the
   // user edited local state while either was in flight, applying the remote

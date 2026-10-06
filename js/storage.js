@@ -28,6 +28,28 @@ export const BACKUP_KEY           = namespacedKey('pm-ops-backups-v1');
 export const SYNC_CONFIG_KEY      = namespacedKey('pm-ops-sync-config-v1');
 const MAX_BACKUPS = 5;
 
+// ── Repairs made while loading saved data ─────────────────────────────────────
+// Everything read back from localStorage goes through normalize.js. When that had to
+// reset, clear or drop something, the loader records it here (source + field path +
+// sentence) and warns once in the console, so a silent repair can still be diagnosed.
+let loadIssues = [];
+
+export function getLoadIssues() { return loadIssues.map(issue => ({ ...issue })); }
+export function clearLoadIssues() { loadIssues = []; }
+
+const LOAD_SOURCE_LABELS = { tasks: 'tasks', team: 'team', workOrders: 'work orders', portfolio: 'portfolio' };
+
+function recordLoadIssues(source, errors, omitted = 0) {
+  loadIssues = loadIssues.filter(issue => issue.source !== source);
+  if (!errors.length) return;
+  errors.forEach(({ path, code, message }) => loadIssues.push({ source, path, code, message }));
+  const total = errors.length + omitted;
+  console.warn(
+    `PM Ops Map repaired ${total} saved value${total === 1 ? '' : 's'} while loading ${LOAD_SOURCE_LABELS[source]}:\n` +
+    errors.slice(0, 20).map(e => `  - ${e.message}`).join('\n') + (total > 20 ? `\n  …and ${total - 20} more.` : ''),
+  );
+}
+
 // ── Toast notifications ───────────────────────────────────────────────────────
 let _toastTimer = null;
 
@@ -92,7 +114,9 @@ export function loadFromStorage() {
     if (!raw) return;
     const saved = JSON.parse(raw);
     if (!Array.isArray(saved)) return;
-    applySavedTasks(orgData.departments, saved);
+    const issues = [];
+    applySavedTasks(orgData.departments, saved, { issues });
+    recordLoadIssues('tasks', issues);
   } catch (e) {
     console.error('Failed to parse saved task data — data preserved in storage:', e);
     _showActionToast('⚠ Could not load saved data — try exporting a backup', 'save-toast--error', 6000);
@@ -195,7 +219,9 @@ export function loadTeamData() {
     }
     const parsed = JSON.parse(raw);
     if (parsed && Array.isArray(parsed.employees)) {
-      setTeamData(normalizeTeam(parsed, { knownDeptIds: knownDeptIds() }).team);
+      const result = normalizeTeam(parsed, { knownDeptIds: knownDeptIds() });
+      setTeamData(result.team);
+      recordLoadIssues('team', result.errors);
     } else {
       seedDefaultTeam();
     }
@@ -216,7 +242,11 @@ export function saveWorkOrders() {
 export function loadWorkOrders() {
   try {
     const raw = localStorage.getItem(WORKORDERS_KEY);
-    if (raw) setWorkOrders(normalizeWorkOrders(JSON.parse(raw)).items);
+    if (raw) {
+      const result = normalizeWorkOrders(JSON.parse(raw));
+      setWorkOrders(result.items);
+      recordLoadIssues('workOrders', result.errors, result.omitted);
+    }
   } catch (e) {
     setWorkOrders([]);
   }
@@ -235,7 +265,9 @@ export function loadPortfolio() {
   try {
     const raw = localStorage.getItem(PORTFOLIO_KEY);
     if (!raw) return;
-    setPortfolio(normalizePortfolio(JSON.parse(raw)).portfolio);
+    const result = normalizePortfolio(JSON.parse(raw));
+    setPortfolio(result.portfolio);
+    recordLoadIssues('portfolio', result.errors, result.omitted);
   } catch (e) {
     setPortfolio({ properties: [], vendors: [], tenants: [] });
   }

@@ -5,6 +5,7 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const { validateState, validatePassphrase, validateExpectedVersion } = require('./validate');
 
 const SLUG_RE = /^[a-z0-9][a-z0-9-]{1,38}[a-z0-9]$/;
 const MAX_STATE_BYTES = 2 * 1024 * 1024; // 2MB — generous for this app's JSON state, cheap to enforce.
@@ -66,6 +67,8 @@ class WorkspaceStore {
     if (typeof passphrase !== 'string' || passphrase.length === 0) {
       throw new HttpError('Passphrase is required.', 400);
     }
+    const tooLong = validatePassphrase(passphrase);
+    if (tooLong) throw new HttpError(tooLong, 400);
     const existing = this._readRaw(slug);
     if (!existing) throw new HttpError('No workspace with that name exists yet.', 404);
     if (!verifyPassphrase(passphrase, existing.salt, existing.hash)) {
@@ -86,8 +89,13 @@ class WorkspaceStore {
     if (typeof passphrase !== 'string' || passphrase.length < MIN_PASSPHRASE_LENGTH) {
       throw new HttpError(`Passphrase must be at least ${MIN_PASSPHRASE_LENGTH} characters.`, 400);
     }
-    if (state === undefined || state === null || typeof state !== 'object') {
-      throw new HttpError('State payload must be a JSON object.', 400);
+    const tooLong = validatePassphrase(passphrase);
+    if (tooLong) throw new HttpError(tooLong, 400);
+    const versionError = validateExpectedVersion(expectedVersion);
+    if (versionError) throw new HttpError(versionError, 400);
+    const stateErrors = validateState(state);
+    if (stateErrors.length) {
+      throw new HttpError(`Invalid workspace data: ${stateErrors.join(' ')}`, 400);
     }
     const size = Buffer.byteLength(JSON.stringify(state));
     if (size > MAX_STATE_BYTES) {

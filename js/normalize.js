@@ -316,12 +316,18 @@ export function normalizeSavedTask(saved, { fill = false, issues = null, path = 
 export function applySavedTasks(departments, savedDepartments, options = {}) {
   const result = { matched: 0, skipped: 0 };
   if (!Array.isArray(savedDepartments)) return result;
-  savedDepartments.forEach(savedDept => {
+  savedDepartments.forEach((savedDept, deptIndex) => {
     if (!savedDept || typeof savedDept.id !== 'string') return;
     const dept = departments.find(d => d.id === savedDept.id);
     if (!dept || !Array.isArray(savedDept.tasks)) return;
-    savedDept.tasks.forEach(savedTask => {
-      const patch = normalizeSavedTask(savedTask, options);
+    savedDept.tasks.forEach((savedTask, taskIndex) => {
+      // With options.issues the caller wants to know what was repaired, so say where each row is.
+      const rowOptions = options.issues ? {
+        ...options,
+        path: `departments[${deptIndex}].tasks[${taskIndex}]`,
+        label: `Task ${shorten(savedTask && savedTask.name)} in ${dept.name}`,
+      } : options;
+      const patch = normalizeSavedTask(savedTask, rowOptions);
       const task = patch && findConfigTask(departments, savedTask, { deptId: dept.id });
       if (!task) { result.skipped++; return; }
       // A name the user never edited (it still equals the starter name the row was saved
