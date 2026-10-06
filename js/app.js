@@ -93,6 +93,8 @@ import {
   initSync, openSyncModal, closeSyncModal, connectSync, disconnectSync, syncNow,
 } from './sync.js';
 import { openPrivacyModal, closePrivacyModal } from './privacy.js';
+import { DEMO_MODE } from './demoMode.js';
+import { initDemoMode, seedShowcaseWorkspace, resetDemo } from './demo.js';
 
 // ── View switcher ─────────────────────────────────────────────────────────────
 function switchView(view, tabEl) {
@@ -156,6 +158,10 @@ function initApp() {
   loadPortfolio();
   loadAuditLog();
   loadFromStorage();
+  // Hosted demo (?demo=1): first visit loads the fictional workspace before anything
+  // renders, so there is no onboarding screen and no empty first frame.
+  initDemoMode();
+  if (DEMO_MODE && !localStorage.getItem(COMPANY_KEY)) seedShowcaseWorkspace();
   renderTrackingView();
   renderLaunchPlan();
   updateStats();
@@ -385,6 +391,8 @@ Object.assign(window, {
   // Data & Privacy dialog: where data lives, what to enter, copies you create.
   openPrivacyModal,
   closePrivacyModal,
+  // Hosted demo: restore the pristine fictional workspace.
+  resetDemo,
   // Team Sync tab: optional self-hosted live sync across devices.
   openSyncModal,
   closeSyncModal,

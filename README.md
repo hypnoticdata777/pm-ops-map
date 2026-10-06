@@ -11,8 +11,8 @@ Track every department, every task, every maintenance request — and exactly wh
 
 **No database required. No login required. No backend required. No monthly fee.**
 
-<!-- TODO: replace with the portfolio URL once it's live -->
-See it in action on [my portfolio](#) — or run it yourself in under a minute, see below.
+**▶ [Try the live demo](https://hypnoticdata777.github.io/pm-ops-map/?demo=1)** — a fictional property-management company, one click to open, one click to reset. Nothing leaves your browser.
+Or run it yourself in under a minute, see below.
 
 </div>
 
@@ -45,11 +45,11 @@ Everything saves to `localStorage` by default. Nothing goes to a server unless y
 
 ### Option A — Live Demo (no setup)
 
-<!-- TODO: replace with the portfolio URL once it's live -->
-1. Open the live demo on [my portfolio](#)
-2. Enter your company name and portfolio size
-3. Add your team, assign tasks, track work orders
+1. Open the **[live demo](https://hypnoticdata777.github.io/pm-ops-map/?demo=1)** — it loads a fictional company with gaps, blocked work, an overloaded teammate, and work orders in every stage
+2. Poke around: reassign an owner, change a status, open the Team Manager workload bars
+3. Made a mess? **Reset demo** in the purple banner restores it. Ready for your own data? **Use your own workspace →**
 
+The demo is clearly labelled as fictional, keeps its data under separate browser-storage keys (so it can never touch a real workspace opened from the same site), and has Team Sync switched off. See [The live demo](#the-live-demo) below.
 ### Option B — Download the ZIP
 
 1. Go to [Releases](https://github.com/hypnoticdata777/pm-ops-map/releases/latest)
@@ -71,8 +71,22 @@ Or with Node: `npm install && npm start`
 ### Option D — Fork and Host Free on GitHub Pages
 
 1. Fork this repo
-2. **Settings → Pages → Source → main branch**
-3. Your team's URL is live at `https://yourusername.github.io/pm-ops-map/`
+2. **Settings → Pages → Build and deployment → Source: GitHub Actions** (the included workflow builds, tests, and publishes the site). Prefer no Actions? Choose *Deploy from a branch* → `master` / `(root)` instead — the app runs straight from source.
+3. Your team's URL is live at `https://yourusername.github.io/pm-ops-map/` (add `?demo=1` for the demo)
+
+---
+
+## The live demo
+
+Open any copy of the site with **`?demo=1`** (for example [`…/pm-ops-map/?demo=1`](https://hypnoticdata777.github.io/pm-ops-map/?demo=1)) and you get a populated, entirely fictional workspace instead of the setup screen. What makes it safe to put on a public URL:
+
+- **Always labelled.** A purple banner — *"Fictional data only… please don't enter real tenant information"* — is pinned to the top of every screen. It cannot be dismissed.
+- **Isolated storage.** Demo mode keeps everything under `pm-ops-demo-*` keys. Visiting, editing, or resetting the demo never reads, overwrites, or deletes a real workspace stored under the normal `pm-ops-*` keys on the same site.
+- **One-click reset.** **Reset demo** removes only the demo's own keys and reloads the pristine data.
+- **No sync.** Team Sync is hidden and disabled, so the demo can't be pointed at a server.
+- **Built to show the point.** Three departments nobody covers (compliance, reporting, systems), one teammate carrying far more than the others, a blocked dependency chain, overdue work, tenants in different lease and rent situations, and work orders in every column. Dates are computed relative to today, so it never goes stale. All names, `(555) 010-xxxx` phone numbers, and `example.com` addresses are made up.
+
+The site is deployed by [`.github/workflows/pages.yml`](.github/workflows/pages.yml): on every push to `master` it runs the unit tests, builds `dist/`, runs the browser suite against that build served under `/pm-ops-map/` (and straight from disk via `file://`), and only then publishes. **One-time setup:** *Settings → Pages → Source → GitHub Actions.*
 
 ---
 
@@ -406,6 +420,9 @@ pm-ops-map/
 │   ├── stateSchema.js      Versioned JSON export/import schema and validation
 │   ├── normalize.js        Boundary sanitizers for imports, sync, backups, and storage loads
 │   ├── privacy.js          Data-handling guidance, Data & Privacy dialog, export confirmations
+│   ├── demoMode.js         ?demo=1 detection and storage-key namespacing (no dependencies)
+│   ├── demo.js             Hosted demo: seeding, banner, reset, sync disabled
+│   ├── showcase.js         The fictional workspace the demo loads (pure, date-relative)
 │   ├── templates.js        Role templates, SOP templates, demo workspace data
 │   ├── utils.js            Pure utility functions
 │   ├── views/
@@ -424,7 +441,7 @@ pm-ops-map/
 ├── server/                  Optional self-hosted sync server (own package.json, tests, Docker) — see server/README.md
 ├── docker-compose.yml       Runs the sync server locally with durable storage
 ├── render.yaml              One-click Render deploy for the sync server
-├── .github/workflows/ci.yml  CI: install, test, audit, build (app + sync server as separate jobs)
+├── .github/workflows/       ci.yml (test, audit, build, browser E2E), audit.yml (weekly), pages.yml (deploy the demo site)
 ├── CONTRIBUTING.md
 ├── SECURITY.md
 ├── LICENSE.txt
@@ -489,6 +506,7 @@ npm start          # webpack-dev-server with live reload → localhost:8080
 npm test           # Vitest unit tests (run against the same ES modules the browser loads)
 npm run test:coverage   # same, with a V8 coverage report
 npm run test:e2e   # Playwright browser tests (first run: npx playwright install chromium)
+npm run test:e2e:pages   # builds dist/, then tests it under a GitHub-Pages-style sub-path
 npm run build      # Production bundle → dist/
 ```
 

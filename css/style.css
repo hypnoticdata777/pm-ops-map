@@ -1685,23 +1685,39 @@ body {
 /* Override the existing justify-content so task-left takes all available space */
 .task-item {
   align-items: center; /* keep vertical centering */
+  /* A row is [chips + name] on the left and [notes, fields, status, owner] on the right.
+     When both do not fit on one line the layout WRAPS rather than squeezing the name into a
+     sliver underneath the status pill: first the name drops below the chips, then (on narrow
+     screens) the right-hand group drops below the left. e2e/layout.spec.js guards this. */
+  flex-wrap: wrap;
+  row-gap: 8px;
 }
 
-/* Left half — priority dot + task name, stretches to fill remaining space */
+/* Left half — priority dot, due date, dependency chip and task name. */
 .task-left {
   display: flex;
   align-items: center;
-  gap: 10px;
-  flex: 1;
-  min-width: 0; /* allows task name to truncate instead of blowing out the row */
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  flex: 1 1 240px;
+  min-width: 0;
+}
+.task-left .task-name {
+  flex: 1 1 14ch;
+  min-width: 14ch;
+  overflow-wrap: anywhere;
 }
 
-/* Right half — status pill + owner badge, fixed width, no wrapping */
+/* Right half — notes, custom fields, status pill and owner badge; keeps its natural width. */
 .task-right {
   display: flex;
   align-items: center;
-  gap: 8px;
+  flex-wrap: wrap;            /* on a phone the owner badge wraps under the status pill */
+  justify-content: flex-end;
+  gap: 6px 8px;
   flex-shrink: 0;
+  max-width: 100%;
+  margin-left: auto;
 }
 
 /* ==========================================================================
@@ -5044,4 +5060,41 @@ body[data-ops-focus="compliance"] {
 @media (max-width: 760px) {
   .privacy-tiers { grid-template-columns: 1fr; }
   .privacy-body { padding: 8px 16px 14px; }
+}
+
+/* ── Hosted demo banner (?demo=1) ───────────────────────────────────────────── */
+.demo-banner {
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 8px 16px;
+  background: #3f2a8c;
+  color: #ffffff;
+  font-size: 13px;
+  line-height: 1.4;
+  box-shadow: 0 2px 8px rgba(23, 32, 42, 0.25);
+}
+.demo-banner[hidden] { display: none; }
+.demo-banner p { margin: 0; flex: 1 1 260px; }
+.demo-banner strong { color: #ffffff; }
+.demo-banner-badge {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #ffd54f;
+  color: #3e2a00;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.demo-banner-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.demo-banner .btn { text-decoration: none; padding: 5px 12px; font-size: 12px; }
+
+@media (max-width: 760px) {
+  .demo-banner { padding: 8px 12px; gap: 8px; }
+  .demo-banner-actions { width: 100%; }
 }

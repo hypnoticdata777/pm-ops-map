@@ -94,6 +94,16 @@ The trust boundary. Everything that enters from outside the UI forms — an impo
 
 Free text (names, notes) legitimately contains characters like `<` and `"`, so normalizing is a safety net and **not** a substitute for escaping at render time. Views still escape every dynamic value and pass ids through `data-*` attributes; see the Security Conventions in `CONTRIBUTING.md`.
 
+### `js/demoMode.js`, `js/demo.js`, and `js/showcase.js`
+
+The hosted demo, enabled by opening the app with `?demo=1`.
+
+| Module | Role |
+|---|---|
+| `demoMode.js` | Dependency-free. Exports `DEMO_MODE` and `namespacedKey()`, which `storage.js` applies to every storage key (`pm-ops-…` becomes `pm-ops-demo-…`), so the demo can never read or overwrite a real workspace on the same origin. |
+| `demo.js` | Runtime: `seedShowcaseWorkspace()` loads the fictional data before the first render, `initDemoMode()` shows the permanent banner and hides Team Sync, `resetDemo()` removes only demo keys and reloads. |
+| `showcase.js` | Pure, date-relative data builder (`buildShowcase`, `applyShowcaseTasks`) shaped to show gaps, overload, blocked chains, overdue work, and varied lease/rent situations. Every name, phone, and email is fictional. |
+
 ### `js/privacy.js`
 
 Owns the plain-language data-handling messaging so the UI, the dialog, and the docs cannot drift apart.

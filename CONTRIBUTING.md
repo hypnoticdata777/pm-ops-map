@@ -69,6 +69,9 @@ pm-ops-map/
 │   ├── handbook.js     Markdown handbook export
 │   ├── normalize.js    Sanitizers for every path that loads outside data
 │   ├── privacy.js      Data-handling guidance and export confirmations
+│   ├── demoMode.js     ?demo=1 detection and storage-key namespacing
+│   ├── demo.js         Hosted demo: seeding, banner, reset
+│   ├── showcase.js     The fictional workspace the demo loads
 │   ├── views/          Tracking, map, team, portfolio, and work order screens
 │   └── __tests__/      Vitest unit tests — they import the shipped ES modules directly
 ├── e2e/                Playwright browser tests (security regression suite)
@@ -93,7 +96,10 @@ PM Ops Map renders data it did not create — imported JSON, pasted clipboard te
 4. **Links:** only store and render `normalizeUrl(url)` (http/https only).
 5. **Anything that loads outside data goes through `js/normalize.js`** (`sanitizeWorkspace`, `applySavedTasks`, `normalizeAuditLog`, …). Don't assign imported objects straight into shared state.
 6. **Exported CSV cells** must go through the CSV helpers so spreadsheet formulas are neutralized.
-7. **Exports** should call `confirmSensitiveExport()` before writing a file that can contain tenant information and `announceExport()` afterwards (see `js/privacy.js`); don't add a new export path that skips them.
+7. **Storage keys** are defined once, in `js/storage.js`, through `namespacedKey()` (see `js/demoMode.js`). Never write a literal `'pm-ops-…'` key anywhere else: the hosted demo relies on every key being namespaced so it can't touch a real workspace, and a test fails if a literal key appears outside those two files.
+8. **Exports** should call `confirmSensitiveExport()` before writing a file that can contain tenant information and `announceExport()` afterwards (see `js/privacy.js`); don't add a new export path that skips them.
+
+`npm run test:e2e:pages` builds `dist/` and runs the smoke and demo suites against the production bundle served under a `/pm-ops-map/` sub-path and from `file://` — run it when you change the build, asset paths, or `index.html`'s script tags.
 
 `npm run test:e2e` runs a browser suite (`e2e/security-xss.spec.js`) that injects a canary payload into every importable field and fails if any view turns it into markup or script. If you add a field or a view, extend `e2e/helpers/security.js`.
 

@@ -6,16 +6,17 @@
   <title>PM Ops Map</title>
   <meta name="description" content="Map your property management company's tasks, ownership, and accountability across every department.">
 
-  <!-- TODO: replace https://your-deployment-url.vercel.app with the real deployed URL -->
+  <!-- Social-card scrapers need absolute URLs. These point at the project's GitHub Pages site;
+       if you host your own copy, change them to your deployment URL. -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="PM Ops Map — free, open-source property management ops tracker">
   <meta property="og:description" content="Map your property management company's tasks, ownership, and accountability across every department. Zero backend, runs entirely in your browser.">
-  <meta property="og:image" content="https://your-deployment-url.vercel.app/og-image.png">
-  <meta property="og:url" content="https://your-deployment-url.vercel.app/">
+  <meta property="og:image" content="https://hypnoticdata777.github.io/pm-ops-map/og-image.png">
+  <meta property="og:url" content="https://hypnoticdata777.github.io/pm-ops-map/">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="PM Ops Map — free, open-source property management ops tracker">
   <meta name="twitter:description" content="Map your property management company's tasks, ownership, and accountability across every department. Zero backend, runs entirely in your browser.">
-  <meta name="twitter:image" content="https://your-deployment-url.vercel.app/og-image.png">
+  <meta name="twitter:image" content="https://hypnoticdata777.github.io/pm-ops-map/og-image.png">
 
   <link rel="stylesheet" href="css/style.css">
 
@@ -25,6 +26,15 @@
   <link rel="manifest" href="site.webmanifest">
 </head>
 <body>
+<!-- Hosted demo (?demo=1) only: js/demo.js un-hides this. It is deliberately not dismissible. -->
+<div id="demo-banner" class="demo-banner" role="region" aria-label="Demo workspace" hidden>
+  <span class="demo-banner-badge">Demo</span>
+  <p><strong>Fictional data only.</strong> Nothing here is real and nothing leaves your browser &mdash; please don&rsquo;t enter real tenant information.</p>
+  <div class="demo-banner-actions">
+    <button class="btn btn-secondary" onclick="resetDemo()" title="Discard your edits and restore the original fictional workspace">Reset demo</button>
+    <a class="btn btn-secondary" href="./" title="Open PM Ops Map with your own, empty workspace">Use your own workspace &rarr;</a>
+  </div>
+</div>
 <div class="container">
   <div class="header">
     <div>

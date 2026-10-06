@@ -102,6 +102,51 @@ describe('scheduled audit', () => {
   });
 });
 
+describe('GitHub Pages deployment', () => {
+  const pages = yaml('.github/workflows/pages.yml');
+  const steps = job => pages.jobs[job].steps;
+  const runs = job => steps(job).map(s => s.run).filter(Boolean);
+
+  test('deploys only from master, or on demand', () => {
+    expect(pages.on.push.branches).toEqual(['master']);
+    expect(pages.on).toHaveProperty('workflow_dispatch');
+  });
+
+  test('tests the built site before publishing anything', () => {
+    expect(runs('build')).toEqual(expect.arrayContaining(['npm test', 'npm run test:e2e:pages']));
+    expect(pages.jobs.deploy.needs).toBe('build');
+  });
+
+  test('publishes dist/ — the production build — not the source tree', () => {
+    const upload = steps('build').find(s => s.uses?.startsWith('actions/upload-pages-artifact'));
+    expect(upload.with.path).toBe('dist');
+  });
+
+  test('elevated permissions belong to the deploy job alone', () => {
+    expect(pages.permissions).toEqual({ contents: 'read' });
+    expect(pages.jobs.build.permissions).toBeUndefined();
+    expect(pages.jobs.deploy.permissions).toEqual({ pages: 'write', 'id-token': 'write' });
+    expect(pages.jobs.deploy.environment.name).toBe('github-pages');
+  });
+
+  test('serializes deployments without cancelling a running one', () => {
+    expect(pages.concurrency).toEqual({ group: 'pages', 'cancel-in-progress': false });
+  });
+
+  test('the script it runs builds first and targets the Pages-style config', () => {
+    const scripts = JSON.parse(read('package.json')).scripts;
+    expect(scripts['test:e2e:pages']).toMatch(/^npm run build && playwright test --config playwright\.pages\.config\.mjs$/);
+    expect(fs.existsSync(path.join(root, 'playwright.pages.config.mjs'))).toBe(true);
+  });
+
+  test('the demo link in the README points at the Pages site with ?demo=1', () => {
+    const readme = read('README.md');
+    expect(readme).toContain('https://hypnoticdata777.github.io/pm-ops-map/?demo=1');
+    expect(readme).not.toMatch(/\[my portfolio\]\(#\)/);
+    expect(readme).not.toContain('TODO: replace with the portfolio URL');
+  });
+});
+
 describe('sync server image', () => {
   test('builds from a supported Node LTS (22 or newer; Node 20 is end-of-life)', () => {
     const from = read('server/Dockerfile').match(/^FROM\s+node:(\d+)/m);

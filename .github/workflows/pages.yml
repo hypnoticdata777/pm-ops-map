@@ -1,0 +1,54 @@
+name: Deploy site to GitHub Pages
+
+# Publishes the production build (dist/) — the same bundle the downloadable ZIP
+# contains — to https://<owner>.github.io/<repo>/. The live demo is that site
+# opened with ?demo=1.
+#
+# One-time setup in the repository: Settings -> Pages -> Build and deployment ->
+# Source: "GitHub Actions". Until that is set, the deploy job cannot publish.
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One deployment at a time; let a running deployment finish rather than cancel it.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      # Builds dist/ and tests THAT, served under /pm-ops-map/ the way a Pages project site
+      # is hosted (and straight from disk via file://). Nothing is published if this fails.
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e:pages
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    # Only the deploy job gets the elevated permissions.
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

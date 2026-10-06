@@ -6,25 +6,26 @@ import {
   STATUS_CYCLE, PRIORITY_CYCLE,
 } from './state.js';
 import { _isQuotaError, _slugify } from './utils.js';
+import { namespacedKey } from './demoMode.js';
 import {
   applySavedTasks, normalizeTeam, normalizeWorkOrders, normalizePortfolio,
   normalizeAuditLog, sanitizeWorkspace,
 } from './normalize.js';
 
 // ── Storage keys ──────────────────────────────────────────────────────────────
-export const STORAGE_KEY     = 'pm-ops-data-v1';
-export const COMPANY_KEY     = 'pm-ops-company-name';
-export const OPS_PROFILE_KEY = 'pm-ops-profile-v1';
-export const NAV_COMPACT_KEY = 'pm-ops-nav-compact';
-export const TEAM_KEY        = 'pm-ops-team-v1';
-export const WORKORDERS_KEY  = 'pm-ops-workorders-v1';
-export const PORTFOLIO_KEY   = 'pm-ops-portfolio-v1';
-export const AUDIT_KEY       = 'pm-ops-audit-v1';
-export const GUIDE_KEY       = 'pm-ops-guide-dismissed';
-export const NOTIF_DATE_KEY  = 'pm-ops-notif-date';
-export const LAUNCH_CHECKLIST_KEY = 'pm-ops-launch-checklist-v1';
-export const BACKUP_KEY           = 'pm-ops-backups-v1';
-export const SYNC_CONFIG_KEY      = 'pm-ops-sync-config-v1'; // must match js/sync.js's SYNC_CONFIG_KEY
+export const STORAGE_KEY     = namespacedKey('pm-ops-data-v1');
+export const COMPANY_KEY     = namespacedKey('pm-ops-company-name');
+export const OPS_PROFILE_KEY = namespacedKey('pm-ops-profile-v1');
+export const NAV_COMPACT_KEY = namespacedKey('pm-ops-nav-compact');
+export const TEAM_KEY        = namespacedKey('pm-ops-team-v1');
+export const WORKORDERS_KEY  = namespacedKey('pm-ops-workorders-v1');
+export const PORTFOLIO_KEY   = namespacedKey('pm-ops-portfolio-v1');
+export const AUDIT_KEY       = namespacedKey('pm-ops-audit-v1');
+export const GUIDE_KEY       = namespacedKey('pm-ops-guide-dismissed');
+export const NOTIF_DATE_KEY  = namespacedKey('pm-ops-notif-date');
+export const LAUNCH_CHECKLIST_KEY = namespacedKey('pm-ops-launch-checklist-v1');
+export const BACKUP_KEY           = namespacedKey('pm-ops-backups-v1');
+export const SYNC_CONFIG_KEY      = namespacedKey('pm-ops-sync-config-v1');
 const MAX_BACKUPS = 5;
 
 // ── Toast notifications ───────────────────────────────────────────────────────
