@@ -226,10 +226,11 @@
       </label>
       <button class="btn btn-export" onclick="copyStateToClipboard()" title="Copy full state to clipboard to paste on another device">&#128203; Copy State</button>
       <button class="btn btn-export" onclick="pasteStateFromClipboard()" title="Paste a state copied from another device">&#128241; Paste State</button>
-      <button class="btn btn-secondary" id="sync-status-pill" onclick="openSyncModal()" title="Sync this workspace with your team">&#8635; Team Sync</button>
+      <button class="btn btn-secondary" id="sync-status-pill" onclick="openSyncModal()" title="Beta: share this workspace with a small, trusted team through a server you run">&#8635; Team Sync <small>beta</small></button>
       <button class="btn btn-secondary" onclick="openAuditLog()" title="View change history">&#128203; Audit Log</button>
       <button class="btn btn-secondary" onclick="openBackupsModal()" title="View and restore automatic backups">&#128190; Backups</button>
       <button class="btn btn-secondary" id="notif-btn" onclick="requestNotificationPermission()" title="Enable browser alerts for overdue tasks" hidden>&#128276; Alerts</button>
+      <button class="btn btn-secondary" onclick="openPrivacyModal()" title="Where your data is stored, what to enter, and the copies exports create">&#128274; Data &amp; Privacy</button>
       <button class="btn btn-secondary stats-reset-btn" onclick="resetStorage()" title="Clear all saved changes and restore defaults">&#8635; Reset</button>
     </div>
   </div>
@@ -268,6 +269,8 @@
         <option value="growth">Scale team capacity</option>
         <option value="compliance">Reduce compliance risk</option>
       </select>
+
+      <p class="onboarding-privacy">&#128274; Everything you enter stays in this browser, unencrypted &mdash; there is no account and no server. Explore with the example workspace first, and read <strong>Data &amp; Privacy</strong> in the toolbar before adding real tenant details.</p>
 
       <button class="onboarding-btn" onclick="submitCompanyName()">Start Mapping &rarr;</button>
       <button class="onboarding-btn onboarding-btn--secondary" onclick="startWithDemoCompany()">Show me an example first</button>
@@ -528,18 +531,24 @@
   <div class="audit-panel">
     <div class="playbook-header">
       <div>
-        <div class="playbook-kicker">Optional &middot; Self-Hosted</div>
+        <div class="playbook-kicker">Beta &middot; Trusted-team sync &middot; Self-hosted</div>
         <h2 id="sync-modal-title">Team Sync</h2>
       </div>
       <button class="playbook-close-btn" onclick="closeSyncModal()" aria-label="Close">&times;</button>
     </div>
     <div class="sync-modal-body">
       <p class="sync-modal-intro">
-        Point this device at a small self-hosted sync server so your team shares one
-        workspace. No accounts &mdash; just a workspace name and a passphrase your
-        team keeps between yourselves. Leave this disconnected and the app keeps
-        working exactly as before, saved only to this browser.
+        Share one workspace across your team&rsquo;s browsers through a small server you run
+        yourself. This is a <strong>beta</strong> built for a few people who trust each other
+        &mdash; it is not enterprise collaboration.
       </p>
+      <ul class="sync-modal-limits">
+        <li><strong>One shared passphrase.</strong> No individual accounts, roles, or way to remove one person&rsquo;s access &mdash; anyone with the workspace name and passphrase can read and change everything.</li>
+        <li><strong>Whole-workspace sync.</strong> If two people edit at once, you choose whose version to keep.</li>
+        <li><strong>Your data leaves this browser.</strong> The workspace goes to the server you enter below (use <code>https://</code>), and the passphrase is saved unencrypted in this browser.</li>
+        <li>Leave this disconnected and the app works exactly as before, saved only in this browser.</li>
+      </ul>
+      <button class="btn btn-secondary sync-privacy-link" onclick="openPrivacyModal()">More about your data</button>
       <label class="sync-field">
         <span>Sync server URL</span>
         <input id="sync-server-url" type="text" class="portfolio-input" placeholder="https://your-sync-server.example.com">
@@ -559,6 +568,22 @@
       <button class="btn btn-secondary" onclick="syncNow()">Sync Now</button>
       <button class="btn btn-secondary" onclick="disconnectSync()">Disconnect</button>
       <button class="btn btn-secondary" onclick="closeSyncModal()">Close</button>
+    </div>
+  </div>
+</div>
+<!-- Data & Privacy modal -->
+<div id="privacy-modal" class="playbook-overlay" role="dialog" aria-modal="true" aria-labelledby="privacy-modal-title">
+  <div class="audit-panel privacy-panel">
+    <div class="playbook-header">
+      <div>
+        <div class="playbook-kicker">Your data</div>
+        <h2 id="privacy-modal-title">Data &amp; Privacy</h2>
+      </div>
+      <button class="playbook-close-btn" onclick="closePrivacyModal()" aria-label="Close">&times;</button>
+    </div>
+    <div id="privacy-body" class="privacy-body"></div>
+    <div class="playbook-actions">
+      <button class="btn btn-secondary" onclick="closePrivacyModal()">Close</button>
     </div>
   </div>
 </div>

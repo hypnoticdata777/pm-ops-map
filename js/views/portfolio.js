@@ -5,6 +5,7 @@ import {
   parseCSV, buildCsvHeaderMap, unguardCsvCell, MAX_IMPORT_BYTES,
 } from '../utils.js';
 import { normalizePortfolio } from '../normalize.js';
+import { renderPortfolioPrivacyNotice, TENANT_FORM_HINT } from '../privacy.js';
 import { renderLaunchPlan } from '../launchPlan.js';
 
 const editState = {
@@ -64,6 +65,7 @@ export function renderPortfolioView() {
         </div>
       </div>
 
+      ${renderPortfolioPrivacyNotice()}
       ${renderStarterExampleStrip()}
 
       <div class="portfolio-grid">
@@ -113,6 +115,7 @@ export function renderPortfolioView() {
             <div>
               <h3>${editingTenant ? 'Edit Tenant' : 'Add Tenant'}</h3>
               <p>${editingTenant ? 'Keep resident contact and unit context ready for maintenance and communication.' : 'Know who is connected to each unit before requests and renewals arrive.'}</p>
+              <p class="portfolio-sensitive-hint">${escapeHtml(TENANT_FORM_HINT)}</p>
             </div>
             ${!editingTenant ? `
               <label class="btn btn-secondary portfolio-csv-btn" title="Bulk-add tenants from a CSV file">

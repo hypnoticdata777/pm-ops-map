@@ -92,6 +92,7 @@ import {
 import {
   initSync, openSyncModal, closeSyncModal, connectSync, disconnectSync, syncNow,
 } from './sync.js';
+import { openPrivacyModal, closePrivacyModal } from './privacy.js';
 
 // ── View switcher ─────────────────────────────────────────────────────────────
 function switchView(view, tabEl) {
@@ -381,6 +382,9 @@ Object.assign(window, {
   closeRecurringModal,
   previewRecurringTemplate,
   applyPendingRecurringTemplate,
+  // Data & Privacy dialog: where data lives, what to enter, copies you create.
+  openPrivacyModal,
+  closePrivacyModal,
   // Team Sync tab: optional self-hosted live sync across devices.
   openSyncModal,
   closeSyncModal,

@@ -94,6 +94,21 @@ The trust boundary. Everything that enters from outside the UI forms — an impo
 
 Free text (names, notes) legitimately contains characters like `<` and `"`, so normalizing is a safety net and **not** a substitute for escaping at render time. Views still escape every dynamic value and pass ids through `data-*` attributes; see the Security Conventions in `CONTRIBUTING.md`.
 
+### `js/privacy.js`
+
+Owns the plain-language data-handling messaging so the UI, the dialog, and the docs cannot drift apart.
+
+| Symbol | Meaning |
+|---|---|
+| `DATA_TIERS`, `COPIES_YOU_CREATE` | The "fine / use with care / do not enter" tiers and the list of copies exports, backups, clipboard, and sync create. |
+| `renderPortfolioPrivacyNotice()` | The always-visible notice at the top of the Portfolio tab. |
+| `openPrivacyModal()` / `closePrivacyModal()` | The Data & Privacy dialog (bound to `window` in `app.js`). |
+| `hasSensitiveRecords()` | True when tenant records, or work orders that name a tenant, exist. |
+| `confirmSensitiveExport(what)` | Asks once per page session before an export that includes resident data; returns `false` if cancelled. |
+| `announceExport(filename)` | Toast saying the file is another unencrypted copy. |
+
+`io.js` and `handbook.js` call these around every export. The acknowledgment is deliberately in memory only, so it reappears each session and needs no extra storage key.
+
 ### `js/stateSchema.js`
 
 The portable workspace contract. The browser and the Vitest suite import this same ES module.

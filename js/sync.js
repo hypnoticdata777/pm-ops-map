@@ -33,6 +33,16 @@ function normalizeServerUrl(url) {
   return (url || '').trim().replace(/\/+$/, '');
 }
 
+// A plain http:// address to anything other than this machine would send the
+// passphrase and the whole workspace across the network unencrypted.
+export function isInsecureSyncUrl(url) {
+  let parsed;
+  try { parsed = new URL(url); } catch (_) { return false; }
+  if (parsed.protocol !== 'http:') return false;
+  const host = parsed.hostname;
+  return !(host === 'localhost' || host.endsWith('.localhost') || host === '127.0.0.1' || host === '[::1]');
+}
+
 function loadSyncConfig() {
   try {
     const raw = localStorage.getItem(SYNC_CONFIG_KEY);
@@ -134,6 +144,11 @@ export async function connectSync() {
   if (!serverUrl) return alert('Enter your sync server URL.');
   if (!SLUG_RE.test(workspace)) return alert('Workspace name must be 2-40 lowercase letters, numbers, or hyphens.');
   if (passphrase.length < 4) return alert('Passphrase must be at least 4 characters.');
+  if (isInsecureSyncUrl(serverUrl) && !confirm(
+    'This server address starts with http://, not https://.\n\n' +
+    'Your passphrase and your entire workspace would cross the network unencrypted, where anyone on that network can read them.\n\n' +
+    'Connect anyway?',
+  )) return;
 
   // Deliberately not touching `sync` yet: if this device is already connected
   // elsewhere, the background loop keeps syncing that workspace safely while
@@ -366,7 +381,7 @@ export function renderSyncStatus() {
   const pill = document.getElementById('sync-status-pill');
   if (!pill) return;
   if (!sync.connected) {
-    pill.innerHTML = '&#8635; Team Sync';
+    pill.innerHTML = '&#8635; Team Sync <small>beta</small>';
     pill.className = 'btn btn-secondary';
     return;
   }

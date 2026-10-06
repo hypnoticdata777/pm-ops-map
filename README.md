@@ -33,9 +33,11 @@ Open it, enter your company name, and you get:
 - **Exportable operations handbook** (Markdown + printable HTML)
 - **Recurring task templates** for weekly ops, monthly finance, compliance, and more
 - **Auto-backups** so nothing gets lost
-- **Optional team sync** — self-host a small sync server so your whole team shares one live workspace instead of one browser
+- **Optional team sync (beta)** — self-host a small sync server so a small, trusted team shares one live workspace instead of one browser
 
 Everything saves to `localStorage` by default. Nothing goes to a server unless you turn on Team Sync yourself. Export your data anytime as JSON or CSV.
+
+> **Your data is stored unencrypted in your browser.** Explore with fictional data, use real tenant details only on a device you control, and never enter ID numbers, bank or card numbers, or screening reports. See [Data & privacy](#data--privacy).
 
 ---
 
@@ -291,7 +293,9 @@ No backend needed — use **Copy State** and **Paste State** in the stats bar to
 
 ---
 
-### Team Sync (optional, self-hosted)
+### Team Sync (optional, self-hosted, beta)
+
+> **Beta, built for a small team that trusts each other** — not enterprise collaboration. There is one shared passphrase and no individual accounts, roles, or way to revoke one person's access; edits sync as a whole workspace (a conflict means choosing whose version to keep); and the passphrase is saved unencrypted in each browser. Use `https://` for any server that isn't on your own machine — the app warns you if you don't.
 
 For a team of more than one, Copy/Paste State is a manual chore. **Team Sync** in the stats bar connects this device to a small self-hosted sync server so your whole team shares one live workspace instead — no accounts, just a workspace name and a passphrase your team keeps between yourselves.
 
@@ -308,6 +312,20 @@ The server lives in [`server/`](server/) — see [`server/README.md`](server/REA
 Grant browser notification permission from the stats bar (**🔔 Alerts**). On each page load, the app checks for overdue tasks and sends one grouped notification per session if any are found.
 
 ---
+
+## Data & privacy
+
+PM Ops Map has no accounts and no server of its own. That keeps it simple, but it also means **nothing encrypts your data for you**: it is saved as plain text in this browser's `localStorage`, and anyone who can open the browser profile (or a file you exported) can read it. The app says so where it matters: a notice on the Portfolio tab, a note on first run, a **Data & Privacy** dialog in the toolbar, a heads-up before exporting resident data, and the Team Sync dialog.
+
+| | What to enter |
+|---|---|
+| ✅ **Fine** | Fictional/demo data; process design (departments, responsibilities, owners, backups, SOP notes); limited context such as property names, unit counts, vendor trades |
+| ⚠️ **Use with care** | Real tenant names, phone numbers, emails; rent, balances, lease dates — **only on a device you control** (screen lock, disk encryption, not a shared computer) |
+| ⛔ **Don't enter without extra protection** | Social Security / passport / driver's-license numbers; bank or card numbers and payment credentials; credit, background, or screening reports; medical or other regulated records; the documents themselves (paste a link instead) |
+
+**Every export is another copy.** JSON, CSV, and handbook files, automatic backups (the last 5 are kept in the browser), Copy State, and a Team Sync workspace each hold your data in the clear. Before an export that includes tenant records (JSON, tenants/work-orders CSV, handbook, Copy State) the app asks for confirmation once per session, and every export reminds you what the file is.
+
+PM Ops Map is an operating *map*, not a system of record: portfolio and payment fields are context for ownership and workload, not a ledger, and the project does not aim to handle payment processing, document storage, or regulated records.
 
 ## Resetting and deleting your data
 
@@ -387,6 +405,7 @@ pm-ops-map/
 │   ├── handbook.js         Markdown + HTML operations handbook generator
 │   ├── stateSchema.js      Versioned JSON export/import schema and validation
 │   ├── normalize.js        Boundary sanitizers for imports, sync, backups, and storage loads
+│   ├── privacy.js          Data-handling guidance, Data & Privacy dialog, export confirmations
 │   ├── templates.js        Role templates, SOP templates, demo workspace data
 │   ├── utils.js            Pure utility functions
 │   ├── views/

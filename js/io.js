@@ -11,6 +11,7 @@ import {
 import { escapeHtml, isValidISODate, _downloadBlob, toCSV, MAX_IMPORT_BYTES } from './utils.js';
 import { buildStatePayload, validateImportedState, formatImportReport } from './stateSchema.js';
 import { applySavedTasks, sanitizeWorkspace } from './normalize.js';
+import { confirmSensitiveExport, announceExport } from './privacy.js';
 import { updateStats } from './ui.js';
 import { renderTrackingView, populateOwnerFilter } from './views/tracking.js';
 import { renderMapControls, renderFlowMap } from './views/map.js';
@@ -94,6 +95,7 @@ export function _applyImportedState(data) {
 
 // ── Export ────────────────────────────────────────────────────────────────────
 export function exportJSON() {
+  if (!confirmSensitiveExport('This JSON export')) return;
   const payload = buildStatePayload({
     company:    getCompanyName(),
     departments: orgData.departments,
@@ -101,11 +103,9 @@ export function exportJSON() {
     workOrders: workOrders,
     portfolio:  portfolio
   });
-  _downloadBlob(
-    JSON.stringify(payload, null, 2),
-    'application/json',
-    `pm-ops-${_fileSlug()}.json`
-  );
+  const filename = `pm-ops-${_fileSlug()}.json`;
+  _downloadBlob(JSON.stringify(payload, null, 2), 'application/json', filename);
+  announceExport(filename);
 }
 
 export function exportCSV() {
@@ -141,6 +141,7 @@ export function exportPropertiesCSV() {
 }
 
 export function exportTenantsCSV() {
+  if (!confirmSensitiveExport('The tenants CSV')) return;
   const rows = [[
     'Tenant', 'Property', 'Unit', 'Status', 'Phone', 'Email',
     'Monthly Rent', 'Lease Start', 'Lease End', 'Balance Due', 'Document Link', 'Created At',
@@ -180,6 +181,7 @@ export function exportVendorsCSV() {
 }
 
 export function exportWorkOrdersCSV() {
+  if (!confirmSensitiveExport('The work orders CSV')) return;
   const rows = [[
     'Property', 'Unit', 'Tenant', 'Issue', 'Status', 'Priority', 'Assignee',
     'Vendor', 'Target Date', 'Estimated Cost', 'Notes', 'Created At', 'Updated At'
@@ -212,6 +214,7 @@ function getPortfolioPropertyName(propertyId) {
 function downloadCSV(rows, filename) {
   // toCSV quotes every cell and neutralizes spreadsheet formulas (see utils.js).
   _downloadBlob(toCSV(rows), 'text/csv', filename);
+  announceExport(filename);
 }
 
 // ── Import ────────────────────────────────────────────────────────────────────
@@ -240,6 +243,7 @@ export function importJSON(inputEl) {
 
 // ── Clipboard sync ────────────────────────────────────────────────────────────
 export function copyStateToClipboard() {
+  if (!confirmSensitiveExport('Copying your workspace')) return;
   const payload = JSON.stringify(buildStatePayload({
     company:    getCompanyName(),
     departments: orgData.departments,
@@ -253,7 +257,7 @@ export function copyStateToClipboard() {
     return;
   }
   navigator.clipboard.writeText(payload)
-    .then(() => _showActionToast('✓ State copied — paste on another device', 'save-toast--success'))
+    .then(() => _showActionToast('✓ State copied — paste on another device. It is unencrypted and may stay in clipboard history.', 'save-toast--success', 6000))
     .catch(() => _showActionToast('⚠ Clipboard access denied', 'save-toast--error'));
 }
 
@@ -333,6 +337,9 @@ function buildImportReviewHTML(report, source) {
   return `
     <p class="import-review-note">
       ${{ clipboard: 'Clipboard state', sync: 'Your team sync server' }[source] || 'JSON file'} will replace matching task assignments, statuses, due dates, dependencies, notes, custom fields, team data, work orders, and portfolio data on this device.
+    </p>
+    <p class="import-review-note">
+      Only import files from sources you trust. A backup of your current workspace is saved automatically first, and you can undo with Ctrl+Z.
     </p>
     <div class="import-review-summary">
       ${buildImportMetric('Schema', String(report.schemaVersion))}

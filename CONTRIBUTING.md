@@ -68,6 +68,7 @@ pm-ops-map/
 │   ├── launchPlan.js   Beginner setup dashboard and readiness checks
 │   ├── handbook.js     Markdown handbook export
 │   ├── normalize.js    Sanitizers for every path that loads outside data
+│   ├── privacy.js      Data-handling guidance and export confirmations
 │   ├── views/          Tracking, map, team, portfolio, and work order screens
 │   └── __tests__/      Vitest unit tests — they import the shipped ES modules directly
 ├── e2e/                Playwright browser tests (security regression suite)
@@ -92,6 +93,7 @@ PM Ops Map renders data it did not create — imported JSON, pasted clipboard te
 4. **Links:** only store and render `normalizeUrl(url)` (http/https only).
 5. **Anything that loads outside data goes through `js/normalize.js`** (`sanitizeWorkspace`, `applySavedTasks`, `normalizeAuditLog`, …). Don't assign imported objects straight into shared state.
 6. **Exported CSV cells** must go through the CSV helpers so spreadsheet formulas are neutralized.
+7. **Exports** should call `confirmSensitiveExport()` before writing a file that can contain tenant information and `announceExport()` afterwards (see `js/privacy.js`); don't add a new export path that skips them.
 
 `npm run test:e2e` runs a browser suite (`e2e/security-xss.spec.js`) that injects a canary payload into every importable field and fails if any view turns it into markup or script. If you add a field or a view, extend `e2e/helpers/security.js`.
 

@@ -10,8 +10,10 @@ import {
   buildEvilWorkspace, evil, prepare, importWorkspace, scan, call, poke, writeTemp,
 } from './helpers/security.js';
 
-async function loadEvilApp(page, testInfo) {
-  page.on('dialog', d => d.dismiss());
+// Most surfaces just need confirm() prompts out of the way. Exports of resident data now ask
+// for confirmation first, so the one test that downloads a file passes acceptDialogs.
+async function loadEvilApp(page, testInfo, { acceptDialogs = false } = {}) {
+  page.on('dialog', d => (acceptDialogs ? d.accept() : d.dismiss()));
   await prepare(page);
   await page.goto('/index.html');
   await page.waitForSelector('#departments .department');
@@ -124,7 +126,7 @@ test.describe('hostile import is inert', () => {
   });
 
   test('exported handbook HTML', async ({ page }, testInfo) => {
-    await loadEvilApp(page, testInfo);
+    await loadEvilApp(page, testInfo, { acceptDialogs: true });
     const [download] = await Promise.all([
       page.waitForEvent('download'),
       call(page, 'downloadOperationsHandbookHTML'),
