@@ -1,10 +1,12 @@
 import { normalizeSavedTask, sanitizeWorkspace } from './normalize.js';
+import { makeIssue, shorten } from './schema.js';
 import { findConfigTask } from './taskIdentity.js';
 
 // v3 added per-task notes and customFields. v4 adds each task's permanent `id` and a
 // `taskId` on dependencies; v2 and v3 files (no ids) still import by starter name.
 export const STATE_SCHEMA_VERSION = 4;
 export const STATE_SCHEMA_NAME = 'pm-ops-map-state';
+export const MAX_REVIEW_ISSUES = 100;
 
 export function buildStatePayload({
   company,
@@ -57,6 +59,10 @@ export function validateImportedState(data, orgData) {
     invalidTasks: 0,
     repairedRecords: 0,
     droppedRecords: 0,
+    // What will be repaired or skipped, field by field: [{ path, code, message }], capped at
+    // MAX_REVIEW_ISSUES; issueCount is the true total.
+    issues: [],
+    issueCount: 0,
     teamMembers: Array.isArray(data?.team?.employees) ? data.team.employees.length : 0,
     workOrders: Array.isArray(data?.workOrders) ? data.workOrders.length : 0,
     properties: Array.isArray(data?.portfolio?.properties) ? data.portfolio.properties.length : 0,
@@ -82,10 +88,17 @@ export function validateImportedState(data, orgData) {
     return report;
   }
 
-  data.departments.forEach(savedDept => {
-    const dept = orgData.departments.find(item => item.id === savedDept.id);
+  const allIssues = [];
+  data.departments.forEach((savedDept, deptIndex) => {
+    const deptPath = `departments[${deptIndex}]`;
+    const dept = orgData.departments.find(item => item.id === savedDept?.id);
     if (!dept) {
       report.skippedDepartments++;
+      const taskCount = Array.isArray(savedDept?.tasks) ? savedDept.tasks.length : 0;
+      allIssues.push(makeIssue({
+        path: deptPath, label: `Department ${shorten(savedDept?.id)}`, code: 'unknown_department',
+        detail: `is not in this version of the app, so ${taskCount} task${taskCount === 1 ? '' : 's'} will be skipped.`,
+      }));
       return;
     }
     report.matchedDepartments++;
@@ -93,8 +106,11 @@ export function validateImportedState(data, orgData) {
       report.warnings.push(`Department "${savedDept.id}" has no task array.`);
       return;
     }
-    savedDept.tasks.forEach(savedTask => {
-      if (!normalizeSavedTask(savedTask)) {
+    savedDept.tasks.forEach((savedTask, taskIndex) => {
+      const path = `${deptPath}.tasks[${taskIndex}]`;
+      const taskName = savedTask && typeof savedTask === 'object' ? savedTask.name : '';
+      const label = taskName ? `Task ${shorten(taskName)} in ${dept.name}` : `Task ${taskIndex + 1} in ${dept.name}`;
+      if (!normalizeSavedTask(savedTask, { issues: allIssues, path, label })) {
         report.invalidTasks++;
         return;
       }
@@ -102,6 +118,7 @@ export function validateImportedState(data, orgData) {
       const task = findConfigTask(orgData.departments, savedTask, { deptId: dept.id });
       if (!task) {
         report.skippedTasks++;
+        allIssues.push(makeIssue({ path, label, code: 'no_match', detail: 'has no matching task in this version of the app, so it is skipped.' }));
         return;
       }
       report.matchedTasks++;
@@ -118,6 +135,9 @@ export function validateImportedState(data, orgData) {
     report.repairedRecords += stat.repaired;
     report.droppedRecords += stat.dropped;
   });
+  allIssues.push(...clean.errors);
+  report.issueCount = allIssues.length + clean.omitted;
+  report.issues = allIssues.slice(0, MAX_REVIEW_ISSUES).map(({ path, code, message }) => ({ path, code, message }));
   if (report.invalidTasks) {
     report.warnings.push(`${report.invalidTasks} task row${report.invalidTasks === 1 ? ' is' : 's are'} missing a name or owner and will be ignored.`);
   }
@@ -159,6 +179,11 @@ export function formatImportReport(report) {
   }
   if (report.errors.length) {
     lines.push('', 'Errors:', ...report.errors.map(item => `- ${item}`));
+  }
+  if (report.issues?.length) {
+    lines.push('', 'What will be repaired or skipped:', ...report.issues.map(item => `- ${item.message}`));
+    const more = report.issueCount - report.issues.length;
+    if (more > 0) lines.push(`- ...and ${more} more.`);
   }
   return lines.join('\n');
 }
