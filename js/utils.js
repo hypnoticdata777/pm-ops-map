@@ -137,6 +137,11 @@ function getDelinquencyStatus(tenant) {
 // returned, so quotes, spaces and angle brackets come back percent-encoded.
 // Store and render this value, not the raw user input.
 const MAX_URL_LENGTH = 2048;
+
+// Largest file the app will read for import. localStorage holds about 5 MB per
+// origin, so anything bigger could not be stored anyway — and reading a huge
+// file into memory would just freeze the tab.
+const MAX_IMPORT_BYTES = 5 * 1024 * 1024;
 function normalizeUrl(url) {
   if (typeof url !== 'string') return '';
   const trimmed = url.trim();
@@ -190,6 +195,35 @@ function parseCSV(text) {
   return rows;
 }
 
+// ── CSV writing ──────────────────────────────────────────────────────────────
+// Spreadsheet apps treat a cell that BEGINS with = + - @ (or a tab / carriage
+// return) as a formula, so a value like =HYPERLINK("http://evil","click") or
+// +cmd|' /C calc'!A0 in an exported file would run when someone opens it in
+// Excel or Sheets ("CSV injection"). Text cells that start that way get a
+// leading apostrophe, which spreadsheets show as plain text. Real numbers are
+// never prefixed — they cannot be formulas, and negatives must stay numeric.
+// A run of apostrophes before the trigger counts too, so the guard is exactly reversible.
+const CSV_FORMULA_TRIGGER = /^'*[=+\-@\t\r]/;
+const CSV_GUARDED = /^'+[=+\-@\t\r]/;
+
+// Encodes one cell as a quoted CSV field.
+function csvCell(value) {
+  let text = value == null ? '' : String(value);
+  if (typeof value === 'string' && CSV_FORMULA_TRIGGER.test(text)) text = `'${text}`;
+  return `"${text.replace(/"/g, '""')}"`;
+}
+
+// Builds a full CSV document (CRLF line endings) from an array of row arrays.
+function toCSV(rows) {
+  return rows.map(row => row.map(csvCell).join(',')).join('\r\n');
+}
+
+// Reverses the guard added by csvCell so export -> edit -> re-import is lossless
+// (e.g. a phone number "+1 555 0100" comes back without the apostrophe).
+function unguardCsvCell(text) {
+  return typeof text === 'string' && CSV_GUARDED.test(text) ? text.slice(1) : text;
+}
+
 // Builds a case-insensitive header-name -> column-index map, e.g. for
 // matching a CSV's own column order against expected field names.
 function buildCsvHeaderMap(headerRow) {
@@ -217,8 +251,12 @@ export {
   formatCurrency,
   getLeaseStatus,
   getDelinquencyStatus,
+  MAX_IMPORT_BYTES,
   normalizeUrl,
   isSafeUrl,
   parseCSV,
+  csvCell,
+  toCSV,
+  unguardCsvCell,
   buildCsvHeaderMap,
 };

@@ -247,6 +247,8 @@ The launch dashboard also runs four data-quality checks (missing owner, missing 
 
 **Bulk import from CSV.** Already tracking properties, tenants, or vendors in a spreadsheet? Click **Import CSV** next to any of the three Portfolio forms to add them all at once instead of typing each one in — no need to change your existing sheet's column order, just the column names need to roughly match. Column headers match what **Export CSV** produces for that same record type, so exporting, editing in Excel/Sheets, and re-importing is a real round trip. Import always adds new records; it never edits or removes existing ones, and shows a summary of skipped/warned rows before anything is saved.
 
+**Spreadsheet safety.** Exported text cells that begin with `=`, `+`, `-`, or `@` get a leading apostrophe, so Excel and Google Sheets display them as text instead of running them as formulas ("CSV injection"). The importer removes that apostrophe again, so exporting, editing, and re-importing stays lossless. Imported rows go through the same validation as every other data source, and files over 5 MB are refused.
+
 ---
 
 ### Operations Handbook Export

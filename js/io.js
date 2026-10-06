@@ -8,7 +8,7 @@ import {
   getCompanyName, applyCompanyName, COMPANY_KEY,
   _showActionToast, _fileSlug, saveBackupSnapshot,
 } from './storage.js';
-import { escapeHtml, isValidISODate, _downloadBlob } from './utils.js';
+import { escapeHtml, isValidISODate, _downloadBlob, toCSV, MAX_IMPORT_BYTES } from './utils.js';
 import { buildStatePayload, validateImportedState, formatImportReport } from './stateSchema.js';
 import { applySavedTasks, sanitizeWorkspace } from './normalize.js';
 import { updateStats } from './ui.js';
@@ -219,16 +219,19 @@ function getPortfolioPropertyName(propertyId) {
 }
 
 function downloadCSV(rows, filename) {
-  const csv = rows.map(row =>
-    row.map(cell => `"${String(cell ?? '').replace(/"/g, '""')}"`).join(',')
-  ).join('\r\n');
-  _downloadBlob(csv, 'text/csv', filename);
+  // toCSV quotes every cell and neutralizes spreadsheet formulas (see utils.js).
+  _downloadBlob(toCSV(rows), 'text/csv', filename);
 }
 
 // ── Import ────────────────────────────────────────────────────────────────────
 export function importJSON(inputEl) {
   const file = inputEl.files[0];
   if (!file) return;
+  if (file.size > MAX_IMPORT_BYTES) {
+    alert(`Import failed: that file is too large (${(file.size / 1048576).toFixed(1)} MB). The limit is ${MAX_IMPORT_BYTES / 1048576} MB.`);
+    inputEl.value = '';
+    return;
+  }
   const reader = new FileReader();
   reader.onload = (ev) => {
     try {

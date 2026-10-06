@@ -451,3 +451,76 @@ describe('isTaskOverdue (integration)', () => {
     expect(utils.isTaskOverdue(task)).toBe(false);
   });
 });
+
+describe('csvCell / toCSV — spreadsheet formula injection guard', () => {
+  test.each(['=1+1', '+1 555 0100', '-2+3', '@SUM(A1:A2)', '\t=1+1', '\r=1+1', '=HYPERLINK("http://evil.test","click")', "+cmd|' /C calc'!A0"])(
+    'text starting with a formula trigger gets a leading apostrophe: %j', value => {
+      const cell = utils.csvCell(value);
+      expect(cell.startsWith('"\'')).toBe(true);
+      expect(cell).not.toMatch(/^"[=+\-@\t\r]/);
+    });
+
+  test('ordinary text is only quoted', () => {
+    expect(utils.csvCell('Maple Street')).toBe('"Maple Street"');
+    expect(utils.csvCell('2026-10-06')).toBe('"2026-10-06"');
+    expect(utils.csvCell('Tom - Jerry = friends')).toBe('"Tom - Jerry = friends"');
+  });
+
+  test('numbers are never prefixed (they cannot be formulas; negatives stay numeric)', () => {
+    expect(utils.csvCell(1450)).toBe('"1450"');
+    expect(utils.csvCell(-5)).toBe('"-5"');
+    expect(utils.csvCell(0)).toBe('"0"');
+  });
+
+  test('null / undefined become empty cells', () => {
+    expect(utils.csvCell(null)).toBe('""');
+    expect(utils.csvCell(undefined)).toBe('""');
+  });
+
+  test('embedded quotes are doubled', () => {
+    expect(utils.csvCell('say "hi"')).toBe('"say ""hi"""');
+    expect(utils.csvCell('=A1&"x"')).toBe('"\'=A1&""x"""');
+  });
+
+  test('toCSV joins rows with CRLF and cells with commas', () => {
+    expect(utils.toCSV([['a', 'b'], ['=x', 1]])).toBe('"a","b"\r\n"\'=x","1"');
+    expect(utils.toCSV([])).toBe('');
+  });
+
+  test('no cell of a generated document starts with a trigger once parsed back', () => {
+    const rows = [['Name', 'Phone'], ['=1+1', '+1 555'], ['@x', '-1'], ['ok', '\t=1']];
+    utils.parseCSV(utils.toCSV(rows)).forEach(row => row.forEach(cell => {
+      expect(cell).not.toMatch(/^[=+\-@\t\r]/);
+    }));
+  });
+});
+
+describe('unguardCsvCell and the export -> import round trip', () => {
+  test('removes only the guard apostrophe', () => {
+    expect(utils.unguardCsvCell("'=1+1")).toBe('=1+1');
+    expect(utils.unguardCsvCell("'+1 555")).toBe('+1 555');
+    expect(utils.unguardCsvCell("'@x")).toBe('@x');
+    expect(utils.unguardCsvCell("'hello")).toBe("'hello");
+    expect(utils.unguardCsvCell("''=1+1")).toBe("'=1+1");
+    expect(utils.unguardCsvCell("O'Brien")).toBe("O'Brien");
+    expect(utils.unguardCsvCell('=1+1')).toBe('=1+1');
+    expect(utils.unguardCsvCell('')).toBe('');
+  });
+
+  test('every tricky value survives toCSV -> parseCSV -> unguard unchanged', () => {
+    const values = [
+      '=1+1', '+1 (555) 010-1188', '-dash', '@handle', '=HYPERLINK("http://evil.test","x")', 'plain',
+      'with, comma', 'with "quotes"', 'multi\nline', "it's", "'already quoted", '  padded  ',
+      "'=literal apostrophe then equals", "''+two apostrophes",
+    ];
+    const csv = utils.toCSV([['v'], ...values.map(v => [v])]);
+    const back = utils.parseCSV(csv).slice(1).map(r => utils.unguardCsvCell(r[0]));
+    expect(back).toEqual(values);
+  });
+});
+
+describe('MAX_IMPORT_BYTES', () => {
+  test('is 5 MB — about what localStorage can hold', () => {
+    expect(utils.MAX_IMPORT_BYTES).toBe(5 * 1024 * 1024);
+  });
+});

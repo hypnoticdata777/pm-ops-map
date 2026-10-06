@@ -2,8 +2,9 @@ import { portfolio, setPortfolio, workOrders } from '../state.js';
 import { savePortfolio, saveWorkOrders, logAudit, _showActionToast, saveBackupSnapshot } from '../storage.js';
 import {
   escapeHtml, shakeInput, isValidISODate, formatCurrency, getLeaseStatus, getDelinquencyStatus, isSafeUrl, normalizeUrl,
-  parseCSV, buildCsvHeaderMap,
+  parseCSV, buildCsvHeaderMap, unguardCsvCell, MAX_IMPORT_BYTES,
 } from '../utils.js';
+import { normalizePortfolio } from '../normalize.js';
 import { renderLaunchPlan } from '../launchPlan.js';
 
 const editState = {
@@ -359,6 +360,10 @@ function _readCsvFile(inputEl) {
   return new Promise((resolve, reject) => {
     const file = inputEl.files[0];
     if (!file) { resolve(null); return; }
+    if (file.size > MAX_IMPORT_BYTES) {
+      reject(new Error(`That file is too large (${(file.size / 1048576).toFixed(1)} MB). The limit is ${MAX_IMPORT_BYTES / 1048576} MB.`));
+      return;
+    }
     const reader = new FileReader();
     reader.onload = ev => resolve(ev.target.result);
     reader.onerror = () => reject(new Error('Could not read the file.'));
@@ -380,7 +385,9 @@ async function _importPortfolioCSV(inputEl, { label, pluralLabel = `${label}s`, 
   inputEl.value = '';
   if (!text) return null;
 
-  const allRows = parseCSV(text);
+  // Undo the apostrophe our own export adds in front of =,+,-,@ cells so
+  // export -> edit -> re-import is lossless.
+  const allRows = parseCSV(text).map(row => row.map(unguardCsvCell));
   if (allRows.length < 2) {
     alert(`That file doesn't look like a ${label} CSV — no data rows found.`);
     return null;
@@ -448,14 +455,15 @@ export async function importPropertiesCSV(inputEl) {
     },
   });
   if (!records) return;
+  const clean = normalizePortfolio({ properties: records }).portfolio.properties;
 
   saveBackupSnapshot('Before CSV import');
-  portfolio.properties.unshift(...records);
+  portfolio.properties.unshift(...clean);
   savePortfolio();
-  logAudit('portfolio_property_added', { title: `${records.length} imported from CSV` });
+  logAudit('portfolio_property_added', { title: `${clean.length} imported from CSV` });
   renderPortfolioView();
   renderLaunchPlan();
-  _showActionToast(`✓ Imported ${records.length} propert${records.length === 1 ? 'y' : 'ies'}`, 'save-toast--success');
+  _showActionToast(`✓ Imported ${clean.length} propert${clean.length === 1 ? 'y' : 'ies'}`, 'save-toast--success');
 }
 
 export async function importTenantsCSV(inputEl) {
@@ -506,14 +514,16 @@ export async function importTenantsCSV(inputEl) {
     },
   });
   if (!records) return;
+  // Existing properties are passed along so a tenant's propertyId survives its cross-reference check.
+  const clean = normalizePortfolio({ properties: portfolio.properties, tenants: records }).portfolio.tenants;
 
   saveBackupSnapshot('Before CSV import');
-  portfolio.tenants.unshift(...records);
+  portfolio.tenants.unshift(...clean);
   savePortfolio();
-  logAudit('portfolio_tenant_added', { title: `${records.length} imported from CSV` });
+  logAudit('portfolio_tenant_added', { title: `${clean.length} imported from CSV` });
   renderPortfolioView();
   renderLaunchPlan();
-  _showActionToast(`✓ Imported ${records.length} tenant${records.length === 1 ? '' : 's'}`, 'save-toast--success');
+  _showActionToast(`✓ Imported ${clean.length} tenant${clean.length === 1 ? '' : 's'}`, 'save-toast--success');
 }
 
 export async function importVendorsCSV(inputEl) {
@@ -539,14 +549,15 @@ export async function importVendorsCSV(inputEl) {
     },
   });
   if (!records) return;
+  const clean = normalizePortfolio({ vendors: records }).portfolio.vendors;
 
   saveBackupSnapshot('Before CSV import');
-  portfolio.vendors.unshift(...records);
+  portfolio.vendors.unshift(...clean);
   savePortfolio();
-  logAudit('portfolio_vendor_added', { title: `${records.length} imported from CSV` });
+  logAudit('portfolio_vendor_added', { title: `${clean.length} imported from CSV` });
   renderPortfolioView();
   renderLaunchPlan();
-  _showActionToast(`✓ Imported ${records.length} vendor${records.length === 1 ? '' : 's'}`, 'save-toast--success');
+  _showActionToast(`✓ Imported ${clean.length} vendor${clean.length === 1 ? '' : 's'}`, 'save-toast--success');
 }
 
 export function commitAddProperty() {
