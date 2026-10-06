@@ -4,13 +4,13 @@
 // here is additive and opt-in.
 import { orgData, teamData, workOrders, portfolio } from './state.js';
 import {
-  getCompanyName, saveBackupSnapshot, logAudit, _showActionToast,
+  getCompanyName, saveBackupSnapshot, logAudit, _showActionToast, RESET_EVENT, SYNC_CONFIG_KEY,
 } from './storage.js';
 import { buildStatePayload, validateImportedState, formatImportReport } from './stateSchema.js';
 import { openImportReview, _applyImportedState, _saveUndoSnapshot } from './io.js';
 import { escapeHtml } from './utils.js';
+import { DEMO_MODE } from './demoMode.js';
 
-const SYNC_CONFIG_KEY = 'pm-ops-sync-config-v1';
 const POLL_INTERVAL_MS = 8000;
 const SLUG_RE = /^[a-z0-9][a-z0-9-]{1,38}[a-z0-9]$/;
 
@@ -33,6 +33,16 @@ function normalizeServerUrl(url) {
   return (url || '').trim().replace(/\/+$/, '');
 }
 
+// A plain http:// address to anything other than this machine would send the
+// passphrase and the whole workspace across the network unencrypted.
+export function isInsecureSyncUrl(url) {
+  let parsed;
+  try { parsed = new URL(url); } catch (_) { return false; }
+  if (parsed.protocol !== 'http:') return false;
+  const host = parsed.hostname;
+  return !(host === 'localhost' || host.endsWith('.localhost') || host === '127.0.0.1' || host === '[::1]');
+}
+
 function loadSyncConfig() {
   try {
     const raw = localStorage.getItem(SYNC_CONFIG_KEY);
@@ -43,6 +53,7 @@ function loadSyncConfig() {
 }
 
 function saveSyncConfig() {
+  if (!sync.connected) return; // never re-create the saved connection after a reset/disconnect
   try {
     localStorage.setItem(SYNC_CONFIG_KEY, JSON.stringify({
       serverUrl: sync.serverUrl,
@@ -98,6 +109,7 @@ async function apiCall(path, body, baseUrl = sync.serverUrl) {
 // ── Public: connect / disconnect ──────────────────────────────────────────────
 
 export function initSync() {
+  if (DEMO_MODE) return; // the public demo must never be pointed at a sync server
   const saved = loadSyncConfig();
   if (!saved?.serverUrl || !saved?.workspace || !saved?.passphrase) return;
   Object.assign(sync, {
@@ -113,7 +125,7 @@ export function initSync() {
 
 export function openSyncModal() {
   const modal = document.getElementById('sync-modal');
-  if (!modal) return;
+  if (!modal || DEMO_MODE) return;
   document.getElementById('sync-server-url').value = sync.serverUrl || 'http://localhost:4000';
   document.getElementById('sync-workspace').value = sync.workspace || '';
   document.getElementById('sync-passphrase').value = sync.passphrase || '';
@@ -126,6 +138,7 @@ export function closeSyncModal() {
 }
 
 export async function connectSync() {
+  if (DEMO_MODE) return;
   const serverUrl = normalizeServerUrl(document.getElementById('sync-server-url')?.value);
   const workspace = (document.getElementById('sync-workspace')?.value || '').trim().toLowerCase();
   const passphrase = document.getElementById('sync-passphrase')?.value || '';
@@ -133,6 +146,11 @@ export async function connectSync() {
   if (!serverUrl) return alert('Enter your sync server URL.');
   if (!SLUG_RE.test(workspace)) return alert('Workspace name must be 2-40 lowercase letters, numbers, or hyphens.');
   if (passphrase.length < 4) return alert('Passphrase must be at least 4 characters.');
+  if (isInsecureSyncUrl(serverUrl) && !confirm(
+    'This server address starts with http://, not https://.\n\n' +
+    'Your passphrase and your entire workspace would cross the network unencrypted, where anyone on that network can read them.\n\n' +
+    'Connect anyway?',
+  )) return;
 
   // Deliberately not touching `sync` yet: if this device is already connected
   // elsewhere, the background loop keeps syncing that workspace safely while
@@ -229,6 +247,13 @@ function stopAutoSync() {
   if (sync.timer) clearInterval(sync.timer);
   sync.timer = null;
 }
+
+// A local reset removes the saved connection (including the passphrase). Stop
+// syncing first so an in-flight tick cannot write it back before the reload.
+window.addEventListener(RESET_EVENT, () => {
+  stopAutoSync();
+  Object.assign(sync, { connected: false, passphrase: '' });
+});
 
 async function runSyncTick(manual) {
   // PROJECT BEACON: This comparison is the sync decision point—dirty clients
@@ -358,7 +383,7 @@ export function renderSyncStatus() {
   const pill = document.getElementById('sync-status-pill');
   if (!pill) return;
   if (!sync.connected) {
-    pill.innerHTML = '&#8635; Team Sync';
+    pill.innerHTML = '&#8635; Team Sync <small>beta</small>';
     pill.className = 'btn btn-secondary';
     return;
   }

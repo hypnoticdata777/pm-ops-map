@@ -4,10 +4,11 @@ import {
   buildWorkloadMap, countUnowned,
 } from './state.js';
 import {
-  getCompanyName, getOpsProfile, _fileSlug, _showActionToast,
+  getCompanyName, getOpsProfile, _fileSlug,
 } from './storage.js';
 import { _downloadBlob, isTaskOverdue } from './utils.js';
 import { SOP_TEMPLATES } from './templates.js';
+import { confirmSensitiveExport, announceExport } from './privacy.js';
 
 // Maintainer note:
 // This module is read-only against app state. It generates the Markdown
@@ -47,23 +48,24 @@ const SEVEN_DAY_PLAN = [
 ];
 
 export function downloadOperationsHandbook() {
-  _downloadBlob(
-    buildOperationsHandbookMarkdown(),
-    'text/markdown',
-    `pm-ops-${_fileSlug()}-operations-handbook.md`
-  );
-  _showActionToast('Operations handbook downloaded', 'save-toast--success');
+  if (!confirmSensitiveExport('The handbook')) return;
+  const filename = `pm-ops-${_fileSlug()}-operations-handbook.md`;
+  _downloadBlob(buildOperationsHandbookMarkdown(), 'text/markdown', filename);
+  announceExport(filename);
 }
 
 export function downloadOperationsHandbookHTML() {
+  if (!confirmSensitiveExport('The handbook')) return;
   const company  = getCompanyName();
   const markdown = buildOperationsHandbookMarkdown();
   const html     = markdownToPrintHtml(markdown, `${company} Operations Handbook`);
-  _downloadBlob(html, 'text/html', `pm-ops-${_fileSlug()}-operations-handbook.html`);
-  _showActionToast('HTML handbook downloaded', 'save-toast--success');
+  const filename = `pm-ops-${_fileSlug()}-operations-handbook.html`;
+  _downloadBlob(html, 'text/html', filename);
+  announceExport(filename);
 }
 
 export function printOperationsHandbook() {
+  if (!confirmSensitiveExport('The printed handbook')) return;
   const markdown = buildOperationsHandbookMarkdown();
   const html = markdownToPrintHtml(markdown, `${getCompanyName()} Operations Handbook`);
   const win = window.open('', '_blank');

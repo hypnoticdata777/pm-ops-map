@@ -1,4 +1,7 @@
-export const STATE_SCHEMA_VERSION = 2;
+import { normalizeSavedTask, sanitizeWorkspace } from './normalize.js';
+
+// v3 adds per-task notes and customFields to the portable payload (v2 files still import).
+export const STATE_SCHEMA_VERSION = 3;
 export const STATE_SCHEMA_NAME = 'pm-ops-map-state';
 
 export function buildStatePayload({
@@ -26,6 +29,8 @@ export function buildStatePayload({
         priority: task.priority || 'medium',
         dueDate: task.dueDate || null,
         blockedBy: task.blockedBy || null,
+        notes: task.notes || null,
+        customFields: task.customFields ? { ...task.customFields } : null,
       })),
     })),
     team,
@@ -46,6 +51,9 @@ export function validateImportedState(data, orgData) {
     skippedDepartments: 0,
     skippedTasks: 0,
     invalidDueDates: 0,
+    invalidTasks: 0,
+    repairedRecords: 0,
+    droppedRecords: 0,
     teamMembers: Array.isArray(data?.team?.employees) ? data.team.employees.length : 0,
     workOrders: Array.isArray(data?.workOrders) ? data.workOrders.length : 0,
     properties: Array.isArray(data?.portfolio?.properties) ? data.portfolio.properties.length : 0,
@@ -83,6 +91,10 @@ export function validateImportedState(data, orgData) {
       return;
     }
     savedDept.tasks.forEach(savedTask => {
+      if (!normalizeSavedTask(savedTask)) {
+        report.invalidTasks++;
+        return;
+      }
       const key = savedTask?._configName || savedTask?.name;
       const task = dept.tasks.find(item => item._configName === key || item.name === key);
       if (!task) {
@@ -95,6 +107,23 @@ export function validateImportedState(data, orgData) {
       }
     });
   });
+
+  // Dry-run the same sanitizer the import will use, so the review screen can say
+  // exactly how much of the file is unusable BEFORE anything is applied.
+  const clean = sanitizeWorkspace(data, { knownDeptIds: orgData.departments.map(d => d.id) });
+  Object.values(clean.stats).forEach(stat => {
+    report.repairedRecords += stat.repaired;
+    report.droppedRecords += stat.dropped;
+  });
+  if (report.invalidTasks) {
+    report.warnings.push(`${report.invalidTasks} task row${report.invalidTasks === 1 ? ' is' : 's are'} missing a name or owner and will be ignored.`);
+  }
+  if (report.droppedRecords) {
+    report.warnings.push(`${report.droppedRecords} team, work order, or portfolio record${report.droppedRecords === 1 ? ' is' : 's are'} unusable (missing a required name/title, duplicated, or over the size limit) and will be skipped.`);
+  }
+  if (report.repairedRecords) {
+    report.warnings.push(`${report.repairedRecords} record${report.repairedRecords === 1 ? ' has' : 's have'} values that are not allowed (unknown status/priority/color, bad dates or numbers, unsafe links or ids) — those fields will be reset to safe defaults.`);
+  }
 
   if (report.invalidDueDates) {
     report.warnings.push(`${report.invalidDueDates} invalid due date value${report.invalidDueDates === 1 ? '' : 's'} will be cleared.`);

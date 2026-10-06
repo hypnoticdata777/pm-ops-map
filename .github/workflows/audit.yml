@@ -1,0 +1,28 @@
+name: Dependency audit
+
+# CI audits on every push, but an advisory published AFTER a merge only turns a
+# gate red on the next push. This runs weekly (and on demand) so new advisories in
+# production dependencies surface on their own.
+on:
+  schedule:
+    - cron: '23 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        dir: ['.', 'server']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      # --package-lock-only audits exactly what the lockfile pins, no install needed.
+      - run: npm audit --package-lock-only --omit=dev --audit-level=moderate
+        working-directory: ${{ matrix.dir }}

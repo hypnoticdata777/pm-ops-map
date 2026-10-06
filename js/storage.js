@@ -6,21 +6,26 @@ import {
   STATUS_CYCLE, PRIORITY_CYCLE,
 } from './state.js';
 import { _isQuotaError, _slugify } from './utils.js';
+import { namespacedKey } from './demoMode.js';
+import {
+  applySavedTasks, normalizeTeam, normalizeWorkOrders, normalizePortfolio,
+  normalizeAuditLog, sanitizeWorkspace,
+} from './normalize.js';
 
 // ── Storage keys ──────────────────────────────────────────────────────────────
-export const STORAGE_KEY     = 'pm-ops-data-v1';
-export const COMPANY_KEY     = 'pm-ops-company-name';
-export const OPS_PROFILE_KEY = 'pm-ops-profile-v1';
-export const NAV_COMPACT_KEY = 'pm-ops-nav-compact';
-export const TEAM_KEY        = 'pm-ops-team-v1';
-export const WORKORDERS_KEY  = 'pm-ops-workorders-v1';
-export const PORTFOLIO_KEY   = 'pm-ops-portfolio-v1';
-export const AUDIT_KEY       = 'pm-ops-audit-v1';
-export const GUIDE_KEY       = 'pm-ops-guide-dismissed';
-export const NOTIF_DATE_KEY  = 'pm-ops-notif-date';
-export const LAUNCH_CHECKLIST_KEY = 'pm-ops-launch-checklist-v1';
-export const BACKUP_KEY           = 'pm-ops-backups-v1';
-export const SYNC_CONFIG_KEY      = 'pm-ops-sync-config-v1'; // must match js/sync.js's SYNC_CONFIG_KEY
+export const STORAGE_KEY     = namespacedKey('pm-ops-data-v1');
+export const COMPANY_KEY     = namespacedKey('pm-ops-company-name');
+export const OPS_PROFILE_KEY = namespacedKey('pm-ops-profile-v1');
+export const NAV_COMPACT_KEY = namespacedKey('pm-ops-nav-compact');
+export const TEAM_KEY        = namespacedKey('pm-ops-team-v1');
+export const WORKORDERS_KEY  = namespacedKey('pm-ops-workorders-v1');
+export const PORTFOLIO_KEY   = namespacedKey('pm-ops-portfolio-v1');
+export const AUDIT_KEY       = namespacedKey('pm-ops-audit-v1');
+export const GUIDE_KEY       = namespacedKey('pm-ops-guide-dismissed');
+export const NOTIF_DATE_KEY  = namespacedKey('pm-ops-notif-date');
+export const LAUNCH_CHECKLIST_KEY = namespacedKey('pm-ops-launch-checklist-v1');
+export const BACKUP_KEY           = namespacedKey('pm-ops-backups-v1');
+export const SYNC_CONFIG_KEY      = namespacedKey('pm-ops-sync-config-v1');
 const MAX_BACKUPS = 5;
 
 // ── Toast notifications ───────────────────────────────────────────────────────
@@ -80,38 +85,13 @@ export function saveToStorage() {
 export function loadFromStorage() {
   // PROJECT BEACON: Reconcile saved edits onto current config by _configName;
   // visible task names are user-editable and are not durable identity keys.
+  // Field-level validation lives in normalize.js (applySavedTasks).
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return;
     const saved = JSON.parse(raw);
     if (!Array.isArray(saved)) return;
-    saved.forEach(savedDept => {
-      if (!savedDept || typeof savedDept.id !== 'string') return;
-      const dept = orgData.departments.find(d => d.id === savedDept.id);
-      if (!dept || !Array.isArray(savedDept.tasks)) return;
-      savedDept.tasks.forEach((savedTask) => {
-        if (!savedTask || typeof savedTask.name !== 'string' || !savedTask.name.trim()) return;
-        if (typeof savedTask.owner !== 'string') return;
-        const key  = savedTask._configName || savedTask.name;
-        const task = dept.tasks.find(t => t._configName === key);
-        if (!task) return;
-        task.name  = savedTask.name.slice(0, 200);
-        task.owner = savedTask.owner;
-        if (savedTask.status   && STATUS_CYCLE.includes(savedTask.status))     task.status   = savedTask.status;
-        if (savedTask.priority && PRIORITY_CYCLE.includes(savedTask.priority)) task.priority = savedTask.priority;
-        if (savedTask.dueDate !== undefined) task.dueDate = savedTask.dueDate;
-        if (savedTask.blockedBy !== undefined) task.blockedBy = savedTask.blockedBy || null;
-        if (typeof savedTask.notes === 'string') task.notes = savedTask.notes.slice(0, 1000);
-        if (savedTask.customFields && typeof savedTask.customFields === 'object' && !Array.isArray(savedTask.customFields)) {
-          task.customFields = Object.fromEntries(
-            Object.entries(savedTask.customFields)
-              .filter(([k, v]) => typeof k === 'string' && typeof v === 'string')
-              .slice(0, 10)
-              .map(([k, v]) => [k.slice(0, 40), v.slice(0, 200)])
-          );
-        }
-      });
-    });
+    applySavedTasks(orgData.departments, saved);
   } catch (e) {
     console.error('Failed to parse saved task data — data preserved in storage:', e);
     _showActionToast('⚠ Could not load saved data — try exporting a backup', 'save-toast--error', 6000);
@@ -132,51 +112,60 @@ export function closeResetModal() {
   document.getElementById('reset-modal')?.classList.remove('visible');
 }
 
-export function confirmResetStorage(choice) {
-  const resetGroups = {
-    '1': {
-      label: 'task names, owners, statuses, due dates, and dependencies',
-      keys: [STORAGE_KEY],
-    },
-    '2': {
-      label: 'operating workspace data',
-      keys: [STORAGE_KEY, TEAM_KEY, WORKORDERS_KEY, PORTFOLIO_KEY, AUDIT_KEY, LAUNCH_CHECKLIST_KEY],
-    },
-    '3': {
-      label: 'company setup and preferences',
-      keys: [COMPANY_KEY, OPS_PROFILE_KEY, NAV_COMPACT_KEY, GUIDE_KEY, NOTIF_DATE_KEY, SYNC_CONFIG_KEY],
-    },
-    '4': {
-      label: 'all PM Ops Map data on this device',
-      keys: [
-        STORAGE_KEY,
-        COMPANY_KEY,
-        OPS_PROFILE_KEY,
-        NAV_COMPACT_KEY,
-        TEAM_KEY,
-        WORKORDERS_KEY,
-        PORTFOLIO_KEY,
-        AUDIT_KEY,
-        GUIDE_KEY,
-        NOTIF_DATE_KEY,
-        LAUNCH_CHECKLIST_KEY,
-        SYNC_CONFIG_KEY,
-      ],
-    },
-  };
+// Full-page reloads go through this object so tests can observe them (jsdom
+// cannot navigate, and window.location.reload is not mockable).
+export const pageControl = { reload: () => location.reload() };
 
-  const selected = resetGroups[choice.trim()];
+// Fired just before a local reset so other modules (Team Sync) stop writing to
+// localStorage while keys are being removed.
+export const RESET_EVENT = 'pm-ops-reset';
+
+// Every localStorage key the app writes. The "Everything" reset is derived from
+// this list, and a unit test checks that every exported *_KEY constant is in it,
+// so a newly added key cannot be forgotten and silently survive a reset.
+export const ALL_STORAGE_KEYS = [
+  STORAGE_KEY, COMPANY_KEY, OPS_PROFILE_KEY, NAV_COMPACT_KEY, TEAM_KEY, WORKORDERS_KEY,
+  PORTFOLIO_KEY, AUDIT_KEY, GUIDE_KEY, NOTIF_DATE_KEY, LAUNCH_CHECKLIST_KEY, BACKUP_KEY,
+  SYNC_CONFIG_KEY,
+];
+
+// Automatic backups are full copies of the workspace (tenant records included),
+// so any reset that claims to remove the workspace must remove them too.
+export const RESET_GROUPS = {
+  '1': {
+    label: 'task names, owners, statuses, due dates, dependencies, notes, and custom fields (automatic backups are kept)',
+    keys: [STORAGE_KEY],
+  },
+  '2': {
+    label: 'operating workspace data, including automatic backups',
+    keys: [STORAGE_KEY, TEAM_KEY, WORKORDERS_KEY, PORTFOLIO_KEY, AUDIT_KEY, LAUNCH_CHECKLIST_KEY, BACKUP_KEY],
+  },
+  '3': {
+    label: 'company setup and preferences, including the saved Team Sync connection',
+    keys: [COMPANY_KEY, OPS_PROFILE_KEY, NAV_COMPACT_KEY, GUIDE_KEY, NOTIF_DATE_KEY, SYNC_CONFIG_KEY],
+  },
+  '4': {
+    label: 'all PM Ops Map data on this device, including automatic backups and the saved Team Sync connection',
+    keys: ALL_STORAGE_KEYS,
+  },
+};
+
+export function confirmResetStorage(choice) {
+  const selected = RESET_GROUPS[String(choice).trim()];
   if (!selected) {
     alert('Reset canceled. Please choose 1, 2, 3, or 4.');
     return;
   }
-  if (!confirm(`Reset ${selected.label}?\n\nThis only affects local data stored in this browser.`)) return;
+  if (!confirm(`Reset ${selected.label}?\n\nThis only affects data stored in this browser. Files you exported earlier, and any copy on a Team Sync server, are not touched.`)) return;
   closeResetModal();
+  window.dispatchEvent(new Event(RESET_EVENT));
   selected.keys.forEach(key => localStorage.removeItem(key));
-  location.reload();
+  pageControl.reload();
 }
 
 // ── Team data persistence ─────────────────────────────────────────────────────
+const knownDeptIds = () => orgData?.departments?.map(d => d.id);
+
 export function seedDefaultTeam() {
   teamData.employees = Object.entries(ownerColors)
     .filter(([name]) => name !== 'UNOWNED')
@@ -205,7 +194,7 @@ export function loadTeamData() {
     }
     const parsed = JSON.parse(raw);
     if (parsed && Array.isArray(parsed.employees)) {
-      setTeamData(parsed);
+      setTeamData(normalizeTeam(parsed, { knownDeptIds: knownDeptIds() }).team);
     } else {
       seedDefaultTeam();
     }
@@ -226,7 +215,7 @@ export function saveWorkOrders() {
 export function loadWorkOrders() {
   try {
     const raw = localStorage.getItem(WORKORDERS_KEY);
-    if (raw) setWorkOrders(JSON.parse(raw) || []);
+    if (raw) setWorkOrders(normalizeWorkOrders(JSON.parse(raw)).items);
   } catch (e) {
     setWorkOrders([]);
   }
@@ -245,12 +234,7 @@ export function loadPortfolio() {
   try {
     const raw = localStorage.getItem(PORTFOLIO_KEY);
     if (!raw) return;
-    const parsed = JSON.parse(raw);
-    setPortfolio({
-      properties: Array.isArray(parsed?.properties) ? parsed.properties : [],
-      vendors:    Array.isArray(parsed?.vendors)    ? parsed.vendors    : [],
-      tenants:    Array.isArray(parsed?.tenants)    ? parsed.tenants    : [],
-    });
+    setPortfolio(normalizePortfolio(JSON.parse(raw)).portfolio);
   } catch (e) {
     setPortfolio({ properties: [], vendors: [], tenants: [] });
   }
@@ -260,7 +244,7 @@ export function loadPortfolio() {
 export function loadAuditLog() {
   try {
     const raw = localStorage.getItem(AUDIT_KEY);
-    if (raw) setAuditLog(JSON.parse(raw) || []);
+    if (raw) setAuditLog(normalizeAuditLog(JSON.parse(raw)));
   } catch (_) {
     setAuditLog([]);
   }
@@ -385,43 +369,24 @@ export function restoreBackupSnapshot(index) {
   try {
     const { departments, team, workOrders: wos, portfolio: port } = JSON.parse(backup.state);
 
-    if (Array.isArray(departments)) {
-      departments.forEach(savedDept => {
-        if (!savedDept || typeof savedDept.id !== 'string') return;
-        const dept = orgData.departments.find(d => d.id === savedDept.id);
-        if (!dept || !Array.isArray(savedDept.tasks)) return;
-        savedDept.tasks.forEach(savedTask => {
-          if (!savedTask || typeof savedTask.name !== 'string' || !savedTask.name.trim()) return;
-          if (typeof savedTask.owner !== 'string') return;
-          const key  = savedTask._configName || savedTask.name;
-          const task = dept.tasks.find(t => t._configName === key);
-          if (!task) return;
-          task.name     = savedTask.name.slice(0, 200);
-          task.owner    = savedTask.owner;
-          task.status   = STATUS_CYCLE.includes(savedTask.status)   ? savedTask.status   : 'todo';
-          task.priority = PRIORITY_CYCLE.includes(savedTask.priority) ? savedTask.priority : 'medium';
-          task.dueDate  = savedTask.dueDate  || null;
-          task.blockedBy = savedTask.blockedBy || null;
-        });
-      });
-    }
+    // Restore replaces state, so absent task fields reset to defaults (fill) and
+    // notes/customFields come back with everything else.
+    applySavedTasks(orgData.departments, departments, { fill: true });
 
-    if (team && Array.isArray(team.employees)) {
-      setTeamData(team);
+    const clean = sanitizeWorkspace(
+      { team, workOrders: wos, portfolio: port },
+      { knownDeptIds: knownDeptIds() },
+    );
+    if (clean.team) {
+      setTeamData(clean.team);
       saveTeamData();
     }
-
-    if (Array.isArray(wos)) {
-      setWorkOrders(wos);
+    if (clean.workOrders) {
+      setWorkOrders(clean.workOrders);
       saveWorkOrders();
     }
-
-    if (port) {
-      setPortfolio({
-        properties: Array.isArray(port.properties) ? port.properties : [],
-        vendors:    Array.isArray(port.vendors)    ? port.vendors    : [],
-        tenants:    Array.isArray(port.tenants)    ? port.tenants    : [],
-      });
+    if (clean.portfolio) {
+      setPortfolio(clean.portfolio);
       savePortfolio();
     }
 
@@ -430,7 +395,7 @@ export function restoreBackupSnapshot(index) {
     _showActionToast('✓ Backup restored', 'save-toast--success');
 
     // Trigger a full UI refresh via page reload so all views sync cleanly
-    setTimeout(() => location.reload(), 800);
+    setTimeout(() => pageControl.reload(), 800);
   } catch (e) {
     alert('Could not restore this backup — the data may be corrupted.');
   }

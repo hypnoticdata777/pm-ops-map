@@ -39,7 +39,7 @@ python -m http.server 8000
 # then open http://localhost:8000
 
 # Option B — dev server with live reload
-# Requires Node.js 20.9 or newer
+# Requires Node.js 22.12 or newer
 npm install
 npm start       # runs at localhost:8080
 ```
@@ -67,12 +67,47 @@ pm-ops-map/
 │   ├── sync.js         Optional team sync client — talks to server/
 │   ├── launchPlan.js   Beginner setup dashboard and readiness checks
 │   ├── handbook.js     Markdown handbook export
-│   ├── data.js         Jest-only config.json shim
-│   └── views/          Tracking, map, team, portfolio, and work order screens
+│   ├── normalize.js    Sanitizers for every path that loads outside data
+│   ├── privacy.js      Data-handling guidance and export confirmations
+│   ├── demoMode.js     ?demo=1 detection and storage-key namespacing
+│   ├── demo.js         Hosted demo: seeding, banner, reset
+│   ├── showcase.js     The fictional workspace the demo loads
+│   ├── views/          Tracking, map, team, portfolio, and work order screens
+│   └── __tests__/      Vitest unit tests — they import the shipped ES modules directly
+├── e2e/                Playwright browser tests (security regression suite)
 └── server/             Optional sync server — separate package.json, own deps, own tests
 ```
 
 Starter operating data lives in `config.json`. Runtime state is loaded by `app.js`, kept in `state.js`, and persisted by `storage.js`. Feature rendering lives in the relevant `js/views/` module.
+
+## Security Conventions
+
+PM Ops Map renders data it did not create — imported JSON, pasted clipboard text, Team Sync snapshots, restored backups — so every contribution follows these rules:
+
+1. **Never put user data inside JavaScript source in an inline handler.** Pass it through a `data-*` attribute and read it from the element:
+   ```js
+   // Good
+   `<button data-id="${escapeHtml(wo.id)}" onclick="deleteWorkOrder(this.dataset.id)">`
+   // Bad — an id containing a quote runs attacker-controlled script
+   `<button onclick="deleteWorkOrder('${wo.id}')">`
+   ```
+2. **Escape every dynamic value** that goes into HTML with `escapeHtml()` — text, attributes, and `title`/`aria-label` alike. Numbers should go through `Number()`.
+3. **Class names and `data-*` values must come from a known list.** Use `asStatus()` / `asPriority()` / `asHex()` from `js/state.js` rather than interpolating the raw value.
+4. **Links:** only store and render `normalizeUrl(url)` (http/https only).
+5. **Anything that loads outside data goes through `js/normalize.js`** (`sanitizeWorkspace`, `applySavedTasks`, `normalizeAuditLog`, …). Don't assign imported objects straight into shared state.
+6. **Exported CSV cells** must go through the CSV helpers so spreadsheet formulas are neutralized.
+7. **Storage keys** are defined once, in `js/storage.js`, through `namespacedKey()` (see `js/demoMode.js`). Never write a literal `'pm-ops-…'` key anywhere else: the hosted demo relies on every key being namespaced so it can't touch a real workspace, and a test fails if a literal key appears outside those two files.
+8. **Exports** should call `confirmSensitiveExport()` before writing a file that can contain tenant information and `announceExport()` afterwards (see `js/privacy.js`); don't add a new export path that skips them.
+
+`npm run test:e2e:pages` builds `dist/` and runs the smoke and demo suites against the production bundle served under a `/pm-ops-map/` sub-path and from `file://` — run it when you change the build, asset paths, or `index.html`'s script tags.
+
+`npm run test:e2e` runs a browser suite (`e2e/security-xss.spec.js`) that injects a canary payload into every importable field and fails if any view turns it into markup or script. If you add a field or a view, extend `e2e/helpers/security.js`.
+
+## Dependency Updates
+
+Dependabot opens weekly update PRs (`.github/dependabot.yml`): minor and patch bumps are grouped, every major bump is its own PR, and the sync server's production dependencies (Express, cors) are grouped apart from test tooling. CI audits production dependencies of both packages on every push, and `.github/workflows/audit.yml` repeats that weekly so a newly published advisory fails loudly even when nobody is pushing. When a Dependabot PR is green, merge it; when it is a major bump, read the changelog first.
+
+The client (`index.html`, `js/`, `css/`) has no runtime npm dependencies and should keep it — everything in the root `package.json` is test or build tooling.
 
 ## Pull Request Guidelines
 
@@ -81,7 +116,8 @@ Starter operating data lives in `config.json`. Runtime state is loaded by `app.j
 - If you're editing an HTML-called handler, update both `index.html` and the `Object.assign(window, ...)` block in `js/app.js`
 - If you're editing a view, keep changes in the relevant `js/views/` module when possible
 - No new runtime dependencies in the client app (`index.html`, `js/`, `css/`) — it should keep working as browser-native HTML, CSS, and JavaScript with zero installs. `server/` is a separate package and may have its own minimal dependencies.
-- Run `npm test` before submitting — tests must pass. If you touched `server/`, also run `npm test` inside `server/`.
+- Run `npm test` before submitting — tests must pass. If you touched rendering, import/export, or storage code, also run `npm run test:e2e` (one-time setup: `npx playwright install chromium`). If you touched `server/`, also run `npm test` inside `server/`.
+- Test the real modules: import from `js/*.js` in your tests. Don't add `.cjs` mirrors or test-only copies of browser code.
 
 ## Code Style
 

@@ -2,12 +2,12 @@
 // status/priority cycling, due dates, and task dependencies.
 import {
   orgData, currentView, mapState,
-  STATUS_LABELS, PRIORITY_LABELS, STATUS_CYCLE, PRIORITY_CYCLE,
+  STATUS_LABELS, PRIORITY_LABELS, STATUS_CYCLE, PRIORITY_CYCLE, asStatus, asPriority,
   getEmployeeHex, getEmployeeNames,
 } from '../state.js';
 import { saveToStorage, logAudit, _showActionToast } from '../storage.js';
 import {
-  escapeHtml, jsonAttr, isTaskOverdue, isValidISODate,
+  escapeHtml, isTaskOverdue, isValidISODate,
   formatDueChip, buildDeptCompletionText,
 } from '../utils.js';
 import { updateStats } from '../ui.js';
@@ -181,17 +181,16 @@ export function renderTrackingView() {
       </div>
       <div class="department-body">
         ${dept.tasks.map((task, taskIdx) => {
-          const safeName  = task.name.replace(/"/g, '&quot;');
           const isUnowned = task.owner === 'UNOWNED';
-          const status    = task.status   || 'todo';
-          const priority  = task.priority || 'medium';
+          const status    = asStatus(task.status);
+          const priority  = asPriority(task.priority);
           const isDone    = status === 'done';
           return `
           <div class="task-item ${isUnowned ? 'unowned' : ''} ${isDone ? 'task-done' : ''} ${isTaskOverdue(task) ? 'task-overdue' : ''} ${_bulkMode && _bulkSelected.has(`${dept.id}:${taskIdx}`) ? 'task-bulk-selected' : ''}"
                data-dept-id="${dept.id}"
                data-task-idx="${taskIdx}"
                data-owner="${escapeHtml(task.owner)}"
-               data-name="${safeName.toLowerCase()}"
+               data-name="${escapeHtml(task.name.toLowerCase())}"
                data-status="${status}"
                data-priority="${priority}">
             <div class="task-left">
@@ -201,8 +200,8 @@ export function renderTrackingView() {
                     title="Priority: ${PRIORITY_LABELS[priority]} — click to change"></span>
               ${task.dueDate
                 ? `<span class="due-date-chip${isTaskOverdue(task) ? ' due-date-overdue' : ''}"
-                         title="Due: ${task.dueDate}"
-                         onclick="openDueDatePicker('${dept.id}', ${taskIdx}, this)">${formatDueChip(task.dueDate)}</span>`
+                         title="Due: ${escapeHtml(task.dueDate)}"
+                         onclick="openDueDatePicker('${dept.id}', ${taskIdx}, this)">${escapeHtml(formatDueChip(task.dueDate))}</span>`
                 : `<span class="due-date-empty"
                          onclick="openDueDatePicker('${dept.id}', ${taskIdx}, this)">+ date</span>`
               }
@@ -665,15 +664,15 @@ export function setTaskDueDate(deptId, taskIdx, dateStr) {
     const taskLeft = taskEl.querySelector('.task-left');
     if (taskLeft) {
       const overdue  = isTaskOverdue(task);
-      const priority = task.priority || 'medium';
+      const priority = asPriority(task.priority);
       taskLeft.innerHTML = `
         <span class="priority-dot priority-${priority}"
               onclick="cycleTaskPriority('${deptId}', ${taskIdx})"
               title="Priority: ${PRIORITY_LABELS[priority]} — click to change"></span>
         ${task.dueDate
           ? `<span class="due-date-chip${overdue ? ' due-date-overdue' : ''}"
-                   title="Due: ${task.dueDate}"
-                   onclick="openDueDatePicker('${deptId}', ${taskIdx}, this)">${formatDueChip(task.dueDate)}</span>`
+                   title="Due: ${escapeHtml(task.dueDate)}"
+                   onclick="openDueDatePicker('${deptId}', ${taskIdx}, this)">${escapeHtml(formatDueChip(task.dueDate))}</span>`
           : `<span class="due-date-empty"
                    onclick="openDueDatePicker('${deptId}', ${taskIdx}, this)">+ date</span>`
         }

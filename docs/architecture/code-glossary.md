@@ -9,7 +9,7 @@ This glossary explains the repository in practical terms. Read [`site-walkthroug
 | [`index.html`](../../index.html) | The single-page shell: navigation, persistent containers, forms, and modals. | Inline handler names must be exported to `window` in `js/app.js`. |
 | [`config.json`](../../config.json) | Product seed data: company placeholder, 17 departments, 262 starter tasks, affinities, and owner colors. | Task names become initial stable identity keys; duplicate/unstable names make persistence ambiguous. |
 | [`css/style.css`](../../css/style.css) | Entire visual system, responsive layout, view styling, states, and animations. | There is no component-scoped CSS or preprocessor. |
-| [`package.json`](../../package.json) | Frontend development, Jest tests, and Webpack build commands. | Dependencies are development-only; the browser bundle has no framework runtime. |
+| [`package.json`](../../package.json) | Frontend development, Vitest tests, and Webpack build commands. | Dependencies are development-only; the browser bundle has no framework runtime. |
 | [`webpack.common.js`](../../webpack.common.js) | Defines `js/app.js` as the bundle entry and `dist/` as output. | Production and development settings extend it. |
 | [`webpack.config.dev.js`](../../webpack.config.dev.js) | Local dev server with live reload and source maps. | Raw `config.json` is fetched over HTTP. |
 | [`webpack.config.prod.js`](../../webpack.config.prod.js) | Produces the distributable static build and copies assets. | Injects config into built HTML so opening `dist/index.html` over `file://` works. |
@@ -48,10 +48,6 @@ The shared in-memory store and domain constants.
 | `buildWorkloadMap()` | Counts assigned responsibilities by employee name. |
 | `countUnowned()` | Counts tasks still owned by `UNOWNED`. |
 
-### `js/data.js`
-
-The CommonJS representation of configuration used by Jest. Runtime configuration comes from `config.json`; this mirror makes the seed data testable without teaching Jest to import browser JSON modules.
-
 ## Persistence, transfer, and safety
 
 ### `js/storage.js`
@@ -84,22 +80,59 @@ Owns movement of state into and out of the app.
 | `copyStateToClipboard()` / `pasteStateFromClipboard()` | Manual device-to-device transfer using the same schema and review path. |
 | `openImportReview(...)` | Shared human checkpoint for file, clipboard, and sync conflicts. |
 
-### `js/stateSchema.js` and `js/stateSchema.cjs`
+### `js/normalize.js`
 
-The portable workspace contract. The ES module is used by the browser; the CommonJS mirror is used by Jest.
+The trust boundary. Everything that enters from outside the UI forms — an imported file, pasted clipboard text, a Team Sync snapshot, a restored backup, or `localStorage` — is converted here into records the rest of the app can rely on: known enums, `#rrggbb` colors, safe ids, valid dates, finite numbers, http(s)-only links, and length-capped text.
+
+| Symbol | Meaning |
+|---|---|
+| `sanitizeWorkspace(data, { knownDeptIds })` | Cleans the team, work orders, portfolio, and company name of an imported payload and reports `kept` / `dropped` / `repaired` counts per section. |
+| `applySavedTasks(departments, saved, { fill })` | The single place saved task fields are merged onto config tasks (storage load, backup restore, and import all use it). |
+| `normalizeWorkOrders`, `normalizePortfolio`, `normalizeTeam` | Per-collection sanitizers built from small declarative field specs. |
+| `normalizeSavedTask`, `normalizeBlockedBy`, `normalizeCustomFields` | Task-level validation. |
+| `normalizeAuditLog` | Validates stored audit entries. |
+
+Free text (names, notes) legitimately contains characters like `<` and `"`, so normalizing is a safety net and **not** a substitute for escaping at render time. Views still escape every dynamic value and pass ids through `data-*` attributes; see the Security Conventions in `CONTRIBUTING.md`.
+
+### `js/demoMode.js`, `js/demo.js`, and `js/showcase.js`
+
+The hosted demo, enabled by opening the app with `?demo=1`.
+
+| Module | Role |
+|---|---|
+| `demoMode.js` | Dependency-free. Exports `DEMO_MODE` and `namespacedKey()`, which `storage.js` applies to every storage key (`pm-ops-…` becomes `pm-ops-demo-…`), so the demo can never read or overwrite a real workspace on the same origin. |
+| `demo.js` | Runtime: `seedShowcaseWorkspace()` loads the fictional data before the first render, `initDemoMode()` shows the permanent banner and hides Team Sync, `resetDemo()` removes only demo keys and reloads. |
+| `showcase.js` | Pure, date-relative data builder (`buildShowcase`, `applyShowcaseTasks`) shaped to show gaps, overload, blocked chains, overdue work, and varied lease/rent situations. Every name, phone, and email is fictional. |
+
+### `js/privacy.js`
+
+Owns the plain-language data-handling messaging so the UI, the dialog, and the docs cannot drift apart.
+
+| Symbol | Meaning |
+|---|---|
+| `DATA_TIERS`, `COPIES_YOU_CREATE` | The "fine / use with care / do not enter" tiers and the list of copies exports, backups, clipboard, and sync create. |
+| `renderPortfolioPrivacyNotice()` | The always-visible notice at the top of the Portfolio tab. |
+| `openPrivacyModal()` / `closePrivacyModal()` | The Data & Privacy dialog (bound to `window` in `app.js`). |
+| `hasSensitiveRecords()` | True when tenant records, or work orders that name a tenant, exist. |
+| `confirmSensitiveExport(what)` | Asks once per page session before an export that includes resident data; returns `false` if cancelled. |
+| `announceExport(filename)` | Toast saying the file is another unencrypted copy. |
+
+`io.js` and `handbook.js` call these around every export. The acknowledgment is deliberately in memory only, so it reappears each session and needs no extra storage key.
+
+### `js/stateSchema.js`
+
+The portable workspace contract. The browser and the Vitest suite import this same ES module.
 
 | Symbol | Meaning |
 |---|---|
 | `STATE_SCHEMA_NAME` / `STATE_SCHEMA_VERSION` | Identifies compatible PM Ops Map payloads. |
-| `buildStatePayload(...)` | Serializes supported task, team, work-order, and portfolio fields. |
+| `buildStatePayload(...)` | Serializes supported task (including `notes` and `customFields`, schema v3), team, work-order, and portfolio fields. |
 | `validateImportedState(data, orgData)` | Reports matched/skipped departments and tasks, bad dates, and incompatible structure before application. |
 | `formatImportReport(report)` | Converts validation results to readable text. |
 
-Keeping two module-format copies is pragmatic for the current test setup, but changes to the schema must be made in both files.
+### `js/utils.js`
 
-### `js/utils.js` and `js/utils.cjs`
-
-Pure helpers for HTML escaping, JSON-in-attribute safety, date validation, due-date display, slugs/downloads, currency, lease and delinquency signals, safe external URLs, and CSV parsing/header mapping. The `.cjs` file mirrors browser logic for Jest.
+Pure helpers for HTML escaping, JSON-in-attribute safety, date validation, due-date display, slugs/downloads, currency, lease and delinquency signals, safe external URLs, and CSV parsing/header mapping. The Vitest suite imports this file directly.
 
 Security-relevant helpers include:
 
@@ -181,15 +214,13 @@ This is a starter registry, not a full property-management database or accountin
 
 The derived operator-guidance layer. `renderLaunchPlan` composes profile-specific onboarding, next action, coverage, risks, a seven-day checklist, and data-quality signals from current state. `loadDemoCompany` applies realistic fictional data from templates. Export/print helpers turn the plan into an artifact.
 
-### `js/templates.js` and `js/templates.cjs`
+### `js/templates.js`
 
 Holds:
 
 - `ROLE_TEMPLATES` for common staffing shapes;
 - `SOP_TEMPLATES` used in generated handbooks; and
 - `buildDemoWorkspace` for a time-relative fictional workspace.
-
-The CommonJS mirror supports Jest and must stay synchronized with browser changes.
 
 ### `js/handbook.js`
 
@@ -301,6 +332,6 @@ File import, clipboard paste, and sync conflicts share `validateImportedState` a
 
 `_configName` preserves the task’s original configured name so visible renames do not break reload/import matching. A future schema would be stronger with explicit immutable task IDs in `config.json`.
 
-### Browser ESM plus CommonJS test mirrors
+### Tests import the shipped modules
 
-`utils`, `templates`, and `stateSchema` each have `.js` and `.cjs` forms. This avoids runtime tooling complexity but creates a maintenance obligation: logic changes must remain equivalent.
+Vitest runs native ES modules, so tests import `js/*.js` directly (with jsdom for `document` and `localStorage`). There are no CommonJS mirrors or test-only shims; the browser and the tests execute the same code. (An earlier setup kept hand-maintained `.cjs` copies for Jest; they had already drifted apart, which is why they were removed.)

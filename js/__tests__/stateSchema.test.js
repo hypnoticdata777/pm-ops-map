@@ -1,10 +1,13 @@
-const { orgData } = require('../data.js');
-const {
+import { describe, test, expect } from 'vitest';
+import config from '../../config.json';
+import {
   STATE_SCHEMA_VERSION,
   buildStatePayload,
   validateImportedState,
   formatImportReport,
-} = require('../stateSchema.cjs');
+} from '../stateSchema.js';
+
+const { orgData } = config;
 
 function cloneOrgData() {
   return {

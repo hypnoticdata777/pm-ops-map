@@ -8,8 +8,10 @@ import {
   getCompanyName, applyCompanyName, COMPANY_KEY,
   _showActionToast, _fileSlug, saveBackupSnapshot,
 } from './storage.js';
-import { escapeHtml, isValidISODate, _downloadBlob } from './utils.js';
+import { escapeHtml, isValidISODate, _downloadBlob, toCSV, MAX_IMPORT_BYTES } from './utils.js';
 import { buildStatePayload, validateImportedState, formatImportReport } from './stateSchema.js';
+import { applySavedTasks, sanitizeWorkspace } from './normalize.js';
+import { confirmSensitiveExport, announceExport } from './privacy.js';
 import { updateStats } from './ui.js';
 import { renderTrackingView, populateOwnerFilter } from './views/tracking.js';
 import { renderMapControls, renderFlowMap } from './views/map.js';
@@ -20,6 +22,7 @@ let pendingImport = null;
 
 // ── Undo stack (single-level, before bulk ops) ────────────────────────────────
 export function _saveUndoSnapshot() {
+  // Same shape as saved/imported tasks, so undo restores through applySavedTasks.
   setUndoSnapshot(orgData.departments.map(dept => ({
     id: dept.id,
     tasks: dept.tasks.map(t => ({
@@ -29,27 +32,17 @@ export function _saveUndoSnapshot() {
       status:      t.status   || 'todo',
       priority:    t.priority || 'medium',
       dueDate:     t.dueDate  || null,
-      blockedBy:   t.blockedBy || null
+      blockedBy:   t.blockedBy ? { ...t.blockedBy } : null,
+      notes:       t.notes || null,
+      customFields: t.customFields ? { ...t.customFields } : null,
     }))
   })));
 }
 
 export function undoLastAction() {
   if (!_undoSnapshot) return;
-  _undoSnapshot.forEach(snap => {
-    const dept = orgData.departments.find(d => d.id === snap.id);
-    if (!dept) return;
-    snap.tasks.forEach(snapTask => {
-      const task = dept.tasks.find(t => t._configName === snapTask._configName);
-      if (!task) return;
-      task.name     = snapTask.name;
-      task.owner    = snapTask.owner;
-      task.status   = snapTask.status;
-      task.priority = snapTask.priority;
-      task.dueDate  = snapTask.dueDate;
-      task.blockedBy = snapTask.blockedBy || null;
-    });
-  });
+  // fill: true — undo must put back exactly what was there, including "no notes".
+  applySavedTasks(orgData.departments, _undoSnapshot, { fill: true });
   setUndoSnapshot(null);
   saveToStorage();
   renderTrackingView();
@@ -64,45 +57,30 @@ export function undoLastAction() {
 // Exported so sync.js can apply a pulled/conflicting remote workspace through
 // the same path as a file/clipboard import.
 export function _applyImportedState(data) {
-  data.departments.forEach(savedDept => {
-    const dept = orgData.departments.find(d => d.id === savedDept.id);
-    if (!dept) return;
-    if (!Array.isArray(savedDept.tasks)) return;
-    savedDept.tasks.forEach((savedTask) => {
-      if (!savedTask.name || !savedTask.owner) return;
-      const key  = savedTask._configName || savedTask.name;
-      const task = dept.tasks.find(t => t._configName === key);
-      if (!task) return;
-      task.name  = savedTask.name;
-      task.owner = savedTask.owner;
-      if (savedTask.status)   task.status   = savedTask.status;
-      if (savedTask.priority) task.priority = savedTask.priority;
-      if (savedTask.dueDate !== undefined) task.dueDate = isValidISODate(savedTask.dueDate) ? savedTask.dueDate : undefined;
-      if (savedTask.blockedBy !== undefined) task.blockedBy = savedTask.blockedBy || null;
-    });
-  });
+  // Nothing from the file reaches shared state unvalidated: tasks are matched to
+  // config by _configName and field-checked, everything else goes through
+  // sanitizeWorkspace (enums, colors, ids, dates, numbers, links, lengths).
+  applySavedTasks(orgData.departments, data.departments);
 
-  if (data.company) {
-    try { localStorage.setItem(COMPANY_KEY, data.company); } catch (_) {}
-    applyCompanyName(data.company);
+  const clean = sanitizeWorkspace(data, { knownDeptIds: orgData.departments.map(d => d.id) });
+
+  if (clean.company) {
+    try { localStorage.setItem(COMPANY_KEY, clean.company); } catch (_) {}
+    applyCompanyName(clean.company);
   }
 
-  if (data.team && Array.isArray(data.team.employees)) {
-    setTeamData(data.team);
+  if (clean.team) {
+    setTeamData(clean.team);
     saveTeamData();
   }
 
-  if (Array.isArray(data.workOrders)) {
-    setWorkOrders(data.workOrders);
+  if (clean.workOrders) {
+    setWorkOrders(clean.workOrders);
     saveWorkOrders();
   }
 
-  if (data.portfolio) {
-    setPortfolio({
-      properties: Array.isArray(data.portfolio.properties) ? data.portfolio.properties : [],
-      vendors:    Array.isArray(data.portfolio.vendors)    ? data.portfolio.vendors    : [],
-      tenants:    Array.isArray(data.portfolio.tenants)    ? data.portfolio.tenants    : [],
-    });
+  if (clean.portfolio) {
+    setPortfolio(clean.portfolio);
     savePortfolio();
   }
 
@@ -117,6 +95,7 @@ export function _applyImportedState(data) {
 
 // ── Export ────────────────────────────────────────────────────────────────────
 export function exportJSON() {
+  if (!confirmSensitiveExport('This JSON export')) return;
   const payload = buildStatePayload({
     company:    getCompanyName(),
     departments: orgData.departments,
@@ -124,11 +103,9 @@ export function exportJSON() {
     workOrders: workOrders,
     portfolio:  portfolio
   });
-  _downloadBlob(
-    JSON.stringify(payload, null, 2),
-    'application/json',
-    `pm-ops-${_fileSlug()}.json`
-  );
+  const filename = `pm-ops-${_fileSlug()}.json`;
+  _downloadBlob(JSON.stringify(payload, null, 2), 'application/json', filename);
+  announceExport(filename);
 }
 
 export function exportCSV() {
@@ -164,6 +141,7 @@ export function exportPropertiesCSV() {
 }
 
 export function exportTenantsCSV() {
+  if (!confirmSensitiveExport('The tenants CSV')) return;
   const rows = [[
     'Tenant', 'Property', 'Unit', 'Status', 'Phone', 'Email',
     'Monthly Rent', 'Lease Start', 'Lease End', 'Balance Due', 'Document Link', 'Created At',
@@ -203,6 +181,7 @@ export function exportVendorsCSV() {
 }
 
 export function exportWorkOrdersCSV() {
+  if (!confirmSensitiveExport('The work orders CSV')) return;
   const rows = [[
     'Property', 'Unit', 'Tenant', 'Issue', 'Status', 'Priority', 'Assignee',
     'Vendor', 'Target Date', 'Estimated Cost', 'Notes', 'Created At', 'Updated At'
@@ -233,16 +212,20 @@ function getPortfolioPropertyName(propertyId) {
 }
 
 function downloadCSV(rows, filename) {
-  const csv = rows.map(row =>
-    row.map(cell => `"${String(cell ?? '').replace(/"/g, '""')}"`).join(',')
-  ).join('\r\n');
-  _downloadBlob(csv, 'text/csv', filename);
+  // toCSV quotes every cell and neutralizes spreadsheet formulas (see utils.js).
+  _downloadBlob(toCSV(rows), 'text/csv', filename);
+  announceExport(filename);
 }
 
 // ── Import ────────────────────────────────────────────────────────────────────
 export function importJSON(inputEl) {
   const file = inputEl.files[0];
   if (!file) return;
+  if (file.size > MAX_IMPORT_BYTES) {
+    alert(`Import failed: that file is too large (${(file.size / 1048576).toFixed(1)} MB). The limit is ${MAX_IMPORT_BYTES / 1048576} MB.`);
+    inputEl.value = '';
+    return;
+  }
   const reader = new FileReader();
   reader.onload = (ev) => {
     try {
@@ -260,6 +243,7 @@ export function importJSON(inputEl) {
 
 // ── Clipboard sync ────────────────────────────────────────────────────────────
 export function copyStateToClipboard() {
+  if (!confirmSensitiveExport('Copying your workspace')) return;
   const payload = JSON.stringify(buildStatePayload({
     company:    getCompanyName(),
     departments: orgData.departments,
@@ -273,7 +257,7 @@ export function copyStateToClipboard() {
     return;
   }
   navigator.clipboard.writeText(payload)
-    .then(() => _showActionToast('✓ State copied — paste on another device', 'save-toast--success'))
+    .then(() => _showActionToast('✓ State copied — paste on another device. It is unencrypted and may stay in clipboard history.', 'save-toast--success', 6000))
     .catch(() => _showActionToast('⚠ Clipboard access denied', 'save-toast--error'));
 }
 
@@ -352,7 +336,10 @@ export function confirmPendingImport() {
 function buildImportReviewHTML(report, source) {
   return `
     <p class="import-review-note">
-      ${{ clipboard: 'Clipboard state', sync: 'Your team sync server' }[source] || 'JSON file'} will replace matching task assignments, statuses, due dates, dependencies, team data, work orders, and portfolio data on this device.
+      ${{ clipboard: 'Clipboard state', sync: 'Your team sync server' }[source] || 'JSON file'} will replace matching task assignments, statuses, due dates, dependencies, notes, custom fields, team data, work orders, and portfolio data on this device.
+    </p>
+    <p class="import-review-note">
+      Only import files from sources you trust. A backup of your current workspace is saved automatically first, and you can undo with Ctrl+Z.
     </p>
     <div class="import-review-summary">
       ${buildImportMetric('Schema', String(report.schemaVersion))}
@@ -373,6 +360,9 @@ function buildImportReviewHTML(report, source) {
         <li>${report.skippedDepartments} departments skipped.</li>
         <li>${report.skippedTasks} tasks skipped.</li>
         <li>${report.invalidDueDates} invalid due dates will be cleared.</li>
+        <li>${report.invalidTasks} task rows were unusable and will be ignored.</li>
+        <li>${report.repairedRecords} team / work order / portfolio records had invalid fields that will be reset.</li>
+        <li>${report.droppedRecords} team / work order / portfolio records are unusable and will be skipped.</li>
       </ul>
     </div>
   `;

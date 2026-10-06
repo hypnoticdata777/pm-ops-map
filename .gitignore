@@ -8,3 +8,7 @@ dist
 *.iml
 .DS_Store
 *.log
+coverage
+test-results
+playwright-report
+test-results-pages

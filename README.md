@@ -11,8 +11,8 @@ Track every department, every task, every maintenance request — and exactly wh
 
 **No database required. No login required. No backend required. No monthly fee.**
 
-<!-- TODO: replace with the portfolio URL once it's live -->
-See it in action on [my portfolio](#) — or run it yourself in under a minute, see below.
+**▶ [Try the live demo](https://hypnoticdata777.github.io/pm-ops-map/?demo=1)** — a fictional property-management company, one click to open, one click to reset. Nothing leaves your browser.
+Or run it yourself in under a minute, see below.
 
 </div>
 
@@ -33,9 +33,11 @@ Open it, enter your company name, and you get:
 - **Exportable operations handbook** (Markdown + printable HTML)
 - **Recurring task templates** for weekly ops, monthly finance, compliance, and more
 - **Auto-backups** so nothing gets lost
-- **Optional team sync** — self-host a small sync server so your whole team shares one live workspace instead of one browser
+- **Optional team sync (beta)** — self-host a small sync server so a small, trusted team shares one live workspace instead of one browser
 
 Everything saves to `localStorage` by default. Nothing goes to a server unless you turn on Team Sync yourself. Export your data anytime as JSON or CSV.
+
+> **Your data is stored unencrypted in your browser.** Explore with fictional data, use real tenant details only on a device you control, and never enter ID numbers, bank or card numbers, or screening reports. See [Data & privacy](#data--privacy).
 
 ---
 
@@ -43,11 +45,11 @@ Everything saves to `localStorage` by default. Nothing goes to a server unless y
 
 ### Option A — Live Demo (no setup)
 
-<!-- TODO: replace with the portfolio URL once it's live -->
-1. Open the live demo on [my portfolio](#)
-2. Enter your company name and portfolio size
-3. Add your team, assign tasks, track work orders
+1. Open the **[live demo](https://hypnoticdata777.github.io/pm-ops-map/?demo=1)** — it loads a fictional company with gaps, blocked work, an overloaded teammate, and work orders in every stage
+2. Poke around: reassign an owner, change a status, open the Team Manager workload bars
+3. Made a mess? **Reset demo** in the purple banner restores it. Ready for your own data? **Use your own workspace →**
 
+The demo is clearly labelled as fictional, keeps its data under separate browser-storage keys (so it can never touch a real workspace opened from the same site), and has Team Sync switched off. See [The live demo](#the-live-demo) below.
 ### Option B — Download the ZIP
 
 1. Go to [Releases](https://github.com/hypnoticdata777/pm-ops-map/releases/latest)
@@ -69,8 +71,22 @@ Or with Node: `npm install && npm start`
 ### Option D — Fork and Host Free on GitHub Pages
 
 1. Fork this repo
-2. **Settings → Pages → Source → main branch**
-3. Your team's URL is live at `https://yourusername.github.io/pm-ops-map/`
+2. **Settings → Pages → Build and deployment → Source: GitHub Actions** (the included workflow builds, tests, and publishes the site). Prefer no Actions? Choose *Deploy from a branch* → `master` / `(root)` instead — the app runs straight from source.
+3. Your team's URL is live at `https://yourusername.github.io/pm-ops-map/` (add `?demo=1` for the demo)
+
+---
+
+## The live demo
+
+Open any copy of the site with **`?demo=1`** (for example [`…/pm-ops-map/?demo=1`](https://hypnoticdata777.github.io/pm-ops-map/?demo=1)) and you get a populated, entirely fictional workspace instead of the setup screen. What makes it safe to put on a public URL:
+
+- **Always labelled.** A purple banner — *"Fictional data only… please don't enter real tenant information"* — is pinned to the top of every screen. It cannot be dismissed.
+- **Isolated storage.** Demo mode keeps everything under `pm-ops-demo-*` keys. Visiting, editing, or resetting the demo never reads, overwrites, or deletes a real workspace stored under the normal `pm-ops-*` keys on the same site.
+- **One-click reset.** **Reset demo** removes only the demo's own keys and reloads the pristine data.
+- **No sync.** Team Sync is hidden and disabled, so the demo can't be pointed at a server.
+- **Built to show the point.** Three departments nobody covers (compliance, reporting, systems), one teammate carrying far more than the others, a blocked dependency chain, overdue work, tenants in different lease and rent situations, and work orders in every column. Dates are computed relative to today, so it never goes stale. All names, `(555) 010-xxxx` phone numbers, and `example.com` addresses are made up.
+
+The site is deployed by [`.github/workflows/pages.yml`](.github/workflows/pages.yml): on every push to `master` it runs the unit tests, builds `dist/`, runs the browser suite against that build served under `/pm-ops-map/` (and straight from disk via `file://`), and only then publishes. **One-time setup:** *Settings → Pages → Source → GitHub Actions.*
 
 ---
 
@@ -197,7 +213,9 @@ Pick a template, enter a property name and due date, and the app creates the mat
 
 The app automatically saves a snapshot before every import, every auto-assign run, and every Team Sync update. Click **Backups** in the stats bar to see the last 5 snapshots and restore any of them with one click.
 
-Each backup captures: all tasks and their state, the full team roster, all work orders, and the portfolio registry.
+Each backup captures: all tasks and their state (including per-task notes and custom fields), the full team roster, all work orders, and the portfolio registry. Restoring one brings all of that back.
+
+Backups are full copies of your workspace — tenant records included — and live in this browser's `localStorage`. They are removed by the **Operating workspace** and **Everything** resets (see [Resetting and deleting your data](#resetting-and-deleting-your-data)).
 
 ---
 
@@ -247,6 +265,8 @@ The launch dashboard also runs four data-quality checks (missing owner, missing 
 
 **Bulk import from CSV.** Already tracking properties, tenants, or vendors in a spreadsheet? Click **Import CSV** next to any of the three Portfolio forms to add them all at once instead of typing each one in — no need to change your existing sheet's column order, just the column names need to roughly match. Column headers match what **Export CSV** produces for that same record type, so exporting, editing in Excel/Sheets, and re-importing is a real round trip. Import always adds new records; it never edits or removes existing ones, and shows a summary of skipped/warned rows before anything is saved.
 
+**Spreadsheet safety.** Exported text cells that begin with `=`, `+`, `-`, or `@` get a leading apostrophe, so Excel and Google Sheets display them as text instead of running them as formulas ("CSV injection"). The importer removes that apostrophe again, so exporting, editing, and re-importing stays lossless. Imported rows go through the same validation as every other data source, and files over 5 MB are refused.
+
 ---
 
 ### Operations Handbook Export
@@ -287,12 +307,14 @@ No backend needed — use **Copy State** and **Paste State** in the stats bar to
 
 ---
 
-### Team Sync (optional, self-hosted)
+### Team Sync (optional, self-hosted, beta)
+
+> **Beta, built for a small team that trusts each other** — not enterprise collaboration. There is one shared passphrase and no individual accounts, roles, or way to revoke one person's access; edits sync as a whole workspace (a conflict means choosing whose version to keep); and the passphrase is saved unencrypted in each browser. Use `https://` for any server that isn't on your own machine — the app warns you if you don't.
 
 For a team of more than one, Copy/Paste State is a manual chore. **Team Sync** in the stats bar connects this device to a small self-hosted sync server so your whole team shares one live workspace instead — no accounts, just a workspace name and a passphrase your team keeps between yourselves.
 
 - The first device to connect to a workspace name creates it with its current data. Everyone else who connects with the same name and passphrase joins it.
-- Changes sync automatically in the background every ~8 seconds. If your local edits and a teammate's collide, you get the same import-preview-and-confirm screen used for file imports before anything overwrites your device.
+- Changes (including per-task notes and custom fields) sync automatically in the background every ~8 seconds. If your local edits and a teammate's collide, you get the same import-preview-and-confirm screen used for file imports before anything overwrites your device.
 - Skip this entirely and the app works exactly as it always has, saved only to this browser.
 
 The server lives in [`server/`](server/) — see [`server/README.md`](server/README.md) for how to run it locally, deploy it with Docker Compose for durable team use, or one-click deploy a free trial instance to Render.
@@ -304,6 +326,33 @@ The server lives in [`server/`](server/) — see [`server/README.md`](server/REA
 Grant browser notification permission from the stats bar (**🔔 Alerts**). On each page load, the app checks for overdue tasks and sends one grouped notification per session if any are found.
 
 ---
+
+## Data & privacy
+
+PM Ops Map has no accounts and no server of its own. That keeps it simple, but it also means **nothing encrypts your data for you**: it is saved as plain text in this browser's `localStorage`, and anyone who can open the browser profile (or a file you exported) can read it. The app says so where it matters: a notice on the Portfolio tab, a note on first run, a **Data & Privacy** dialog in the toolbar, a heads-up before exporting resident data, and the Team Sync dialog.
+
+| | What to enter |
+|---|---|
+| ✅ **Fine** | Fictional/demo data; process design (departments, responsibilities, owners, backups, SOP notes); limited context such as property names, unit counts, vendor trades |
+| ⚠️ **Use with care** | Real tenant names, phone numbers, emails; rent, balances, lease dates — **only on a device you control** (screen lock, disk encryption, not a shared computer) |
+| ⛔ **Don't enter without extra protection** | Social Security / passport / driver's-license numbers; bank or card numbers and payment credentials; credit, background, or screening reports; medical or other regulated records; the documents themselves (paste a link instead) |
+
+**Every export is another copy.** JSON, CSV, and handbook files, automatic backups (the last 5 are kept in the browser), Copy State, and a Team Sync workspace each hold your data in the clear. Before an export that includes tenant records (JSON, tenants/work-orders CSV, handbook, Copy State) the app asks for confirmation once per session, and every export reminds you what the file is.
+
+PM Ops Map is an operating *map*, not a system of record: portfolio and payment fields are context for ownership and workload, not a ledger, and the project does not aim to handle payment processing, document storage, or regulated records.
+
+## Resetting and deleting your data
+
+**Stats bar → Reset** offers four scopes. Each one asks for confirmation and only touches this browser:
+
+| Scope | Removes | Keeps |
+|-------|---------|-------|
+| **Tasks only** | Task names, owners, statuses, due dates, dependencies, notes, custom fields | Team, work orders, portfolio, **automatic backups**, company setup |
+| **Operating workspace** | Tasks, team, portfolio, work orders, audit log, launch checklist, **automatic backups** | Company setup, Team Sync connection |
+| **Company setup** | Company profile, preferences, guide state, **the saved Team Sync connection (including its passphrase)** | Workspace data |
+| **Everything** | All of the above — every PM Ops Map key in this browser | — |
+
+A reset does **not** touch files you exported earlier (JSON, CSV, handbooks, playbooks), text you copied to the clipboard, or any copy of the workspace on a Team Sync server. Delete those separately.
 
 ## Customizing for Your Company
 
@@ -369,6 +418,11 @@ pm-ops-map/
 │   ├── launchPlan.js       Guided setup plan, data-quality checks, demo company
 │   ├── handbook.js         Markdown + HTML operations handbook generator
 │   ├── stateSchema.js      Versioned JSON export/import schema and validation
+│   ├── normalize.js        Boundary sanitizers for imports, sync, backups, and storage loads
+│   ├── privacy.js          Data-handling guidance, Data & Privacy dialog, export confirmations
+│   ├── demoMode.js         ?demo=1 detection and storage-key namespacing (no dependencies)
+│   ├── demo.js             Hosted demo: seeding, banner, reset, sync disabled
+│   ├── showcase.js         The fictional workspace the demo loads (pure, date-relative)
 │   ├── templates.js        Role templates, SOP templates, demo workspace data
 │   ├── utils.js            Pure utility functions
 │   ├── views/
@@ -378,18 +432,20 @@ pm-ops-map/
 │   │   ├── portfolio.js    Property, tenant, and vendor registry
 │   │   ├── workorders.js   Work Orders kanban board
 │   │   └── recurring.js    Recurring work order templates
-│   └── __tests__/
+│   └── __tests__/          Vitest unit tests — import the shipped ES modules directly
 │       ├── data.test.js    config.json structure tests
 │       ├── utils.test.js   Utility function tests
 │       ├── stateSchema.test.js
 │       └── templates.test.js
+├── e2e/                     Playwright browser tests, including the XSS regression suite
 ├── server/                  Optional self-hosted sync server (own package.json, tests, Docker) — see server/README.md
 ├── docker-compose.yml       Runs the sync server locally with durable storage
 ├── render.yaml              One-click Render deploy for the sync server
-├── .github/workflows/ci.yml  CI: install, test, audit, build (app + sync server as separate jobs)
+├── .github/workflows/       ci.yml (test, audit, build, browser E2E), audit.yml (weekly), pages.yml (deploy the demo site)
 ├── CONTRIBUTING.md
 ├── SECURITY.md
 ├── LICENSE.txt
+├── vitest.config.mjs         Test runner config (jsdom environment)
 └── webpack.config.*.js       Optional build configs (not needed to run)
 ```
 
@@ -447,13 +503,16 @@ ES modules do not automatically place functions on `window`. Every `onclick="fn(
 ```bash
 npm install
 npm start          # webpack-dev-server with live reload → localhost:8080
-npm test           # Jest unit test suite
+npm test           # Vitest unit tests (run against the same ES modules the browser loads)
+npm run test:coverage   # same, with a V8 coverage report
+npm run test:e2e   # Playwright browser tests (first run: npx playwright install chromium)
+npm run test:e2e:pages   # builds dist/, then tests it under a GitHub-Pages-style sub-path
 npm run build      # Production bundle → dist/
 ```
 
-Requires Node.js 20.9+. The optional sync server has its own independent test suite — see [`server/README.md`](server/README.md).
+Requires Node.js 22.12+ for development, tests, and the optional build (the app itself only needs a browser). The optional sync server has its own independent test suite — see [`server/README.md`](server/README.md).
 
-CI runs two jobs on every push and pull request: the app (`npm ci` → `npm test` → `npm audit --omit=dev` → `npm run build`) and the sync server (`cd server && npm ci && npm test && npm audit --omit=dev`).
+CI runs three jobs on every push and pull request: the app (`npm ci` → `npm test` → `npm audit --omit=dev` → `npm run build`), the browser E2E suite (`npm run test:e2e`), and the sync server (`cd server && npm ci && npm test && npm audit --omit=dev`). A scheduled workflow repeats the production audits weekly, and Dependabot keeps npm packages, GitHub Actions, and the server's Docker base image current.
 
 ---
 

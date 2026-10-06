@@ -1,4 +1,7 @@
-const { orgData, ownerColors, defaultAffinities } = require('../data.js');
+import { describe, test, expect } from 'vitest';
+import config from '../../config.json';
+
+const { orgData, ownerColors, defaultAffinities } = config;
 
 describe('orgData', () => {
   test('has a departments array with entries', () => {

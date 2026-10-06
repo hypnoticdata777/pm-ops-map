@@ -1,9 +1,11 @@
 import { portfolio, setPortfolio, workOrders } from '../state.js';
 import { savePortfolio, saveWorkOrders, logAudit, _showActionToast, saveBackupSnapshot } from '../storage.js';
 import {
-  escapeHtml, shakeInput, isValidISODate, formatCurrency, getLeaseStatus, getDelinquencyStatus, isSafeUrl,
-  parseCSV, buildCsvHeaderMap,
+  escapeHtml, shakeInput, isValidISODate, formatCurrency, getLeaseStatus, getDelinquencyStatus, isSafeUrl, normalizeUrl,
+  parseCSV, buildCsvHeaderMap, unguardCsvCell, MAX_IMPORT_BYTES,
 } from '../utils.js';
+import { normalizePortfolio } from '../normalize.js';
+import { renderPortfolioPrivacyNotice, TENANT_FORM_HINT } from '../privacy.js';
 import { renderLaunchPlan } from '../launchPlan.js';
 
 const editState = {
@@ -63,6 +65,7 @@ export function renderPortfolioView() {
         </div>
       </div>
 
+      ${renderPortfolioPrivacyNotice()}
       ${renderStarterExampleStrip()}
 
       <div class="portfolio-grid">
@@ -112,6 +115,7 @@ export function renderPortfolioView() {
             <div>
               <h3>${editingTenant ? 'Edit Tenant' : 'Add Tenant'}</h3>
               <p>${editingTenant ? 'Keep resident contact and unit context ready for maintenance and communication.' : 'Know who is connected to each unit before requests and renewals arrive.'}</p>
+              <p class="portfolio-sensitive-hint">${escapeHtml(TENANT_FORM_HINT)}</p>
             </div>
             ${!editingTenant ? `
               <label class="btn btn-secondary portfolio-csv-btn" title="Bulk-add tenants from a CSV file">
@@ -359,6 +363,10 @@ function _readCsvFile(inputEl) {
   return new Promise((resolve, reject) => {
     const file = inputEl.files[0];
     if (!file) { resolve(null); return; }
+    if (file.size > MAX_IMPORT_BYTES) {
+      reject(new Error(`That file is too large (${(file.size / 1048576).toFixed(1)} MB). The limit is ${MAX_IMPORT_BYTES / 1048576} MB.`));
+      return;
+    }
     const reader = new FileReader();
     reader.onload = ev => resolve(ev.target.result);
     reader.onerror = () => reject(new Error('Could not read the file.'));
@@ -380,7 +388,9 @@ async function _importPortfolioCSV(inputEl, { label, pluralLabel = `${label}s`, 
   inputEl.value = '';
   if (!text) return null;
 
-  const allRows = parseCSV(text);
+  // Undo the apostrophe our own export adds in front of =,+,-,@ cells so
+  // export -> edit -> re-import is lossless.
+  const allRows = parseCSV(text).map(row => row.map(unguardCsvCell));
   if (allRows.length < 2) {
     alert(`That file doesn't look like a ${label} CSV — no data rows found.`);
     return null;
@@ -441,21 +451,22 @@ export async function importPropertiesCSV(inputEl) {
           units: Number.isFinite(rawUnits) && rawUnits >= 0 ? rawUnits : 0,
           owner: (cells[h['owner / client']] || '').trim(),
           notes: (cells[h['notes']] || '').trim(),
-          documentUrl: isSafeUrl(rawDocUrl) ? rawDocUrl : '',
+          documentUrl: normalizeUrl(rawDocUrl),
           createdAt: new Date().toISOString(),
         },
       };
     },
   });
   if (!records) return;
+  const clean = normalizePortfolio({ properties: records }).portfolio.properties;
 
   saveBackupSnapshot('Before CSV import');
-  portfolio.properties.unshift(...records);
+  portfolio.properties.unshift(...clean);
   savePortfolio();
-  logAudit('portfolio_property_added', { title: `${records.length} imported from CSV` });
+  logAudit('portfolio_property_added', { title: `${clean.length} imported from CSV` });
   renderPortfolioView();
   renderLaunchPlan();
-  _showActionToast(`✓ Imported ${records.length} propert${records.length === 1 ? 'y' : 'ies'}`, 'save-toast--success');
+  _showActionToast(`✓ Imported ${clean.length} propert${clean.length === 1 ? 'y' : 'ies'}`, 'save-toast--success');
 }
 
 export async function importTenantsCSV(inputEl) {
@@ -499,21 +510,23 @@ export async function importTenantsCSV(inputEl) {
           leaseStart: validStart,
           leaseEnd: validEnd,
           balanceDue: Number.isFinite(rawBalance) && rawBalance >= 0 ? rawBalance : 0,
-          documentUrl: isSafeUrl(rawDocUrl) ? rawDocUrl : '',
+          documentUrl: normalizeUrl(rawDocUrl),
           createdAt: new Date().toISOString(),
         },
       };
     },
   });
   if (!records) return;
+  // Existing properties are passed along so a tenant's propertyId survives its cross-reference check.
+  const clean = normalizePortfolio({ properties: portfolio.properties, tenants: records }).portfolio.tenants;
 
   saveBackupSnapshot('Before CSV import');
-  portfolio.tenants.unshift(...records);
+  portfolio.tenants.unshift(...clean);
   savePortfolio();
-  logAudit('portfolio_tenant_added', { title: `${records.length} imported from CSV` });
+  logAudit('portfolio_tenant_added', { title: `${clean.length} imported from CSV` });
   renderPortfolioView();
   renderLaunchPlan();
-  _showActionToast(`✓ Imported ${records.length} tenant${records.length === 1 ? '' : 's'}`, 'save-toast--success');
+  _showActionToast(`✓ Imported ${clean.length} tenant${clean.length === 1 ? '' : 's'}`, 'save-toast--success');
 }
 
 export async function importVendorsCSV(inputEl) {
@@ -532,21 +545,22 @@ export async function importVendorsCSV(inputEl) {
           trade: (cells[h['trade']] || '').trim(),
           phone: (cells[h['phone']] || '').trim(),
           email: (cells[h['email']] || '').trim(),
-          documentUrl: isSafeUrl(rawDocUrl) ? rawDocUrl : '',
+          documentUrl: normalizeUrl(rawDocUrl),
           createdAt: new Date().toISOString(),
         },
       };
     },
   });
   if (!records) return;
+  const clean = normalizePortfolio({ vendors: records }).portfolio.vendors;
 
   saveBackupSnapshot('Before CSV import');
-  portfolio.vendors.unshift(...records);
+  portfolio.vendors.unshift(...clean);
   savePortfolio();
-  logAudit('portfolio_vendor_added', { title: `${records.length} imported from CSV` });
+  logAudit('portfolio_vendor_added', { title: `${clean.length} imported from CSV` });
   renderPortfolioView();
   renderLaunchPlan();
-  _showActionToast(`✓ Imported ${records.length} vendor${records.length === 1 ? '' : 's'}`, 'save-toast--success');
+  _showActionToast(`✓ Imported ${clean.length} vendor${clean.length === 1 ? '' : 's'}`, 'save-toast--success');
 }
 
 export function commitAddProperty() {
@@ -570,7 +584,7 @@ export function commitAddProperty() {
     units: Number.isFinite(rawUnits) && rawUnits >= 0 ? rawUnits : 0,
     owner: document.getElementById('property-owner')?.value.trim() || '',
     notes: document.getElementById('property-notes')?.value.trim() || '',
-    documentUrl: docUrl,
+    documentUrl: normalizeUrl(docUrl),
   };
   const existing = portfolio.properties.find(property => property.id === editState.propertyId);
   if (existing) {
@@ -630,7 +644,7 @@ export function commitAddTenant() {
     leaseStart: isValidISODate(leaseStart) ? leaseStart : '',
     leaseEnd: isValidISODate(leaseEnd) ? leaseEnd : '',
     balanceDue: Number.isFinite(rawBalance) && rawBalance >= 0 ? rawBalance : 0,
-    documentUrl: docUrl,
+    documentUrl: normalizeUrl(docUrl),
   };
   const existing = portfolio.tenants.find(tenant => tenant.id === editState.tenantId);
   if (existing) {
@@ -670,7 +684,7 @@ export function commitAddVendor() {
     trade: document.getElementById('vendor-trade')?.value.trim() || '',
     phone: document.getElementById('vendor-phone')?.value.trim() || '',
     email: document.getElementById('vendor-email')?.value.trim() || '',
-    documentUrl: docUrl,
+    documentUrl: normalizeUrl(docUrl),
   };
   const existing = portfolio.vendors.find(vendor => vendor.id === editState.vendorId);
   if (existing) {
@@ -788,8 +802,9 @@ export function cancelPortfolioEdit(type) {
 // records can also arrive via JSON import or Team Sync, neither of which
 // goes through commitAddProperty/Tenant/Vendor's save-time validation.
 function renderDocLink(url) {
-  if (!isSafeUrl(url)) return '';
-  return `<a class="doc-link" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">&#128196; Document</a>`;
+  const href = normalizeUrl(url);
+  if (!href) return '';
+  return `<a class="doc-link" href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer">&#128196; Document</a>`;
 }
 
 function renderPropertyCard(property) {
@@ -802,8 +817,8 @@ function renderPropertyCard(property) {
         ${renderDocLink(property.documentUrl)}
       </div>
       <div class="portfolio-card-actions">
-        <button class="portfolio-edit-btn" onclick="startEditProperty('${property.id}')" aria-label="Edit ${escapeHtml(property.name)}">Edit</button>
-        <button class="portfolio-delete-btn" onclick="deleteProperty('${property.id}')" aria-label="Delete ${escapeHtml(property.name)}">Delete</button>
+        <button class="portfolio-edit-btn" data-id="${escapeHtml(property.id)}" onclick="startEditProperty(this.dataset.id)" aria-label="Edit ${escapeHtml(property.name)}">Edit</button>
+        <button class="portfolio-delete-btn" data-id="${escapeHtml(property.id)}" onclick="deleteProperty(this.dataset.id)" aria-label="Delete ${escapeHtml(property.name)}">Delete</button>
       </div>
     </article>
   `;
@@ -820,8 +835,8 @@ function renderVendorCard(vendor) {
         ${renderDocLink(vendor.documentUrl)}
       </div>
       <div class="portfolio-card-actions">
-        <button class="portfolio-edit-btn" onclick="startEditVendor('${vendor.id}')" aria-label="Edit ${escapeHtml(vendor.name)}">Edit</button>
-        <button class="portfolio-delete-btn" onclick="deleteVendor('${vendor.id}')" aria-label="Delete ${escapeHtml(vendor.name)}">Delete</button>
+        <button class="portfolio-edit-btn" data-id="${escapeHtml(vendor.id)}" onclick="startEditVendor(this.dataset.id)" aria-label="Edit ${escapeHtml(vendor.name)}">Edit</button>
+        <button class="portfolio-delete-btn" data-id="${escapeHtml(vendor.id)}" onclick="deleteVendor(this.dataset.id)" aria-label="Delete ${escapeHtml(vendor.name)}">Delete</button>
       </div>
     </article>
   `;
@@ -849,9 +864,9 @@ function renderTenantCard(tenant) {
         ${renderDocLink(tenant.documentUrl)}
       </div>
       <div class="portfolio-card-actions">
-        <button class="portfolio-edit-btn" onclick="recordTenantPayment('${tenant.id}')" aria-label="Record payment for ${escapeHtml(tenant.name)}">Payment</button>
-        <button class="portfolio-edit-btn" onclick="startEditTenant('${tenant.id}')" aria-label="Edit ${escapeHtml(tenant.name)}">Edit</button>
-        <button class="portfolio-delete-btn" onclick="deleteTenant('${tenant.id}')" aria-label="Delete ${escapeHtml(tenant.name)}">Delete</button>
+        <button class="portfolio-edit-btn" data-id="${escapeHtml(tenant.id)}" onclick="recordTenantPayment(this.dataset.id)" aria-label="Record payment for ${escapeHtml(tenant.name)}">Payment</button>
+        <button class="portfolio-edit-btn" data-id="${escapeHtml(tenant.id)}" onclick="startEditTenant(this.dataset.id)" aria-label="Edit ${escapeHtml(tenant.name)}">Edit</button>
+        <button class="portfolio-delete-btn" data-id="${escapeHtml(tenant.id)}" onclick="deleteTenant(this.dataset.id)" aria-label="Delete ${escapeHtml(tenant.name)}">Delete</button>
       </div>
     </article>
   `;
