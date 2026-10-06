@@ -14,7 +14,9 @@
     "test:e2e": "playwright test",
     "test:e2e:pages": "npm run build && playwright test --config playwright.pages.config.mjs",
     "start": "webpack serve --open --config webpack.config.dev.js",
-    "build": "webpack --config webpack.config.prod.js"
+    "build": "webpack --config webpack.config.prod.js",
+    "ids:assign": "node scripts/assign-task-ids.mjs",
+    "ids:check": "node scripts/assign-task-ids.mjs --check"
   },
   "devDependencies": {
     "@playwright/test": "1.56.1",
