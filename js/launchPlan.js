@@ -9,6 +9,7 @@ import {
 } from './storage.js';
 import { escapeHtml, _slugify, getLeaseStatus, getDelinquencyStatus, formatCurrency } from './utils.js';
 import { ROLE_TEMPLATES, buildDemoWorkspace } from './templates.js';
+import { DEMO_MODE } from './demoMode.js';
 
 // Maintainer note:
 // This module powers the top-of-dashboard Launch Plan and "Start Here" next
@@ -265,6 +266,12 @@ const SEVEN_DAY_PLAN = [
   },
 ];
 
+// "Compliance needs…" for one weak lane, "Compliance, Leasing need…" for several (first three named).
+export function coverageRiskDetail(areas) {
+  const verb = areas.length === 1 ? 'needs' : 'need';
+  return `${areas.map(area => area.label).slice(0, 3).join(', ')} ${verb} clearer ownership.`;
+}
+
 export function renderLaunchPlan() {
   // Called by app init, ui.updateStats(), onboarding submit, checklist changes,
   // and guided action handlers. Keep this render idempotent and derived from
@@ -306,7 +313,7 @@ export function renderLaunchPlan() {
     <div class="launch-metrics-grid" aria-label="Launch readiness metrics">
       ${renderMetricCard('Portfolio', String(snapshot.propertyCount), `${snapshot.unitCount} units / ${snapshot.tenantCount} tenants / ${snapshot.vendorCount} vendors`, snapshot.propertyCount && snapshot.tenantCount && snapshot.vendorCount ? 'good' : 'warn')}
       ${renderMetricCard('Owned tasks', `${snapshot.assignedTasks}/${snapshot.totalTasks}`, `${snapshot.unownedTasks} unowned`, snapshot.unownedTasks ? 'warn' : 'good')}
-      ${renderMetricCard('Team roster', String(snapshot.employeeCount), snapshot.isStarterTeam ? 'sample roster' : 'real people', snapshot.isStarterTeam ? 'warn' : 'good')}
+      ${renderMetricCard('Team roster', String(snapshot.employeeCount), snapshot.isStarterTeam ? 'sample roster' : DEMO_MODE ? 'fictional people' : 'real people', snapshot.isStarterTeam ? 'warn' : 'good')}
       ${renderMetricCard('Open repairs', String(snapshot.openWorkOrders), `${snapshot.unassignedWorkOrders} unassigned`, snapshot.unassignedWorkOrders ? 'warn' : 'good')}
       ${renderMetricCard('Blocked work', String(snapshot.blockedTasks), `${snapshot.overdueTasks} overdue`, snapshot.blockedTasks || snapshot.overdueTasks ? 'danger' : 'good')}
     </div>
@@ -945,7 +952,7 @@ function getRiskQueue(snapshot) {
     risks.push({
       label: 'Ownership Map',
       title: `${weakCoverage.length} critical coverage lane${weakCoverage.length === 1 ? '' : 's'} under 70%`,
-      detail: `${weakCoverage.map(area => area.label).slice(0, 3).join(', ')} need clearer ownership.`,
+      detail: coverageRiskDetail(weakCoverage),
       tone: 'danger',
       onclick: `focusCoverageArea('${weakCoverage[0].id}')`,
     });

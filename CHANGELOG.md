@@ -11,6 +11,7 @@
 ### Fixed
 - Per-task **notes and custom fields** are now part of the portable workspace (schema v3): they were missing from JSON export, Copy State, and Team Sync, and were not restored from backups. Version 2 files still import.
 - **Reset now deletes automatic backups** (full workspace copies, tenant records included) with "Operating workspace" and "Everything"; its confirmation says what a reset does not touch. Team Sync is stopped first so it cannot re-save the passphrase.
+- Risk Queue grammar: "Compliance **needs** clearer ownership" when exactly one lane is weak (was "need"). The demo's team card now says "fictional people" instead of "real people".
 - Task rows no longer squeeze the task name under the status pill when a task has a due date, a dependency, and notes.
 - Work orders without a timestamp no longer display the text "Invalid Date".
 
