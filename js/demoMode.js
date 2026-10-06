@@ -9,6 +9,7 @@
 // This module has no dependencies on purpose — storage.js imports it to name
 // every key, so it must load first and must not import anything back.
 
+/** @param {string} search @returns {boolean} */
 function detectDemoMode(search) {
   try {
     return new URLSearchParams(search).get('demo') === '1';
@@ -20,6 +21,7 @@ function detectDemoMode(search) {
 export const DEMO_MODE = detectDemoMode(typeof location === 'undefined' ? '' : location.search);
 
 // All real keys start with "pm-ops-"; demo keys become "pm-ops-demo-...".
+/** @param {string} key @returns {string} */
 export const namespacedKey = key => (DEMO_MODE ? key.replace(/^pm-ops-/, 'pm-ops-demo-') : key);
 
 // Exposed for tests, which need to evaluate the same logic for both modes.

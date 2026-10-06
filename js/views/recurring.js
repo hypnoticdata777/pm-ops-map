@@ -1,3 +1,4 @@
+// @ts-nocheck — TODO(types): not converted to checked JSDoc yet. Delete this line and fix what `npm run typecheck` reports.
 // Recurring task templates — generate common PM work-order checklists on demand.
 import { workOrders, setWorkOrders } from '../state.js';
 import { saveWorkOrders, logAudit, _showActionToast } from '../storage.js';

@@ -76,6 +76,7 @@ export const SOP_TEMPLATES = [
   },
 ];
 
+/** @param {string | number | Date} from @param {number} days @returns {string} */
 function _isoDateOffset(from, days) {
   const d = new Date(from);
   d.setDate(d.getDate() + days);

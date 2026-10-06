@@ -1,3 +1,4 @@
+// @ts-nocheck — TODO(types): not converted to checked JSDoc yet. Delete this line and fix what `npm run typecheck` reports.
 // Tracking view: department cards, task editing, owner picker, filter bar,
 // status/priority cycling, due dates, and task dependencies.
 import {

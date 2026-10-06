@@ -5,6 +5,7 @@
 // exact file — there is no second copy to keep in sync.
 
 // Escapes text for use as element content or inside a quoted attribute value.
+/** @param {unknown} str @returns {string} */
 function escapeHtml(str) {
   return String(str == null ? '' : str)
     .replace(/&/g, '&amp;')
@@ -20,16 +21,19 @@ function escapeHtml(str) {
 // inside the value — say "&quot;" — stays literal text after the attribute is
 // parsed instead of turning back into a quote that ends the JS string.
 // Prefer data-* attributes (see CONTRIBUTING.md) for anything user-controlled.
+/** @param {unknown} val @returns {string} */
 function jsonAttr(val) {
   return escapeHtml(JSON.stringify(String(val == null ? '' : val)));
 }
 
+/** @param {HTMLElement | null | undefined} el */
 function shakeInput(el) {
   if (!el) return;
   el.classList.add('shake');
   setTimeout(() => el.classList.remove('shake'), 400);
 }
 
+/** @param {unknown} e @returns {boolean} */
 function _isQuotaError(e) {
   return e instanceof DOMException && (
     e.code === 22 || e.name === 'QuotaExceededError' || e.name === 'NS_ERROR_DOM_QUOTA_REACHED'
@@ -37,6 +41,7 @@ function _isQuotaError(e) {
 }
 
 // Returns true only for strings that are valid YYYY-MM-DD ISO dates.
+/** @param {unknown} str @returns {boolean} */
 function isValidISODate(str) {
   if (typeof str !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(str)) return false;
   const d = new Date(str + 'T00:00:00');
@@ -53,11 +58,13 @@ function getTodayISO() {
 }
 
 // Returns true if the task has a due date in the past and is not done.
+/** @param {{ dueDate?: string | null, status?: string }} task @returns {boolean} */
 function isTaskOverdue(task) {
   return !!(task.dueDate && isValidISODate(task.dueDate) && task.dueDate < getTodayISO() && (task.status || 'todo') !== 'done');
 }
 
 // Formats YYYY-MM-DD to "Dec 15" without toLocaleDateString for consistency.
+/** @param {string | null | undefined} dateStr @returns {string} */
 function formatDueChip(dateStr) {
   if (!dateStr) return '';
   const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -70,6 +77,7 @@ function formatDueChip(dateStr) {
 }
 
 // Returns the inline HTML that shows done and blocked counts in the dept header.
+/** @param {number} doneCount @param {number} blockedCount @returns {string} */
 function buildDeptCompletionText(doneCount, blockedCount) {
   const parts = [];
   if (doneCount   > 0) parts.push(`· <span class="dept-done-count">✓ ${doneCount} done</span>`);
@@ -77,10 +85,12 @@ function buildDeptCompletionText(doneCount, blockedCount) {
   return parts.join(' ');
 }
 
+/** @param {unknown} value @returns {string} */
 function _slugify(value) {
   return String(value || 'pm-ops').replace(/[^a-z0-9]+/gi, '-').toLowerCase().replace(/^-|-$/g, '') || 'pm-ops';
 }
 
+/** @param {BlobPart} content @param {string} mimeType @param {string} filename */
 function _downloadBlob(content, mimeType, filename) {
   const blob = new Blob([content], { type: mimeType });
   const url  = URL.createObjectURL(blob);
@@ -93,8 +103,9 @@ function _downloadBlob(content, mimeType, filename) {
   URL.revokeObjectURL(url);
 }
 
+/** @param {string | null | undefined} isoStr @returns {string} */
 function formatWODate(isoStr) {
-  const d = new Date(isoStr);
+  const d = new Date(isoStr ?? NaN); // null/undefined fall through to the !isoStr guard below
   if (!isoStr || Number.isNaN(d.getTime())) return '';
   try {
     return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
@@ -102,6 +113,7 @@ function formatWODate(isoStr) {
 }
 
 // Formats a number as USD, e.g. 1200 -> "$1,200.00".
+/** @param {unknown} amount @returns {string} */
 function formatCurrency(amount) {
   return `$${Number(amount || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
@@ -109,11 +121,16 @@ function formatCurrency(amount) {
 // Returns { tone, label, days } describing how close a tenant's lease end
 // date is, or null if the tenant has no valid lease end date on file.
 // todayISO is injectable for testing; defaults to the real current date.
+/**
+ * @param {{ leaseEnd?: string } | null | undefined} tenant
+ * @param {string} [todayISO]
+ * @returns {{ tone: string, label: string, days: number } | null}
+ */
 function getLeaseStatus(tenant, todayISO = getTodayISO()) {
   if (!tenant || !isValidISODate(tenant.leaseEnd)) return null;
   const today = new Date(todayISO + 'T00:00:00');
   const end   = new Date(tenant.leaseEnd + 'T00:00:00');
-  const days  = Math.round((end - today) / 86400000);
+  const days  = Math.round((end.getTime() - today.getTime()) / 86400000);
 
   if (days < 0)   return { tone: 'danger', label: 'Lease expired', days };
   if (days <= 60) return { tone: 'warn', label: days === 0 ? 'Lease ends today' : `Lease ends in ${days}d`, days };
@@ -123,6 +140,10 @@ function getLeaseStatus(tenant, todayISO = getTodayISO()) {
 // Returns { tone, label, balance } if a tenant has a positive outstanding
 // balance, or null if they're current. Tone escalates to danger once the
 // balance reaches a full month's rent.
+/**
+ * @param {{ balanceDue?: number, rent?: number } | null | undefined} tenant
+ * @returns {{ tone: string, label: string, balance: number } | null}
+ */
 function getDelinquencyStatus(tenant) {
   const balance = Number(tenant?.balanceDue || 0);
   if (!(balance > 0)) return null;
@@ -142,6 +163,7 @@ const MAX_URL_LENGTH = 2048;
 // origin, so anything bigger could not be stored anyway — and reading a huge
 // file into memory would just freeze the tab.
 const MAX_IMPORT_BYTES = 5 * 1024 * 1024;
+/** @param {unknown} url @returns {string} */
 function normalizeUrl(url) {
   if (typeof url !== 'string') return '';
   const trimmed = url.trim();
@@ -157,6 +179,7 @@ function normalizeUrl(url) {
 // Only allows absolute http(s) links — this gets embedded as an <a href>, so
 // rejecting anything else up front means callers never need to think about
 // scheme-based injection at render time.
+/** @param {unknown} url @returns {boolean} */
 function isSafeUrl(url) {
   return normalizeUrl(url) !== '';
 }
@@ -165,8 +188,11 @@ function isSafeUrl(url) {
 // embedded newlines inside quotes, escaped "" quotes, and CRLF/LF endings.
 // Returns an array of row arrays; drops a single trailing blank line so a
 // file that ends with a newline doesn't produce a phantom empty row.
+/** @param {unknown} text @returns {string[][]} */
 function parseCSV(text) {
+  /** @type {string[][]} */
   const rows = [];
+  /** @type {string[]} */
   let row = [];
   let field = '';
   let inQuotes = false;
@@ -207,6 +233,7 @@ const CSV_FORMULA_TRIGGER = /^'*[=+\-@\t\r]/;
 const CSV_GUARDED = /^'+[=+\-@\t\r]/;
 
 // Encodes one cell as a quoted CSV field.
+/** @param {unknown} value @returns {string} */
 function csvCell(value) {
   let text = value == null ? '' : String(value);
   if (typeof value === 'string' && CSV_FORMULA_TRIGGER.test(text)) text = `'${text}`;
@@ -214,19 +241,23 @@ function csvCell(value) {
 }
 
 // Builds a full CSV document (CRLF line endings) from an array of row arrays.
+/** @param {unknown[][]} rows @returns {string} */
 function toCSV(rows) {
   return rows.map(row => row.map(csvCell).join(',')).join('\r\n');
 }
 
 // Reverses the guard added by csvCell so export -> edit -> re-import is lossless
 // (e.g. a phone number "+1 555 0100" comes back without the apostrophe).
+/** @param {string} text @returns {string} */
 function unguardCsvCell(text) {
   return typeof text === 'string' && CSV_GUARDED.test(text) ? text.slice(1) : text;
 }
 
 // Builds a case-insensitive header-name -> column-index map, e.g. for
 // matching a CSV's own column order against expected field names.
+/** @param {unknown[] | null | undefined} headerRow @returns {Record<string, number>} */
 function buildCsvHeaderMap(headerRow) {
+  /** @type {Record<string, number>} */
   const map = {};
   (headerRow || []).forEach((name, idx) => {
     const key = String(name || '').trim().toLowerCase();

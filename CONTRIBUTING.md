@@ -67,7 +67,10 @@ pm-ops-map/
 │   ├── sync.js         Optional team sync client — talks to server/
 │   ├── launchPlan.js   Beginner setup dashboard and readiness checks
 │   ├── handbook.js     Markdown handbook export
-│   ├── normalize.js    Sanitizers for every path that loads outside data
+│   ├── schema.js       Hand-rolled schema layer: field helpers, record/collection validation, error paths
+│   ├── normalize.js    Sanitizers for every path that loads outside data (built on schema.js)
+│   ├── syncEnvelope.js Checks the shape of Team Sync server replies
+│   ├── types.js        Shared JSDoc type definitions (no runtime code)
 │   ├── taskIdentity.js Permanent task ids: stamping at boot and matching saved rows to tasks
 │   ├── privacy.js      Data-handling guidance and export confirmations
 │   ├── demoMode.js     ?demo=1 detection and storage-key namespacing
@@ -115,6 +118,14 @@ PM Ops Map renders data it did not create — imported JSON, pasted clipboard te
 
 `npm run test:e2e` runs a browser suite (`e2e/security-xss.spec.js`) that injects a canary payload into every importable field and fails if any view turns it into markup or script. If you add a field or a view, extend `e2e/helpers/security.js`.
 
+## Types (JSDoc + `npm run typecheck`)
+
+The client is plain JavaScript with no build step, and it is type-checked with JSDoc comments: `npm run typecheck` runs `tsc` over `js/` (`allowJs`, `checkJs`, `strict`, `noEmit`). CI runs it before the tests.
+
+- Shared shapes (Task, Employee, WorkOrder, Property, Tenant, Vendor, WorkspacePayload, ImportReport, …) live in `js/types.js`. Pull them into a file with `/** @import { Task } from './types.js' */`.
+- Annotate with `@param` / `@returns` / `@type`. Don't use `any`: if a value really is untrusted, type it `unknown` and narrow it (see `normalize.js`); if you must reach for `any`, say why in a comment next to it.
+- Files that are not converted yet start with `// @ts-nocheck — TODO(types): …`. To convert one, delete that line, fix what `npm run typecheck` reports, and remove it from `NOT_CONVERTED_YET` in `js/__tests__/typecheck-guard.test.js`. New files are checked from the start.
+
 ## Dependency Updates
 
 Dependabot opens weekly update PRs (`.github/dependabot.yml`): minor and patch bumps are grouped, every major bump is its own PR, and the sync server's production dependencies (Express, cors) are grouped apart from test tooling. CI audits production dependencies of both packages on every push, and `.github/workflows/audit.yml` repeats that weekly so a newly published advisory fails loudly even when nobody is pushing. When a Dependabot PR is green, merge it; when it is a major bump, read the changelog first.
@@ -128,7 +139,7 @@ The client (`index.html`, `js/`, `css/`) has no runtime npm dependencies and sho
 - If you're editing an HTML-called handler, update both `index.html` and the `Object.assign(window, ...)` block in `js/app.js`
 - If you're editing a view, keep changes in the relevant `js/views/` module when possible
 - No new runtime dependencies in the client app (`index.html`, `js/`, `css/`) — it should keep working as browser-native HTML, CSS, and JavaScript with zero installs. `server/` is a separate package and may have its own minimal dependencies.
-- Run `npm test` before submitting — tests must pass. If you touched rendering, import/export, or storage code, also run `npm run test:e2e` (one-time setup: `npx playwright install chromium`). If you touched `server/`, also run `npm test` inside `server/`.
+- Run `npm run typecheck` and `npm test` before submitting — both must pass. If you touched rendering, import/export, or storage code, also run `npm run test:e2e` (one-time setup: `npx playwright install chromium`). If you touched `server/`, also run `npm test` inside `server/`.
 - Test the real modules: import from `js/*.js` in your tests. Don't add `.cjs` mirrors or test-only copies of browser code.
 
 ## Code Style

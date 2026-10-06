@@ -1,3 +1,4 @@
+/** @import { Issue, AuditEntry, OrgData } from './types.js' */
 // localStorage persistence, toast notifications, and company profile helpers.
 import {
   orgData, teamData, setTeamData, workOrders, setWorkOrders,
@@ -28,17 +29,25 @@ export const BACKUP_KEY           = namespacedKey('pm-ops-backups-v1');
 export const SYNC_CONFIG_KEY      = namespacedKey('pm-ops-sync-config-v1');
 const MAX_BACKUPS = 5;
 
+/**
+ * The company profile saved by onboarding (all fields optional: older saves lack some).
+ * @typedef {{ company?: string, portfolioSize?: string, focus?: string, configuredAt?: string }} OpsProfile
+ */
+
 // ── Repairs made while loading saved data ─────────────────────────────────────
 // Everything read back from localStorage goes through normalize.js. When that had to
 // reset, clear or drop something, the loader records it here (source + field path +
 // sentence) and warns once in the console, so a silent repair can still be diagnosed.
+/** @type {{ source: string, path: string, code: string, message: string }[]} */
 let loadIssues = [];
 
 export function getLoadIssues() { return loadIssues.map(issue => ({ ...issue })); }
 export function clearLoadIssues() { loadIssues = []; }
 
+/** @type {Record<string, string>} */
 const LOAD_SOURCE_LABELS = { tasks: 'tasks', team: 'team', workOrders: 'work orders', portfolio: 'portfolio' };
 
+/** @param {string} source @param {Issue[]} errors @param {number} [omitted] */
 function recordLoadIssues(source, errors, omitted = 0) {
   loadIssues = loadIssues.filter(issue => issue.source !== source);
   if (!errors.length) return;
@@ -51,7 +60,8 @@ function recordLoadIssues(source, errors, omitted = 0) {
 }
 
 // ── Toast notifications ───────────────────────────────────────────────────────
-let _toastTimer = null;
+/** @type {ReturnType<typeof setTimeout> | undefined} */
+let _toastTimer;
 
 export function showSaveToast(isError = false, isQuota = false) {
   const toast = document.getElementById('save-toast');
@@ -69,6 +79,7 @@ export function showSaveToast(isError = false, isQuota = false) {
   _toastTimer = setTimeout(() => toast.classList.remove('visible'), isQuota ? 6000 : 2000);
 }
 
+/** @param {string} msg @param {string} cls @param {number} [duration] */
 export function _showActionToast(msg, cls, duration = 3000) {
   const toast = document.getElementById('save-toast');
   if (!toast) return;
@@ -83,7 +94,7 @@ export function _showActionToast(msg, cls, duration = 3000) {
 // ── Task data persistence ─────────────────────────────────────────────────────
 export function saveToStorage() {
   try {
-    const payload = orgData.departments.map(dept => ({
+    const payload = liveDepartments().map(dept => ({
       id: dept.id,
       tasks: dept.tasks.map(t => ({
         id:           t.id,
@@ -114,8 +125,9 @@ export function loadFromStorage() {
     if (!raw) return;
     const saved = JSON.parse(raw);
     if (!Array.isArray(saved)) return;
+    /** @type {Issue[]} */
     const issues = [];
-    applySavedTasks(orgData.departments, saved, { issues });
+    applySavedTasks(liveDepartments(), saved, { issues });
     recordLoadIssues('tasks', issues);
   } catch (e) {
     console.error('Failed to parse saved task data — data preserved in storage:', e);
@@ -148,6 +160,7 @@ export const RESET_EVENT = 'pm-ops-reset';
 // Every localStorage key the app writes. The "Everything" reset is derived from
 // this list, and a unit test checks that every exported *_KEY constant is in it,
 // so a newly added key cannot be forgotten and silently survive a reset.
+/** @type {string[]} */
 export const ALL_STORAGE_KEYS = [
   STORAGE_KEY, COMPANY_KEY, OPS_PROFILE_KEY, NAV_COMPACT_KEY, TEAM_KEY, WORKORDERS_KEY,
   PORTFOLIO_KEY, AUDIT_KEY, GUIDE_KEY, NOTIF_DATE_KEY, LAUNCH_CHECKLIST_KEY, BACKUP_KEY,
@@ -156,6 +169,7 @@ export const ALL_STORAGE_KEYS = [
 
 // Automatic backups are full copies of the workspace (tenant records included),
 // so any reset that claims to remove the workspace must remove them too.
+/** @type {Record<string, { label: string, keys: string[] }>} */
 export const RESET_GROUPS = {
   '1': {
     label: 'task names, owners, statuses, due dates, dependencies, notes, and custom fields (automatic backups are kept)',
@@ -175,6 +189,7 @@ export const RESET_GROUPS = {
   },
 };
 
+/** @param {unknown} choice */
 export function confirmResetStorage(choice) {
   const selected = RESET_GROUPS[String(choice).trim()];
   if (!selected) {
@@ -191,13 +206,18 @@ export function confirmResetStorage(choice) {
 // ── Team data persistence ─────────────────────────────────────────────────────
 const knownDeptIds = () => orgData?.departments?.map(d => d.id);
 
+// Config is loaded at boot, before anything saves or restores, so these never run without it.
+const liveDepartments = () => /** @type {OrgData} */ (orgData).departments;
+
 export function seedDefaultTeam() {
-  teamData.employees = Object.entries(ownerColors)
+  const colors = /** @type {NonNullable<typeof ownerColors>} */ (ownerColors);
+  const affinities = /** @type {NonNullable<typeof defaultAffinities>} */ (defaultAffinities);
+  teamData.employees = Object.entries(colors)
     .filter(([name]) => name !== 'UNOWNED')
     .map(([name, info]) => ({
       name,
       hex: info.hex,
-      affinities: defaultAffinities[name] ? [...defaultAffinities[name]] : []
+      affinities: affinities[name] ? [...affinities[name]] : []
     }));
 }
 
@@ -289,6 +309,7 @@ export function saveAuditLog() {
   } catch (_) { /* silent fail */ }
 }
 
+/** @param {string} action @param {Partial<Omit<AuditEntry, 'ts' | 'action'>>} [details] */
 export function logAudit(action, details = {}) {
   auditLog.unshift({ ts: new Date().toISOString(), action, ...details });
   if (auditLog.length > 500) auditLog.length = 500;
@@ -300,14 +321,16 @@ export function getCompanyName() {
   return localStorage.getItem(COMPANY_KEY) || 'Your Company';
 }
 
+/** @returns {OpsProfile} */
 export function getOpsProfile() {
   try {
-    return JSON.parse(localStorage.getItem(OPS_PROFILE_KEY)) || {};
+    return JSON.parse(localStorage.getItem(OPS_PROFILE_KEY) ?? 'null') || {};
   } catch (_) {
     return {};
   }
 }
 
+/** @param {string} name */
 export function applyCompanyName(name) {
   const heading = document.getElementById('company-heading');
   if (heading) heading.textContent = name.toUpperCase();
@@ -347,7 +370,7 @@ export function saveBackupSnapshot(label = 'Auto-save') {
       label,
       company: getCompanyName(),
       state: JSON.stringify({
-        departments: orgData.departments,
+        departments: liveDepartments(),
         team: teamData,
         workOrders,
         portfolio,
@@ -393,6 +416,7 @@ export function closeBackupsModal() {
   document.getElementById('backups-modal')?.classList.remove('visible');
 }
 
+/** @param {number} index */
 export function restoreBackupSnapshot(index) {
   const backups = loadBackupSnapshots();
   const backup  = backups[index];
@@ -404,7 +428,7 @@ export function restoreBackupSnapshot(index) {
 
     // Restore replaces state, so absent task fields reset to defaults (fill) and
     // notes/customFields come back with everything else.
-    applySavedTasks(orgData.departments, departments, { fill: true });
+    applySavedTasks(liveDepartments(), departments, { fill: true });
 
     const clean = sanitizeWorkspace(
       { team, workOrders: wos, portfolio: port },
@@ -434,6 +458,7 @@ export function restoreBackupSnapshot(index) {
   }
 }
 
+/** @param {unknown} str @returns {string} */
 function escapeBackup(str) {
   return String(str ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }

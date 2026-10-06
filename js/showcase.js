@@ -1,3 +1,4 @@
+/** @import { Department, Employee, Property, Tenant, Vendor, WorkOrder } from './types.js' */
 // The workspace behind the hosted demo (?demo=1): entirely fictional, deterministic,
 // and shaped to show what the tool is FOR rather than a wall of identical rows.
 //
@@ -14,11 +15,13 @@
 
 const DAY_MS = 86_400_000;
 
+/** @param {Date} now @param {number} days @returns {string} */
 const isoDate = (now, days) => {
   const d = new Date(now);
   d.setDate(d.getDate() + days);
   return d.toISOString().slice(0, 10);
 };
+/** @param {Date} now @param {number} days @returns {string} */
 const isoStamp = (now, days) => new Date(now.getTime() + days * DAY_MS).toISOString();
 
 export const SHOWCASE_COMPANY = 'Demo Door Property Management';
@@ -26,6 +29,7 @@ export const SHOWCASE_COMPANY = 'Demo Door Property Management';
 // Departments with no one assigned on purpose — the gaps the map is meant to expose.
 export const UNCOVERED_DEPARTMENTS = ['compliance', 'reporting', 'systems'];
 
+/** @type {Employee[]} */
 const TEAM = [
   {
     name: 'Dana Whitfield', hex: '#1565c0',
@@ -44,6 +48,7 @@ const TEAM = [
 export function buildShowcase(now = new Date()) {
   const team = { employees: TEAM.map(emp => ({ ...emp, affinities: [...emp.affinities] })) };
 
+  /** @type {Property[]} */
   const properties = [
     {
       id: 'demo-property-oak', name: 'Oak Street Duplex', units: 2, owner: 'Rivera Family LLC',
@@ -57,7 +62,8 @@ export function buildShowcase(now = new Date()) {
     },
   ];
 
-  const tenants = [
+  /** @type {(Omit<Tenant, 'documentUrl'> & { documentUrl?: string })[]} */
+  const tenantsRows = [
     {
       id: 'demo-tenant-1', name: 'Maya Chen', propertyId: 'demo-property-oak', unit: '2B', status: 'active',
       phone: '(555) 010-2041', email: 'maya.chen@example.com', rent: 1450,
@@ -84,8 +90,12 @@ export function buildShowcase(now = new Date()) {
       lastPaymentDate: isoDate(now, -9), createdAt: isoStamp(now, -370),
     },
   ];
+  // Every real record has a documentUrl (the sanitizers add it), so the demo's must too.
+  /** @type {Tenant[]} */
+  const tenants = tenantsRows.map(row => ({ documentUrl: '', ...row }));
 
-  const vendors = [
+  /** @type {(Omit<Vendor, 'documentUrl'> & { documentUrl?: string })[]} */
+  const vendorsRows = [
     {
       id: 'demo-vendor-1', name: 'Ace Plumbing', trade: 'Plumbing', phone: '(555) 010-1188',
       email: 'dispatch@aceplumbing.example', documentUrl: 'https://example.com/documents/ace-plumbing-coi.pdf',
@@ -100,7 +110,11 @@ export function buildShowcase(now = new Date()) {
       email: 'help@clearviewhvac.example', createdAt: isoStamp(now, -130),
     },
   ];
+  // Every real record has a documentUrl (the sanitizers add it), so the demo's must too.
+  /** @type {Vendor[]} */
+  const vendors = vendorsRows.map(row => ({ documentUrl: '', ...row }));
 
+  /** @param {number} n @param {Pick<WorkOrder, 'property' | 'title' | 'status' | 'priority' | 'assignee'> & Partial<WorkOrder>} fields @returns {WorkOrder} */
   const order = (n, fields) => ({
     id: `demo-wo-${n}`, unit: '', tenant: '', notes: '', vendor: '', dueDate: null, cost: 0,
     createdAt: isoStamp(now, -6), updatedAt: isoStamp(now, -1), ...fields,
@@ -145,6 +159,7 @@ export function buildShowcase(now = new Date()) {
 
 // Sets owners, status, priority, due dates, dependencies, notes and custom fields on
 // the live config departments (mutating them, like the app's own Auto-Assign does).
+/** @param {Department[]} departments @param {Employee[]} employees @param {Date} [now] */
 export function applyShowcaseTasks(departments, employees, now = new Date()) {
   const workload = new Map(employees.map(emp => [emp.name, 0]));
   const byId = new Map(departments.map(dept => [dept.id, dept]));
@@ -167,8 +182,9 @@ export function applyShowcaseTasks(departments, employees, now = new Date()) {
       }
 
       // Least-loaded person among those with affinity — same idea as the app's Auto-Assign.
-      const owner = [...pool].sort((a, b) => workload.get(a.name) - workload.get(b.name))[0];
-      workload.set(owner.name, workload.get(owner.name) + 1);
+      const load = (/** @type {Employee} */ emp) => workload.get(emp.name) ?? 0; // every employee starts at 0
+      const owner = /** @type {Employee} */ ([...pool].sort((a, b) => load(a) - load(b))[0]); // pool is non-empty here
+      workload.set(owner.name, load(owner) + 1);
       task.owner = owner.name;
 
       // Deterministic spread so the same demo always looks the same.
@@ -179,6 +195,7 @@ export function applyShowcaseTasks(departments, employees, now = new Date()) {
     });
   });
 
+  /** @param {string} deptId @param {number} blockedIdx @param {number} blockerIdx */
   const link = (deptId, blockedIdx, blockerIdx) => {
     const tasks = byId.get(deptId)?.tasks;
     const blocked = tasks?.[blockedIdx];

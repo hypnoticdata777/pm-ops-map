@@ -1,3 +1,5 @@
+/** @import { Department, Task } from './types.js' */
+/** @typedef {Omit<Task, 'id'> & { id?: string }} RawTask */
 // Task identity: how a saved/imported/backed-up task row finds its starter task.
 //
 // Every starter task in config.json has a permanent `id` (e.g. "maintenance-014").
@@ -13,10 +15,12 @@
 // Same character set as the other ids that reach attributes and selectors (see normalize.js).
 const TASK_ID_RE = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,79}$/;
 
+/** @param {unknown} value @returns {value is string} */
 export function isTaskId(value) {
   return typeof value === 'string' && TASK_ID_RE.test(value);
 }
 
+/** @param {unknown} name @returns {string} */
 function slugify(name) {
   const slug = String(name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 30).replace(/-+$/, '');
   return slug || 'task';
@@ -26,6 +30,11 @@ function slugify(name) {
 // as `_configName` and makes sure every task has a unique, safe `id`. Tasks from a
 // custom config without ids get a deterministic fallback derived from their starter
 // name, so the same config always produces the same ids.
+/**
+ * @template {{ id: string, tasks: RawTask[] }} D
+ * @param {D[]} departments  Departments whose tasks may still lack an id (a config without ids).
+ * @returns {Department[]}    The same departments, now with every task carrying a unique `id`.
+ */
 export function stampTaskIdentity(departments) {
   const used = new Set();
   departments.forEach(dept => dept.tasks.forEach(task => {
@@ -41,15 +50,23 @@ export function stampTaskIdentity(departments) {
     used.add(id);
     task.id = id;
   }));
-  return departments;
+  // The loop above gave every task an id, which the RawTask input type could not promise.
+  return /** @type {Department[]} */ (/** @type {unknown} */ (departments));
 }
 
+/** @param {Task} task @param {string} key @returns {boolean} */
 function nameMatches(task, key) {
   return task._configName === key || (Array.isArray(task.aliases) && task.aliases.includes(key));
 }
 
 // Finds the live config task a saved row refers to, or null.
 // `saved` may carry { id, _configName, name }; `deptId` is the department it was saved under.
+/**
+ * @param {Department[]} departments
+ * @param {{ id?: unknown, _configName?: unknown, name?: unknown } | null | undefined} saved
+ * @param {{ deptId?: string }} [where]
+ * @returns {Task | null}
+ */
 export function findConfigTask(departments, saved, { deptId } = {}) {
   if (!saved || typeof saved !== 'object') return null;
   if (isTaskId(saved.id)) {
@@ -65,6 +82,11 @@ export function findConfigTask(departments, saved, { deptId } = {}) {
 }
 
 // Resolves a task's `blockedBy` reference ({ deptId, taskId?, configName?, name }) to the blocking task.
+/**
+ * @param {Department[]} departments
+ * @param {{ deptId?: string, taskId?: string, configName?: string } | null | undefined} blockedBy
+ * @returns {Task | null}
+ */
 export function findBlockerTask(departments, blockedBy) {
   if (!blockedBy || typeof blockedBy !== 'object') return null;
   return findConfigTask(departments, { id: blockedBy.taskId, _configName: blockedBy.configName }, { deptId: blockedBy.deptId });

@@ -1,3 +1,4 @@
+// @ts-nocheck — TODO(types): not converted to checked JSDoc yet. Delete this line and fix what `npm run typecheck` reports.
 // Map view: SVG flow diagram, dept panel, tooltips, and map controls.
 import {
   orgData, mapState, getEmployeeHex,

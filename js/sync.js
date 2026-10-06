@@ -1,3 +1,4 @@
+// @ts-nocheck — TODO(types): not converted to checked JSDoc yet. Delete this line and fix what `npm run typecheck` reports.
 // Optional team sync: talks to the self-hosted sync server in server/ so a
 // small team can share one workspace across browsers without a full backend.
 // The app works exactly as before if this is never connected — everything

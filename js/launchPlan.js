@@ -1,3 +1,4 @@
+// @ts-nocheck — TODO(types): not converted to checked JSDoc yet. Delete this line and fix what `npm run typecheck` reports.
 import {
   orgData, teamData, setTeamData, workOrders, setWorkOrders, portfolio, setPortfolio,
   ownerColors, countUnowned,

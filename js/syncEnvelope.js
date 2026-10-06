@@ -7,19 +7,23 @@
 import { cleanTimestamp } from './schema.js';
 
 export class SyncResponseError extends Error {
+  /** @param {string} message */
   constructor(message) {
     super(`The sync server sent an unexpected response: ${message}`);
     this.name = 'SyncResponseError';
   }
 }
 
+/** @param {unknown} v @returns {v is Record<string, unknown>} */
 const isObject = v => !!v && typeof v === 'object' && !Array.isArray(v);
 
+/** @param {unknown} body @returns {Record<string, unknown>} */
 function requireObject(body) {
   if (!isObject(body)) throw new SyncResponseError('the reply was not a JSON object.');
   return body;
 }
 
+/** @param {Record<string, unknown>} body @returns {number} */
 function requireVersion(body) {
   const v = body.version;
   if (typeof v !== 'number' || !Number.isSafeInteger(v) || v < 0) {
@@ -28,21 +32,25 @@ function requireVersion(body) {
   return v;
 }
 
+/** @param {unknown} value @returns {string} */
 const stampOrEmpty = value => cleanTimestamp(value) || '';
 
 // A pull response, or the `current` workspace attached to a 409 conflict.
+/** A pull response, or the `current` workspace of a 409. @param {unknown} body @returns {{ state: Record<string, unknown>, version: number, updatedAt: string }} */
 export function parseVersionedState(body) {
-  requireObject(body);
-  if (!isObject(body.state)) throw new SyncResponseError('"state" must be an object.');
-  return { state: body.state, version: requireVersion(body), updatedAt: stampOrEmpty(body.updatedAt) };
+  const obj = requireObject(body);
+  if (!isObject(obj.state)) throw new SyncResponseError('"state" must be an object.');
+  return { state: obj.state, version: requireVersion(obj), updatedAt: stampOrEmpty(obj.updatedAt) };
 }
 
+/** @param {unknown} body @returns {{ version: number, updatedAt: string }} */
 export function parseVersionInfo(body) {
-  requireObject(body);
-  return { version: requireVersion(body), updatedAt: stampOrEmpty(body.updatedAt) };
+  const obj = requireObject(body);
+  return { version: requireVersion(obj), updatedAt: stampOrEmpty(obj.updatedAt) };
 }
 
+/** @param {unknown} body @returns {{ version: number, updatedAt: string, created: boolean }} */
 export function parsePushResult(body) {
-  requireObject(body);
-  return { version: requireVersion(body), updatedAt: stampOrEmpty(body.updatedAt), created: body.created === true };
+  const obj = requireObject(body);
+  return { version: requireVersion(obj), updatedAt: stampOrEmpty(obj.updatedAt), created: obj.created === true };
 }

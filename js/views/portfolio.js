@@ -1,3 +1,4 @@
+// @ts-nocheck — TODO(types): not converted to checked JSDoc yet. Delete this line and fix what `npm run typecheck` reports.
 import { portfolio, setPortfolio, workOrders } from '../state.js';
 import { savePortfolio, saveWorkOrders, logAudit, _showActionToast, saveBackupSnapshot } from '../storage.js';
 import {
