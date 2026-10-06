@@ -97,6 +97,12 @@ PM Ops Map renders data it did not create — imported JSON, pasted clipboard te
 
 `npm run test:e2e` runs a browser suite (`e2e/security-xss.spec.js`) that injects a canary payload into every importable field and fails if any view turns it into markup or script. If you add a field or a view, extend `e2e/helpers/security.js`.
 
+## Dependency Updates
+
+Dependabot opens weekly update PRs (`.github/dependabot.yml`): minor and patch bumps are grouped, every major bump is its own PR, and the sync server's production dependencies (Express, cors) are grouped apart from test tooling. CI audits production dependencies of both packages on every push, and `.github/workflows/audit.yml` repeats that weekly so a newly published advisory fails loudly even when nobody is pushing. When a Dependabot PR is green, merge it; when it is a major bump, read the changelog first.
+
+The client (`index.html`, `js/`, `css/`) has no runtime npm dependencies and should keep it — everything in the root `package.json` is test or build tooling.
+
 ## Pull Request Guidelines
 
 - Keep PRs focused — one change per PR

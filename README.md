@@ -494,7 +494,7 @@ npm run build      # Production bundle → dist/
 
 Requires Node.js 22.12+ for development, tests, and the optional build (the app itself only needs a browser). The optional sync server has its own independent test suite — see [`server/README.md`](server/README.md).
 
-CI runs three jobs on every push and pull request: the app (`npm ci` → `npm test` → `npm audit --omit=dev` → `npm run build`), the browser E2E suite (`npm run test:e2e`), and the sync server (`cd server && npm ci && npm test && npm audit --omit=dev`).
+CI runs three jobs on every push and pull request: the app (`npm ci` → `npm test` → `npm audit --omit=dev` → `npm run build`), the browser E2E suite (`npm run test:e2e`), and the sync server (`cd server && npm ci && npm test && npm audit --omit=dev`). A scheduled workflow repeats the production audits weekly, and Dependabot keeps npm packages, GitHub Actions, and the server's Docker base image current.
 
 ---
 

@@ -1,0 +1,59 @@
+# Dependabot keeps dependencies, GitHub Actions, and the sync server's base image
+# current. Minor/patch updates are grouped to keep the PR queue small; every major
+# update arrives as its own PR so breaking changes get individual review.
+#
+# Security updates are a separate repository setting (Settings -> Code security ->
+# Dependabot alerts + Dependabot security updates) and are not configured here.
+version: 2
+updates:
+  # Test runner, browser tests, and bundler. Nothing here ships to users: the app
+  # has no runtime npm dependencies.
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
+    groups:
+      tooling:
+        update-types: [minor, patch]
+
+  # Sync server. Express/cors are the networked part, so production updates are
+  # grouped apart from test tooling and are never buried among dev-only bumps.
+  - package-ecosystem: npm
+    directory: /server
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "chore(deps)"
+    groups:
+      server-production:
+        dependency-type: production
+        update-types: [minor, patch]
+      server-tooling:
+        dependency-type: development
+        update-types: [minor, patch]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    commit-message:
+      prefix: "chore(ci)"
+    groups:
+      actions:
+        update-types: [minor, patch]
+
+  # Base image of the sync server (server/Dockerfile).
+  - package-ecosystem: docker
+    directory: /server
+    schedule:
+      interval: weekly
+      day: monday
+    commit-message:
+      prefix: "chore(docker)"
