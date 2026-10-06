@@ -19,7 +19,7 @@ Use this sequence while sharing the repository:
 1. **Lead with the operator problem.** Show the README problem statement. Explain that transaction systems can record events without creating a complete responsibility map.
 2. **Show the evidence.** Point to the screenshots and `config.json`: 17 departments and 262 real starter responsibilities, not a blank task-board demo.
 3. **Open the composition root.** In [`js/app.js`](../../js/app.js), show configuration bootstrap, initialization order, and `window` handler binding.
-4. **Explain state and persistence.** In [`js/state.js`](../../js/state.js) and [`js/storage.js`](../../js/storage.js), describe shared objects, local-first saves, stable `_configName` matching, backups, and the mutate/persist/rerender pattern.
+4. **Explain state and persistence.** In [`js/state.js`](../../js/state.js) and [`js/storage.js`](../../js/storage.js), describe shared objects, local-first saves, permanent task-id matching (with `_configName`/alias fallback), backups, and the mutate/persist/rerender pattern.
 5. **Explain one algorithm well.** In [`runAutoAssign`](../../js/views/team.js), trace affinity filtering, least-loaded selection, immediate workload increments, fallback, backup, undo, audit, and refresh.
 6. **Show product depth without listing everything.** Use Tracking, Work Orders, and Portfolio as three connected examples: responsibility, execution, and operating context.
 7. **Explain sync honestly.** Show [`js/sync.js`](../../js/sync.js) and [`server/src/store.js`](../../server/src/store.js). Call it optimistic whole-snapshot sync for trusted teams, not real-time enterprise collaboration.
@@ -45,7 +45,7 @@ Why this works: it names the user, pain, workflow, and proof instead of saying �
 
 **Strong answer:**
 
-> `index.html` loads `js/app.js`. On DOM ready, source/hosted builds fetch `config.json`; production builds can use config injected by Webpack so the downloaded build works over `file://`. `bootstrapWithConfig` sets shared configuration and gives each task a stable `_configName`. `initApp` loads team, work orders, portfolio, audit log, and saved task edits before rendering. Then it initializes guidance, stats, filters, preferences, notifications, and optional sync. The order prevents a first render with stale defaults followed by a visible state jump.
+> `index.html` loads `js/app.js`. On DOM ready, source/hosted builds fetch `config.json`; production builds can use config injected by Webpack so the downloaded build works over `file://`. `bootstrapWithConfig` sets shared configuration and gives each task a permanent `id` and its starter name (`_configName`). `initApp` loads team, work orders, portfolio, audit log, and saved task edits before rendering. Then it initializes guidance, stats, filters, preferences, notifications, and optional sync. The order prevents a first render with stale defaults followed by a visible state jump.
 
 ### “How does auto-assignment work?”
 
@@ -63,7 +63,7 @@ Why this works: it names the user, pain, workflow, and proof instead of saying �
 
 **Strong answer:**
 
-> During bootstrap, each configured task gets `_configName` equal to its original starter name. The displayed `name` can change, but persistence and import matching use `_configName` to reconnect saved fields to the current configured task. It solves the immediate rename problem. A stronger future design would add explicit immutable task IDs to `config.json`, because an original name is still a derived identity.
+> Every configured task has a permanent `id` in `config.json`, and bootstrap also records its starter name as `_configName`. The displayed `name` can change, but persistence and import matching use the `id` first (then `_configName` or an alias, for data saved before ids existed) to reconnect saved fields to the current configured task. Because the id is not derived from the name, rewording a starter task in a later release doesn't orphan anyone's progress.
 
 ### “How do you avoid losing data?”
 
@@ -112,7 +112,7 @@ Answer each in 60–90 seconds without reading the sample answers.
 5. How does a task edit travel from a click to durable storage and back to the screen?
 6. Why do the tests import the shipped modules directly instead of keeping test-only copies?
 7. What happens if two teammates push at the same time?
-8. What failure does `_configName` prevent, and what weakness remains?
+8. What failure do permanent task ids prevent, and why is `_configName` kept as a fallback?
 9. Which user inputs are security-sensitive at render time?
 10. What would break first if the app grew to hundreds of simultaneous users?
 11. Which claims can you prove from tests or screenshots?

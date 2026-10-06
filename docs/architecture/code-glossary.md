@@ -27,7 +27,7 @@ The composition root and browser entry point.
 |---|---|
 | `switchView(view, tabEl)` | Activates one view panel, updates the tab state, clears tracking-only UI when leaving it, and renders the destination view. |
 | `initApp()` | Hydrates every persisted collection, renders initial screens, applies preferences, starts sync/notifications, and decides whether to show onboarding. |
-| `bootstrapWithConfig(config)` | Loads configuration into shared state and stamps task `_configName` values before initialization. |
+| `bootstrapWithConfig(config)` | Loads configuration into shared state and stamps each task's `_configName` and permanent `id` (`stampTaskIdentity`) before initialization. |
 | `Object.assign(window, {...})` | Adapter between ES modules and inline/generated HTML handlers. Missing entries cause otherwise-visible controls to fail at click time. |
 
 ### `js/state.js`
@@ -58,7 +58,7 @@ Owns browser persistence.
 |---|---|
 | `STORAGE_KEY` and sibling constants | Namespaces for task, company, profile, team, work-order, portfolio, audit, backup, and sync records. |
 | `saveToStorage()` | Saves editable task fields, excluding presentation-only configuration where possible. |
-| `loadFromStorage()` | Reconciles saved task edits with configured tasks using `_configName`; bounds and validates restored values. |
+| `loadFromStorage()` | Reconciles saved task edits with configured tasks by `id`, then `_configName`/aliases (`findConfigTask`); bounds and validates restored values. |
 | `saveTeamData()` / `loadTeamData()` | Persists the roster or seeds it from configuration. |
 | `saveWorkOrders()` / `loadWorkOrders()` | Persists the maintenance collection. |
 | `savePortfolio()` / `loadPortfolio()` | Persists properties, tenants, and vendors with safe empty-array fallback. |
@@ -289,7 +289,7 @@ Department
   id, name, color, tasks[]
 
 Task
-  _configName, name, owner, status, priority,
+  id, _configName, name, owner, status, priority,
   dueDate, blockedBy, notes, customFields
 
 Employee
@@ -330,7 +330,7 @@ File import, clipboard paste, and sync conflicts share `validateImportedState` a
 
 ### Stable config identity
 
-`_configName` preserves the task’s original configured name so visible renames do not break reload/import matching. A future schema would be stronger with explicit immutable task IDs in `config.json`.
+Every task in `config.json` has a permanent `id` (`maintenance-014`). Saved rows are matched to tasks by `id` first, then by `_configName` (the starter name the row was saved under) or one of the task's `aliases` (former starter names, listed in `config.json` when a task is reworded) — see `js/taskIdentity.js`. Because the id never changes, rewording a starter task does not orphan saved progress, and a task can move departments. A name the user never edited follows config's current wording; an edited name is kept.
 
 ### Tests import the shipped modules
 

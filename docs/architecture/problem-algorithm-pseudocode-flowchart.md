@@ -160,7 +160,7 @@ flowchart TD
 Auto-assignment only works because the app first reconciles three layers of state:
 
 1. [`config.json`](../../config.json) defines the current supported departments and starter tasks.
-2. [`js/app.js`](../../js/app.js) stamps every task with its original name as `_configName`.
+2. [`js/app.js`](../../js/app.js) stamps every task with its original name as `_configName` and guarantees a permanent `id` (`js/taskIdentity.js`).
 3. [`js/storage.js`](../../js/storage.js) overlays compatible saved fields onto those current task objects.
 
 That approach avoids blindly trusting an old serialized copy of the entire configuration. New code can ship updated display structure while compatible user edits are restored by stable task identity.
@@ -171,12 +171,13 @@ FUNCTION startApplication(config, browserStorage):
 
     FOR EACH configured task:
         task._configName = task.name
+        task.id = task.id or deterministic fallback
 
     load team, work orders, portfolio, and audit log
 
     FOR EACH saved department that still exists:
         FOR EACH saved task:
-            match current task by saved _configName
+            match current task by saved id, else _configName / alias
             IF matched:
                 copy bounded, valid editable fields
 

@@ -44,15 +44,15 @@ export function buildEvilWorkspace() {
         name: 'Leasing',
         tasks: [
           {
-            _configName: t0.name, name: evil('task.name'), owner: evil('emp.name'),
+            id: evil('task.id'), _configName: t0.name, name: evil('task.name'), owner: evil('emp.name'),
             status: evil('task.status'), priority: evil('task.priority'),
             dueDate: evil('task.due'),
-            blockedBy: { deptId: evil('dep.dept'), configName: evil('dep.cfg'), name: evil('dep.name') },
+            blockedBy: { deptId: evil('dep.dept'), taskId: evil('dep.taskId'), configName: evil('dep.cfg'), name: evil('dep.name') },
           },
           {
             _configName: t1.name, name: t1.name, owner: evil('emp.name'),
             status: 'blocked', priority: 'high', dueDate: '2020-01-01',
-            blockedBy: { deptId: 'leasing', configName: t0.name, name: evil('dep.ok.name') },
+            blockedBy: { deptId: 'leasing', taskId: evil('dep.ok.taskId'), configName: t0.name, name: evil('dep.ok.name') },
           },
         ],
       },

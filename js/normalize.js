@@ -12,6 +12,7 @@
 // escape it at render time. Pure functions only — no DOM, no shared state.
 import { STATUS_CYCLE, PRIORITY_CYCLE, WO_STATUS_CYCLE } from './state.js';
 import { isValidISODate, normalizeUrl } from './utils.js';
+import { findConfigTask } from './taskIdentity.js';
 
 export const TENANT_STATUSES = ['active', 'applicant', 'notice', 'past'];
 export const DEFAULT_EMPLOYEE_HEX = '#607d8b';
@@ -275,13 +276,21 @@ export function normalizeTeam(raw, options = {}) {
 
 // ── Tasks ─────────────────────────────────────────────────────────────────────
 
+// A dependency points at its blocker by `taskId` (permanent) and/or `configName` (the
+// starter name older versions wrote). Either is enough; both are kept when present so
+// a file written by this version still works in an older one.
 export function normalizeBlockedBy(raw) {
   if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return null;
   const deptId = typeof raw.deptId === 'string' && DEPT_ID_RE.test(raw.deptId) ? raw.deptId : '';
+  const taskId = cleanId(raw.taskId);
   const configName = cleanText(raw.configName, LIMITS.taskName);
   const name = cleanText(raw.name, LIMITS.taskName);
-  if (!deptId || !configName) return null;
-  return { deptId, configName, name: name || configName };
+  if (!deptId || (!taskId && !configName)) return null;
+  const result = { deptId };
+  if (taskId) result.taskId = taskId;
+  if (configName) result.configName = configName;
+  result.name = name || configName || '';
+  return result;
 }
 
 export function normalizeCustomFields(raw) {
@@ -323,8 +332,9 @@ export function normalizeSavedTask(saved, { fill = false } = {}) {
 // Merges saved/imported department data onto the live config departments. This
 // is the ONE place saved task fields are applied — storage load, backup restore
 // and file/clipboard/sync import all call it, so they can never disagree about
-// which fields survive. Rows are matched to config tasks by their stable
-// _configName key. Returns { matched, skipped } counts.
+// which fields survive. Rows are matched to config tasks by permanent `id`, then by
+// the starter name (`_configName`) or one of the task's `aliases` (see taskIdentity.js).
+// Returns { matched, skipped } counts.
 export function applySavedTasks(departments, savedDepartments, options = {}) {
   const result = { matched: 0, skipped: 0 };
   if (!Array.isArray(savedDepartments)) return result;
@@ -334,9 +344,11 @@ export function applySavedTasks(departments, savedDepartments, options = {}) {
     if (!dept || !Array.isArray(savedDept.tasks)) return;
     savedDept.tasks.forEach(savedTask => {
       const patch = normalizeSavedTask(savedTask, options);
-      const key = savedTask && (savedTask._configName || savedTask.name);
-      const task = patch && dept.tasks.find(t => t._configName === key);
+      const task = patch && findConfigTask(departments, savedTask, { deptId: dept.id });
       if (!task) { result.skipped++; return; }
+      // A name the user never edited (it still equals the starter name the row was saved
+      // under) follows config.json's current wording; an edited name is the user's and stays.
+      if (task._configName && patch.name === cleanText(savedTask._configName, LIMITS.taskName)) patch.name = task._configName;
       Object.assign(task, patch);
       result.matched++;
     });

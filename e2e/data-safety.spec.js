@@ -45,7 +45,7 @@ test('notes and custom fields survive export -> reset -> import', async ({ page 
   const [download] = await Promise.all([page.waitForEvent('download'), call(page, 'exportJSON')]);
   const exported = writeTemp('export.json', fs.readFileSync(await download.path()));
   const file = JSON.parse(fs.readFileSync(exported, 'utf8'));
-  expect(file.schemaVersion).toBe(3);
+  expect(file.schemaVersion).toBe(4);
   const first = file.departments.find(d => d.id === 'leasing').tasks[0];
   expect(first.notes).toBe(NOTE);
   expect(first.customFields).toEqual({ 'Gate code': '4471' });

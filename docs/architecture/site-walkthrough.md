@@ -52,7 +52,7 @@ On `DOMContentLoaded`, it chooses one of two configuration paths:
 `bootstrapWithConfig` then:
 
 1. places `orgData`, `defaultAffinities`, and `ownerColors` in [`js/state.js`](../../js/state.js);
-2. stamps every starter task with `_configName`, a stable identity that survives user-visible renames; and
+2. gives every starter task a permanent `id` and records its starter name as `_configName`, so saved progress survives both user renames and later rewording in `config.json`; and
 3. calls `initApp`.
 
 `initApp` deliberately hydrates saved data before rendering. Team, work orders, portfolio, audit entries, and task edits are loaded first; only then are Tracking, Launch Plan, stats, filters, legend, portfolio, notifications, and optional sync initialized. A returning user gets the saved company name. A first-time user gets onboarding.
@@ -77,7 +77,7 @@ The app uses shared mutable objects rather than Redux, a framework store, or an 
 
 [`js/storage.js`](../../js/storage.js) is the browser persistence boundary. It owns the `localStorage` keys, reloads saved task state into the current configuration, persists team/work-order/portfolio/audit changes, and manages five rolling backup snapshots.
 
-Task restoration is identity-aware. The visible task name is editable, so a saved task is matched back to the current starter task with `_configName`, not only the displayed name. Unsupported values are normalized: status and priority must be in their allowed cycles, note and custom-field sizes are capped, and malformed collections fall back safely.
+Task restoration is identity-aware. The visible task name is editable, so a saved task is matched back to the current starter task by permanent `id` (then `_configName` or an alias), not the displayed name. Unsupported values are normalized: status and priority must be in their allowed cycles, note and custom-field sizes are capped, and malformed collections fall back safely.
 
 Before risky bulk replacements—imports, auto-assignment, and remote sync—the app records a backup. JSON import also has a one-step in-memory undo path in [`js/io.js`](../../js/io.js).
 

@@ -6,6 +6,7 @@ import {
   getEmployeeHex, getEmployeeNames,
 } from '../state.js';
 import { saveToStorage, logAudit, _showActionToast } from '../storage.js';
+import { findBlockerTask } from '../taskIdentity.js';
 import {
   escapeHtml, isTaskOverdue, isValidISODate,
   formatDueChip, buildDeptCompletionText,
@@ -750,12 +751,11 @@ export function openDependencyPicker(deptId, taskIdx, anchorEl) {
       matchingTasks.forEach(t => {
         const btn = document.createElement('button');
         btn.className = 'dep-picker-item' +
-          (task.blockedBy && task.blockedBy.deptId === d.id && task.blockedBy.configName === t._configName
-            ? ' dep-picker-item--active' : '');
+          (findBlockerTask(orgData.departments, task.blockedBy) === t ? ' dep-picker-item--active' : '');
         btn.textContent = t.name;
         btn.addEventListener('click', (e) => {
           e.stopPropagation();
-          setTaskDependency(deptId, taskIdx, d.id, t._configName, t.name, anchorEl);
+          setTaskDependency(deptId, taskIdx, d.id, t, anchorEl);
           _closeDependencyPicker();
         });
         list.appendChild(btn);
@@ -796,14 +796,15 @@ function _closeDependencyPicker() {
   }
 }
 
-export function setTaskDependency(deptId, taskIdx, depDeptId, depConfigName, depName, anchorEl) {
+export function setTaskDependency(deptId, taskIdx, depDeptId, blocker, anchorEl) {
   const dept = orgData.departments.find(d => d.id === deptId);
   if (!dept) return;
   const task = dept.tasks[taskIdx];
   if (!task) return;
 
-  task.blockedBy = { deptId: depDeptId, configName: depConfigName, name: depName };
-  logAudit('dependency_set', { dept: dept.name, task: task.name, from: null, to: depName });
+  // taskId is the permanent reference; configName is kept so an older version can still read it.
+  task.blockedBy = { deptId: depDeptId, taskId: blocker.id, configName: blocker._configName, name: blocker.name };
+  logAudit('dependency_set', { dept: dept.name, task: task.name, from: null, to: blocker.name });
   _updateDepChip(deptId, taskIdx, task, anchorEl);
   saveToStorage();
 }
@@ -1002,10 +1003,7 @@ function _updateCustomFieldsIcon(deptId, taskIdx, task) {
 
 export function isDependencyBlocking(task) {
   if (!task.blockedBy) return false;
-  const dep = task.blockedBy;
-  const depDept = orgData.departments.find(d => d.id === dep.deptId);
-  if (!depDept) return false;
-  const depTask = depDept.tasks.find(t => t._configName === dep.configName);
+  const depTask = findBlockerTask(orgData.departments, task.blockedBy);
   if (!depTask) return false;
   return (depTask.status || 'todo') !== 'done';
 }

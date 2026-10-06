@@ -26,6 +26,7 @@ export function _saveUndoSnapshot() {
   setUndoSnapshot(orgData.departments.map(dept => ({
     id: dept.id,
     tasks: dept.tasks.map(t => ({
+      id:          t.id,
       _configName: t._configName,
       name:        t.name,
       owner:       t.owner,
@@ -58,7 +59,7 @@ export function undoLastAction() {
 // the same path as a file/clipboard import.
 export function _applyImportedState(data) {
   // Nothing from the file reaches shared state unvalidated: tasks are matched to
-  // config by _configName and field-checked, everything else goes through
+  // config by id (then _configName) and field-checked, everything else goes through
   // sanitizeWorkspace (enums, colors, ids, dates, numbers, links, lengths).
   applySavedTasks(orgData.departments, data.departments);
 

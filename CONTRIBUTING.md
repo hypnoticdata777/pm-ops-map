@@ -68,17 +68,29 @@ pm-ops-map/
 │   ├── launchPlan.js   Beginner setup dashboard and readiness checks
 │   ├── handbook.js     Markdown handbook export
 │   ├── normalize.js    Sanitizers for every path that loads outside data
+│   ├── taskIdentity.js Permanent task ids: stamping at boot and matching saved rows to tasks
 │   ├── privacy.js      Data-handling guidance and export confirmations
 │   ├── demoMode.js     ?demo=1 detection and storage-key namespacing
 │   ├── demo.js         Hosted demo: seeding, banner, reset
 │   ├── showcase.js     The fictional workspace the demo loads
 │   ├── views/          Tracking, map, team, portfolio, and work order screens
 │   └── __tests__/      Vitest unit tests — they import the shipped ES modules directly
+├── scripts/            Maintenance scripts (assign-task-ids.mjs)
 ├── e2e/                Playwright browser tests (security regression suite)
 └── server/             Optional sync server — separate package.json, own deps, own tests
 ```
 
 Starter operating data lives in `config.json`. Runtime state is loaded by `app.js`, kept in `state.js`, and persisted by `storage.js`. Feature rendering lives in the relevant `js/views/` module.
+
+## Editing `config.json` tasks
+
+Every task has a permanent `id` (`<department>-<NNN>`, e.g. `maintenance-014`). Saved data, imports and backups find a task by that id, so its visible `name` is free to change.
+
+- **Adding a task:** write `{ "name": "…", "owner": "UNOWNED" }` on its own line, then run `npm run ids:assign`. It adds ids to tasks that lack one and never changes an existing id. A test fails if any task has no id or two share one.
+- **Rewording a task:** change `name` only — never the `id`. Also list the old wording in `"aliases": ["old name"]` so data saved *before ids existed* (and old exports) still finds the task. Data saved since ids shipped follows the id on its own.
+- **Moving a task to another department:** keep its `id`; progress follows it.
+- **Removing a task:** delete the line. Do not reuse its id for a different task.
+- Keep each task on a single line; the id script refuses a layout it can't edit safely.
 
 ## Security Conventions
 

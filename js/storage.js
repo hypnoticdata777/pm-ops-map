@@ -64,6 +64,7 @@ export function saveToStorage() {
     const payload = orgData.departments.map(dept => ({
       id: dept.id,
       tasks: dept.tasks.map(t => ({
+        id:           t.id,
         _configName:  t._configName || t.name,
         name:         t.name,
         owner:        t.owner,
@@ -83,8 +84,8 @@ export function saveToStorage() {
 }
 
 export function loadFromStorage() {
-  // PROJECT BEACON: Reconcile saved edits onto current config by _configName;
-  // visible task names are user-editable and are not durable identity keys.
+  // PROJECT BEACON: Reconcile saved edits onto current config by permanent task id
+  // (falling back to _configName); visible task names are user-editable and are not durable identity keys.
   // Field-level validation lives in normalize.js (applySavedTasks).
   try {
     const raw = localStorage.getItem(STORAGE_KEY);

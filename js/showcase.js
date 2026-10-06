@@ -186,7 +186,7 @@ export function applyShowcaseTasks(departments, employees, now = new Date()) {
     if (!blocked || !blocker) return;
     blocker.status = blocker.status === 'done' ? 'in-progress' : blocker.status; // a dependency only matters while it is open
     blocked.status = 'blocked';
-    blocked.blockedBy = { deptId, configName: blocker._configName || blocker.name, name: blocker.name };
+    blocked.blockedBy = { deptId, taskId: blocker.id, configName: blocker._configName || blocker.name, name: blocker.name };
   };
 
   // Hand-placed storylines.

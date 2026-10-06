@@ -1,7 +1,9 @@
 import { normalizeSavedTask, sanitizeWorkspace } from './normalize.js';
+import { findConfigTask } from './taskIdentity.js';
 
-// v3 adds per-task notes and customFields to the portable payload (v2 files still import).
-export const STATE_SCHEMA_VERSION = 3;
+// v3 added per-task notes and customFields. v4 adds each task's permanent `id` and a
+// `taskId` on dependencies; v2 and v3 files (no ids) still import by starter name.
+export const STATE_SCHEMA_VERSION = 4;
 export const STATE_SCHEMA_NAME = 'pm-ops-map-state';
 
 export function buildStatePayload({
@@ -22,6 +24,7 @@ export function buildStatePayload({
       id: dept.id,
       name: dept.name,
       tasks: dept.tasks.map(task => ({
+        id: task.id,
         _configName: task._configName || task.name,
         name: task.name,
         owner: task.owner,
@@ -95,8 +98,8 @@ export function validateImportedState(data, orgData) {
         report.invalidTasks++;
         return;
       }
-      const key = savedTask?._configName || savedTask?.name;
-      const task = dept.tasks.find(item => item._configName === key || item.name === key);
+      // Same matcher the import itself uses, so the review can't promise a match that won't happen.
+      const task = findConfigTask(orgData.departments, savedTask, { deptId: dept.id });
       if (!task) {
         report.skippedTasks++;
         return;
