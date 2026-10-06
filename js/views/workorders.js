@@ -2,7 +2,7 @@
 import {
   workOrders, setWorkOrders, portfolio,
   WO_STATUS_CYCLE, WO_STATUS_LABELS, WO_STATUS_COLORS,
-  PRIORITY_LABELS, getEmployeeHex, getEmployeeNames,
+  PRIORITY_LABELS, asPriority, getEmployeeHex, getEmployeeNames,
 } from '../state.js';
 import { saveWorkOrders, logAudit } from '../storage.js';
 import { escapeHtml, formatDueChip, formatWODate, isValidISODate, formatCurrency } from '../utils.js';
@@ -23,6 +23,7 @@ function setDatalistOptions(id, values) {
 // ── Card builder ──────────────────────────────────────────────────────────────
 function buildWorkOrderCard(wo) {
   const isUnassigned = wo.assignee === 'UNASSIGNED';
+  const priority     = asPriority(wo.priority);
   const statusIdx    = WO_STATUS_CYCLE.indexOf(wo.status);
   const canAdvance   = statusIdx < WO_STATUS_CYCLE.length - 1;
   const nextLabel    = canAdvance ? WO_STATUS_LABELS[WO_STATUS_CYCLE[statusIdx + 1]] : '';
@@ -31,14 +32,14 @@ function buildWorkOrderCard(wo) {
   const woOverdue    = wo.dueDate && wo.dueDate < todayISO && wo.status !== 'completed';
 
   return `
-    <div class="wo-card priority-border-${wo.priority}${woOverdue ? ' wo-card--overdue' : ''}">
+    <div class="wo-card priority-border-${priority}${woOverdue ? ' wo-card--overdue' : ''}">
       <div class="wo-card-top">
         <div class="wo-card-location">
           <span class="wo-property">${escapeHtml(wo.property)}</span>
           ${wo.unit ? `<span class="wo-unit">Unit ${escapeHtml(wo.unit)}</span>` : ''}
         </div>
-        <span class="priority-dot priority-${wo.priority}"
-              title="Priority: ${PRIORITY_LABELS[wo.priority]}"></span>
+        <span class="priority-dot priority-${priority}"
+              title="Priority: ${PRIORITY_LABELS[priority]}"></span>
       </div>
       <div class="wo-card-title">${escapeHtml(wo.title)}</div>
       ${wo.notes  ? `<div class="wo-card-notes">${escapeHtml(wo.notes)}</div>` : ''}
@@ -52,22 +53,25 @@ function buildWorkOrderCard(wo) {
         ${wo.cost > 0 ? `<span class="wo-cost">${escapeHtml(formatCurrency(wo.cost))}</span>` : ''}
         <div class="wo-card-actions">
           <button class="wo-edit-btn"
-                  onclick="showEditWorkOrderModal('${wo.id}')"
+                  data-id="${escapeHtml(wo.id)}"
+                  onclick="showEditWorkOrderModal(this.dataset.id)"
                   title="Edit work order">Edit</button>
           ${canAdvance
             ? `<button class="wo-advance-btn"
-                       onclick="advanceWorkOrder('${wo.id}')"
-                       title="Advance to ${nextLabel}">&#8594; ${nextLabel}</button>`
+                       data-id="${escapeHtml(wo.id)}"
+                       onclick="advanceWorkOrder(this.dataset.id)"
+                       title="Advance to ${escapeHtml(nextLabel)}">&#8594; ${escapeHtml(nextLabel)}</button>`
             : ''}
           <button class="wo-delete-btn"
-                  onclick="deleteWorkOrder('${wo.id}')"
+                  data-id="${escapeHtml(wo.id)}"
+                  onclick="deleteWorkOrder(this.dataset.id)"
                   title="Delete work order">&#x2715;</button>
         </div>
       </div>
       <div class="wo-card-date">
         ${wo.dueDate ? `<span class="due-date-chip${woOverdue ? ' due-date-overdue' : ''}"
-          title="Target: ${wo.dueDate}">${woOverdue ? '⚠ ' : '📅 '}${formatDueChip(wo.dueDate)}</span>` : ''}
-        ${formatWODate(wo.createdAt)}
+          title="Target: ${escapeHtml(wo.dueDate)}">${woOverdue ? '⚠ ' : '📅 '}${escapeHtml(formatDueChip(wo.dueDate))}</span>` : ''}
+        ${escapeHtml(formatWODate(wo.createdAt))}
       </div>
     </div>`;
 }

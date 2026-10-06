@@ -65,6 +65,11 @@ export const PRIORITY_LABELS = {
 export const STATUS_CYCLE   = ['todo', 'in-progress', 'blocked', 'done'];
 export const PRIORITY_CYCLE = ['high', 'medium', 'low'];
 
+// Views interpolate status/priority into class names and data-* attributes, so
+// they always go through these guards — an unknown value can never reach markup.
+export const asStatus   = v => (STATUS_CYCLE.includes(v)   ? v : 'todo');
+export const asPriority = v => (PRIORITY_CYCLE.includes(v) ? v : 'medium');
+
 export const WO_STATUS_CYCLE  = ['submitted', 'scheduled', 'in-progress', 'completed'];
 export const WO_STATUS_LABELS = {
   'submitted':   'Submitted',
@@ -114,11 +119,16 @@ export const AUDIT_LABELS = {
 
 // Returns the hex color for any owner name.
 // Checks the live teamData roster first; falls back to ownerColors, then neutral gray.
+const HEX_COLOR = /^#[0-9a-fA-F]{6}$/;
+const FALLBACK_HEX = '#607d8b';
+
+// Always a plain #rrggbb value: views put colors straight into style attributes.
+export const asHex = v => (typeof v === 'string' && HEX_COLOR.test(v) ? v : FALLBACK_HEX);
+
 export function getEmployeeHex(name) {
   if (name === 'UNOWNED') return '#d32f2f';
   const emp = teamData.employees.find(e => e.name === name);
-  if (emp) return emp.hex;
-  return ownerColors?.[name]?.hex || '#607d8b';
+  return asHex(emp ? emp.hex : ownerColors?.[name]?.hex);
 }
 
 // Returns an array of all employee names in the current roster.

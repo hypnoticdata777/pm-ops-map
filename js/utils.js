@@ -4,18 +4,24 @@
 // Browser modules and the Vitest suite (js/__tests__/utils.test.js) import this
 // exact file — there is no second copy to keep in sync.
 
+// Escapes text for use as element content or inside a quoted attribute value.
 function escapeHtml(str) {
   return String(str == null ? '' : str)
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
-// Safely embeds a JS value inside a double-quoted HTML attribute that contains
-// a JS call, e.g. onclick="fn(jsonAttr(val))".
+// Embeds a JS string literal inside a double-quoted HTML attribute that holds a
+// JS call, e.g. onclick="fn(${jsonAttr(val)})".
+// The whole JSON literal is HTML-escaped (including "&"), so an entity written
+// inside the value — say "&quot;" — stays literal text after the attribute is
+// parsed instead of turning back into a quote that ends the JS string.
+// Prefer data-* attributes (see CONTRIBUTING.md) for anything user-controlled.
 function jsonAttr(val) {
-  return JSON.stringify(String(val == null ? '' : val)).replace(/"/g, '&quot;');
+  return escapeHtml(JSON.stringify(String(val == null ? '' : val)));
 }
 
 function shakeInput(el) {
@@ -88,9 +94,10 @@ function _downloadBlob(content, mimeType, filename) {
 }
 
 function formatWODate(isoStr) {
+  const d = new Date(isoStr);
+  if (!isoStr || Number.isNaN(d.getTime())) return '';
   try {
-    return new Date(isoStr).toLocaleDateString('en-US',
-      { month: 'short', day: 'numeric', year: 'numeric' });
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
   } catch (e) { return ''; }
 }
 
@@ -124,11 +131,29 @@ function getDelinquencyStatus(tenant) {
   return { tone, label: `${formatCurrency(balance)} past due`, balance };
 }
 
+// Returns the canonical href for an absolute http(s) URL, or '' for anything
+// else (javascript:, data:, relative paths, malformed input, over-long values).
+// The URL is parsed by the platform's own parser and the normalized form is
+// returned, so quotes, spaces and angle brackets come back percent-encoded.
+// Store and render this value, not the raw user input.
+const MAX_URL_LENGTH = 2048;
+function normalizeUrl(url) {
+  if (typeof url !== 'string') return '';
+  const trimmed = url.trim();
+  if (!trimmed || trimmed.length > MAX_URL_LENGTH) return '';
+  try {
+    const parsed = new URL(trimmed);
+    return parsed.protocol === 'http:' || parsed.protocol === 'https:' ? parsed.href : '';
+  } catch (_) {
+    return '';
+  }
+}
+
 // Only allows absolute http(s) links — this gets embedded as an <a href>, so
-// rejecting anything else (javascript:, data:, relative paths) up front means
-// callers never need to think about scheme-based injection at render time.
+// rejecting anything else up front means callers never need to think about
+// scheme-based injection at render time.
 function isSafeUrl(url) {
-  return typeof url === 'string' && /^https?:\/\//i.test(url.trim());
+  return normalizeUrl(url) !== '';
 }
 
 // Minimal RFC4180-style CSV parser: handles quoted fields, embedded commas,
@@ -192,6 +217,7 @@ export {
   formatCurrency,
   getLeaseStatus,
   getDelinquencyStatus,
+  normalizeUrl,
   isSafeUrl,
   parseCSV,
   buildCsvHeaderMap,

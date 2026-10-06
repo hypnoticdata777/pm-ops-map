@@ -10,6 +10,7 @@ import {
 } from './storage.js';
 import { escapeHtml, isValidISODate, _downloadBlob } from './utils.js';
 import { buildStatePayload, validateImportedState, formatImportReport } from './stateSchema.js';
+import { applySavedTasks, sanitizeWorkspace } from './normalize.js';
 import { updateStats } from './ui.js';
 import { renderTrackingView, populateOwnerFilter } from './views/tracking.js';
 import { renderMapControls, renderFlowMap } from './views/map.js';
@@ -64,45 +65,30 @@ export function undoLastAction() {
 // Exported so sync.js can apply a pulled/conflicting remote workspace through
 // the same path as a file/clipboard import.
 export function _applyImportedState(data) {
-  data.departments.forEach(savedDept => {
-    const dept = orgData.departments.find(d => d.id === savedDept.id);
-    if (!dept) return;
-    if (!Array.isArray(savedDept.tasks)) return;
-    savedDept.tasks.forEach((savedTask) => {
-      if (!savedTask.name || !savedTask.owner) return;
-      const key  = savedTask._configName || savedTask.name;
-      const task = dept.tasks.find(t => t._configName === key);
-      if (!task) return;
-      task.name  = savedTask.name;
-      task.owner = savedTask.owner;
-      if (savedTask.status)   task.status   = savedTask.status;
-      if (savedTask.priority) task.priority = savedTask.priority;
-      if (savedTask.dueDate !== undefined) task.dueDate = isValidISODate(savedTask.dueDate) ? savedTask.dueDate : undefined;
-      if (savedTask.blockedBy !== undefined) task.blockedBy = savedTask.blockedBy || null;
-    });
-  });
+  // Nothing from the file reaches shared state unvalidated: tasks are matched to
+  // config by _configName and field-checked, everything else goes through
+  // sanitizeWorkspace (enums, colors, ids, dates, numbers, links, lengths).
+  applySavedTasks(orgData.departments, data.departments);
 
-  if (data.company) {
-    try { localStorage.setItem(COMPANY_KEY, data.company); } catch (_) {}
-    applyCompanyName(data.company);
+  const clean = sanitizeWorkspace(data, { knownDeptIds: orgData.departments.map(d => d.id) });
+
+  if (clean.company) {
+    try { localStorage.setItem(COMPANY_KEY, clean.company); } catch (_) {}
+    applyCompanyName(clean.company);
   }
 
-  if (data.team && Array.isArray(data.team.employees)) {
-    setTeamData(data.team);
+  if (clean.team) {
+    setTeamData(clean.team);
     saveTeamData();
   }
 
-  if (Array.isArray(data.workOrders)) {
-    setWorkOrders(data.workOrders);
+  if (clean.workOrders) {
+    setWorkOrders(clean.workOrders);
     saveWorkOrders();
   }
 
-  if (data.portfolio) {
-    setPortfolio({
-      properties: Array.isArray(data.portfolio.properties) ? data.portfolio.properties : [],
-      vendors:    Array.isArray(data.portfolio.vendors)    ? data.portfolio.vendors    : [],
-      tenants:    Array.isArray(data.portfolio.tenants)    ? data.portfolio.tenants    : [],
-    });
+  if (clean.portfolio) {
+    setPortfolio(clean.portfolio);
     savePortfolio();
   }
 
@@ -373,6 +359,9 @@ function buildImportReviewHTML(report, source) {
         <li>${report.skippedDepartments} departments skipped.</li>
         <li>${report.skippedTasks} tasks skipped.</li>
         <li>${report.invalidDueDates} invalid due dates will be cleared.</li>
+        <li>${report.invalidTasks} task rows were unusable and will be ignored.</li>
+        <li>${report.repairedRecords} team / work order / portfolio records had invalid fields that will be reset.</li>
+        <li>${report.droppedRecords} team / work order / portfolio records are unusable and will be skipped.</li>
       </ul>
     </div>
   `;

@@ -80,6 +80,20 @@ Owns movement of state into and out of the app.
 | `copyStateToClipboard()` / `pasteStateFromClipboard()` | Manual device-to-device transfer using the same schema and review path. |
 | `openImportReview(...)` | Shared human checkpoint for file, clipboard, and sync conflicts. |
 
+### `js/normalize.js`
+
+The trust boundary. Everything that enters from outside the UI forms — an imported file, pasted clipboard text, a Team Sync snapshot, a restored backup, or `localStorage` — is converted here into records the rest of the app can rely on: known enums, `#rrggbb` colors, safe ids, valid dates, finite numbers, http(s)-only links, and length-capped text.
+
+| Symbol | Meaning |
+|---|---|
+| `sanitizeWorkspace(data, { knownDeptIds })` | Cleans the team, work orders, portfolio, and company name of an imported payload and reports `kept` / `dropped` / `repaired` counts per section. |
+| `applySavedTasks(departments, saved, { fill })` | The single place saved task fields are merged onto config tasks (storage load, backup restore, and import all use it). |
+| `normalizeWorkOrders`, `normalizePortfolio`, `normalizeTeam` | Per-collection sanitizers built from small declarative field specs. |
+| `normalizeSavedTask`, `normalizeBlockedBy`, `normalizeCustomFields` | Task-level validation. |
+| `normalizeAuditLog` | Validates stored audit entries. |
+
+Free text (names, notes) legitimately contains characters like `<` and `"`, so normalizing is a safety net and **not** a substitute for escaping at render time. Views still escape every dynamic value and pass ids through `data-*` attributes; see the Security Conventions in `CONTRIBUTING.md`.
+
 ### `js/stateSchema.js`
 
 The portable workspace contract. The browser and the Vitest suite import this same ES module.

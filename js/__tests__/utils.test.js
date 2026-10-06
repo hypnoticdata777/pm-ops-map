@@ -53,6 +53,14 @@ describe('escapeHtml', () => {
     expect(utils.escapeHtml('>')).toBe('&gt;');
   });
 
+  test('escapes single quotes so values are safe in single-quoted attributes too', () => {
+    expect(utils.escapeHtml("it's")).toBe('it&#39;s');
+  });
+
+  test('escapes & first so entities in the input stay literal text', () => {
+    expect(utils.escapeHtml('&quot;')).toBe('&amp;quot;');
+  });
+
   test('null input returns empty string', () => {
     expect(utils.escapeHtml(null)).toBe('');
   });
@@ -158,6 +166,53 @@ describe('jsonAttr', () => {
   });
 });
 
+// The old implementation: JSON.stringify then only swap " for &quot;. It does NOT
+// escape "&", so a value containing the text &quot; turns back into a real quote
+// after the browser parses the attribute and ends the JS string early.
+const legacyJsonAttr = val => JSON.stringify(String(val == null ? '' : val)).replace(/"/g, '&quot;');
+
+// Parses `<button onclick="f(<attr>)">` with the real HTML parser, then evaluates
+// the resulting handler source with f stubbed — exactly what a click would run.
+function roundTrip(attrFn, value) {
+  delete globalThis.__pwn;
+  const host = document.createElement('div');
+  host.innerHTML = `<button onclick="f(${attrFn(value)})">x</button>`;
+  const handlerSource = host.firstChild.getAttribute('onclick');
+  const received = [];
+  new Function('f', handlerSource)(v => received.push(v));
+  return { received, executed: globalThis.__pwn !== undefined };
+}
+
+describe('jsonAttr round trip through the HTML parser', () => {
+  const values = [
+    'plain', '"double"', "it's", 'back\\slash', 'line\nbreak', '<img src=x onerror=1>', '</script>',
+    '&amp;', '&quot;', '&#34;', '&lt;b&gt;', '\u2028', 'emoji 🏠',
+  ];
+
+  test.each(values)('the handler receives exactly %j', value => {
+    const { received, executed } = roundTrip(utils.jsonAttr, value);
+    expect(received).toEqual([value]);
+    expect(executed).toBe(false);
+  });
+
+  test('an entity-encoded breakout payload cannot execute', () => {
+    const payload = '&quot;);__pwn=1;//';
+    const { received, executed } = roundTrip(utils.jsonAttr, payload);
+    expect(executed).toBe(false);
+    expect(received).toEqual([payload]);
+  });
+
+  test('regression proof: the legacy encoding DID execute that payload', () => {
+    const { executed } = roundTrip(legacyJsonAttr, '&quot;);__pwn=1;//');
+    expect(executed).toBe(true);
+    delete globalThis.__pwn;
+  });
+
+  test('output never contains a raw double quote, so it cannot end the attribute', () => {
+    expect(utils.jsonAttr('say "hi" & <bye>')).not.toMatch(/["<>]/);
+  });
+});
+
 describe('formatCurrency', () => {
   test('formats a whole number with two decimals and thousands separator', () => {
     expect(utils.formatCurrency(1200)).toBe('$1,200.00');
@@ -256,6 +311,56 @@ describe('isSafeUrl', () => {
     expect(utils.isSafeUrl('')).toBe(false);
     expect(utils.isSafeUrl(null)).toBe(false);
     expect(utils.isSafeUrl(undefined)).toBe(false);
+  });
+});
+
+describe('isSafeUrl (stricter: parsed, not just prefix-matched)', () => {
+  test('rejects other schemes, protocol-relative and malformed URLs', () => {
+    ['ftp://example.com/f', 'file:///etc/passwd', 'mailto:a@b.com', '//example.com', 'https://', 'http://exa mple.com',
+      'JaVaScRiPt:alert(1)', ' javascript:alert(1)'].forEach(url => {
+      expect(utils.isSafeUrl(url), url).toBe(false);
+    });
+  });
+
+  test('rejects non-strings and over-long values', () => {
+    expect(utils.isSafeUrl(42)).toBe(false);
+    expect(utils.isSafeUrl({})).toBe(false);
+    expect(utils.isSafeUrl(`https://example.com/${'a'.repeat(3000)}`)).toBe(false);
+  });
+
+  test('accepts surrounding whitespace and mixed-case schemes', () => {
+    expect(utils.isSafeUrl('  HTTPS://Example.com/a  ')).toBe(true);
+  });
+});
+
+describe('normalizeUrl', () => {
+  test('returns the canonical href for valid http(s) URLs', () => {
+    expect(utils.normalizeUrl('https://example.com')).toBe('https://example.com/');
+    expect(utils.normalizeUrl('  http://Example.com/Lease.pdf  ')).toBe('http://example.com/Lease.pdf');
+  });
+
+  test('percent-encodes characters that could break out of an attribute', () => {
+    const href = utils.normalizeUrl('https://example.com/a b"c<d>e');
+    expect(href).toBe('https://example.com/a%20b%22c%3Cd%3Ee');
+    expect(href).not.toMatch(/["<> ]/);
+  });
+
+  test('returns an empty string for anything unsafe or unparseable', () => {
+    ['javascript:alert(1)', 'data:text/html,x', '/relative', '', '   ', null, undefined, 5].forEach(v => {
+      expect(utils.normalizeUrl(v)).toBe('');
+    });
+  });
+});
+
+describe('formatWODate', () => {
+  test('formats valid ISO timestamps', () => {
+    expect(utils.formatWODate('2026-10-06T12:00:00.000Z')).toMatch(/Oct \d{1,2}, 2026/);
+  });
+
+  test('returns an empty string — never the text "Invalid Date"', () => {
+    ['', null, undefined, 'garbage', '2026-13-45'].forEach(v => {
+      expect(utils.formatWODate(v)).toBe('');
+    });
   });
 });
 

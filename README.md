@@ -369,6 +369,7 @@ pm-ops-map/
 │   ├── launchPlan.js       Guided setup plan, data-quality checks, demo company
 │   ├── handbook.js         Markdown + HTML operations handbook generator
 │   ├── stateSchema.js      Versioned JSON export/import schema and validation
+│   ├── normalize.js        Boundary sanitizers for imports, sync, backups, and storage loads
 │   ├── templates.js        Role templates, SOP templates, demo workspace data
 │   ├── utils.js            Pure utility functions
 │   ├── views/
@@ -383,6 +384,7 @@ pm-ops-map/
 │       ├── utils.test.js   Utility function tests
 │       ├── stateSchema.test.js
 │       └── templates.test.js
+├── e2e/                     Playwright browser tests, including the XSS regression suite
 ├── server/                  Optional self-hosted sync server (own package.json, tests, Docker) — see server/README.md
 ├── docker-compose.yml       Runs the sync server locally with durable storage
 ├── render.yaml              One-click Render deploy for the sync server
@@ -450,12 +452,13 @@ npm install
 npm start          # webpack-dev-server with live reload → localhost:8080
 npm test           # Vitest unit tests (run against the same ES modules the browser loads)
 npm run test:coverage   # same, with a V8 coverage report
+npm run test:e2e   # Playwright browser tests (first run: npx playwright install chromium)
 npm run build      # Production bundle → dist/
 ```
 
 Requires Node.js 22.12+ for development, tests, and the optional build (the app itself only needs a browser). The optional sync server has its own independent test suite — see [`server/README.md`](server/README.md).
 
-CI runs two jobs on every push and pull request: the app (`npm ci` → `npm test` → `npm audit --omit=dev` → `npm run build`) and the sync server (`cd server && npm ci && npm test && npm audit --omit=dev`).
+CI runs three jobs on every push and pull request: the app (`npm ci` → `npm test` → `npm audit --omit=dev` → `npm run build`), the browser E2E suite (`npm run test:e2e`), and the sync server (`cd server && npm ci && npm test && npm audit --omit=dev`).
 
 ---
 

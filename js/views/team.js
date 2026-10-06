@@ -3,7 +3,7 @@ import {
   orgData, teamData, setTeamData, workOrders,
   _selectedColor, setSelectedColor, COLOR_PALETTE,
   STATUS_LABELS, PRIORITY_LABELS, WO_STATUS_LABELS,
-  currentView, getEmployeeHex, getEmployeeNames,
+  currentView, asHex, getEmployeeHex, getEmployeeNames,
   buildWorkloadMap, countUnowned,
   auditLog, setAuditLog, AUDIT_LABELS,
 } from '../state.js';
@@ -13,7 +13,7 @@ import {
   saveAuditLog, saveBackupSnapshot,
 } from '../storage.js';
 import {
-  escapeHtml, jsonAttr, isTaskOverdue, _downloadBlob, _slugify,
+  escapeHtml, isTaskOverdue, _downloadBlob, _slugify,
 } from '../utils.js';
 import { ROLE_TEMPLATES } from '../templates.js';
 import { updateStats, updateBeacons } from '../ui.js';
@@ -84,7 +84,7 @@ export function renderTeamView() {
           </div>
           <div class="role-template-actions">
             ${Object.entries(ROLE_TEMPLATES).map(([id, template]) => `
-              <button class="role-template-btn" onclick="openRoleTemplatePreview(${jsonAttr(id)})" title="${escapeHtml(template.description)}">
+              <button class="role-template-btn" data-template="${escapeHtml(id)}" onclick="openRoleTemplatePreview(this.dataset.template)" title="${escapeHtml(template.description)}">
                 ${escapeHtml(template.label)}
               </button>
             `).join('')}
@@ -114,19 +114,20 @@ export function renderTeamView() {
 
 export function buildEmployeeCard(emp, depts, workload, maxTasks) {
   const taskCount = workload.get(emp.name) || 0;
+  const hex       = asHex(emp.hex);
   const pct       = maxTasks > 0 ? Math.round((taskCount / maxTasks) * 100) : 0;
 
   return `
     <div class="employee-card" data-emp="${escapeHtml(emp.name)}">
       <div class="employee-card-header">
-        <span class="emp-color-dot" style="background:${escapeHtml(emp.hex)}"></span>
+        <span class="emp-color-dot" style="background:${hex}"></span>
         <span class="emp-name">${escapeHtml(emp.name)}</span>
-        <span class="emp-task-count" style="color:${escapeHtml(emp.hex)}">${taskCount} task${taskCount !== 1 ? 's' : ''}</span>
+        <span class="emp-task-count" style="color:${hex}">${taskCount} task${taskCount !== 1 ? 's' : ''}</span>
         <div class="emp-mini-bar-track">
-          <div class="emp-mini-bar-fill" style="width:${Math.max(pct, 2)}%;background:${escapeHtml(emp.hex)}"></div>
+          <div class="emp-mini-bar-fill" style="width:${Math.max(pct, 2)}%;background:${hex}"></div>
         </div>
-        <button class="emp-playbook-btn" onclick="openRolePlaybook(${jsonAttr(emp.name)})" title="Open role playbook for ${escapeHtml(emp.name)}">Playbook</button>
-        <button class="emp-remove-btn" onclick="removeEmployee(${jsonAttr(emp.name)})" title="Remove ${escapeHtml(emp.name)}">&#x2715;</button>
+        <button class="emp-playbook-btn" data-name="${escapeHtml(emp.name)}" onclick="openRolePlaybook(this.dataset.name)" title="Open role playbook for ${escapeHtml(emp.name)}">Playbook</button>
+        <button class="emp-remove-btn" data-name="${escapeHtml(emp.name)}" onclick="removeEmployee(this.dataset.name)" title="Remove ${escapeHtml(emp.name)}">&#x2715;</button>
       </div>
 
       <div class="affinity-tags">
@@ -139,7 +140,9 @@ export function buildEmployeeCard(emp, depts, workload, maxTasks) {
               style="${active
                 ? `background:${dept.color};border-color:${dept.color}`
                 : `border-color:${dept.color};color:${dept.color}`}"
-              onclick="toggleAffinity(${jsonAttr(emp.name)}, ${jsonAttr(dept.id)})"
+              data-name="${escapeHtml(emp.name)}"
+              data-dept="${escapeHtml(dept.id)}"
+              onclick="toggleAffinity(this.dataset.name, this.dataset.dept)"
               title="${active ? 'Remove' : 'Add'} affinity: ${escapeHtml(dept.name)}"
             >${escapeHtml(dept.name)}</button>
           `;
@@ -323,7 +326,7 @@ function buildRoleTemplatePreviewHTML(template) {
         return `
           <div class="role-template-preview-card">
             <div class="role-template-preview-card-header">
-              <span class="role-template-preview-dot" style="background:${emp.hex}"></span>
+              <span class="role-template-preview-dot" style="background:${asHex(emp.hex)}"></span>
               <strong>${escapeHtml(emp.name)}</strong>
             </div>
             <div class="role-template-preview-affinities">

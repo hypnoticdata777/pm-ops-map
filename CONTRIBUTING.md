@@ -67,12 +67,33 @@ pm-ops-map/
 │   ├── sync.js         Optional team sync client — talks to server/
 │   ├── launchPlan.js   Beginner setup dashboard and readiness checks
 │   ├── handbook.js     Markdown handbook export
+│   ├── normalize.js    Sanitizers for every path that loads outside data
 │   ├── views/          Tracking, map, team, portfolio, and work order screens
 │   └── __tests__/      Vitest unit tests — they import the shipped ES modules directly
+├── e2e/                Playwright browser tests (security regression suite)
 └── server/             Optional sync server — separate package.json, own deps, own tests
 ```
 
 Starter operating data lives in `config.json`. Runtime state is loaded by `app.js`, kept in `state.js`, and persisted by `storage.js`. Feature rendering lives in the relevant `js/views/` module.
+
+## Security Conventions
+
+PM Ops Map renders data it did not create — imported JSON, pasted clipboard text, Team Sync snapshots, restored backups — so every contribution follows these rules:
+
+1. **Never put user data inside JavaScript source in an inline handler.** Pass it through a `data-*` attribute and read it from the element:
+   ```js
+   // Good
+   `<button data-id="${escapeHtml(wo.id)}" onclick="deleteWorkOrder(this.dataset.id)">`
+   // Bad — an id containing a quote runs attacker-controlled script
+   `<button onclick="deleteWorkOrder('${wo.id}')">`
+   ```
+2. **Escape every dynamic value** that goes into HTML with `escapeHtml()` — text, attributes, and `title`/`aria-label` alike. Numbers should go through `Number()`.
+3. **Class names and `data-*` values must come from a known list.** Use `asStatus()` / `asPriority()` / `asHex()` from `js/state.js` rather than interpolating the raw value.
+4. **Links:** only store and render `normalizeUrl(url)` (http/https only).
+5. **Anything that loads outside data goes through `js/normalize.js`** (`sanitizeWorkspace`, `applySavedTasks`, `normalizeAuditLog`, …). Don't assign imported objects straight into shared state.
+6. **Exported CSV cells** must go through the CSV helpers so spreadsheet formulas are neutralized.
+
+`npm run test:e2e` runs a browser suite (`e2e/security-xss.spec.js`) that injects a canary payload into every importable field and fails if any view turns it into markup or script. If you add a field or a view, extend `e2e/helpers/security.js`.
 
 ## Pull Request Guidelines
 
@@ -81,7 +102,7 @@ Starter operating data lives in `config.json`. Runtime state is loaded by `app.j
 - If you're editing an HTML-called handler, update both `index.html` and the `Object.assign(window, ...)` block in `js/app.js`
 - If you're editing a view, keep changes in the relevant `js/views/` module when possible
 - No new runtime dependencies in the client app (`index.html`, `js/`, `css/`) — it should keep working as browser-native HTML, CSS, and JavaScript with zero installs. `server/` is a separate package and may have its own minimal dependencies.
-- Run `npm test` before submitting — tests must pass. If you touched `server/`, also run `npm test` inside `server/`.
+- Run `npm test` before submitting — tests must pass. If you touched rendering, import/export, or storage code, also run `npm run test:e2e` (one-time setup: `npx playwright install chromium`). If you touched `server/`, also run `npm test` inside `server/`.
 - Test the real modules: import from `js/*.js` in your tests. Don't add `.cjs` mirrors or test-only copies of browser code.
 
 ## Code Style

@@ -6,6 +6,10 @@ import {
   STATUS_CYCLE, PRIORITY_CYCLE,
 } from './state.js';
 import { _isQuotaError, _slugify } from './utils.js';
+import {
+  applySavedTasks, normalizeTeam, normalizeWorkOrders, normalizePortfolio,
+  normalizeAuditLog, sanitizeWorkspace,
+} from './normalize.js';
 
 // ── Storage keys ──────────────────────────────────────────────────────────────
 export const STORAGE_KEY     = 'pm-ops-data-v1';
@@ -80,38 +84,13 @@ export function saveToStorage() {
 export function loadFromStorage() {
   // PROJECT BEACON: Reconcile saved edits onto current config by _configName;
   // visible task names are user-editable and are not durable identity keys.
+  // Field-level validation lives in normalize.js (applySavedTasks).
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return;
     const saved = JSON.parse(raw);
     if (!Array.isArray(saved)) return;
-    saved.forEach(savedDept => {
-      if (!savedDept || typeof savedDept.id !== 'string') return;
-      const dept = orgData.departments.find(d => d.id === savedDept.id);
-      if (!dept || !Array.isArray(savedDept.tasks)) return;
-      savedDept.tasks.forEach((savedTask) => {
-        if (!savedTask || typeof savedTask.name !== 'string' || !savedTask.name.trim()) return;
-        if (typeof savedTask.owner !== 'string') return;
-        const key  = savedTask._configName || savedTask.name;
-        const task = dept.tasks.find(t => t._configName === key);
-        if (!task) return;
-        task.name  = savedTask.name.slice(0, 200);
-        task.owner = savedTask.owner;
-        if (savedTask.status   && STATUS_CYCLE.includes(savedTask.status))     task.status   = savedTask.status;
-        if (savedTask.priority && PRIORITY_CYCLE.includes(savedTask.priority)) task.priority = savedTask.priority;
-        if (savedTask.dueDate !== undefined) task.dueDate = savedTask.dueDate;
-        if (savedTask.blockedBy !== undefined) task.blockedBy = savedTask.blockedBy || null;
-        if (typeof savedTask.notes === 'string') task.notes = savedTask.notes.slice(0, 1000);
-        if (savedTask.customFields && typeof savedTask.customFields === 'object' && !Array.isArray(savedTask.customFields)) {
-          task.customFields = Object.fromEntries(
-            Object.entries(savedTask.customFields)
-              .filter(([k, v]) => typeof k === 'string' && typeof v === 'string')
-              .slice(0, 10)
-              .map(([k, v]) => [k.slice(0, 40), v.slice(0, 200)])
-          );
-        }
-      });
-    });
+    applySavedTasks(orgData.departments, saved);
   } catch (e) {
     console.error('Failed to parse saved task data — data preserved in storage:', e);
     _showActionToast('⚠ Could not load saved data — try exporting a backup', 'save-toast--error', 6000);
@@ -177,6 +156,8 @@ export function confirmResetStorage(choice) {
 }
 
 // ── Team data persistence ─────────────────────────────────────────────────────
+const knownDeptIds = () => orgData?.departments?.map(d => d.id);
+
 export function seedDefaultTeam() {
   teamData.employees = Object.entries(ownerColors)
     .filter(([name]) => name !== 'UNOWNED')
@@ -205,7 +186,7 @@ export function loadTeamData() {
     }
     const parsed = JSON.parse(raw);
     if (parsed && Array.isArray(parsed.employees)) {
-      setTeamData(parsed);
+      setTeamData(normalizeTeam(parsed, { knownDeptIds: knownDeptIds() }).team);
     } else {
       seedDefaultTeam();
     }
@@ -226,7 +207,7 @@ export function saveWorkOrders() {
 export function loadWorkOrders() {
   try {
     const raw = localStorage.getItem(WORKORDERS_KEY);
-    if (raw) setWorkOrders(JSON.parse(raw) || []);
+    if (raw) setWorkOrders(normalizeWorkOrders(JSON.parse(raw)).items);
   } catch (e) {
     setWorkOrders([]);
   }
@@ -245,12 +226,7 @@ export function loadPortfolio() {
   try {
     const raw = localStorage.getItem(PORTFOLIO_KEY);
     if (!raw) return;
-    const parsed = JSON.parse(raw);
-    setPortfolio({
-      properties: Array.isArray(parsed?.properties) ? parsed.properties : [],
-      vendors:    Array.isArray(parsed?.vendors)    ? parsed.vendors    : [],
-      tenants:    Array.isArray(parsed?.tenants)    ? parsed.tenants    : [],
-    });
+    setPortfolio(normalizePortfolio(JSON.parse(raw)).portfolio);
   } catch (e) {
     setPortfolio({ properties: [], vendors: [], tenants: [] });
   }
@@ -260,7 +236,7 @@ export function loadPortfolio() {
 export function loadAuditLog() {
   try {
     const raw = localStorage.getItem(AUDIT_KEY);
-    if (raw) setAuditLog(JSON.parse(raw) || []);
+    if (raw) setAuditLog(normalizeAuditLog(JSON.parse(raw)));
   } catch (_) {
     setAuditLog([]);
   }
@@ -385,43 +361,24 @@ export function restoreBackupSnapshot(index) {
   try {
     const { departments, team, workOrders: wos, portfolio: port } = JSON.parse(backup.state);
 
-    if (Array.isArray(departments)) {
-      departments.forEach(savedDept => {
-        if (!savedDept || typeof savedDept.id !== 'string') return;
-        const dept = orgData.departments.find(d => d.id === savedDept.id);
-        if (!dept || !Array.isArray(savedDept.tasks)) return;
-        savedDept.tasks.forEach(savedTask => {
-          if (!savedTask || typeof savedTask.name !== 'string' || !savedTask.name.trim()) return;
-          if (typeof savedTask.owner !== 'string') return;
-          const key  = savedTask._configName || savedTask.name;
-          const task = dept.tasks.find(t => t._configName === key);
-          if (!task) return;
-          task.name     = savedTask.name.slice(0, 200);
-          task.owner    = savedTask.owner;
-          task.status   = STATUS_CYCLE.includes(savedTask.status)   ? savedTask.status   : 'todo';
-          task.priority = PRIORITY_CYCLE.includes(savedTask.priority) ? savedTask.priority : 'medium';
-          task.dueDate  = savedTask.dueDate  || null;
-          task.blockedBy = savedTask.blockedBy || null;
-        });
-      });
-    }
+    // Restore replaces state, so absent task fields reset to defaults (fill) and
+    // notes/customFields come back with everything else.
+    applySavedTasks(orgData.departments, departments, { fill: true });
 
-    if (team && Array.isArray(team.employees)) {
-      setTeamData(team);
+    const clean = sanitizeWorkspace(
+      { team, workOrders: wos, portfolio: port },
+      { knownDeptIds: knownDeptIds() },
+    );
+    if (clean.team) {
+      setTeamData(clean.team);
       saveTeamData();
     }
-
-    if (Array.isArray(wos)) {
-      setWorkOrders(wos);
+    if (clean.workOrders) {
+      setWorkOrders(clean.workOrders);
       saveWorkOrders();
     }
-
-    if (port) {
-      setPortfolio({
-        properties: Array.isArray(port.properties) ? port.properties : [],
-        vendors:    Array.isArray(port.vendors)    ? port.vendors    : [],
-        tenants:    Array.isArray(port.tenants)    ? port.tenants    : [],
-      });
+    if (clean.portfolio) {
+      setPortfolio(clean.portfolio);
       savePortfolio();
     }
 
