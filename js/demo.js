@@ -1,3 +1,4 @@
+/** @import { OrgData } from './types.js' */
 // Runtime for hosted-demo mode (see demoMode.js): seeds the fictional workspace on
 // first visit, shows the permanent "fictional data" banner, and resets the demo.
 //
@@ -19,7 +20,7 @@ export function seedShowcaseWorkspace(now = new Date()) {
   setTeamData(showcase.team);
   setPortfolio(showcase.portfolio);
   setWorkOrders(showcase.workOrders);
-  applyShowcaseTasks(orgData.departments, showcase.team.employees, now);
+  applyShowcaseTasks(/** @type {OrgData} */ (orgData).departments, showcase.team.employees, now);
 
   try {
     localStorage.setItem(COMPANY_KEY, showcase.company);

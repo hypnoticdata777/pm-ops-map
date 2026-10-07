@@ -1,3 +1,4 @@
+// @ts-nocheck — TODO(types): not converted to checked JSDoc yet. Delete this line and fix what `npm run typecheck` reports.
 // Entry point for the browser app.
 //
 // This is the best file to read first when editing the project because it
@@ -93,6 +94,7 @@ import {
   initSync, openSyncModal, closeSyncModal, connectSync, disconnectSync, syncNow,
 } from './sync.js';
 import { openPrivacyModal, closePrivacyModal } from './privacy.js';
+import { stampTaskIdentity } from './taskIdentity.js';
 import { DEMO_MODE } from './demoMode.js';
 import { initDemoMode, seedShowcaseWorkspace, resetDemo } from './demo.js';
 
@@ -213,12 +215,10 @@ function bootstrapWithConfig(config) {
   setOrgData(config.orgData);
   setDefaultAffinities(config.defaultAffinities);
   setOwnerColors(config.ownerColors);
-  // Stamp each task with its original config name as a stable identity key.
-  // User edits can rename tasks later, so this hidden key lets storage.js
-  // reconnect saved progress to the correct starter task on reload.
-  config.orgData.departments.forEach(dept => {
-    dept.tasks.forEach(task => { task._configName = task.name; });
-  });
+  // Give every task its permanent id and remember its starter name (_configName).
+  // User edits can rename tasks later; saved progress is reconnected by id first
+  // (see taskIdentity.js), so reworded starter tasks don't orphan anyone's data.
+  stampTaskIdentity(config.orgData.departments);
   initApp();
 }
 

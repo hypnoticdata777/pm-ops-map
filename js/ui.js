@@ -1,3 +1,4 @@
+// @ts-nocheck — TODO(types): not converted to checked JSDoc yet. Delete this line and fix what `npm run typecheck` reports.
 // Global UI helpers: stats bar, beacons, onboarding, welcome guide, notifications.
 import {
   orgData, teamData, workOrders, countUnowned,

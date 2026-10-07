@@ -105,4 +105,16 @@ npm test
 
 Covers workspace claim-on-first-write, passphrase verification, version
 conflict detection (including a concurrent-write race), payload size limits,
-and the HTTP API layer end-to-end.
+request/state validation, and the HTTP API layer end-to-end.
+
+## What the server validates
+
+The server stores a workspace as an opaque blob and never interprets its
+contents — the app checks every record itself before applying anything. It does
+refuse (HTTP 400, with a message naming the problem) a push whose `state` is not
+a JSON object, has a `schema` other than `pm-ops-map-state`, has the wrong type
+for `departments` / `team` / `workOrders` / `portfolio` / `company`, has an
+oversized list (about twice what the app keeps), contains a `__proto__` key, or
+is nested more than 20 levels deep; an `expectedVersion` that is not a whole
+number; or a passphrase over 200 characters. Unknown extra keys are accepted so
+newer app versions keep working against an older server.

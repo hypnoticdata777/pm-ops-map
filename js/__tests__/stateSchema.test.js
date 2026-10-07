@@ -6,6 +6,7 @@ import {
   validateImportedState,
   formatImportReport,
 } from '../stateSchema.js';
+import { stampTaskIdentity } from '../taskIdentity.js';
 
 const { orgData } = config;
 
@@ -87,5 +88,51 @@ describe('state schema', () => {
     expect(report.invalidDueDates).toBe(1);
     expect(report.skippedTasks).toBe(1);
     expect(report.warnings.length).toBeGreaterThan(0);
+  });
+});
+
+describe('schema v4: permanent task ids', () => {
+  const stamp = () => stampTaskIdentity(cloneOrgData().departments);
+  const payloadOf = departments => buildStatePayload({
+    company: 'Test PM', departments, team: { employees: [] }, workOrders: [],
+    portfolio: { properties: [], tenants: [], vendors: [] }, exportedAt: '2026-05-19T00:00:00.000Z',
+  });
+
+  test('exports are schema v4 and every task row carries its id', () => {
+    const payload = payloadOf(stamp());
+    expect(payload.schemaVersion).toBe(4);
+    const rows = payload.departments.flatMap(d => d.tasks);
+    expect(rows).toHaveLength(262);
+    rows.forEach(r => expect(r.id).toMatch(/^[a-z0-9-]+-\d{3}$/));
+  });
+
+  test('a v4 export still matches after the starter task is reworded in config.json', () => {
+    const exported = payloadOf(stamp());
+    exported.departments[0].tasks[0].owner = 'Maria';
+    const live = stamp();
+    live[0].tasks[0].name = 'Reworded starter task';
+    live[0].tasks[0]._configName = 'Reworded starter task';
+    const report = validateImportedState(exported, { departments: live });
+    expect(report.ok).toBe(true);
+    expect(report.matchedTasks).toBe(262);
+    expect(report.skippedTasks).toBe(0);
+  });
+
+  test('v2 and v3 files (no ids) still import against the current config', () => {
+    [2, 3].forEach(version => {
+      const file = payloadOf(stamp());
+      file.schemaVersion = version;
+      file.departments.forEach(d => d.tasks.forEach(t => { delete t.id; }));
+      const report = validateImportedState(file, { departments: stamp() });
+      expect(report.ok, `v${version}`).toBe(true);
+      expect(report.matchedTasks, `v${version}`).toBe(262);
+    });
+  });
+
+  test('a file from a newer schema version warns but the current one does not', () => {
+    const file = payloadOf(stamp());
+    expect(validateImportedState(file, { departments: stamp() }).warnings.join(' ')).not.toMatch(/newer schema/);
+    file.schemaVersion = 5;
+    expect(validateImportedState(file, { departments: stamp() }).warnings.join(' ')).toMatch(/newer schema/);
   });
 });

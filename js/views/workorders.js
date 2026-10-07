@@ -1,3 +1,4 @@
+// @ts-nocheck — TODO(types): not converted to checked JSDoc yet. Delete this line and fix what `npm run typecheck` reports.
 // Work Orders kanban: 4-column pipeline (Submitted → Scheduled → In Progress → Completed).
 import {
   workOrders, setWorkOrders, portfolio,

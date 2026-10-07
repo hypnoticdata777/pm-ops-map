@@ -204,3 +204,26 @@ describe('applyShowcaseTasks', () => {
     expect(departments[0].tasks[0].owner).toBe('Priya Raman');
   });
 });
+
+describe('showcase records are already in the canonical shape', () => {
+  // The demo bypasses the import sanitizers, so it must produce exactly what they would:
+  // otherwise views see fields (documentUrl) that exist on every real record but not on demo ones.
+  const { team, portfolio, workOrders } = buildShowcase(NOW);
+
+  test('properties, tenants and vendors equal their sanitized selves', () => {
+    expect(sanitizeWorkspace({ portfolio }, { knownDeptIds: deptIds }).portfolio).toEqual(portfolio);
+  });
+
+  test('work orders equal their sanitized selves', () => {
+    expect(sanitizeWorkspace({ workOrders }, { knownDeptIds: deptIds }).workOrders).toEqual(workOrders);
+  });
+
+  test('the team equals its sanitized self', () => {
+    expect(sanitizeWorkspace({ team }, { knownDeptIds: deptIds }).team).toEqual(team);
+  });
+
+  test('importing the showcase reports nothing to repair', () => {
+    const r = sanitizeWorkspace({ team, workOrders, portfolio }, { knownDeptIds: deptIds });
+    expect(r.errors).toEqual([]);
+  });
+});

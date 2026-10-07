@@ -40,12 +40,12 @@ beforeEach(() => {
 afterEach(() => vi.restoreAllMocks());
 
 describe('1. notes and custom fields travel with the workspace', () => {
-  test('the payload carries notes and customFields, at schema v3', () => {
+  test('the payload carries notes and customFields (schema v3 and later)', () => {
     task().notes = 'Call the owner before listing';
     task().customFields = { 'PO #': '4471', Unit: '2B' };
     const payload = payloadFromState();
-    expect(STATE_SCHEMA_VERSION).toBe(3);
-    expect(payload.schemaVersion).toBe(3);
+    expect(STATE_SCHEMA_VERSION).toBeGreaterThanOrEqual(3);
+    expect(payload.schemaVersion).toBe(STATE_SCHEMA_VERSION);
     expect(payload.departments[0].tasks[0]).toMatchObject({
       notes: 'Call the owner before listing',
       customFields: { 'PO #': '4471', Unit: '2B' },

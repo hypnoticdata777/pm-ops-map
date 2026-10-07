@@ -375,7 +375,7 @@ Edit `config.json` in the project root. No JavaScript needed.
 }
 ```
 
-Add a new department the same way, using a new `id`.
+Add a new department the same way, using a new `id`. After adding tasks, run `npm run ids:assign` — every task carries a permanent id (like `leasing-006`) that keeps saved progress attached even if you reword the task later. See [CONTRIBUTING](CONTRIBUTING.md#editing-configjson-tasks).
 
 ### Fork and brand it
 
@@ -419,6 +419,7 @@ pm-ops-map/
 │   ├── handbook.js         Markdown + HTML operations handbook generator
 │   ├── stateSchema.js      Versioned JSON export/import schema and validation
 │   ├── normalize.js        Boundary sanitizers for imports, sync, backups, and storage loads
+│   ├── taskIdentity.js     Permanent task ids: boot stamping and saved-row → task matching
 │   ├── privacy.js          Data-handling guidance, Data & Privacy dialog, export confirmations
 │   ├── demoMode.js         ?demo=1 detection and storage-key namespacing (no dependencies)
 │   ├── demo.js             Hosted demo: seeding, banner, reset, sync disabled
@@ -437,6 +438,7 @@ pm-ops-map/
 │       ├── utils.test.js   Utility function tests
 │       ├── stateSchema.test.js
 │       └── templates.test.js
+├── scripts/                 assign-task-ids.mjs — adds permanent ids to new config.json tasks
 ├── e2e/                     Playwright browser tests, including the XSS regression suite
 ├── server/                  Optional self-hosted sync server (own package.json, tests, Docker) — see server/README.md
 ├── docker-compose.yml       Runs the sync server locally with durable storage
@@ -470,7 +472,7 @@ pm-ops-map/
 
 ### Data flow
 
-`config.json` is fetched on load. `app.js` stamps each task with a stable `_configName` identity key and passes the result to `state.js`. Every module imports from `state.js`. UI edits mutate in-memory objects; `storage.js` persists them to `localStorage` after each change. Nothing goes to a server unless `sync.js` is connected to a Team Sync workspace.
+`config.json` is fetched on load. `app.js` stamps each task with its starter name (`_configName`), makes sure it has a permanent `id`, and passes the result to `state.js`; saved data is matched back by `id` first (see `js/taskIdentity.js`). Every module imports from `state.js`. UI edits mutate in-memory objects; `storage.js` persists them to `localStorage` after each change. Nothing goes to a server unless `sync.js` is connected to a Team Sync workspace.
 
 ### Module graph (no circular dependencies)
 

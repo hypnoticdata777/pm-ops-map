@@ -1,3 +1,4 @@
+// @ts-nocheck — TODO(types): not converted to checked JSDoc yet. Delete this line and fix what `npm run typecheck` reports.
 // Export / Import / Clipboard sync / Undo stack.
 import {
   orgData, teamData, setTeamData, workOrders, setWorkOrders,
@@ -26,6 +27,7 @@ export function _saveUndoSnapshot() {
   setUndoSnapshot(orgData.departments.map(dept => ({
     id: dept.id,
     tasks: dept.tasks.map(t => ({
+      id:          t.id,
       _configName: t._configName,
       name:        t.name,
       owner:       t.owner,
@@ -58,7 +60,7 @@ export function undoLastAction() {
 // the same path as a file/clipboard import.
 export function _applyImportedState(data) {
   // Nothing from the file reaches shared state unvalidated: tasks are matched to
-  // config by _configName and field-checked, everything else goes through
+  // config by id (then _configName) and field-checked, everything else goes through
   // sanitizeWorkspace (enums, colors, ids, dates, numbers, links, lengths).
   applySavedTasks(orgData.departments, data.departments);
 
@@ -353,6 +355,7 @@ function buildImportReviewHTML(report, source) {
     </div>
     ${report.warnings.length ? buildImportList('Warnings', report.warnings, 'warn') : ''}
     ${report.errors.length ? buildImportList('Errors', report.errors, 'error') : ''}
+    ${buildRepairList(report)}
     <div class="import-review-section">
       <h3>Matching summary</h3>
       <ul>
@@ -366,6 +369,16 @@ function buildImportReviewHTML(report, source) {
       </ul>
     </div>
   `;
+}
+
+// "What will be repaired": one line per field that was reset, cleared or skipped, naming the
+// record and field. Capped by validateImportedState; the rest are summarized.
+function buildRepairList(report) {
+  if (!report.issues || !report.issues.length) return '';
+  const more = report.issueCount - report.issues.length;
+  const items = report.issues.map(issue => issue.message);
+  if (more > 0) items.push(`…and ${more} more.`);
+  return buildImportList('What will be repaired', items, 'warn');
 }
 
 function buildImportMetric(label, value) {

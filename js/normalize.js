@@ -1,3 +1,31 @@
+/** @import { Employee, Team, WorkOrder, Property, Tenant, Vendor, Portfolio, AuditEntry, BlockedBy, Issue, CollectionStats, Department } from './types.js' */
+/** @import { CollectionResult } from './schema.js' */
+
+/**
+ * The fields of a task row that may be merged onto a starter task (see normalizeSavedTask).
+ * @typedef {object} SavedTaskPatch
+ * @property {string} name
+ * @property {string} owner
+ * @property {string} [status]
+ * @property {string} [priority]
+ * @property {string | null} [dueDate]
+ * @property {BlockedBy | null} [blockedBy]
+ * @property {string | null} [notes]
+ * @property {Record<string, string> | null} [customFields]
+ */
+
+/**
+ * Everything in an imported payload except the tasks. Sections absent from the payload are null.
+ * @typedef {object} SanitizedWorkspace
+ * @property {string} company
+ * @property {Team | null} team
+ * @property {WorkOrder[] | null} workOrders
+ * @property {Portfolio | null} portfolio
+ * @property {Record<string, CollectionStats>} stats
+ * @property {Issue[]} errors
+ * @property {number} omitted
+ */
+
 // Boundary sanitizers: turn untrusted data into records the rest of the app can trust.
 //
 // Data enters PM Ops Map from places the UI forms never see — an imported JSON
@@ -7,11 +35,24 @@
 // on: known enums, #rrggbb colors, safe ids, valid dates, finite numbers,
 // http(s)-only links, and length-capped text.
 //
+// The generic machinery (field helpers, record/collection validation, error
+// objects with field paths) lives in schema.js; this file says what a work order,
+// property, tenant, vendor, employee and task look like. Every validator returns
+// its sanitized data plus `errors`: what was repaired or dropped, by field path.
+//
 // This is a safety net, not a replacement for escaping: free text (names,
 // notes) legitimately contains characters like < and ", so views must still
 // escape it at render time. Pure functions only — no DOM, no shared state.
 import { STATUS_CYCLE, PRIORITY_CYCLE, WO_STATUS_CYCLE } from './state.js';
-import { isValidISODate, normalizeUrl } from './utils.js';
+import { isValidISODate } from './utils.js';
+import { findConfigTask } from './taskIdentity.js';
+import {
+  cleanText, cleanId, isHexColor, cleanTimestamp, cleanNumber,
+  line, text, choice, date, optionalDate, stamp, url, money, count,
+  validateCollection, makeIssue, shorten, wasProvided, isPlainObject, isOneOf,
+} from './schema.js';
+
+export { cleanText, cleanId, isHexColor, cleanTimestamp, cleanNumber };
 
 export const TENANT_STATUSES = ['active', 'applicant', 'notice', 'past'];
 export const DEFAULT_EMPLOYEE_HEX = '#607d8b';
@@ -33,68 +74,9 @@ export const LIMITS = {
   vendor: { name: 200, trade: 100, phone: 50, email: 200 },
 };
 
-// Letters, digits and . _ : - only — safe in an attribute, a selector, or a URL fragment.
-const ID_RE = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,79}$/;
 const DEPT_ID_RE = /^[a-z0-9][a-z0-9-]{0,39}$/;
-const HEX_RE = /^#[0-9a-fA-F]{6}$/;
-const TIMESTAMP_RE = /^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}(:\d{2}(\.\d{1,3})?)?(Z|[+-]\d{2}:?\d{2})?)?$/;
-// C0 controls except \t \n \r, DEL, and the Unicode line/paragraph separators.
-const CONTROL_CHARS = /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F\u2028\u2029]/g;
 
-// ── Primitive cleaners (return undefined when the input is unusable) ──────────
-
-function asString(value) {
-  if (typeof value === 'string') return value;
-  if (typeof value === 'number' && Number.isFinite(value)) return String(value);
-  return '';
-}
-
-export function cleanText(value, max, { multiline = false } = {}) {
-  let s = asString(value).replace(CONTROL_CHARS, '');
-  if (!multiline) s = s.replace(/[\r\n\t]+/g, ' ');
-  return s.trim().slice(0, max);
-}
-
-export function cleanId(value) {
-  return typeof value === 'string' && ID_RE.test(value) ? value : undefined;
-}
-
-export function isHexColor(value) {
-  return typeof value === 'string' && HEX_RE.test(value);
-}
-
-export function cleanTimestamp(value) {
-  if (typeof value !== 'string' || !TIMESTAMP_RE.test(value)) return undefined;
-  return Number.isNaN(Date.parse(value)) ? undefined : value;
-}
-
-export function cleanNumber(value, { min = 0, max = 1e9, integer = false } = {}) {
-  let n = NaN;
-  if (typeof value === 'number') n = value;
-  else if (typeof value === 'string' && value.trim() !== '') n = Number(value);
-  if (!Number.isFinite(n) || n < min || n > max) return undefined;
-  return integer ? Math.trunc(n) : Math.round(n * 100) / 100;
-}
-
-function generateId(prefix) {
-  return `${prefix}-${Date.now()}-${Math.floor(Math.random() * 1e6)}`;
-}
-
-// ── Declarative field specs ───────────────────────────────────────────────────
-// Each field: { clean(input) -> value | undefined, fallback, required? }
-
-const line = (max, fallback = '') => ({ clean: v => cleanText(v, max), fallback });
-const text = (max, fallback = '') => ({ clean: v => cleanText(v, max, { multiline: true }), fallback });
-const choice = (list, fallback) => ({ clean: v => (list.includes(v) ? v : undefined), fallback });
-const date = (fallback = null) => ({ clean: v => (isValidISODate(v) ? v : undefined), fallback });
-// Optional fields stay absent when the input is absent or unusable (no empty-string placeholders).
-const stamp = () => ({ clean: cleanTimestamp, optional: true });
-const optionalDate = () => ({ clean: v => (isValidISODate(v) ? v : undefined), optional: true });
-// A valid link counts as unchanged even when the parser canonicalizes it
-// (https://example.com -> https://example.com/); only invalid links are "repairs".
-const url = (fallback = '') => ({ clean: v => normalizeUrl(v) || undefined, fallback, sameAs: () => true });
-const money = (fallback = 0) => ({ clean: v => cleanNumber(v), fallback, numeric: true });
-const count = (fallback = 0) => ({ clean: v => cleanNumber(v, { max: 1e6, integer: true }), fallback, numeric: true });
+// ── Record specs ──────────────────────────────────────────────────────────────
 
 const WORK_ORDER_SPEC = {
   property: line(LIMITS.workOrder.property),
@@ -148,147 +130,175 @@ const VENDOR_SPEC = {
   updatedAt: stamp(),
 };
 
-function wasProvided(input) {
-  return !(input === undefined || input === null || input === '');
-}
-
-function unchanged(input, cleaned, field) {
-  if (field.sameAs) return field.sameAs(input, cleaned);
-  if (field.numeric) return Number(input) === cleaned;
-  return typeof input === 'string' ? input.trim() === cleaned : input === cleaned;
-}
-
-// Applies a spec to one raw record. Returns { value, repaired } or null when a
-// required field is unusable (the record should be dropped).
-function normalizeRecord(raw, spec) {
-  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return null;
-  const value = {};
-  let repaired = false;
-  for (const [key, field] of Object.entries(spec)) {
-    const input = raw[key];
-    const cleaned = field.clean(input);
-    if (cleaned === undefined || (field.required && cleaned === '')) {
-      if (field.required) return null;
-      if (wasProvided(input)) repaired = true;
-      if (!field.optional) value[key] = field.fallback;
-    } else {
-      value[key] = cleaned;
-      if (wasProvided(input) && !unchanged(input, cleaned, field)) repaired = true;
-    }
-  }
-  return { value, repaired };
-}
-
-// Normalizes a list of records, assigning safe unique ids. `finish(record, raw)`
-// runs cross-reference checks and returns { value, repaired } (or null to drop).
-function normalizeCollection(rawList, spec, { idPrefix, max, finish } = {}) {
-  const stats = { kept: 0, dropped: 0, repaired: 0 };
-  const items = [];
-  if (!Array.isArray(rawList)) return { items, stats };
-  const seen = new Set();
-  rawList.forEach((raw, index) => {
-    if (items.length >= max) { stats.dropped++; return; }
-    const result = normalizeRecord(raw, spec);
-    if (!result) { stats.dropped++; return; }
-    let { value, repaired } = result;
-    let id = cleanId(raw.id);
-    if (!id || seen.has(id)) {
-      id = generateId(`${idPrefix}-${index}`);
-      repaired = true;
-    }
-    seen.add(id);
-    value = { id, ...value };
-    if (finish) {
-      const finished = finish(value, raw);
-      if (!finished) { stats.dropped++; return; }
-      value = finished.value;
-      repaired = repaired || finished.repaired;
-    }
-    if (repaired) stats.repaired++;
-    stats.kept++;
-    items.push(value);
-  });
-  return { items, stats };
-}
-
 // ── Work orders and portfolio ─────────────────────────────────────────────────
 
+/** @param {unknown} rawList @returns {CollectionResult<WorkOrder>} */
 export function normalizeWorkOrders(rawList) {
-  return normalizeCollection(rawList, WORK_ORDER_SPEC, { idPrefix: 'wo', max: LIMITS.records.workOrders });
+  return /** @type {CollectionResult<WorkOrder>} */ (validateCollection(rawList, WORK_ORDER_SPEC, {
+    path: 'workOrders', noun: 'Work order', titleKey: 'title', idPrefix: 'wo', max: LIMITS.records.workOrders,
+  }));
 }
 
+/**
+ * @param {unknown} raw
+ * @returns {{ portfolio: Portfolio, stats: { properties: CollectionStats, tenants: CollectionStats, vendors: CollectionStats }, errors: Issue[], omitted: number }}
+ */
 export function normalizePortfolio(raw) {
-  const source = raw && typeof raw === 'object' && !Array.isArray(raw) ? raw : {};
-  const properties = normalizeCollection(source.properties, PROPERTY_SPEC, { idPrefix: 'property', max: LIMITS.records.properties });
+  /** @type {Record<string, unknown>} */
+  const source = isPlainObject(raw) ? raw : {};
+  const properties = /** @type {CollectionResult<Property>} */ (validateCollection(source.properties, PROPERTY_SPEC, {
+    path: 'portfolio.properties', noun: 'Property', titleKey: 'name', idPrefix: 'property', max: LIMITS.records.properties,
+  }));
   const propertyIds = new Set(properties.items.map(p => p.id));
-  const tenants = normalizeCollection(source.tenants, TENANT_SPEC, {
-    idPrefix: 'tenant',
-    max: LIMITS.records.tenants,
+  const tenants = /** @type {CollectionResult<Tenant>} */ (validateCollection(source.tenants, TENANT_SPEC, {
+    path: 'portfolio.tenants', noun: 'Tenant', titleKey: 'name', idPrefix: 'tenant', max: LIMITS.records.tenants,
     // A tenant only keeps its propertyId if that property exists in this workspace.
-    finish: (record, rawTenant) => {
+    finish: (record, rawTenant, ctx) => {
       const candidate = cleanId(rawTenant.propertyId);
       const linked = candidate && propertyIds.has(candidate) ? candidate : '';
-      return { value: { ...record, propertyId: linked }, repaired: wasProvided(rawTenant.propertyId) && !linked };
+      const broken = wasProvided(rawTenant.propertyId) && !linked;
+      return {
+        value: { ...record, propertyId: linked },
+        repaired: broken,
+        errors: broken ? [makeIssue({
+          path: `${ctx.path}.propertyId`, label: ctx.label, field: 'propertyId', code: 'unknown_reference',
+          detail: `${shorten(rawTenant.propertyId)} is not a property in this workspace; link cleared.`,
+        })] : [],
+      };
     },
-  });
-  const vendors = normalizeCollection(source.vendors, VENDOR_SPEC, { idPrefix: 'vendor', max: LIMITS.records.vendors });
+  }));
+  const vendors = /** @type {CollectionResult<Vendor>} */ (validateCollection(source.vendors, VENDOR_SPEC, {
+    path: 'portfolio.vendors', noun: 'Vendor', titleKey: 'name', idPrefix: 'vendor', max: LIMITS.records.vendors,
+  }));
   return {
     portfolio: { properties: properties.items, tenants: tenants.items, vendors: vendors.items },
     stats: { properties: properties.stats, tenants: tenants.stats, vendors: vendors.stats },
+    errors: [...properties.errors, ...tenants.errors, ...vendors.errors],
+    omitted: properties.omitted + tenants.omitted + vendors.omitted,
   };
 }
 
 // ── Team ──────────────────────────────────────────────────────────────────────
 
-export function normalizeEmployee(raw, { knownDeptIds } = {}) {
-  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return null;
+// Returns { employee, errors, repaired }; `employee` is null when the row is unusable.
+/**
+ * @param {unknown} raw
+ * @param {{ knownDeptIds?: string[], path?: string, label?: string }} [options]
+ * @returns {{ employee: Employee | null, errors: Issue[], repaired: boolean }}
+ */
+function checkEmployee(raw, { knownDeptIds, path = 'team.employees[0]', label = 'Team member' } = {}) {
+  if (!isPlainObject(raw)) {
+    return { employee: null, repaired: false, errors: [makeIssue({ path, label, code: 'not_an_object', detail: 'is not an object, so it is skipped.' })] };
+  }
   const name = cleanText(raw.name, LIMITS.employeeName);
-  if (!name || name.toUpperCase() === 'UNOWNED' || name.toUpperCase() === 'UNASSIGNED') return null;
+  const named = name ? `${label} (${shorten(name)})` : label;
+  if (!name) {
+    return { employee: null, repaired: false, errors: [makeIssue({ path: `${path}.name`, label, field: 'name', code: 'missing_required', detail: 'required, so the member is skipped.' })] };
+  }
+  if (name.toUpperCase() === 'UNOWNED' || name.toUpperCase() === 'UNASSIGNED') {
+    return { employee: null, repaired: false, errors: [makeIssue({ path: `${path}.name`, label: named, field: 'name', code: 'reserved_name', detail: `${shorten(name)} is a reserved name, so the member is skipped.` })] };
+  }
+  /** @type {Issue[]} */
+  const errors = [];
+  if (raw.name !== name) {
+    errors.push(makeIssue({ path: `${path}.name`, label: named, field: 'name', code: 'adjusted', detail: 'was cleaned up (extra spaces or characters removed, or shortened).' }));
+  }
+  let hex = DEFAULT_EMPLOYEE_HEX;
+  if (isHexColor(raw.hex)) hex = raw.hex;
+  else {
+    errors.push(makeIssue({
+      path: `${path}.hex`, label: named, field: 'hex', code: 'invalid_value',
+      detail: wasProvided(raw.hex) ? `${shorten(raw.hex)} is not a valid color; reset to ${shorten(DEFAULT_EMPLOYEE_HEX)}.` : `missing; using the default color ${shorten(DEFAULT_EMPLOYEE_HEX)}.`,
+    }));
+  }
   const known = knownDeptIds ? new Set(knownDeptIds) : null;
+  /** @type {string[]} */
   const affinities = [];
   if (Array.isArray(raw.affinities)) {
-    raw.affinities.forEach(a => {
-      if (typeof a !== 'string' || !DEPT_ID_RE.test(a)) return;
-      if (known && !known.has(a)) return;
-      if (!affinities.includes(a) && affinities.length < LIMITS.affinities) affinities.push(a);
+    raw.affinities.forEach((a, i) => {
+      const where = { path: `${path}.affinities[${i}]`, label: named, field: `affinities[${i}]` };
+      if (typeof a !== 'string' || !DEPT_ID_RE.test(a)) {
+        errors.push(makeIssue({ ...where, code: 'invalid_value', detail: `${shorten(a)} is not a valid department id; removed.` }));
+      } else if (known && !known.has(a)) {
+        errors.push(makeIssue({ ...where, code: 'unknown_reference', detail: `${shorten(a)} is not a department in this app; removed.` }));
+      } else if (affinities.includes(a)) {
+        errors.push(makeIssue({ ...where, code: 'adjusted', detail: `${shorten(a)} is listed twice; duplicate removed.` }));
+      } else if (affinities.length >= LIMITS.affinities) {
+        errors.push(makeIssue({ ...where, code: 'over_limit', detail: `over the limit of ${LIMITS.affinities} departments; removed.` }));
+      } else {
+        affinities.push(a);
+      }
     });
   }
-  return { name, hex: isHexColor(raw.hex) ? raw.hex : DEFAULT_EMPLOYEE_HEX, affinities };
+  return { employee: { name, hex, affinities }, errors, repaired: errors.length > 0 };
 }
 
+/** @param {unknown} raw @param {{ knownDeptIds?: string[] }} [options] @returns {Employee | null} */
+export function normalizeEmployee(raw, options = {}) {
+  return checkEmployee(raw, options).employee;
+}
+
+/** @param {unknown} raw @param {{ knownDeptIds?: string[] }} [options] @returns {{ team: Team, stats: CollectionStats, errors: Issue[] }} */
 export function normalizeTeam(raw, options = {}) {
   const stats = { kept: 0, dropped: 0, repaired: 0 };
+  /** @type {Employee[]} */
   const employees = [];
-  const list = raw && Array.isArray(raw.employees) ? raw.employees : [];
+  /** @type {Issue[]} */
+  const errors = [];
+  const list = isPlainObject(raw) && Array.isArray(raw.employees) ? raw.employees : [];
   const seen = new Set();
-  list.forEach(item => {
-    const employee = normalizeEmployee(item, options);
-    const key = employee?.name.toLowerCase();
-    if (!employee || seen.has(key) || employees.length >= LIMITS.records.employees) { stats.dropped++; return; }
+  list.forEach((item, index) => {
+    const path = `team.employees[${index}]`;
+    const label = `Team member ${index + 1}`;
+    const result = checkEmployee(item, { ...options, path, label });
+    const employee = result.employee;
+    if (!employee) { stats.dropped++; errors.push(...result.errors); return; }
+    const key = employee.name.toLowerCase();
+    if (seen.has(key)) {
+      stats.dropped++;
+      errors.push(makeIssue({ path: `${path}.name`, label: `${label} (${shorten(employee.name)})`, field: 'name', code: 'duplicate', detail: 'repeats an earlier team member, so it is skipped.' }));
+      return;
+    }
+    if (employees.length >= LIMITS.records.employees) {
+      stats.dropped++;
+      errors.push(makeIssue({ path, label, code: 'over_limit', detail: `over the limit of ${LIMITS.records.employees} team members, so it is skipped.` }));
+      return;
+    }
     seen.add(key);
-    if (item.name !== employee.name || item.hex !== employee.hex || (item.affinities || []).length !== employee.affinities.length) stats.repaired++;
+    errors.push(...result.errors);
+    if (result.repaired) stats.repaired++;
     stats.kept++;
     employees.push(employee);
   });
-  return { team: { employees }, stats };
+  return { team: { employees }, stats, errors };
 }
 
 // ── Tasks ─────────────────────────────────────────────────────────────────────
 
+// A dependency points at its blocker by `taskId` (permanent) and/or `configName` (the
+// starter name older versions wrote). Either is enough; both are kept when present so
+// a file written by this version still works in an older one.
+/** @param {unknown} raw @returns {BlockedBy | null} */
 export function normalizeBlockedBy(raw) {
-  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return null;
+  if (!isPlainObject(raw)) return null;
   const deptId = typeof raw.deptId === 'string' && DEPT_ID_RE.test(raw.deptId) ? raw.deptId : '';
+  const taskId = cleanId(raw.taskId);
   const configName = cleanText(raw.configName, LIMITS.taskName);
   const name = cleanText(raw.name, LIMITS.taskName);
-  if (!deptId || !configName) return null;
-  return { deptId, configName, name: name || configName };
+  if (!deptId || (!taskId && !configName)) return null;
+  const result = /** @type {BlockedBy} */ ({ deptId });
+  if (taskId) result.taskId = taskId;
+  if (configName) result.configName = configName;
+  result.name = name || configName || '';
+  return result;
 }
 
+/** @param {unknown} raw @returns {Record<string, string> | null} */
 export function normalizeCustomFields(raw) {
-  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return null;
+  if (!isPlainObject(raw)) return null;
   const entries = Object.entries(raw)
     .filter(([k, v]) => typeof k === 'string' && typeof v === 'string')
-    .map(([k, v]) => [cleanText(k, LIMITS.customFieldKey), cleanText(v, LIMITS.customFieldValue)])
+    .map(([k, v]) => /** @type {[string, string]} */ ([cleanText(k, LIMITS.customFieldKey), cleanText(v, LIMITS.customFieldValue)]))
     .filter(([k]) => k && k !== '__proto__' && k !== 'constructor' && k !== 'prototype')
     .slice(0, LIMITS.customFieldCount);
   return entries.length ? Object.fromEntries(entries) : null;
@@ -297,22 +307,53 @@ export function normalizeCustomFields(raw) {
 // Converts one saved/imported task into a patch to merge onto the matching
 // config task. Returns null if the row is unusable. With { fill: true } (used by
 // backup restore) absent fields are reset to their defaults instead of being left alone.
-export function normalizeSavedTask(saved, { fill = false } = {}) {
-  if (!saved || typeof saved !== 'object' || Array.isArray(saved)) return null;
+// With { issues, path, label } every field that had to be dropped or reset is also
+// described in `issues` (an array the caller owns).
+/**
+ * @param {unknown} saved
+ * @param {{ fill?: boolean, issues?: Issue[] | null, path?: string, label?: string }} [options]
+ * @returns {SavedTaskPatch | null}
+ */
+export function normalizeSavedTask(saved, { fill = false, issues = null, path = '', label = '' } = {}) {
+  /** @param {string} field @param {string} code @param {string} detail */
+  const note = (field, code, detail) => {
+    if (issues) issues.push(makeIssue({ path: path ? `${path}.${field}` : field, label, field, code, detail }));
+  };
+  if (!isPlainObject(saved)) {
+    if (issues) issues.push(makeIssue({ path, label, code: 'not_an_object', detail: 'is not an object, so it is ignored.' }));
+    return null;
+  }
   const name = cleanText(saved.name, LIMITS.taskName);
   const owner = cleanText(saved.owner, LIMITS.ownerName);
-  if (!name || !owner) return null;
+  if (!name || !owner) {
+    if (!name) note('name', 'missing_required', 'required, so the task row is ignored.');
+    if (!owner) note('owner', 'missing_required', 'required, so the task row is ignored.');
+    return null;
+  }
 
+  /** @type {SavedTaskPatch} */
   const patch = { name, owner };
 
-  if (STATUS_CYCLE.includes(saved.status)) patch.status = saved.status;
-  else if (fill) patch.status = 'todo';
+  if (isOneOf(STATUS_CYCLE, saved.status)) patch.status = saved.status;
+  else {
+    if (wasProvided(saved.status)) note('status', 'invalid_value', `${shorten(saved.status)} is not allowed; ${fill ? 'reset to "todo"' : 'left unchanged'}.`);
+    if (fill) patch.status = 'todo';
+  }
 
-  if (PRIORITY_CYCLE.includes(saved.priority)) patch.priority = saved.priority;
-  else if (fill) patch.priority = 'medium';
+  if (isOneOf(PRIORITY_CYCLE, saved.priority)) patch.priority = saved.priority;
+  else {
+    if (wasProvided(saved.priority)) note('priority', 'invalid_value', `${shorten(saved.priority)} is not allowed; ${fill ? 'reset to "medium"' : 'left unchanged'}.`);
+    if (fill) patch.priority = 'medium';
+  }
 
-  if (saved.dueDate !== undefined || fill) patch.dueDate = isValidISODate(saved.dueDate) ? saved.dueDate : null;
-  if (saved.blockedBy !== undefined || fill) patch.blockedBy = normalizeBlockedBy(saved.blockedBy);
+  if (saved.dueDate !== undefined || fill) {
+    patch.dueDate = isValidISODate(saved.dueDate) ? /** @type {string} */ (saved.dueDate) : null;
+    if (patch.dueDate === null && wasProvided(saved.dueDate)) note('dueDate', 'invalid_value', `${shorten(saved.dueDate)} is not allowed; cleared.`);
+  }
+  if (saved.blockedBy !== undefined || fill) {
+    patch.blockedBy = normalizeBlockedBy(saved.blockedBy);
+    if (patch.blockedBy === null && wasProvided(saved.blockedBy)) note('blockedBy', 'invalid_value', `${shorten(saved.blockedBy)} is not a usable dependency; cleared.`);
+  }
   // null means "no notes" (a note cleared on another device); undefined means "this file predates notes" — leave alone.
   if (typeof saved.notes === 'string' || saved.notes === null || fill) patch.notes = cleanText(saved.notes, LIMITS.taskNotes, { multiline: true }) || null;
   if (saved.customFields !== undefined || fill) patch.customFields = normalizeCustomFields(saved.customFields);
@@ -323,20 +364,35 @@ export function normalizeSavedTask(saved, { fill = false } = {}) {
 // Merges saved/imported department data onto the live config departments. This
 // is the ONE place saved task fields are applied — storage load, backup restore
 // and file/clipboard/sync import all call it, so they can never disagree about
-// which fields survive. Rows are matched to config tasks by their stable
-// _configName key. Returns { matched, skipped } counts.
+// which fields survive. Rows are matched to config tasks by permanent `id`, then by
+// the starter name (`_configName`) or one of the task's `aliases` (see taskIdentity.js).
+// Returns { matched, skipped } counts.
+/**
+ * @param {Department[]} departments
+ * @param {unknown} savedDepartments
+ * @param {{ fill?: boolean, issues?: Issue[] | null }} [options]
+ * @returns {{ matched: number, skipped: number }}
+ */
 export function applySavedTasks(departments, savedDepartments, options = {}) {
   const result = { matched: 0, skipped: 0 };
   if (!Array.isArray(savedDepartments)) return result;
-  savedDepartments.forEach(savedDept => {
+  savedDepartments.forEach((savedDept, deptIndex) => {
     if (!savedDept || typeof savedDept.id !== 'string') return;
     const dept = departments.find(d => d.id === savedDept.id);
     if (!dept || !Array.isArray(savedDept.tasks)) return;
-    savedDept.tasks.forEach(savedTask => {
-      const patch = normalizeSavedTask(savedTask, options);
-      const key = savedTask && (savedTask._configName || savedTask.name);
-      const task = patch && dept.tasks.find(t => t._configName === key);
+    savedDept.tasks.forEach((/** @type {{ id?: unknown, _configName?: unknown, name?: unknown } | null | undefined} */ savedTask, /** @type {number} */ taskIndex) => {
+      // With options.issues the caller wants to know what was repaired, so say where each row is.
+      const rowOptions = options.issues ? {
+        ...options,
+        path: `departments[${deptIndex}].tasks[${taskIndex}]`,
+        label: `Task ${shorten(savedTask && savedTask.name)} in ${dept.name}`,
+      } : options;
+      const patch = normalizeSavedTask(savedTask, rowOptions);
+      const task = patch && findConfigTask(departments, savedTask, { deptId: dept.id });
       if (!task) { result.skipped++; return; }
+      // A name the user never edited (it still equals the starter name the row was saved
+      // under) follows config.json's current wording; an edited name is the user's and stays.
+      if (task._configName && patch.name === cleanText(savedTask?._configName, LIMITS.taskName)) patch.name = task._configName;
       Object.assign(task, patch);
       result.matched++;
     });
@@ -348,11 +404,13 @@ export function applySavedTasks(departments, savedDepartments, options = {}) {
 
 const AUDIT_TEXT_KEYS = ['dept', 'task', 'title', 'label'];
 
+/** @param {unknown} raw @returns {AuditEntry | null} */
 export function normalizeAuditEntry(raw) {
-  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return null;
+  if (!isPlainObject(raw)) return null;
   const ts = cleanTimestamp(raw.ts);
   const action = typeof raw.action === 'string' && /^[a-z0-9_]{1,40}$/.test(raw.action) ? raw.action : '';
   if (!ts || !action) return null;
+  /** @type {Record<string, unknown>} */
   const entry = { ts, action };
   AUDIT_TEXT_KEYS.forEach(key => {
     if (typeof raw[key] === 'string') entry[key] = cleanText(raw[key], 300);
@@ -363,15 +421,17 @@ export function normalizeAuditEntry(raw) {
     else if (typeof raw[key] === 'number' && Number.isFinite(raw[key])) entry[key] = raw[key];
   });
   if (typeof raw.count === 'number' && Number.isFinite(raw.count)) entry.count = raw.count;
-  return entry;
+  return /** @type {AuditEntry} */ (entry);
 }
 
+/** @param {unknown} rawList @param {number} [max] @returns {AuditEntry[]} */
 export function normalizeAuditLog(rawList, max = 500) {
-  return (Array.isArray(rawList) ? rawList : []).map(normalizeAuditEntry).filter(Boolean).slice(0, max);
+  return (Array.isArray(rawList) ? rawList : []).map(normalizeAuditEntry).filter(/** @returns {e is AuditEntry} @param {AuditEntry | null} e */ e => e !== null).slice(0, max);
 }
 
 // ── Whole-workspace entry point ───────────────────────────────────────────────
 
+/** @param {unknown} value @returns {string} */
 export function normalizeCompany(value) {
   return cleanText(value, LIMITS.company);
 }
@@ -379,18 +439,28 @@ export function normalizeCompany(value) {
 // Sanitizes everything in an imported payload except the tasks (those are
 // matched against the live config by the caller via normalizeSavedTask).
 // Sections absent from the payload come back as null so callers leave them alone.
+/**
+ * @param {unknown} data
+ * @param {{ knownDeptIds?: string[] }} [options]
+ * @returns {SanitizedWorkspace}
+ */
 export function sanitizeWorkspace(data, { knownDeptIds } = {}) {
+  /** @type {Record<string, any>} */ // an untrusted file: every field below is checked before use
   const src = data && typeof data === 'object' ? data : {};
-  const result = { company: normalizeCompany(src.company), team: null, workOrders: null, portfolio: null, stats: {} };
+  /** @type {SanitizedWorkspace} */
+  const result = { company: normalizeCompany(src.company), team: null, workOrders: null, portfolio: null, stats: {}, errors: [], omitted: 0 };
   if (src.team && Array.isArray(src.team.employees)) {
     const t = normalizeTeam(src.team, { knownDeptIds });
     result.team = t.team;
     result.stats.employees = t.stats;
+    result.errors.push(...t.errors);
   }
   if (Array.isArray(src.workOrders)) {
     const w = normalizeWorkOrders(src.workOrders);
     result.workOrders = w.items;
     result.stats.workOrders = w.stats;
+    result.errors.push(...w.errors);
+    result.omitted += w.omitted;
   }
   if (src.portfolio && typeof src.portfolio === 'object') {
     const p = normalizePortfolio(src.portfolio);
@@ -398,6 +468,8 @@ export function sanitizeWorkspace(data, { knownDeptIds } = {}) {
     result.stats.properties = p.stats.properties;
     result.stats.tenants = p.stats.tenants;
     result.stats.vendors = p.stats.vendors;
+    result.errors.push(...p.errors);
+    result.omitted += p.omitted;
   }
   return result;
 }

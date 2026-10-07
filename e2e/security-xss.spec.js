@@ -175,6 +175,24 @@ test.describe('hostile text is displayed, not executed', () => {
     await expect(page.locator('a.doc-link[href^="javascript"]')).toHaveCount(0);
   });
 
+  test('import review names the repaired fields, and the hostile values inside those messages are inert', async ({ page }, testInfo) => {
+    page.on('dialog', d => d.dismiss());
+    await prepare(page);
+    await page.goto('/index.html');
+    await page.waitForSelector('#departments .department');
+    const file = writeTemp('evil.json', JSON.stringify(buildEvilWorkspace()));
+    await page.setInputFiles('#import-file-input', file);
+    await page.waitForSelector('#import-review-modal.visible');
+    const section = page.locator('#import-review-body .import-review-section', { hasText: 'What will be repaired' });
+    await expect(section).toHaveCount(1);
+    const text = await section.innerText();
+    expect(text).toMatch(/Work order 1/);
+    expect(text).toMatch(/priority: .* is not allowed; reset to "medium"/);
+    expect(text).toMatch(/Team member/);
+    expect(await section.locator('img, script, [data-pwn]').count()).toBe(0);
+    await expectClean(page, 'import review repair list');
+  });
+
   test('import review tells the user how much was cleaned', async ({ page }, testInfo) => {
     page.on('dialog', d => d.dismiss());
     await prepare(page);

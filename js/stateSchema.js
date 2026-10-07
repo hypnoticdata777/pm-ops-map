@@ -1,9 +1,36 @@
+/** @import { Department, Team, WorkOrder, Portfolio, OrgData, WorkspacePayload, ImportReport, Issue } from './types.js' */
+
+/**
+ * A department as it appears in an untrusted file: nothing is known until it is checked.
+ * @typedef {{ id?: unknown, name?: unknown, tasks?: unknown }} LooseDepartment
+ */
+
+/**
+ * An untrusted workspace file. Every field is `unknown` until validateImportedState has checked it.
+ * @typedef {object} LooseFile
+ * @property {unknown} [schema]
+ * @property {unknown} [schemaVersion]
+ * @property {unknown} [company]
+ * @property {unknown} [departments]
+ * @property {{ employees?: unknown } | null} [team]
+ * @property {unknown} [workOrders]
+ * @property {{ properties?: unknown, tenants?: unknown, vendors?: unknown } | null} [portfolio]
+ */
+
 import { normalizeSavedTask, sanitizeWorkspace } from './normalize.js';
+import { makeIssue, shorten } from './schema.js';
+import { findConfigTask } from './taskIdentity.js';
 
-// v3 adds per-task notes and customFields to the portable payload (v2 files still import).
-export const STATE_SCHEMA_VERSION = 3;
+// v3 added per-task notes and customFields. v4 adds each task's permanent `id` and a
+// `taskId` on dependencies; v2 and v3 files (no ids) still import by starter name.
+export const STATE_SCHEMA_VERSION = 4;
 export const STATE_SCHEMA_NAME = 'pm-ops-map-state';
+export const MAX_REVIEW_ISSUES = 100;
 
+/**
+ * @param {{ company: string, departments: Department[], team: Team, workOrders: WorkOrder[], portfolio: Portfolio, exportedAt?: string }} parts
+ * @returns {WorkspacePayload}
+ */
 export function buildStatePayload({
   company,
   departments,
@@ -22,6 +49,7 @@ export function buildStatePayload({
       id: dept.id,
       name: dept.name,
       tasks: dept.tasks.map(task => ({
+        id: task.id,
         _configName: task._configName || task.name,
         name: task.name,
         owner: task.owner,
@@ -39,13 +67,19 @@ export function buildStatePayload({
   };
 }
 
+/**
+ * @param {LooseFile | null | undefined} data  Parsed JSON from a file, the clipboard or a sync server — nothing is trusted yet.
+ * @param {OrgData} orgData  The live config departments the file is matched against.
+ * @returns {ImportReport}
+ */
 export function validateImportedState(data, orgData) {
+  /** @type {ImportReport} */
   const report = {
     ok: true,
     errors: [],
     warnings: [],
     schemaVersion: data?.schemaVersion || 1,
-    company: data?.company || '',
+    company: String(data?.company || ''),
     matchedDepartments: 0,
     matchedTasks: 0,
     skippedDepartments: 0,
@@ -54,6 +88,10 @@ export function validateImportedState(data, orgData) {
     invalidTasks: 0,
     repairedRecords: 0,
     droppedRecords: 0,
+    // What will be repaired or skipped, field by field: [{ path, code, message }], capped at
+    // MAX_REVIEW_ISSUES; issueCount is the true total.
+    issues: [],
+    issueCount: 0,
     teamMembers: Array.isArray(data?.team?.employees) ? data.team.employees.length : 0,
     workOrders: Array.isArray(data?.workOrders) ? data.workOrders.length : 0,
     properties: Array.isArray(data?.portfolio?.properties) ? data.portfolio.properties.length : 0,
@@ -71,7 +109,7 @@ export function validateImportedState(data, orgData) {
     report.warnings.push(`Unexpected schema "${data.schema}". PM Ops Map will import compatible department data only.`);
   }
   if (Number(data?.schemaVersion || 1) > STATE_SCHEMA_VERSION) {
-    report.warnings.push(`This file was exported by a newer schema version (${data.schemaVersion}). Unknown fields will be ignored.`);
+    report.warnings.push(`This file was exported by a newer schema version (${data?.schemaVersion}). Unknown fields will be ignored.`);
   }
 
   if (report.errors.length) {
@@ -79,10 +117,19 @@ export function validateImportedState(data, orgData) {
     return report;
   }
 
-  data.departments.forEach(savedDept => {
-    const dept = orgData.departments.find(item => item.id === savedDept.id);
+  /** @type {Issue[]} */
+  const allIssues = [];
+  const savedDepartments = /** @type {LooseDepartment[]} */ (data?.departments); // checked by the Array.isArray test above
+  savedDepartments.forEach((savedDept, deptIndex) => {
+    const deptPath = `departments[${deptIndex}]`;
+    const dept = orgData.departments.find(item => item.id === savedDept?.id);
     if (!dept) {
       report.skippedDepartments++;
+      const taskCount = Array.isArray(savedDept?.tasks) ? savedDept.tasks.length : 0;
+      allIssues.push(makeIssue({
+        path: deptPath, label: `Department ${shorten(savedDept?.id)}`, code: 'unknown_department',
+        detail: `is not in this version of the app, so ${taskCount} task${taskCount === 1 ? '' : 's'} will be skipped.`,
+      }));
       return;
     }
     report.matchedDepartments++;
@@ -90,15 +137,19 @@ export function validateImportedState(data, orgData) {
       report.warnings.push(`Department "${savedDept.id}" has no task array.`);
       return;
     }
-    savedDept.tasks.forEach(savedTask => {
-      if (!normalizeSavedTask(savedTask)) {
+    savedDept.tasks.forEach((savedTask, taskIndex) => {
+      const path = `${deptPath}.tasks[${taskIndex}]`;
+      const taskName = savedTask && typeof savedTask === 'object' ? savedTask.name : '';
+      const label = taskName ? `Task ${shorten(taskName)} in ${dept.name}` : `Task ${taskIndex + 1} in ${dept.name}`;
+      if (!normalizeSavedTask(savedTask, { issues: allIssues, path, label })) {
         report.invalidTasks++;
         return;
       }
-      const key = savedTask?._configName || savedTask?.name;
-      const task = dept.tasks.find(item => item._configName === key || item.name === key);
+      // Same matcher the import itself uses, so the review can't promise a match that won't happen.
+      const task = findConfigTask(orgData.departments, savedTask, { deptId: dept.id });
       if (!task) {
         report.skippedTasks++;
+        allIssues.push(makeIssue({ path, label, code: 'no_match', detail: 'has no matching task in this version of the app, so it is skipped.' }));
         return;
       }
       report.matchedTasks++;
@@ -115,6 +166,9 @@ export function validateImportedState(data, orgData) {
     report.repairedRecords += stat.repaired;
     report.droppedRecords += stat.dropped;
   });
+  allIssues.push(...clean.errors);
+  report.issueCount = allIssues.length + clean.omitted;
+  report.issues = allIssues.slice(0, MAX_REVIEW_ISSUES).map(({ path, code, message }) => ({ path, code, message }));
   if (report.invalidTasks) {
     report.warnings.push(`${report.invalidTasks} task row${report.invalidTasks === 1 ? ' is' : 's are'} missing a name or owner and will be ignored.`);
   }
@@ -139,6 +193,7 @@ export function validateImportedState(data, orgData) {
   return report;
 }
 
+/** @param {ImportReport} report @returns {string} */
 export function formatImportReport(report) {
   const lines = [
     'Import validation report',
@@ -157,9 +212,15 @@ export function formatImportReport(report) {
   if (report.errors.length) {
     lines.push('', 'Errors:', ...report.errors.map(item => `- ${item}`));
   }
+  if (report.issues?.length) {
+    lines.push('', 'What will be repaired or skipped:', ...report.issues.map(item => `- ${item.message}`));
+    const more = report.issueCount - report.issues.length;
+    if (more > 0) lines.push(`- ...and ${more} more.`);
+  }
   return lines.join('\n');
 }
 
+/** @param {unknown} value @returns {boolean} */
 function isValidISODateValue(value) {
   if (typeof value !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
   const d = new Date(value + 'T00:00:00');

@@ -51,6 +51,7 @@ export const COPIES_YOU_CREATE = [
   ['Team Sync (beta)', 'Sends your workspace to the server you connect to, and saves its passphrase unencrypted in this browser.'],
 ];
 
+/** @param {string[]} items @returns {string} */
 const escapedList = items => items.map(item => `<li>${escapeHtml(item)}</li>`).join('');
 
 export function renderPrivacyTiers() {
@@ -136,6 +137,7 @@ export function _resetExportAcknowledgment() { acknowledged = false; }
 
 // Asks once per session before an export that includes tenant information.
 // Returns false if the user cancels, in which case the caller must not export.
+/** @param {string} what @returns {boolean} */
 export function confirmSensitiveExport(what) {
   if (!hasSensitiveRecords() || acknowledged) return true;
   const ok = confirm(
@@ -148,6 +150,7 @@ export function confirmSensitiveExport(what) {
 }
 
 // Confirms a finished export and says what it is: another unencrypted copy.
+/** @param {string} filename */
 export function announceExport(filename) {
   const note = hasSensitiveRecords()
     ? 'is an unencrypted copy with tenant data — keep it somewhere you trust'
