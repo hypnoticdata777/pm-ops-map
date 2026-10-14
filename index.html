@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PM Ops Map</title>
-  <meta name="description" content="Map your property management company's tasks, ownership, and accountability across every department.">
+  <meta name="description" content="Map responsibilities, assign ownership, review gaps, and share a clear operating picture across your property management team.">
 
   <!-- Social-card scrapers need absolute URLs. These point at the project's GitHub Pages site;
        if you host your own copy, change them to your deployment URL. -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="PM Ops Map — free, open-source property management ops tracker">
-  <meta property="og:description" content="Map your property management company's tasks, ownership, and accountability across every department. Zero backend, runs entirely in your browser.">
+  <meta property="og:description" content="Map responsibilities, assign ownership, review gaps, and share a clear operating picture. Zero backend, runs entirely in your browser.">
   <meta property="og:image" content="https://hypnoticdata777.github.io/pm-ops-map/og-image.png">
   <meta property="og:url" content="https://hypnoticdata777.github.io/pm-ops-map/">
   <meta name="twitter:card" content="summary_large_image">
@@ -39,7 +39,7 @@
   <div class="header">
     <div>
       <h1>PM Ops Map</h1>
-      <p>Comprehensive Operational Analysis &amp; Strategic Planning</p>
+      <p>Map responsibilities. Assign owners. Review gaps. Share the operating picture.</p>
     </div>
     <button class="nav-toggle-btn" id="nav-toggle-btn" onclick="toggleNavCompact()" aria-pressed="false" title="Make navigation less prominent">Hide nav</button>
   </div>
@@ -47,19 +47,19 @@
   <div class="nav-tabs" id="nav-tabs">
     <!-- FIX: pass `this` so switchView() receives the clicked element directly,
          avoiding reliance on window.event which is undefined in Firefox. -->
-    <div class="nav-tab active" onclick="switchView('tracking', this)">&#128202; Tracking View</div>
-    <div class="nav-tab" onclick="switchView('map', this)">&#128506; Map View</div>
+    <div class="nav-tab active" onclick="switchView('tracking', this)">&#128202; Map &amp; Review</div>
+    <div class="nav-tab" onclick="switchView('map', this)">&#128506; Share Map</div>
     <!-- ★ BEACON: tab-beacon is the pulsing red dot shown when UNOWNED tasks exist.
          JS toggles its `hidden` attribute so it appears/disappears automatically. -->
     <div class="nav-tab" id="team-tab" onclick="switchView('team', this)">
-      &#128101; Team Manager
+      &#128101; Assign Owners
       <span class="tab-beacon" id="tab-beacon" hidden></span>
     </div>
     <div class="nav-tab" id="wo-tab" onclick="switchView('workorders', this)">
-      &#128295; Work Orders
+      &#128295; Context: Work Orders
       <span class="tab-beacon" id="wo-tab-beacon" hidden></span>
     </div>
-    <div class="nav-tab" id="portfolio-tab" onclick="switchView('portfolio', this)">Portfolio</div>
+    <div class="nav-tab" id="portfolio-tab" onclick="switchView('portfolio', this)">Context: Portfolio</div>
   </div>
 
   <div class="controls" id="controls">
@@ -135,7 +135,7 @@
             <div class="guide-step-num">1</div>
             <div class="guide-step-body">
               <strong>Start at the top</strong>
-              <span>The Start Here panel tells you the one best next action based on your current setup.</span>
+            <span>The Start Here panel tells you the one best next action based on your current setup.</span>
             </div>
           </div>
           <div class="guide-divider"></div>
@@ -143,7 +143,7 @@
             <div class="guide-step-num">2</div>
             <div class="guide-step-body">
               <strong>Add real people</strong>
-              <span>Open <strong>Team Manager</strong>, add your team, and choose which departments each person covers.</span>
+              <span>Open <strong>Assign Owners</strong>, add your team, and choose which departments each person covers.</span>
             </div>
           </div>
           <div class="guide-divider"></div>

@@ -2,6 +2,12 @@
 
 Thanks for your interest in contributing. PM Ops Map is built to be simple — the goal is to keep it that way while making it more useful for real property management companies.
 
+## Product Boundary
+
+PM Ops Map's wedge is responsibility clarity: **Map → Assign → Review → Share**. Contributions should strengthen that workflow or make the resulting map easier to understand and hand off.
+
+The project is not intended to become an accounting system, payment platform, tenant portal, document store, maintenance dispatch system, or full property-management system of record. The Portfolio and Work Orders views are lightweight context around the map, not authoritative records. Please keep that boundary in mind when proposing features.
+
 ## Ways to Contribute
 
 ### 1. Share Your Department Templates

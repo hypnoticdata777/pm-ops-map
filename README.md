@@ -2,8 +2,8 @@
 
 # PM Ops Map
 
-**Free, open-source operations management for property management companies.**
-Track every department, every task, every maintenance request — and exactly who owns what.
+**A responsibility map for property management teams.**
+Map the work, assign ownership, review the gaps, and share a clear operating picture.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.txt)
 [![Download](https://img.shields.io/badge/Download-v1.0.0-orange?style=flat-square)](https://github.com/hypnoticdata777/pm-ops-map/releases/latest)
@@ -20,17 +20,24 @@ Or run it yourself in under a minute, see below.
 
 ## What Is It?
 
-PM Ops Map is a free browser app that gives a property management company a complete operating system on day one — without signing up for anything.
+PM Ops Map is a free browser app for making operational responsibility visible. It helps a property management team map what it does, assign clear owners, review gaps and blockers, and share a lightweight operating picture without signing up for a new system of record.
 
-The product is built around a practical operator problem: important work is often spread across spreadsheets, inboxes, individual memory, and property-management software screens, so leadership can see activity without seeing clear ownership. PM Ops Map turns that ambiguity into an editable responsibility map: what the company does, who owns each task, what is blocked, and where operating risk is accumulating.
+The product is built around a practical operator problem: important work is often spread across spreadsheets, inboxes, individual memory, and property-management software screens, so leadership can see activity without seeing clear ownership. PM Ops Map turns that ambiguity into an editable responsibility map: what the company does, who owns each responsibility, what is blocked, and where operating risk is accumulating.
+
+The workflow is intentionally simple:
+
+1. **Map** the responsibilities across your departments.
+2. **Assign** owners, priorities, due dates, and dependencies.
+3. **Review** unowned work, blockers, workload, and readiness gaps.
+4. **Share** the map as JSON, CSV, a handbook, or through the optional self-hosted sync server.
 
 Open it, enter your company name, and you get:
 
 - **260+ standard PM tasks** across 17 departments, all editable to match your company
 - **Team assignment engine** with auto-assign, workload balancing, and role templates
-- **Maintenance work orders** tracked from intake to completion
-- **Property, tenant, and vendor registry** with rent/lease tracking, delinquency alerts, document links, and CSV bulk import
-- **Exportable operations handbook** (Markdown + printable HTML)
+- **Review signals** for unowned work, blockers, overdue tasks, workload balance, and setup gaps
+- **Exportable responsibility map and operations handbook** (JSON, CSV, Markdown, and printable HTML)
+- **Optional context views** for maintenance work orders and a lightweight property, tenant, and vendor registry
 - **Recurring task templates** for weekly ops, monthly finance, compliance, and more
 - **Auto-backups** so nothing gets lost
 - **Optional team sync (beta)** — self-host a small sync server so a small, trusted team shares one live workspace instead of one browser
@@ -46,7 +53,7 @@ Everything saves to `localStorage` by default. Nothing goes to a server unless y
 ### Option A — Live Demo (no setup)
 
 1. Open the **[live demo](https://hypnoticdata777.github.io/pm-ops-map/?demo=1)** — it loads a fictional company with gaps, blocked work, an overloaded teammate, and work orders in every stage
-2. Poke around: reassign an owner, change a status, open the Team Manager workload bars
+2. Poke around: reassign an owner, change a status, open the Assign Owners workload bars
 3. Made a mess? **Reset demo** in the purple banner restores it. Ready for your own data? **Use your own workspace →**
 
 The demo is clearly labelled as fictional, keeps its data under separate browser-storage keys (so it can never touch a real workspace opened from the same site), and has Team Sync switched off. See [The live demo](#the-live-demo) below.
@@ -245,7 +252,7 @@ Click **Playbook** on any employee card for a full scrollable summary — worklo
 
 ---
 
-### Work Orders — Maintenance Pipeline
+### Context: Work Orders — Maintenance Pipeline
 
 Four-stage kanban: **Submitted → Scheduled → In Progress → Completed**
 
@@ -253,7 +260,7 @@ Each work order captures: property, unit, tenant/resident, issue title, notes, p
 
 ---
 
-### Portfolio & Data Quality
+### Context: Portfolio & Data Quality
 
 Track properties, tenants, and vendors in the **Portfolio tab**. Tenant records include monthly rent and lease start/end dates, with a color-coded chip that flags leases renewing within 60 days or already expired — surfaced both on the tenant card and in the Launch Plan's risk queue.
 
@@ -536,17 +543,29 @@ This is an actively developed proof of concept, not a finished product — here'
 - CSV bulk import/export for the whole portfolio
 - Optional self-hosted Team Sync so more than one person can use this at once
 - Operations handbook export, audit log, auto-backups, guided first-week setup
+- Phase 0 trust work: shipped-module tests, import/sync validation, XSS and CSV-safety fixes, privacy messaging, demo isolation, Dependabot, and GitHub Pages deployment
+- Phase 1 foundations: permanent task IDs, runtime schemas, JSDoc type checking, sync envelopes, and browser regression coverage
+- Phase 2 positioning: a focused Map → Assign → Review → Share workflow, explicit context views, and documented product non-goals
 
 **Next up:**
-- Real notifications (email/SMS) instead of same-session browser alerts
-- Actual file uploads for documents, not just external links
-- Exportable rent-roll and delinquency reports formatted for owners
-- Field-level conflict resolution for Team Sync (right now a true conflict resolves as "take theirs or take mine," not a merge)
-- Import mapping presets for common PM software exports (Buildium, AppFolio, Rentvine) instead of the current generic-schema-only CSV import
+- Responsibility intelligence: criticality, backup ownership, review cadence, readiness diagnostics, and transparent assignment previews.
+- Onboarding and responsibility import: a guided audit, responsibility CSV mapping, and documented sample paths.
+- Sync and deployment hardening for the optional trusted-team server.
 
 **Further out, not committed to:**
-- A tenant-facing portal (payment status, maintenance requests)
-- Real user accounts/roles instead of the shared-passphrase workspace model
+- Broader property-management system features that would turn the map into a system of record
+
+## Non-goals
+
+PM Ops Map is not intended to replace the systems that already hold operational records. It is not:
+
+- an accounting, rent-collection, or payment platform;
+- a tenant-facing portal or resident communications system;
+- a maintenance dispatch or vendor marketplace;
+- a document-storage system; or
+- a full property-management system of record.
+
+The Portfolio and Work Orders views provide useful context around the responsibility map. They are deliberately lightweight and should not be treated as authoritative accounting, leasing, maintenance, or document records.
 
 If you're evaluating this for real use today: the core ownership/maintenance/portfolio workflow is solid and tested. Team Sync is genuinely useful for a small trusted team but intentionally skips enterprise auth. Treat it as what it is — a fast, honest way to see whether this kind of tool is worth building further for your company.
 
