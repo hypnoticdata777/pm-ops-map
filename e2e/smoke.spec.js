@@ -32,9 +32,16 @@ test('every tab opens without errors', async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem('pm-ops-company-name', 'Smoke Test Co'));
   await page.goto('index.html');
   await page.waitForSelector('#departments .department');
-  const views = [['Map View', '#map-view'], ['Team Manager', '#team-view'], ['Work Orders', '#workorders-view'], ['Portfolio', '#portfolio-view'], ['Tracking View', '#tracking-view']];
+  // Tab label -> the view it opens. Labels follow the product's Map -> Assign -> Review -> Share
+  // vocabulary (index.html); when a tab is renamed, update this table.
+  const views = [
+    ['Share Map', '#map-view'], ['Assign Owners', '#team-view'], ['Context: Work Orders', '#workorders-view'],
+    ['Context: Portfolio', '#portfolio-view'], ['Map & Review', '#tracking-view'],
+  ];
   for (const [label, selector] of views) {
-    await page.locator('.nav-tab', { hasText: label }).click();
+    const tab = page.locator('.nav-tab', { hasText: label });
+    await expect(tab, `no nav tab labelled "${label}" (was a tab renamed in index.html?)`).toHaveCount(1);
+    await tab.click();
     await expect(page.locator(selector)).toHaveClass(/active/);
   }
   expect(problems).toEqual([]);
