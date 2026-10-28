@@ -26,6 +26,7 @@
 - Playwright browser suite (security fuzzing, CSV, data safety, privacy, demo, layout, smoke, and built-site tests) running in CI; Dependabot and a weekly production-dependency audit.
 
 ### Changed
+- **CI guardrails.** A failed weekly dependency audit now opens (or updates) a GitHub issue labelled `dependency-audit` instead of only turning a run red; the audit can be run by hand with a simulated failure to prove it. Nav tabs carry a `data-view` and tests select them by that, not by label text, so renaming a tab cannot break the suite.
 - Tests now import the shipped ES modules directly (Vitest + jsdom). The hand-maintained `.cjs` copies, which had already drifted apart, and the `js/data.js` shim are gone.
 - Development tooling requires **Node.js 22.12+** (Node 20 reached end-of-life). The app itself still only needs a browser.
 

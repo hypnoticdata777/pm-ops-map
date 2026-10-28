@@ -47,19 +47,19 @@
   <div class="nav-tabs" id="nav-tabs">
     <!-- FIX: pass `this` so switchView() receives the clicked element directly,
          avoiding reliance on window.event which is undefined in Firefox. -->
-    <div class="nav-tab active" onclick="switchView('tracking', this)">&#128202; Map &amp; Review</div>
-    <div class="nav-tab" onclick="switchView('map', this)">&#128506; Share Map</div>
+    <div class="nav-tab active" data-view="tracking" onclick="switchView('tracking', this)">&#128202; Map &amp; Review</div>
+    <div class="nav-tab" data-view="map" onclick="switchView('map', this)">&#128506; Share Map</div>
     <!-- ★ BEACON: tab-beacon is the pulsing red dot shown when UNOWNED tasks exist.
          JS toggles its `hidden` attribute so it appears/disappears automatically. -->
-    <div class="nav-tab" id="team-tab" onclick="switchView('team', this)">
+    <div class="nav-tab" id="team-tab" data-view="team" onclick="switchView('team', this)">
       &#128101; Assign Owners
       <span class="tab-beacon" id="tab-beacon" hidden></span>
     </div>
-    <div class="nav-tab" id="wo-tab" onclick="switchView('workorders', this)">
+    <div class="nav-tab" id="wo-tab" data-view="workorders" onclick="switchView('workorders', this)">
       &#128295; Context: Work Orders
       <span class="tab-beacon" id="wo-tab-beacon" hidden></span>
     </div>
-    <div class="nav-tab" id="portfolio-tab" onclick="switchView('portfolio', this)">Context: Portfolio</div>
+    <div class="nav-tab" id="portfolio-tab" data-view="portfolio" onclick="switchView('portfolio', this)">Context: Portfolio</div>
   </div>
 
   <div class="controls" id="controls">

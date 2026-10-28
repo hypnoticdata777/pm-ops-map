@@ -124,6 +124,10 @@ PM Ops Map renders data it did not create — imported JSON, pasted clipboard te
 
 `npm run test:e2e` runs a browser suite (`e2e/security-xss.spec.js`) that injects a canary payload into every importable field and fails if any view turns it into markup or script. If you add a field or a view, extend `e2e/helpers/security.js`.
 
+## Tests and UI wording
+
+Browser tests find the nav tabs by `data-view` (`.nav-tab[data-view="map"]`), not by their visible text, so changing a tab's label is safe. If you add a tab, give it a `data-view` that matches both the view it opens and its `#<view>-view` container; `js/__tests__/nav-tabs.test.js` checks this. For other UI text, search `e2e/` and `js/__tests__/` for the old wording before you rename it, or select by `data-*` / `id` instead of text in new tests.
+
 ## Types (JSDoc + `npm run typecheck`)
 
 The client is plain JavaScript with no build step, and it is type-checked with JSDoc comments: `npm run typecheck` runs `tsc` over `js/` (`allowJs`, `checkJs`, `strict`, `noEmit`). CI runs it before the tests.
