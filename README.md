@@ -401,6 +401,7 @@ Use the README for the product overview and setup path. Use the architecture not
 | [Code glossary](docs/architecture/code-glossary.md) | Looking up important files, functions, models, routes, and repository patterns |
 | [Explain-the-code practice guide](docs/architecture/explain-the-code-practice-guide.md) | Preparing a recruiter walkthrough, technical interview explanation, or portfolio demo |
 | [Sync server guide](server/README.md) | Running or deploying the optional shared-workspace service |
+| [Roadmap](docs/ROADMAP.md) | What has shipped, what is in progress, and what each phase and step is for |
 | [Contributing guide](CONTRIBUTING.md) | Making and validating changes |
 
 If you are reviewing the repository for the first time, read the site walkthrough next and keep the code glossary open as a reference.
@@ -544,10 +545,11 @@ This is an actively developed proof of concept, not a finished product — here'
 - Optional self-hosted Team Sync so more than one person can use this at once
 - Operations handbook export, audit log, auto-backups, guided first-week setup
 - Phase 0 trust work: shipped-module tests, import/sync validation, XSS and CSV-safety fixes, privacy messaging, demo isolation, Dependabot, and GitHub Pages deployment
-- Phase 1 foundations: permanent task IDs, runtime schemas, JSDoc type checking, sync envelopes, and browser regression coverage
+- Phase 1A foundations: permanent task IDs, runtime schemas (the import review names each repaired field), JSDoc type checking, sync reply checks, and browser regression coverage
 - Phase 2 positioning: a focused Map → Assign → Review → Share workflow, explicit context views, and documented product non-goals
 
-**Next up:**
+**Next up** (the full plan, with status and "done when" criteria for each step, is in [docs/ROADMAP.md](docs/ROADMAP.md)):
+- Phase 1B/1C foundations: a pure domain layer (coverage, workload, assignment with reasons), one save-and-re-render path, event delegation in place of inline handlers, and broader end-to-end tests.
 - Responsibility intelligence: criticality, backup ownership, review cadence, readiness diagnostics, and transparent assignment previews.
 - Onboarding and responsibility import: a guided audit, responsibility CSV mapping, and documented sample paths.
 - Sync and deployment hardening for the optional trusted-team server.
