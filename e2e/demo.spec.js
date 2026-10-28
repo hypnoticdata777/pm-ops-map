@@ -95,7 +95,7 @@ test.describe('the demo shows what the tool is for', () => {
 
   test('the map renders the fictional org', async ({ page }) => {
     await page.goto(DEMO);
-    await page.locator('.nav-tab').nth(1).click();
+    await page.locator('.nav-tab[data-view="map"]').click();
     await expect(page.locator('#map-view svg')).toBeVisible();
   });
 });

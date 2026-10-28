@@ -32,17 +32,13 @@ test('every tab opens without errors', async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem('pm-ops-company-name', 'Smoke Test Co'));
   await page.goto('index.html');
   await page.waitForSelector('#departments .department');
-  // Tab label -> the view it opens. Labels follow the product's Map -> Assign -> Review -> Share
-  // vocabulary (index.html); when a tab is renamed, update this table.
-  const views = [
-    ['Share Map', '#map-view'], ['Assign Owners', '#team-view'], ['Context: Work Orders', '#workorders-view'],
-    ['Context: Portfolio', '#portfolio-view'], ['Map & Review', '#tracking-view'],
-  ];
-  for (const [label, selector] of views) {
-    const tab = page.locator('.nav-tab', { hasText: label });
-    await expect(tab, `no nav tab labelled "${label}" (was a tab renamed in index.html?)`).toHaveCount(1);
+  // Tabs are found by data-view, never by their label, so renaming a tab's text cannot break this
+  // (js/__tests__/nav-tabs.test.js keeps each data-view in step with the view it opens).
+  for (const view of ['map', 'team', 'workorders', 'portfolio', 'tracking']) {
+    const tab = page.locator(`.nav-tab[data-view="${view}"]`);
+    await expect(tab, `no nav tab with data-view="${view}" in index.html`).toHaveCount(1);
     await tab.click();
-    await expect(page.locator(selector)).toHaveClass(/active/);
+    await expect(page.locator(`#${view}-view`)).toHaveClass(/active/);
   }
   expect(problems).toEqual([]);
 });

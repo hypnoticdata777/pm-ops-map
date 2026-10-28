@@ -66,7 +66,7 @@ test.describe('hostile import is inert', () => {
 
   test('map view, tooltips and department panel', async ({ page }, testInfo) => {
     await loadEvilApp(page, testInfo);
-    await page.locator('.nav-tab').nth(1).click();
+    await page.locator('.nav-tab[data-view="map"]').click();
     await page.waitForSelector('#map-view.active svg');
     await expectClean(page, 'map');
     await poke(page, '#map-view svg *');

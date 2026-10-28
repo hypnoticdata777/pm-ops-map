@@ -7,6 +7,11 @@ on:
   schedule:
     - cron: '23 6 * * 1'
   workflow_dispatch:
+    inputs:
+      simulate_failure:
+        description: 'Fail on purpose, to check that a failed audit opens an issue'
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -19,6 +24,11 @@ jobs:
       matrix:
         dir: ['.', 'server']
     steps:
+      - name: Simulated failure (manual runs only)
+        if: ${{ inputs.simulate_failure }}
+        run: |
+          echo "Failing on purpose (simulate_failure was ticked)."
+          exit 1
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
@@ -26,3 +36,25 @@ jobs:
       # --package-lock-only audits exactly what the lockfile pins, no install needed.
       - run: npm audit --package-lock-only --omit=dev --audit-level=moderate
         working-directory: ${{ matrix.dir }}
+
+  # A red scheduled run is easy to miss, so a failed audit also opens (or updates) an issue.
+  report:
+    needs: audit
+    if: ${{ always() && needs.audit.result == 'failure' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write   # open / comment on the issue
+      actions: read   # name which audit job failed
+    steps:
+      - uses: actions/checkout@v4
+      - name: Open or update the audit issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          FAILED_JOBS="$(gh run view "${{ github.run_id }}" --repo "$REPO" --json jobs \
+            --jq '[.jobs[] | select(.conclusion == "failure") | .name] | join(", ")' || true)"
+          export FAILED_JOBS
+          bash .github/scripts/report-audit-failure.sh
