@@ -1,0 +1,2968 @@
+{
+  "domain": {
+    "template-solo": {
+      "before": {
+        "stats": {
+          "total": "262",
+          "assigned": "0",
+          "done": "0",
+          "in-progress": "0",
+          "blocked": "0",
+          "overdue": "0",
+          "unowned": "262",
+          "departments": "17"
+        },
+        "badge": {
+          "text": "262",
+          "display": "inline-flex"
+        },
+        "autoAssignButton": {
+          "disabled": false,
+          "title": "Auto-assign 262 unowned tasks based on department affinities"
+        },
+        "tabBeaconHidden": false,
+        "team": {
+          "alert": "262 unowned tasks need assignment ⚡ Auto-Assign Now",
+          "bars": [
+            "Owner Operator 0"
+          ]
+        },
+        "launch": {
+          "coverageCards": [
+            "Leasing 0% 49 unowned / 49 tasks No named owner",
+            "Rent Collection 0% 46 unowned / 46 tasks No named owner",
+            "Inspections 0% 54 unowned / 54 tasks No named owner",
+            "Maintenance 0% 38 unowned / 38 tasks No named owner",
+            "Compliance 0% 20 unowned / 20 tasks No named owner",
+            "Renewals 0% 50 unowned / 50 tasks No named owner",
+            "Emergencies 0% 62 unowned / 62 tasks No named owner"
+          ],
+          "allText": "4976636fa510a1b3",
+          "allHtml": "6dd07b462979bd9b"
+        },
+        "handbook": {
+          "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 0%\n- Responsibilities: 49\n- Unowned: 49\n- Primary owners: No named owner\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 0%\n- Responsibilities: 46\n- Unowned: 46\n- Primary owners: No named owner\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 0%\n- Responsibilities: 54\n- Unowned: 54\n- Primary owners: No named owner\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 0%\n- Responsibilities: 38\n- Unowned: 38\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 0%\n- Responsibilities: 20\n- Unowned: 20\n- Primary owners: No named owner\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 0%\n- Responsibilities: 50\n- Unowned: 50\n- Primary owners: No named owner\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 0%\n- Responsibilities: 62\n- Unowned: 62\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
+          "gaps": "## Setup Gaps To Close\n\n- Add managed properties with unit counts and owner/client context.\n- Add tenants so maintenance and communication have resident context.\n- Add vendors so repair dispatch has a starter bench.\n- Assign 262 unowned responsibilities.\n- Create one starter work order to document maintenance flow.\n- Improve Leasing coverage (0% covered).\n- Improve Rent Collection coverage (0% covered).\n- Improve Inspections coverage (0% covered).\n- Improve Maintenance coverage (0% covered).\n- Improve Compliance coverage (0% covered).\n- Improve Renewals coverage (0% covered).\n- Improve Emergencies coverage (0% covered).",
+          "team": "## Team Roster And Workload\n\n### Owner Operator\n\n- Owned responsibilities: 0\n- Department affinities: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins, Tenant Communications & Services, Delinquency & Collections, Maintenance Coordination, Vendor Management, Make-Ready & Unit Turns, Move-Outs & Inspections, Field Services & Access Control, Utilities & Insurance, Owner Communications & Relations, Owner Onboarding, Accounting & Finance, Compliance & Legal, Reporting & KPIs, Technology & Systems",
+          "wholeFromSnapshot": "c5431e7a536ad200"
+        }
+      },
+      "countsBefore": {
+        "UNOWNED": 262
+      },
+      "run": {
+        "alerts": [],
+        "toast": {
+          "text": "⚡ 262 tasks auto-assigned · Ctrl+Z to undo",
+          "className": "save-toast save-toast--success"
+        },
+        "ownersSha": "dbb3b6ff351f1dc0",
+        "firstTwenty": [
+          "leasing#0=Owner Operator",
+          "leasing#1=Owner Operator",
+          "leasing#2=Owner Operator",
+          "leasing#3=Owner Operator",
+          "leasing#4=Owner Operator",
+          "leasing#5=Owner Operator",
+          "leasing#6=Owner Operator",
+          "leasing#7=Owner Operator",
+          "leasing#8=Owner Operator",
+          "leasing#9=Owner Operator",
+          "leasing#10=Owner Operator",
+          "leasing#11=Owner Operator",
+          "leasing#12=Owner Operator",
+          "leasing#13=Owner Operator",
+          "leasing#14=Owner Operator",
+          "leasing#15=Owner Operator",
+          "leasing#16=Owner Operator",
+          "leasing#17=Owner Operator",
+          "leasing#18=Owner Operator",
+          "leasing#19=Owner Operator"
+        ],
+        "counts": {
+          "Owner Operator": 262
+        },
+        "audit": [
+          {
+            "action": "auto_assign",
+            "count": 262
+          }
+        ],
+        "backups": [
+          "Before auto-assign"
+        ],
+        "undoSnapshotTaken": true,
+        "changedTasks": 262
+      },
+      "after": {
+        "stats": {
+          "total": "262",
+          "assigned": "262",
+          "done": "0",
+          "in-progress": "0",
+          "blocked": "0",
+          "overdue": "0",
+          "unowned": "0",
+          "departments": "17"
+        },
+        "badge": {
+          "text": "0",
+          "display": "none"
+        },
+        "autoAssignButton": {
+          "disabled": true,
+          "title": "All tasks are assigned — nothing to auto-assign!"
+        },
+        "tabBeaconHidden": true,
+        "team": {
+          "alert": "✓ All tasks are assigned!",
+          "bars": [
+            "Owner Operator 262"
+          ]
+        },
+        "launch": {
+          "coverageCards": [
+            "Leasing 100% 0 unowned / 49 tasks Owner Operator",
+            "Rent Collection 100% 0 unowned / 46 tasks Owner Operator",
+            "Inspections 100% 0 unowned / 54 tasks Owner Operator",
+            "Maintenance 100% 0 unowned / 38 tasks Owner Operator",
+            "Compliance 100% 0 unowned / 20 tasks Owner Operator",
+            "Renewals 100% 0 unowned / 50 tasks Owner Operator",
+            "Emergencies 100% 0 unowned / 62 tasks Owner Operator"
+          ],
+          "allText": "9059e3a07b8e59a9",
+          "allHtml": "d509ccaa9072b5aa"
+        },
+        "handbook": {
+          "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 100%\n- Responsibilities: 49\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 100%\n- Responsibilities: 46\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 100%\n- Responsibilities: 54\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 100%\n- Responsibilities: 38\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 100%\n- Responsibilities: 20\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 100%\n- Responsibilities: 50\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 100%\n- Responsibilities: 62\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
+          "gaps": "## Setup Gaps To Close\n\n- Add managed properties with unit counts and owner/client context.\n- Add tenants so maintenance and communication have resident context.\n- Add vendors so repair dispatch has a starter bench.\n- Create one starter work order to document maintenance flow.",
+          "team": "## Team Roster And Workload\n\n### Owner Operator\n\n- Owned responsibilities: 262\n- Department affinities: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins, Tenant Communications & Services, Delinquency & Collections, Maintenance Coordination, Vendor Management, Make-Ready & Unit Turns, Move-Outs & Inspections, Field Services & Access Control, Utilities & Insurance, Owner Communications & Relations, Owner Onboarding, Accounting & Finance, Compliance & Legal, Reporting & KPIs, Technology & Systems",
+          "wholeFromSnapshot": "8a4ba7f7b90e2c45"
+        }
+      },
+      "undo": {
+        "ownersRestored": true,
+        "snapshotConsumed": true
+      }
+    },
+    "template-twoPerson": {
+      "before": {
+        "stats": {
+          "total": "262",
+          "assigned": "0",
+          "done": "0",
+          "in-progress": "0",
+          "blocked": "0",
+          "overdue": "0",
+          "unowned": "262",
+          "departments": "17"
+        },
+        "badge": {
+          "text": "262",
+          "display": "inline-flex"
+        },
+        "autoAssignButton": {
+          "disabled": false,
+          "title": "Auto-assign 262 unowned tasks based on department affinities"
+        },
+        "tabBeaconHidden": false,
+        "team": {
+          "alert": "262 unowned tasks need assignment ⚡ Auto-Assign Now",
+          "bars": [
+            "Portfolio Lead 0",
+            "Ops Coordinator 0"
+          ]
+        },
+        "launch": {
+          "coverageCards": [
+            "Leasing 0% 49 unowned / 49 tasks No named owner",
+            "Rent Collection 0% 46 unowned / 46 tasks No named owner",
+            "Inspections 0% 54 unowned / 54 tasks No named owner",
+            "Maintenance 0% 38 unowned / 38 tasks No named owner",
+            "Compliance 0% 20 unowned / 20 tasks No named owner",
+            "Renewals 0% 50 unowned / 50 tasks No named owner",
+            "Emergencies 0% 62 unowned / 62 tasks No named owner"
+          ],
+          "allText": "b052c67294036546",
+          "allHtml": "545b9497e11f4664"
+        },
+        "handbook": {
+          "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 0%\n- Responsibilities: 49\n- Unowned: 49\n- Primary owners: No named owner\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 0%\n- Responsibilities: 46\n- Unowned: 46\n- Primary owners: No named owner\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 0%\n- Responsibilities: 54\n- Unowned: 54\n- Primary owners: No named owner\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 0%\n- Responsibilities: 38\n- Unowned: 38\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 0%\n- Responsibilities: 20\n- Unowned: 20\n- Primary owners: No named owner\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 0%\n- Responsibilities: 50\n- Unowned: 50\n- Primary owners: No named owner\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 0%\n- Responsibilities: 62\n- Unowned: 62\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
+          "gaps": "## Setup Gaps To Close\n\n- Add managed properties with unit counts and owner/client context.\n- Add tenants so maintenance and communication have resident context.\n- Add vendors so repair dispatch has a starter bench.\n- Assign 262 unowned responsibilities.\n- Create one starter work order to document maintenance flow.\n- Improve Leasing coverage (0% covered).\n- Improve Rent Collection coverage (0% covered).\n- Improve Inspections coverage (0% covered).\n- Improve Maintenance coverage (0% covered).\n- Improve Compliance coverage (0% covered).\n- Improve Renewals coverage (0% covered).\n- Improve Emergencies coverage (0% covered).",
+          "team": "## Team Roster And Workload\n\n### Portfolio Lead\n\n- Owned responsibilities: 0\n- Department affinities: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins, Tenant Communications & Services, Owner Communications & Relations, Owner Onboarding, Reporting & KPIs\n\n### Ops Coordinator\n\n- Owned responsibilities: 0\n- Department affinities: Maintenance Coordination, Vendor Management, Make-Ready & Unit Turns, Move-Outs & Inspections, Field Services & Access Control, Utilities & Insurance, Delinquency & Collections, Accounting & Finance, Compliance & Legal, Technology & Systems",
+          "wholeFromSnapshot": "f0717dc390d323da"
+        }
+      },
+      "countsBefore": {
+        "UNOWNED": 262
+      },
+      "run": {
+        "alerts": [],
+        "toast": {
+          "text": "⚡ 262 tasks auto-assigned · Ctrl+Z to undo",
+          "className": "save-toast save-toast--success"
+        },
+        "ownersSha": "7173c3ea53ddaf5b",
+        "firstTwenty": [
+          "leasing#0=Portfolio Lead",
+          "leasing#1=Portfolio Lead",
+          "leasing#2=Portfolio Lead",
+          "leasing#3=Portfolio Lead",
+          "leasing#4=Portfolio Lead",
+          "leasing#5=Portfolio Lead",
+          "leasing#6=Portfolio Lead",
+          "leasing#7=Portfolio Lead",
+          "leasing#8=Portfolio Lead",
+          "leasing#9=Portfolio Lead",
+          "leasing#10=Portfolio Lead",
+          "leasing#11=Portfolio Lead",
+          "leasing#12=Portfolio Lead",
+          "leasing#13=Portfolio Lead",
+          "leasing#14=Portfolio Lead",
+          "leasing#15=Portfolio Lead",
+          "leasing#16=Portfolio Lead",
+          "leasing#17=Portfolio Lead",
+          "leasing#18=Portfolio Lead",
+          "leasing#19=Portfolio Lead"
+        ],
+        "counts": {
+          "Ops Coordinator": 159,
+          "Portfolio Lead": 103
+        },
+        "audit": [
+          {
+            "action": "auto_assign",
+            "count": 262
+          }
+        ],
+        "backups": [
+          "Before auto-assign"
+        ],
+        "undoSnapshotTaken": true,
+        "changedTasks": 262
+      },
+      "after": {
+        "stats": {
+          "total": "262",
+          "assigned": "262",
+          "done": "0",
+          "in-progress": "0",
+          "blocked": "0",
+          "overdue": "0",
+          "unowned": "0",
+          "departments": "17"
+        },
+        "badge": {
+          "text": "0",
+          "display": "none"
+        },
+        "autoAssignButton": {
+          "disabled": true,
+          "title": "All tasks are assigned — nothing to auto-assign!"
+        },
+        "tabBeaconHidden": true,
+        "team": {
+          "alert": "✓ All tasks are assigned!",
+          "bars": [
+            "Ops Coordinator 159",
+            "Portfolio Lead 103"
+          ]
+        },
+        "launch": {
+          "coverageCards": [
+            "Leasing 100% 0 unowned / 49 tasks Portfolio Lead",
+            "Rent Collection 100% 0 unowned / 46 tasks Ops Coordinator",
+            "Inspections 100% 0 unowned / 54 tasks Ops Coordinator, Portfolio Lead",
+            "Maintenance 100% 0 unowned / 38 tasks Ops Coordinator",
+            "Compliance 100% 0 unowned / 20 tasks Ops Coordinator, Portfolio Lead",
+            "Renewals 100% 0 unowned / 50 tasks Portfolio Lead",
+            "Emergencies 100% 0 unowned / 62 tasks Ops Coordinator, Portfolio Lead"
+          ],
+          "allText": "3ee4745da5d8e0cc",
+          "allHtml": "b5da1b39f682aa5a"
+        },
+        "handbook": {
+          "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 100%\n- Responsibilities: 49\n- Unowned: 0\n- Primary owners: Portfolio Lead\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 100%\n- Responsibilities: 46\n- Unowned: 0\n- Primary owners: Ops Coordinator\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 100%\n- Responsibilities: 54\n- Unowned: 0\n- Primary owners: Ops Coordinator, Portfolio Lead\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 100%\n- Responsibilities: 38\n- Unowned: 0\n- Primary owners: Ops Coordinator\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 100%\n- Responsibilities: 20\n- Unowned: 0\n- Primary owners: Ops Coordinator, Portfolio Lead\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 100%\n- Responsibilities: 50\n- Unowned: 0\n- Primary owners: Portfolio Lead\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 100%\n- Responsibilities: 62\n- Unowned: 0\n- Primary owners: Ops Coordinator, Portfolio Lead\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
+          "gaps": "## Setup Gaps To Close\n\n- Add managed properties with unit counts and owner/client context.\n- Add tenants so maintenance and communication have resident context.\n- Add vendors so repair dispatch has a starter bench.\n- Create one starter work order to document maintenance flow.",
+          "team": "## Team Roster And Workload\n\n### Portfolio Lead\n\n- Owned responsibilities: 103\n- Department affinities: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins, Tenant Communications & Services, Owner Communications & Relations, Owner Onboarding, Reporting & KPIs\n\n### Ops Coordinator\n\n- Owned responsibilities: 159\n- Department affinities: Maintenance Coordination, Vendor Management, Make-Ready & Unit Turns, Move-Outs & Inspections, Field Services & Access Control, Utilities & Insurance, Delinquency & Collections, Accounting & Finance, Compliance & Legal, Technology & Systems",
+          "wholeFromSnapshot": "0926d92116fa941a"
+        }
+      },
+      "undo": {
+        "ownersRestored": true,
+        "snapshotConsumed": true
+      }
+    },
+    "template-maintenanceHeavy": {
+      "before": {
+        "stats": {
+          "total": "262",
+          "assigned": "0",
+          "done": "0",
+          "in-progress": "0",
+          "blocked": "0",
+          "overdue": "0",
+          "unowned": "262",
+          "departments": "17"
+        },
+        "badge": {
+          "text": "262",
+          "display": "inline-flex"
+        },
+        "autoAssignButton": {
+          "disabled": false,
+          "title": "Auto-assign 262 unowned tasks based on department affinities"
+        },
+        "tabBeaconHidden": false,
+        "team": {
+          "alert": "262 unowned tasks need assignment ⚡ Auto-Assign Now",
+          "bars": [
+            "Maintenance Coordinator 0",
+            "Resident Coordinator 0",
+            "Portfolio Admin 0"
+          ]
+        },
+        "launch": {
+          "coverageCards": [
+            "Leasing 0% 49 unowned / 49 tasks No named owner",
+            "Rent Collection 0% 46 unowned / 46 tasks No named owner",
+            "Inspections 0% 54 unowned / 54 tasks No named owner",
+            "Maintenance 0% 38 unowned / 38 tasks No named owner",
+            "Compliance 0% 20 unowned / 20 tasks No named owner",
+            "Renewals 0% 50 unowned / 50 tasks No named owner",
+            "Emergencies 0% 62 unowned / 62 tasks No named owner"
+          ],
+          "allText": "a5901c3c9d8d8ffd",
+          "allHtml": "530c12caee047fd1"
+        },
+        "handbook": {
+          "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 0%\n- Responsibilities: 49\n- Unowned: 49\n- Primary owners: No named owner\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 0%\n- Responsibilities: 46\n- Unowned: 46\n- Primary owners: No named owner\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 0%\n- Responsibilities: 54\n- Unowned: 54\n- Primary owners: No named owner\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 0%\n- Responsibilities: 38\n- Unowned: 38\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 0%\n- Responsibilities: 20\n- Unowned: 20\n- Primary owners: No named owner\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 0%\n- Responsibilities: 50\n- Unowned: 50\n- Primary owners: No named owner\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 0%\n- Responsibilities: 62\n- Unowned: 62\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
+          "gaps": "## Setup Gaps To Close\n\n- Add managed properties with unit counts and owner/client context.\n- Add tenants so maintenance and communication have resident context.\n- Add vendors so repair dispatch has a starter bench.\n- Assign 262 unowned responsibilities.\n- Create one starter work order to document maintenance flow.\n- Improve Leasing coverage (0% covered).\n- Improve Rent Collection coverage (0% covered).\n- Improve Inspections coverage (0% covered).\n- Improve Maintenance coverage (0% covered).\n- Improve Compliance coverage (0% covered).\n- Improve Renewals coverage (0% covered).\n- Improve Emergencies coverage (0% covered).",
+          "team": "## Team Roster And Workload\n\n### Maintenance Coordinator\n\n- Owned responsibilities: 0\n- Department affinities: Maintenance Coordination, Vendor Management, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Resident Coordinator\n\n- Owned responsibilities: 0\n- Department affinities: Tenant Communications & Services, Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Leasing & Marketing, Applications & Tenant Screening\n\n### Portfolio Admin\n\n- Owned responsibilities: 0\n- Department affinities: Owner Communications & Relations, Accounting & Finance, Utilities & Insurance, Compliance & Legal, Reporting & KPIs, Technology & Systems, Delinquency & Collections",
+          "wholeFromSnapshot": "5301eba2fb81f9d8"
+        }
+      },
+      "countsBefore": {
+        "UNOWNED": 262
+      },
+      "run": {
+        "alerts": [],
+        "toast": {
+          "text": "⚡ 262 tasks assigned · ⚠ 1 dept had no affinity match (Owner Onboarding) · Ctrl+Z to undo",
+          "className": "save-toast save-toast--warn"
+        },
+        "ownersSha": "a764b52874d2bd69",
+        "firstTwenty": [
+          "leasing#0=Resident Coordinator",
+          "leasing#1=Resident Coordinator",
+          "leasing#2=Resident Coordinator",
+          "leasing#3=Resident Coordinator",
+          "leasing#4=Resident Coordinator",
+          "leasing#5=Resident Coordinator",
+          "leasing#6=Resident Coordinator",
+          "leasing#7=Resident Coordinator",
+          "leasing#8=Resident Coordinator",
+          "leasing#9=Resident Coordinator",
+          "leasing#10=Resident Coordinator",
+          "leasing#11=Resident Coordinator",
+          "leasing#12=Resident Coordinator",
+          "leasing#13=Resident Coordinator",
+          "leasing#14=Resident Coordinator",
+          "leasing#15=Resident Coordinator",
+          "leasing#16=Resident Coordinator",
+          "leasing#17=Resident Coordinator",
+          "leasing#18=Resident Coordinator",
+          "leasing#19=Resident Coordinator"
+        ],
+        "counts": {
+          "Maintenance Coordinator": 65,
+          "Portfolio Admin": 124,
+          "Resident Coordinator": 73
+        },
+        "audit": [
+          {
+            "action": "auto_assign",
+            "count": 262
+          }
+        ],
+        "backups": [
+          "Before auto-assign"
+        ],
+        "undoSnapshotTaken": true,
+        "changedTasks": 262
+      },
+      "after": {
+        "stats": {
+          "total": "262",
+          "assigned": "262",
+          "done": "0",
+          "in-progress": "0",
+          "blocked": "0",
+          "overdue": "0",
+          "unowned": "0",
+          "departments": "17"
+        },
+        "badge": {
+          "text": "0",
+          "display": "none"
+        },
+        "autoAssignButton": {
+          "disabled": true,
+          "title": "All tasks are assigned — nothing to auto-assign!"
+        },
+        "tabBeaconHidden": true,
+        "team": {
+          "alert": "✓ All tasks are assigned!",
+          "bars": [
+            "Portfolio Admin ⚠ 124 [overloaded]",
+            "Resident Coordinator 73",
+            "Maintenance Coordinator 65"
+          ]
+        },
+        "launch": {
+          "coverageCards": [
+            "Leasing 100% 0 unowned / 49 tasks Resident Coordinator",
+            "Rent Collection 100% 0 unowned / 46 tasks Portfolio Admin",
+            "Inspections 100% 0 unowned / 54 tasks Resident Coordinator, Maintenance Coordinator",
+            "Maintenance 100% 0 unowned / 38 tasks Maintenance Coordinator",
+            "Compliance 100% 0 unowned / 20 tasks Portfolio Admin",
+            "Renewals 100% 0 unowned / 50 tasks Resident Coordinator, Portfolio Admin",
+            "Emergencies 100% 0 unowned / 62 tasks Maintenance Coordinator, Resident Coordinator"
+          ],
+          "allText": "c7cef13d41ba77e8",
+          "allHtml": "7cf71013c5a4d190"
+        },
+        "handbook": {
+          "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 100%\n- Responsibilities: 49\n- Unowned: 0\n- Primary owners: Resident Coordinator\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 100%\n- Responsibilities: 46\n- Unowned: 0\n- Primary owners: Portfolio Admin\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 100%\n- Responsibilities: 54\n- Unowned: 0\n- Primary owners: Resident Coordinator, Maintenance Coordinator\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 100%\n- Responsibilities: 38\n- Unowned: 0\n- Primary owners: Maintenance Coordinator\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 100%\n- Responsibilities: 20\n- Unowned: 0\n- Primary owners: Portfolio Admin\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 100%\n- Responsibilities: 50\n- Unowned: 0\n- Primary owners: Resident Coordinator, Portfolio Admin\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 100%\n- Responsibilities: 62\n- Unowned: 0\n- Primary owners: Maintenance Coordinator, Resident Coordinator\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
+          "gaps": "## Setup Gaps To Close\n\n- Add managed properties with unit counts and owner/client context.\n- Add tenants so maintenance and communication have resident context.\n- Add vendors so repair dispatch has a starter bench.\n- Create one starter work order to document maintenance flow.",
+          "team": "## Team Roster And Workload\n\n### Maintenance Coordinator\n\n- Owned responsibilities: 65\n- Department affinities: Maintenance Coordination, Vendor Management, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Resident Coordinator\n\n- Owned responsibilities: 73\n- Department affinities: Tenant Communications & Services, Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Leasing & Marketing, Applications & Tenant Screening\n\n### Portfolio Admin\n\n- Owned responsibilities: 124\n- Department affinities: Owner Communications & Relations, Accounting & Finance, Utilities & Insurance, Compliance & Legal, Reporting & KPIs, Technology & Systems, Delinquency & Collections",
+          "wholeFromSnapshot": "9d2d1d1077d3ddac"
+        }
+      },
+      "undo": {
+        "ownersRestored": true,
+        "snapshotConsumed": true
+      }
+    },
+    "template-leasingHeavy": {
+      "before": {
+        "stats": {
+          "total": "262",
+          "assigned": "0",
+          "done": "0",
+          "in-progress": "0",
+          "blocked": "0",
+          "overdue": "0",
+          "unowned": "262",
+          "departments": "17"
+        },
+        "badge": {
+          "text": "262",
+          "display": "inline-flex"
+        },
+        "autoAssignButton": {
+          "disabled": false,
+          "title": "Auto-assign 262 unowned tasks based on department affinities"
+        },
+        "tabBeaconHidden": false,
+        "team": {
+          "alert": "262 unowned tasks need assignment ⚡ Auto-Assign Now",
+          "bars": [
+            "Leasing Lead 0",
+            "Operations Lead 0",
+            "Accounting Admin 0"
+          ]
+        },
+        "launch": {
+          "coverageCards": [
+            "Leasing 0% 49 unowned / 49 tasks No named owner",
+            "Rent Collection 0% 46 unowned / 46 tasks No named owner",
+            "Inspections 0% 54 unowned / 54 tasks No named owner",
+            "Maintenance 0% 38 unowned / 38 tasks No named owner",
+            "Compliance 0% 20 unowned / 20 tasks No named owner",
+            "Renewals 0% 50 unowned / 50 tasks No named owner",
+            "Emergencies 0% 62 unowned / 62 tasks No named owner"
+          ],
+          "allText": "a5901c3c9d8d8ffd",
+          "allHtml": "530c12caee047fd1"
+        },
+        "handbook": {
+          "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 0%\n- Responsibilities: 49\n- Unowned: 49\n- Primary owners: No named owner\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 0%\n- Responsibilities: 46\n- Unowned: 46\n- Primary owners: No named owner\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 0%\n- Responsibilities: 54\n- Unowned: 54\n- Primary owners: No named owner\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 0%\n- Responsibilities: 38\n- Unowned: 38\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 0%\n- Responsibilities: 20\n- Unowned: 20\n- Primary owners: No named owner\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 0%\n- Responsibilities: 50\n- Unowned: 50\n- Primary owners: No named owner\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 0%\n- Responsibilities: 62\n- Unowned: 62\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
+          "gaps": "## Setup Gaps To Close\n\n- Add managed properties with unit counts and owner/client context.\n- Add tenants so maintenance and communication have resident context.\n- Add vendors so repair dispatch has a starter bench.\n- Assign 262 unowned responsibilities.\n- Create one starter work order to document maintenance flow.\n- Improve Leasing coverage (0% covered).\n- Improve Rent Collection coverage (0% covered).\n- Improve Inspections coverage (0% covered).\n- Improve Maintenance coverage (0% covered).\n- Improve Compliance coverage (0% covered).\n- Improve Renewals coverage (0% covered).\n- Improve Emergencies coverage (0% covered).",
+          "team": "## Team Roster And Workload\n\n### Leasing Lead\n\n- Owned responsibilities: 0\n- Department affinities: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins, Owner Onboarding\n\n### Operations Lead\n\n- Owned responsibilities: 0\n- Department affinities: Tenant Communications & Services, Maintenance Coordination, Vendor Management, Make-Ready & Unit Turns, Move-Outs & Inspections, Field Services & Access Control\n\n### Accounting Admin\n\n- Owned responsibilities: 0\n- Department affinities: Delinquency & Collections, Accounting & Finance, Utilities & Insurance, Owner Communications & Relations, Compliance & Legal, Reporting & KPIs, Technology & Systems",
+          "wholeFromSnapshot": "ca8df4c6f3adde8e"
+        }
+      },
+      "countsBefore": {
+        "UNOWNED": 262
+      },
+      "run": {
+        "alerts": [],
+        "toast": {
+          "text": "⚡ 262 tasks auto-assigned · Ctrl+Z to undo",
+          "className": "save-toast save-toast--success"
+        },
+        "ownersSha": "b723d7c3249192f5",
+        "firstTwenty": [
+          "leasing#0=Leasing Lead",
+          "leasing#1=Leasing Lead",
+          "leasing#2=Leasing Lead",
+          "leasing#3=Leasing Lead",
+          "leasing#4=Leasing Lead",
+          "leasing#5=Leasing Lead",
+          "leasing#6=Leasing Lead",
+          "leasing#7=Leasing Lead",
+          "leasing#8=Leasing Lead",
+          "leasing#9=Leasing Lead",
+          "leasing#10=Leasing Lead",
+          "leasing#11=Leasing Lead",
+          "leasing#12=Leasing Lead",
+          "leasing#13=Leasing Lead",
+          "leasing#14=Leasing Lead",
+          "leasing#15=Leasing Lead",
+          "leasing#16=Leasing Lead",
+          "leasing#17=Leasing Lead",
+          "leasing#18=Leasing Lead",
+          "leasing#19=Leasing Lead"
+        ],
+        "counts": {
+          "Accounting Admin": 107,
+          "Leasing Lead": 66,
+          "Operations Lead": 89
+        },
+        "audit": [
+          {
+            "action": "auto_assign",
+            "count": 262
+          }
+        ],
+        "backups": [
+          "Before auto-assign"
+        ],
+        "undoSnapshotTaken": true,
+        "changedTasks": 262
+      },
+      "after": {
+        "stats": {
+          "total": "262",
+          "assigned": "262",
+          "done": "0",
+          "in-progress": "0",
+          "blocked": "0",
+          "overdue": "0",
+          "unowned": "0",
+          "departments": "17"
+        },
+        "badge": {
+          "text": "0",
+          "display": "none"
+        },
+        "autoAssignButton": {
+          "disabled": true,
+          "title": "All tasks are assigned — nothing to auto-assign!"
+        },
+        "tabBeaconHidden": true,
+        "team": {
+          "alert": "✓ All tasks are assigned!",
+          "bars": [
+            "Accounting Admin 107",
+            "Operations Lead 89",
+            "Leasing Lead 66"
+          ]
+        },
+        "launch": {
+          "coverageCards": [
+            "Leasing 100% 0 unowned / 49 tasks Leasing Lead",
+            "Rent Collection 100% 0 unowned / 46 tasks Accounting Admin",
+            "Inspections 100% 0 unowned / 54 tasks Operations Lead, Leasing Lead",
+            "Maintenance 100% 0 unowned / 38 tasks Operations Lead",
+            "Compliance 100% 0 unowned / 20 tasks Accounting Admin",
+            "Renewals 100% 0 unowned / 50 tasks Accounting Admin, Leasing Lead, Operations Lead",
+            "Emergencies 100% 0 unowned / 62 tasks Operations Lead"
+          ],
+          "allText": "c0ab81d254eebb1b",
+          "allHtml": "2575e80aaeeecdc7"
+        },
+        "handbook": {
+          "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 100%\n- Responsibilities: 49\n- Unowned: 0\n- Primary owners: Leasing Lead\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 100%\n- Responsibilities: 46\n- Unowned: 0\n- Primary owners: Accounting Admin\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 100%\n- Responsibilities: 54\n- Unowned: 0\n- Primary owners: Operations Lead, Leasing Lead\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 100%\n- Responsibilities: 38\n- Unowned: 0\n- Primary owners: Operations Lead\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 100%\n- Responsibilities: 20\n- Unowned: 0\n- Primary owners: Accounting Admin\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 100%\n- Responsibilities: 50\n- Unowned: 0\n- Primary owners: Accounting Admin, Leasing Lead, Operations Lead\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 100%\n- Responsibilities: 62\n- Unowned: 0\n- Primary owners: Operations Lead\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
+          "gaps": "## Setup Gaps To Close\n\n- Add managed properties with unit counts and owner/client context.\n- Add tenants so maintenance and communication have resident context.\n- Add vendors so repair dispatch has a starter bench.\n- Create one starter work order to document maintenance flow.",
+          "team": "## Team Roster And Workload\n\n### Leasing Lead\n\n- Owned responsibilities: 66\n- Department affinities: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins, Owner Onboarding\n\n### Operations Lead\n\n- Owned responsibilities: 89\n- Department affinities: Tenant Communications & Services, Maintenance Coordination, Vendor Management, Make-Ready & Unit Turns, Move-Outs & Inspections, Field Services & Access Control\n\n### Accounting Admin\n\n- Owned responsibilities: 107\n- Department affinities: Delinquency & Collections, Accounting & Finance, Utilities & Insurance, Owner Communications & Relations, Compliance & Legal, Reporting & KPIs, Technology & Systems",
+          "wholeFromSnapshot": "97d28618cdfc6eb1"
+        }
+      },
+      "undo": {
+        "ownersRestored": true,
+        "snapshotConsumed": true
+      }
+    },
+    "showcase-partial": {
+      "before": {
+        "stats": {
+          "total": "262",
+          "assigned": "153",
+          "done": "54",
+          "in-progress": "62",
+          "blocked": "16",
+          "overdue": "13",
+          "unowned": "109",
+          "departments": "17"
+        },
+        "badge": {
+          "text": "109",
+          "display": "inline-flex"
+        },
+        "autoAssignButton": {
+          "disabled": false,
+          "title": "Auto-assign 109 unowned tasks based on department affinities"
+        },
+        "tabBeaconHidden": false,
+        "team": {
+          "alert": "109 unowned tasks need assignment ⚡ Auto-Assign Now",
+          "bars": [
+            "Dana Whitfield ⚠ 71 [overloaded]",
+            "Priya Raman 48",
+            "Marcus Reyes 34"
+          ]
+        },
+        "launch": {
+          "coverageCards": [
+            "Leasing 65% 17 unowned / 49 tasks Priya Raman",
+            "Rent Collection 67% 15 unowned / 46 tasks Dana Whitfield",
+            "Inspections 65% 19 unowned / 54 tasks Marcus Reyes, Priya Raman",
+            "Maintenance 66% 13 unowned / 38 tasks Marcus Reyes, Dana Whitfield",
+            "Compliance 0% 20 unowned / 20 tasks No named owner",
+            "Renewals 68% 16 unowned / 50 tasks Priya Raman, Dana Whitfield",
+            "Emergencies 66% 21 unowned / 62 tasks Marcus Reyes, Dana Whitfield, Priya Raman"
+          ],
+          "allText": "8181dd72bd071986",
+          "allHtml": "018b3ed07624120c"
+        },
+        "handbook": {
+          "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 65%\n- Responsibilities: 49\n- Unowned: 17\n- Primary owners: Priya Raman\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 67%\n- Responsibilities: 46\n- Unowned: 15\n- Primary owners: Dana Whitfield\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 65%\n- Responsibilities: 54\n- Unowned: 19\n- Primary owners: Marcus Reyes, Priya Raman\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 66%\n- Responsibilities: 38\n- Unowned: 13\n- Primary owners: Marcus Reyes, Dana Whitfield\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 0%\n- Responsibilities: 20\n- Unowned: 20\n- Primary owners: No named owner\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 68%\n- Responsibilities: 50\n- Unowned: 16\n- Primary owners: Priya Raman, Dana Whitfield\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 66%\n- Responsibilities: 62\n- Unowned: 21\n- Primary owners: Marcus Reyes, Dana Whitfield, Priya Raman\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
+          "gaps": "## Setup Gaps To Close\n\n- Assign 109 unowned responsibilities.\n- Resolve or document 16 blocked responsibilities.\n- Review 13 overdue responsibilities.\n- Improve Leasing coverage (65% covered).\n- Improve Rent Collection coverage (67% covered).\n- Improve Inspections coverage (65% covered).\n- Improve Maintenance coverage (66% covered).\n- Improve Compliance coverage (0% covered).\n- Improve Renewals coverage (68% covered).\n- Improve Emergencies coverage (66% covered).",
+          "team": "## Team Roster And Workload\n\n### Dana Whitfield\n\n- Owned responsibilities: 71\n- Department affinities: Accounting & Finance, Owner Communications & Relations, Owner Onboarding, Delinquency & Collections, Utilities & Insurance, Vendor Management\n\n### Marcus Reyes\n\n- Owned responsibilities: 34\n- Department affinities: Maintenance Coordination, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Priya Raman\n\n- Owned responsibilities: 48\n- Department affinities: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Tenant Communications & Services",
+          "wholeFromSnapshot": "f61da7aa80c76e80"
+        }
+      },
+      "countsBefore": {
+        "Dana Whitfield": 71,
+        "Marcus Reyes": 34,
+        "Priya Raman": 48,
+        "UNOWNED": 109
+      },
+      "run": {
+        "alerts": [],
+        "toast": {
+          "text": "⚡ 109 tasks assigned · ⚠ 3 depts had no affinity match (Compliance & Legal, Reporting & KPIs +1 more) · Ctrl+Z to undo",
+          "className": "save-toast save-toast--warn"
+        },
+        "ownersSha": "22b2a9c9dc9125de",
+        "firstTwenty": [
+          "leasing#0=Priya Raman",
+          "leasing#1=Priya Raman",
+          "leasing#2=Priya Raman",
+          "leasing#3=Priya Raman",
+          "leasing#4=Priya Raman",
+          "leasing#5=Priya Raman",
+          "leasing#6=Priya Raman",
+          "leasing#7=Priya Raman",
+          "leasing#8=Priya Raman",
+          "leasing#9=Priya Raman",
+          "leasing#10=Priya Raman",
+          "leasing#11=Priya Raman",
+          "leasing#12=Priya Raman",
+          "leasing#13=Priya Raman",
+          "leasing#14=Priya Raman",
+          "leasing#15=Priya Raman",
+          "leasing#16=Priya Raman",
+          "leasing#17=Priya Raman",
+          "leasing#18=Priya Raman",
+          "leasing#19=Priya Raman"
+        ],
+        "counts": {
+          "Dana Whitfield": 105,
+          "Marcus Reyes": 79,
+          "Priya Raman": 78
+        },
+        "audit": [
+          {
+            "action": "auto_assign",
+            "count": 109
+          }
+        ],
+        "backups": [
+          "Before auto-assign"
+        ],
+        "undoSnapshotTaken": true,
+        "changedTasks": 109
+      },
+      "after": {
+        "stats": {
+          "total": "262",
+          "assigned": "262",
+          "done": "54",
+          "in-progress": "62",
+          "blocked": "16",
+          "overdue": "13",
+          "unowned": "0",
+          "departments": "17"
+        },
+        "badge": {
+          "text": "0",
+          "display": "none"
+        },
+        "autoAssignButton": {
+          "disabled": true,
+          "title": "All tasks are assigned — nothing to auto-assign!"
+        },
+        "tabBeaconHidden": true,
+        "team": {
+          "alert": "✓ All tasks are assigned!",
+          "bars": [
+            "Dana Whitfield 105",
+            "Marcus Reyes 79",
+            "Priya Raman 78"
+          ]
+        },
+        "launch": {
+          "coverageCards": [
+            "Leasing 100% 0 unowned / 49 tasks Priya Raman",
+            "Rent Collection 100% 0 unowned / 46 tasks Dana Whitfield",
+            "Inspections 100% 0 unowned / 54 tasks Priya Raman, Marcus Reyes",
+            "Maintenance 100% 0 unowned / 38 tasks Marcus Reyes, Dana Whitfield",
+            "Compliance 100% 0 unowned / 20 tasks Marcus Reyes",
+            "Renewals 100% 0 unowned / 50 tasks Priya Raman, Dana Whitfield",
+            "Emergencies 100% 0 unowned / 62 tasks Marcus Reyes, Dana Whitfield, Priya Raman"
+          ],
+          "allText": "767bb9c27a7cd5bf",
+          "allHtml": "a42e1b0caa12f6e6"
+        },
+        "handbook": {
+          "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 100%\n- Responsibilities: 49\n- Unowned: 0\n- Primary owners: Priya Raman\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 100%\n- Responsibilities: 46\n- Unowned: 0\n- Primary owners: Dana Whitfield\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 100%\n- Responsibilities: 54\n- Unowned: 0\n- Primary owners: Priya Raman, Marcus Reyes\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 100%\n- Responsibilities: 38\n- Unowned: 0\n- Primary owners: Marcus Reyes, Dana Whitfield\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 100%\n- Responsibilities: 20\n- Unowned: 0\n- Primary owners: Marcus Reyes\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 100%\n- Responsibilities: 50\n- Unowned: 0\n- Primary owners: Priya Raman, Dana Whitfield\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 100%\n- Responsibilities: 62\n- Unowned: 0\n- Primary owners: Marcus Reyes, Dana Whitfield, Priya Raman\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
+          "gaps": "## Setup Gaps To Close\n\n- Resolve or document 16 blocked responsibilities.\n- Review 13 overdue responsibilities.",
+          "team": "## Team Roster And Workload\n\n### Dana Whitfield\n\n- Owned responsibilities: 105\n- Department affinities: Accounting & Finance, Owner Communications & Relations, Owner Onboarding, Delinquency & Collections, Utilities & Insurance, Vendor Management\n\n### Marcus Reyes\n\n- Owned responsibilities: 79\n- Department affinities: Maintenance Coordination, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Priya Raman\n\n- Owned responsibilities: 78\n- Department affinities: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Tenant Communications & Services",
+          "wholeFromSnapshot": "85af5e49d9756e99"
+        }
+      },
+      "undo": {
+        "ownersRestored": true,
+        "snapshotConsumed": true
+      }
+    },
+    "no-affinity": {
+      "before": {
+        "stats": {
+          "total": "262",
+          "assigned": "0",
+          "done": "0",
+          "in-progress": "0",
+          "blocked": "0",
+          "overdue": "0",
+          "unowned": "262",
+          "departments": "17"
+        },
+        "badge": {
+          "text": "262",
+          "display": "inline-flex"
+        },
+        "autoAssignButton": {
+          "disabled": false,
+          "title": "Auto-assign 262 unowned tasks based on department affinities"
+        },
+        "tabBeaconHidden": false,
+        "team": {
+          "alert": "262 unowned tasks need assignment ⚡ Auto-Assign Now",
+          "bars": [
+            "Rae 0",
+            "Sol 0",
+            "Tia 0"
+          ]
+        },
+        "launch": {
+          "coverageCards": [
+            "Leasing 0% 49 unowned / 49 tasks No named owner",
+            "Rent Collection 0% 46 unowned / 46 tasks No named owner",
+            "Inspections 0% 54 unowned / 54 tasks No named owner",
+            "Maintenance 0% 38 unowned / 38 tasks No named owner",
+            "Compliance 0% 20 unowned / 20 tasks No named owner",
+            "Renewals 0% 50 unowned / 50 tasks No named owner",
+            "Emergencies 0% 62 unowned / 62 tasks No named owner"
+          ],
+          "allText": "a5901c3c9d8d8ffd",
+          "allHtml": "530c12caee047fd1"
+        },
+        "handbook": {
+          "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 0%\n- Responsibilities: 49\n- Unowned: 49\n- Primary owners: No named owner\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 0%\n- Responsibilities: 46\n- Unowned: 46\n- Primary owners: No named owner\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 0%\n- Responsibilities: 54\n- Unowned: 54\n- Primary owners: No named owner\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 0%\n- Responsibilities: 38\n- Unowned: 38\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 0%\n- Responsibilities: 20\n- Unowned: 20\n- Primary owners: No named owner\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 0%\n- Responsibilities: 50\n- Unowned: 50\n- Primary owners: No named owner\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 0%\n- Responsibilities: 62\n- Unowned: 62\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
+          "gaps": "## Setup Gaps To Close\n\n- Add managed properties with unit counts and owner/client context.\n- Add tenants so maintenance and communication have resident context.\n- Add vendors so repair dispatch has a starter bench.\n- Assign 262 unowned responsibilities.\n- Create one starter work order to document maintenance flow.\n- Improve Leasing coverage (0% covered).\n- Improve Rent Collection coverage (0% covered).\n- Improve Inspections coverage (0% covered).\n- Improve Maintenance coverage (0% covered).\n- Improve Compliance coverage (0% covered).\n- Improve Renewals coverage (0% covered).\n- Improve Emergencies coverage (0% covered).",
+          "team": "## Team Roster And Workload\n\n### Rae\n\n- Owned responsibilities: 0\n- Department affinities: None selected yet\n\n### Sol\n\n- Owned responsibilities: 0\n- Department affinities: None selected yet\n\n### Tia\n\n- Owned responsibilities: 0\n- Department affinities: None selected yet",
+          "wholeFromSnapshot": "c962bdad2c474247"
+        }
+      },
+      "countsBefore": {
+        "UNOWNED": 262
+      },
+      "run": {
+        "alerts": [],
+        "toast": {
+          "text": "⚡ 262 tasks assigned · ⚠ 17 depts had no affinity match (Leasing & Marketing, Applications & Tenant Screening +15 more) · Ctrl+Z to undo",
+          "className": "save-toast save-toast--warn"
+        },
+        "ownersSha": "76bf8be2c38e2892",
+        "firstTwenty": [
+          "leasing#0=Rae",
+          "leasing#1=Sol",
+          "leasing#2=Tia",
+          "leasing#3=Rae",
+          "leasing#4=Sol",
+          "leasing#5=Tia",
+          "leasing#6=Rae",
+          "leasing#7=Sol",
+          "leasing#8=Tia",
+          "leasing#9=Rae",
+          "leasing#10=Sol",
+          "leasing#11=Tia",
+          "leasing#12=Rae",
+          "leasing#13=Sol",
+          "leasing#14=Tia",
+          "leasing#15=Rae",
+          "leasing#16=Sol",
+          "leasing#17=Tia",
+          "leasing#18=Rae",
+          "leasing#19=Sol"
+        ],
+        "counts": {
+          "Rae": 88,
+          "Sol": 87,
+          "Tia": 87
+        },
+        "audit": [
+          {
+            "action": "auto_assign",
+            "count": 262
+          }
+        ],
+        "backups": [
+          "Before auto-assign"
+        ],
+        "undoSnapshotTaken": true,
+        "changedTasks": 262
+      },
+      "after": {
+        "stats": {
+          "total": "262",
+          "assigned": "262",
+          "done": "0",
+          "in-progress": "0",
+          "blocked": "0",
+          "overdue": "0",
+          "unowned": "0",
+          "departments": "17"
+        },
+        "badge": {
+          "text": "0",
+          "display": "none"
+        },
+        "autoAssignButton": {
+          "disabled": true,
+          "title": "All tasks are assigned — nothing to auto-assign!"
+        },
+        "tabBeaconHidden": true,
+        "team": {
+          "alert": "✓ All tasks are assigned!",
+          "bars": [
+            "Rae 88",
+            "Sol 87",
+            "Tia 87"
+          ]
+        },
+        "launch": {
+          "coverageCards": [
+            "Leasing 100% 0 unowned / 49 tasks Rae, Sol, Tia",
+            "Rent Collection 100% 0 unowned / 46 tasks Tia, Rae, Sol",
+            "Inspections 100% 0 unowned / 54 tasks Rae, Tia, Sol",
+            "Maintenance 100% 0 unowned / 38 tasks Rae, Sol, Tia",
+            "Compliance 100% 0 unowned / 20 tasks Tia, Rae, Sol",
+            "Renewals 100% 0 unowned / 50 tasks Sol, Tia, Rae",
+            "Emergencies 100% 0 unowned / 62 tasks Rae, Sol, Tia"
+          ],
+          "allText": "ca35afc18d9e2fec",
+          "allHtml": "402bc4ab2f191647"
+        },
+        "handbook": {
+          "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 100%\n- Responsibilities: 49\n- Unowned: 0\n- Primary owners: Rae, Sol, Tia\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 100%\n- Responsibilities: 46\n- Unowned: 0\n- Primary owners: Tia, Rae, Sol\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 100%\n- Responsibilities: 54\n- Unowned: 0\n- Primary owners: Rae, Tia, Sol\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 100%\n- Responsibilities: 38\n- Unowned: 0\n- Primary owners: Rae, Sol, Tia\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 100%\n- Responsibilities: 20\n- Unowned: 0\n- Primary owners: Tia, Rae, Sol\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 100%\n- Responsibilities: 50\n- Unowned: 0\n- Primary owners: Sol, Tia, Rae\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 100%\n- Responsibilities: 62\n- Unowned: 0\n- Primary owners: Rae, Sol, Tia\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
+          "gaps": "## Setup Gaps To Close\n\n- Add managed properties with unit counts and owner/client context.\n- Add tenants so maintenance and communication have resident context.\n- Add vendors so repair dispatch has a starter bench.\n- Create one starter work order to document maintenance flow.",
+          "team": "## Team Roster And Workload\n\n### Rae\n\n- Owned responsibilities: 88\n- Department affinities: None selected yet\n\n### Sol\n\n- Owned responsibilities: 87\n- Department affinities: None selected yet\n\n### Tia\n\n- Owned responsibilities: 87\n- Department affinities: None selected yet",
+          "wholeFromSnapshot": "6b03b9747958d4ac"
+        }
+      },
+      "undo": {
+        "ownersRestored": true,
+        "snapshotConsumed": true
+      }
+    },
+    "partial-affinity-preowned": {
+      "before": {
+        "stats": {
+          "total": "262",
+          "assigned": "11",
+          "done": "0",
+          "in-progress": "0",
+          "blocked": "0",
+          "overdue": "0",
+          "unowned": "251",
+          "departments": "17"
+        },
+        "badge": {
+          "text": "251",
+          "display": "inline-flex"
+        },
+        "autoAssignButton": {
+          "disabled": false,
+          "title": "Auto-assign 251 unowned tasks based on department affinities"
+        },
+        "tabBeaconHidden": false,
+        "team": {
+          "alert": "251 unowned tasks need assignment ⚡ Auto-Assign Now",
+          "bars": [
+            "Bob 5",
+            "Ghost Person 4",
+            "Ann 2",
+            "Cy 0"
+          ]
+        },
+        "launch": {
+          "coverageCards": [
+            "Leasing 12% 43 unowned / 49 tasks Ghost Person, Ann",
+            "Rent Collection 0% 46 unowned / 46 tasks No named owner",
+            "Inspections 0% 54 unowned / 54 tasks No named owner",
+            "Maintenance 13% 33 unowned / 38 tasks Bob",
+            "Compliance 0% 20 unowned / 20 tasks No named owner",
+            "Renewals 8% 46 unowned / 50 tasks Ghost Person",
+            "Emergencies 8% 57 unowned / 62 tasks Bob"
+          ],
+          "allText": "859cae7fa762f634",
+          "allHtml": "d221d1602e694249"
+        },
+        "handbook": {
+          "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 12%\n- Responsibilities: 49\n- Unowned: 43\n- Primary owners: Ghost Person, Ann\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 0%\n- Responsibilities: 46\n- Unowned: 46\n- Primary owners: No named owner\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 0%\n- Responsibilities: 54\n- Unowned: 54\n- Primary owners: No named owner\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 13%\n- Responsibilities: 38\n- Unowned: 33\n- Primary owners: Bob\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 0%\n- Responsibilities: 20\n- Unowned: 20\n- Primary owners: No named owner\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 8%\n- Responsibilities: 50\n- Unowned: 46\n- Primary owners: Ghost Person\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 8%\n- Responsibilities: 62\n- Unowned: 57\n- Primary owners: Bob\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
+          "gaps": "## Setup Gaps To Close\n\n- Add managed properties with unit counts and owner/client context.\n- Add tenants so maintenance and communication have resident context.\n- Add vendors so repair dispatch has a starter bench.\n- Assign 251 unowned responsibilities.\n- Create one starter work order to document maintenance flow.\n- Improve Leasing coverage (12% covered).\n- Improve Rent Collection coverage (0% covered).\n- Improve Inspections coverage (0% covered).\n- Improve Maintenance coverage (13% covered).\n- Improve Compliance coverage (0% covered).\n- Improve Renewals coverage (8% covered).\n- Improve Emergencies coverage (8% covered).",
+          "team": "## Team Roster And Workload\n\n### Ann\n\n- Owned responsibilities: 2\n- Department affinities: Leasing & Marketing, Applications & Tenant Screening\n\n### Bob\n\n- Owned responsibilities: 5\n- Department affinities: Maintenance Coordination, Vendor Management\n\n### Cy\n\n- Owned responsibilities: 0\n- Department affinities: None selected yet",
+          "wholeFromSnapshot": "83eeba57beac502c"
+        }
+      },
+      "countsBefore": {
+        "Ann": 2,
+        "Bob": 5,
+        "Ghost Person": 4,
+        "UNOWNED": 251
+      },
+      "run": {
+        "alerts": [],
+        "toast": {
+          "text": "⚡ 251 tasks assigned · ⚠ 13 depts had no affinity match (Tenant Onboarding & Move-Ins, Tenant Communications & Services +11 more) · Ctrl+Z to undo",
+          "className": "save-toast save-toast--warn"
+        },
+        "ownersSha": "4f3dfda0c73980b5",
+        "firstTwenty": [
+          "leasing#0=Ghost Person",
+          "leasing#1=Ghost Person",
+          "leasing#2=Ghost Person",
+          "leasing#3=Ghost Person",
+          "leasing#4=Ann",
+          "leasing#5=Ann",
+          "leasing#6=Ann",
+          "leasing#7=Ann",
+          "leasing#8=Ann",
+          "leasing#9=Ann",
+          "leasing#10=Ann",
+          "leasing#11=Ann",
+          "leasing#12=Ann",
+          "leasing#13=Ann",
+          "leasing#14=Ann",
+          "leasing#15=Ann",
+          "leasing#16=Ann",
+          "leasing#17=Ann",
+          "leasing#18=Ann",
+          "leasing#19=Ann"
+        ],
+        "counts": {
+          "Ann": 86,
+          "Bob": 86,
+          "Cy": 86,
+          "Ghost Person": 4
+        },
+        "audit": [
+          {
+            "action": "auto_assign",
+            "count": 251
+          }
+        ],
+        "backups": [
+          "Before auto-assign"
+        ],
+        "undoSnapshotTaken": true,
+        "changedTasks": 251
+      },
+      "after": {
+        "stats": {
+          "total": "262",
+          "assigned": "262",
+          "done": "0",
+          "in-progress": "0",
+          "blocked": "0",
+          "overdue": "0",
+          "unowned": "0",
+          "departments": "17"
+        },
+        "badge": {
+          "text": "0",
+          "display": "none"
+        },
+        "autoAssignButton": {
+          "disabled": true,
+          "title": "All tasks are assigned — nothing to auto-assign!"
+        },
+        "tabBeaconHidden": true,
+        "team": {
+          "alert": "✓ All tasks are assigned!",
+          "bars": [
+            "Ann 86",
+            "Bob 86",
+            "Cy 86",
+            "Ghost Person 4"
+          ]
+        },
+        "launch": {
+          "coverageCards": [
+            "Leasing 100% 0 unowned / 49 tasks Ann, Cy, Ghost Person",
+            "Rent Collection 100% 0 unowned / 46 tasks Bob, Cy, Ann",
+            "Inspections 100% 0 unowned / 54 tasks Cy, Ann, Bob",
+            "Maintenance 100% 0 unowned / 38 tasks Bob",
+            "Compliance 100% 0 unowned / 20 tasks Bob, Cy, Ann",
+            "Renewals 100% 0 unowned / 50 tasks Ann, Cy, Bob",
+            "Emergencies 100% 0 unowned / 62 tasks Bob, Cy, Ann"
+          ],
+          "allText": "3531477417fd5ed6",
+          "allHtml": "0bbd8fffe988bc8e"
+        },
+        "handbook": {
+          "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 100%\n- Responsibilities: 49\n- Unowned: 0\n- Primary owners: Ann, Cy, Ghost Person\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 100%\n- Responsibilities: 46\n- Unowned: 0\n- Primary owners: Bob, Cy, Ann\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 100%\n- Responsibilities: 54\n- Unowned: 0\n- Primary owners: Cy, Ann, Bob\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 100%\n- Responsibilities: 38\n- Unowned: 0\n- Primary owners: Bob\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 100%\n- Responsibilities: 20\n- Unowned: 0\n- Primary owners: Bob, Cy, Ann\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 100%\n- Responsibilities: 50\n- Unowned: 0\n- Primary owners: Ann, Cy, Bob\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 100%\n- Responsibilities: 62\n- Unowned: 0\n- Primary owners: Bob, Cy, Ann\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
+          "gaps": "## Setup Gaps To Close\n\n- Add managed properties with unit counts and owner/client context.\n- Add tenants so maintenance and communication have resident context.\n- Add vendors so repair dispatch has a starter bench.\n- Create one starter work order to document maintenance flow.",
+          "team": "## Team Roster And Workload\n\n### Ann\n\n- Owned responsibilities: 86\n- Department affinities: Leasing & Marketing, Applications & Tenant Screening\n\n### Bob\n\n- Owned responsibilities: 86\n- Department affinities: Maintenance Coordination, Vendor Management\n\n### Cy\n\n- Owned responsibilities: 86\n- Department affinities: None selected yet",
+          "wholeFromSnapshot": "e081728f0851e8c5"
+        }
+      },
+      "undo": {
+        "ownersRestored": true,
+        "snapshotConsumed": true
+      }
+    },
+    "tie-order": {
+      "before": {
+        "stats": {
+          "total": "262",
+          "assigned": "0",
+          "done": "0",
+          "in-progress": "0",
+          "blocked": "0",
+          "overdue": "0",
+          "unowned": "262",
+          "departments": "17"
+        },
+        "badge": {
+          "text": "262",
+          "display": "inline-flex"
+        },
+        "autoAssignButton": {
+          "disabled": false,
+          "title": "Auto-assign 262 unowned tasks based on department affinities"
+        },
+        "tabBeaconHidden": false,
+        "team": {
+          "alert": "262 unowned tasks need assignment ⚡ Auto-Assign Now",
+          "bars": [
+            "Zed 0",
+            "Amy 0",
+            "Mia 0"
+          ]
+        },
+        "launch": {
+          "coverageCards": [
+            "Leasing 0% 49 unowned / 49 tasks No named owner",
+            "Rent Collection 0% 46 unowned / 46 tasks No named owner",
+            "Inspections 0% 54 unowned / 54 tasks No named owner",
+            "Maintenance 0% 38 unowned / 38 tasks No named owner",
+            "Compliance 0% 20 unowned / 20 tasks No named owner",
+            "Renewals 0% 50 unowned / 50 tasks No named owner",
+            "Emergencies 0% 62 unowned / 62 tasks No named owner"
+          ],
+          "allText": "a5901c3c9d8d8ffd",
+          "allHtml": "530c12caee047fd1"
+        },
+        "handbook": {
+          "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 0%\n- Responsibilities: 49\n- Unowned: 49\n- Primary owners: No named owner\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 0%\n- Responsibilities: 46\n- Unowned: 46\n- Primary owners: No named owner\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 0%\n- Responsibilities: 54\n- Unowned: 54\n- Primary owners: No named owner\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 0%\n- Responsibilities: 38\n- Unowned: 38\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 0%\n- Responsibilities: 20\n- Unowned: 20\n- Primary owners: No named owner\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 0%\n- Responsibilities: 50\n- Unowned: 50\n- Primary owners: No named owner\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 0%\n- Responsibilities: 62\n- Unowned: 62\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
+          "gaps": "## Setup Gaps To Close\n\n- Add managed properties with unit counts and owner/client context.\n- Add tenants so maintenance and communication have resident context.\n- Add vendors so repair dispatch has a starter bench.\n- Assign 262 unowned responsibilities.\n- Create one starter work order to document maintenance flow.\n- Improve Leasing coverage (0% covered).\n- Improve Rent Collection coverage (0% covered).\n- Improve Inspections coverage (0% covered).\n- Improve Maintenance coverage (0% covered).\n- Improve Compliance coverage (0% covered).\n- Improve Renewals coverage (0% covered).\n- Improve Emergencies coverage (0% covered).",
+          "team": "## Team Roster And Workload\n\n### Zed\n\n- Owned responsibilities: 0\n- Department affinities: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins, Tenant Communications & Services, Delinquency & Collections, Maintenance Coordination, Vendor Management, Make-Ready & Unit Turns, Move-Outs & Inspections, Field Services & Access Control, Utilities & Insurance, Owner Communications & Relations, Owner Onboarding, Accounting & Finance, Compliance & Legal, Reporting & KPIs, Technology & Systems\n\n### Amy\n\n- Owned responsibilities: 0\n- Department affinities: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins, Tenant Communications & Services, Delinquency & Collections, Maintenance Coordination, Vendor Management, Make-Ready & Unit Turns, Move-Outs & Inspections, Field Services & Access Control, Utilities & Insurance, Owner Communications & Relations, Owner Onboarding, Accounting & Finance, Compliance & Legal, Reporting & KPIs, Technology & Systems\n\n### Mia\n\n- Owned responsibilities: 0\n- Department affinities: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins, Tenant Communications & Services, Delinquency & Collections, Maintenance Coordination, Vendor Management, Make-Ready & Unit Turns, Move-Outs & Inspections, Field Services & Access Control, Utilities & Insurance, Owner Communications & Relations, Owner Onboarding, Accounting & Finance, Compliance & Legal, Reporting & KPIs, Technology & Systems",
+          "wholeFromSnapshot": "e674413384f2349a"
+        }
+      },
+      "countsBefore": {
+        "UNOWNED": 262
+      },
+      "run": {
+        "alerts": [],
+        "toast": {
+          "text": "⚡ 262 tasks auto-assigned · Ctrl+Z to undo",
+          "className": "save-toast save-toast--success"
+        },
+        "ownersSha": "b6d8f2865b98d9cf",
+        "firstTwenty": [
+          "leasing#0=Zed",
+          "leasing#1=Amy",
+          "leasing#2=Mia",
+          "leasing#3=Zed",
+          "leasing#4=Amy",
+          "leasing#5=Mia",
+          "leasing#6=Zed",
+          "leasing#7=Amy",
+          "leasing#8=Mia",
+          "leasing#9=Zed",
+          "leasing#10=Amy",
+          "leasing#11=Mia",
+          "leasing#12=Zed",
+          "leasing#13=Amy",
+          "leasing#14=Mia",
+          "leasing#15=Zed",
+          "leasing#16=Amy",
+          "leasing#17=Mia",
+          "leasing#18=Zed",
+          "leasing#19=Amy"
+        ],
+        "counts": {
+          "Amy": 87,
+          "Mia": 87,
+          "Zed": 88
+        },
+        "audit": [
+          {
+            "action": "auto_assign",
+            "count": 262
+          }
+        ],
+        "backups": [
+          "Before auto-assign"
+        ],
+        "undoSnapshotTaken": true,
+        "changedTasks": 262
+      },
+      "after": {
+        "stats": {
+          "total": "262",
+          "assigned": "262",
+          "done": "0",
+          "in-progress": "0",
+          "blocked": "0",
+          "overdue": "0",
+          "unowned": "0",
+          "departments": "17"
+        },
+        "badge": {
+          "text": "0",
+          "display": "none"
+        },
+        "autoAssignButton": {
+          "disabled": true,
+          "title": "All tasks are assigned — nothing to auto-assign!"
+        },
+        "tabBeaconHidden": true,
+        "team": {
+          "alert": "✓ All tasks are assigned!",
+          "bars": [
+            "Zed 88",
+            "Amy 87",
+            "Mia 87"
+          ]
+        },
+        "launch": {
+          "coverageCards": [
+            "Leasing 100% 0 unowned / 49 tasks Zed, Amy, Mia",
+            "Rent Collection 100% 0 unowned / 46 tasks Mia, Zed, Amy",
+            "Inspections 100% 0 unowned / 54 tasks Zed, Mia, Amy",
+            "Maintenance 100% 0 unowned / 38 tasks Zed, Amy, Mia",
+            "Compliance 100% 0 unowned / 20 tasks Mia, Zed, Amy",
+            "Renewals 100% 0 unowned / 50 tasks Amy, Mia, Zed",
+            "Emergencies 100% 0 unowned / 62 tasks Zed, Amy, Mia"
+          ],
+          "allText": "2ff6e1798f8ae5b4",
+          "allHtml": "2eaac5a663a3aedc"
+        },
+        "handbook": {
+          "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 100%\n- Responsibilities: 49\n- Unowned: 0\n- Primary owners: Zed, Amy, Mia\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 100%\n- Responsibilities: 46\n- Unowned: 0\n- Primary owners: Mia, Zed, Amy\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 100%\n- Responsibilities: 54\n- Unowned: 0\n- Primary owners: Zed, Mia, Amy\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 100%\n- Responsibilities: 38\n- Unowned: 0\n- Primary owners: Zed, Amy, Mia\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 100%\n- Responsibilities: 20\n- Unowned: 0\n- Primary owners: Mia, Zed, Amy\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 100%\n- Responsibilities: 50\n- Unowned: 0\n- Primary owners: Amy, Mia, Zed\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 100%\n- Responsibilities: 62\n- Unowned: 0\n- Primary owners: Zed, Amy, Mia\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
+          "gaps": "## Setup Gaps To Close\n\n- Add managed properties with unit counts and owner/client context.\n- Add tenants so maintenance and communication have resident context.\n- Add vendors so repair dispatch has a starter bench.\n- Create one starter work order to document maintenance flow.",
+          "team": "## Team Roster And Workload\n\n### Zed\n\n- Owned responsibilities: 88\n- Department affinities: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins, Tenant Communications & Services, Delinquency & Collections, Maintenance Coordination, Vendor Management, Make-Ready & Unit Turns, Move-Outs & Inspections, Field Services & Access Control, Utilities & Insurance, Owner Communications & Relations, Owner Onboarding, Accounting & Finance, Compliance & Legal, Reporting & KPIs, Technology & Systems\n\n### Amy\n\n- Owned responsibilities: 87\n- Department affinities: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins, Tenant Communications & Services, Delinquency & Collections, Maintenance Coordination, Vendor Management, Make-Ready & Unit Turns, Move-Outs & Inspections, Field Services & Access Control, Utilities & Insurance, Owner Communications & Relations, Owner Onboarding, Accounting & Finance, Compliance & Legal, Reporting & KPIs, Technology & Systems\n\n### Mia\n\n- Owned responsibilities: 87\n- Department affinities: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins, Tenant Communications & Services, Delinquency & Collections, Maintenance Coordination, Vendor Management, Make-Ready & Unit Turns, Move-Outs & Inspections, Field Services & Access Control, Utilities & Insurance, Owner Communications & Relations, Owner Onboarding, Accounting & Finance, Compliance & Legal, Reporting & KPIs, Technology & Systems",
+          "wholeFromSnapshot": "f41dc6daadf9c720"
+        }
+      },
+      "undo": {
+        "ownersRestored": true,
+        "snapshotConsumed": true
+      }
+    },
+    "overloaded": {
+      "before": {
+        "stats": {
+          "total": "262",
+          "assigned": "130",
+          "done": "0",
+          "in-progress": "0",
+          "blocked": "0",
+          "overdue": "0",
+          "unowned": "132",
+          "departments": "17"
+        },
+        "badge": {
+          "text": "132",
+          "display": "inline-flex"
+        },
+        "autoAssignButton": {
+          "disabled": false,
+          "title": "Auto-assign 132 unowned tasks based on department affinities"
+        },
+        "tabBeaconHidden": false,
+        "team": {
+          "alert": "132 unowned tasks need assignment ⚡ Auto-Assign Now",
+          "bars": [
+            "Heavy ⚠ 130 [overloaded]",
+            "Light 0"
+          ]
+        },
+        "launch": {
+          "coverageCards": [
+            "Leasing 100% 0 unowned / 49 tasks Heavy",
+            "Rent Collection 35% 30 unowned / 46 tasks Heavy",
+            "Inspections 56% 24 unowned / 54 tasks Heavy",
+            "Maintenance 100% 0 unowned / 38 tasks Heavy",
+            "Compliance 0% 20 unowned / 20 tasks No named owner",
+            "Renewals 60% 20 unowned / 50 tasks Heavy",
+            "Emergencies 77% 14 unowned / 62 tasks Heavy"
+          ],
+          "allText": "7e424ebff57c022e",
+          "allHtml": "bcfc699c8f3d076c"
+        },
+        "handbook": {
+          "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 100%\n- Responsibilities: 49\n- Unowned: 0\n- Primary owners: Heavy\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 35%\n- Responsibilities: 46\n- Unowned: 30\n- Primary owners: Heavy\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 56%\n- Responsibilities: 54\n- Unowned: 24\n- Primary owners: Heavy\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 100%\n- Responsibilities: 38\n- Unowned: 0\n- Primary owners: Heavy\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 0%\n- Responsibilities: 20\n- Unowned: 20\n- Primary owners: No named owner\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 60%\n- Responsibilities: 50\n- Unowned: 20\n- Primary owners: Heavy\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 77%\n- Responsibilities: 62\n- Unowned: 14\n- Primary owners: Heavy\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
+          "gaps": "## Setup Gaps To Close\n\n- Add managed properties with unit counts and owner/client context.\n- Add tenants so maintenance and communication have resident context.\n- Add vendors so repair dispatch has a starter bench.\n- Assign 132 unowned responsibilities.\n- Create one starter work order to document maintenance flow.\n- Improve Rent Collection coverage (35% covered).\n- Improve Inspections coverage (56% covered).\n- Improve Compliance coverage (0% covered).\n- Improve Renewals coverage (60% covered).",
+          "team": "## Team Roster And Workload\n\n### Heavy\n\n- Owned responsibilities: 130\n- Department affinities: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins, Tenant Communications & Services, Delinquency & Collections, Maintenance Coordination, Vendor Management, Make-Ready & Unit Turns, Move-Outs & Inspections, Field Services & Access Control, Utilities & Insurance, Owner Communications & Relations, Owner Onboarding, Accounting & Finance, Compliance & Legal, Reporting & KPIs, Technology & Systems\n\n### Light\n\n- Owned responsibilities: 0\n- Department affinities: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins, Tenant Communications & Services, Delinquency & Collections, Maintenance Coordination, Vendor Management, Make-Ready & Unit Turns, Move-Outs & Inspections, Field Services & Access Control, Utilities & Insurance, Owner Communications & Relations, Owner Onboarding, Accounting & Finance, Compliance & Legal, Reporting & KPIs, Technology & Systems",
+          "wholeFromSnapshot": "ce150bc996b7d0d5"
+        }
+      },
+      "countsBefore": {
+        "Heavy": 130,
+        "UNOWNED": 132
+      },
+      "run": {
+        "alerts": [],
+        "toast": {
+          "text": "⚡ 132 tasks auto-assigned · Ctrl+Z to undo",
+          "className": "save-toast save-toast--success"
+        },
+        "ownersSha": "20be4870ff5d1890",
+        "firstTwenty": [
+          "leasing#0=Heavy",
+          "leasing#1=Heavy",
+          "leasing#2=Heavy",
+          "leasing#3=Heavy",
+          "leasing#4=Heavy",
+          "leasing#5=Heavy",
+          "leasing#6=Heavy",
+          "leasing#7=Heavy",
+          "leasing#8=Heavy",
+          "leasing#9=Heavy",
+          "leasing#10=Heavy",
+          "leasing#11=Heavy",
+          "leasing#12=Heavy",
+          "leasing#13=Heavy",
+          "leasing#14=Heavy",
+          "leasing#15=Heavy",
+          "leasing#16=Heavy",
+          "leasing#17=Heavy",
+          "leasing#18=Heavy",
+          "leasing#19=Heavy"
+        ],
+        "counts": {
+          "Heavy": 131,
+          "Light": 131
+        },
+        "audit": [
+          {
+            "action": "auto_assign",
+            "count": 132
+          }
+        ],
+        "backups": [
+          "Before auto-assign"
+        ],
+        "undoSnapshotTaken": true,
+        "changedTasks": 132
+      },
+      "after": {
+        "stats": {
+          "total": "262",
+          "assigned": "262",
+          "done": "0",
+          "in-progress": "0",
+          "blocked": "0",
+          "overdue": "0",
+          "unowned": "0",
+          "departments": "17"
+        },
+        "badge": {
+          "text": "0",
+          "display": "none"
+        },
+        "autoAssignButton": {
+          "disabled": true,
+          "title": "All tasks are assigned — nothing to auto-assign!"
+        },
+        "tabBeaconHidden": true,
+        "team": {
+          "alert": "✓ All tasks are assigned!",
+          "bars": [
+            "Heavy 131",
+            "Light 131"
+          ]
+        },
+        "launch": {
+          "coverageCards": [
+            "Leasing 100% 0 unowned / 49 tasks Heavy",
+            "Rent Collection 100% 0 unowned / 46 tasks Light, Heavy",
+            "Inspections 100% 0 unowned / 54 tasks Heavy, Light",
+            "Maintenance 100% 0 unowned / 38 tasks Heavy",
+            "Compliance 100% 0 unowned / 20 tasks Light",
+            "Renewals 100% 0 unowned / 50 tasks Heavy, Light",
+            "Emergencies 100% 0 unowned / 62 tasks Heavy, Light"
+          ],
+          "allText": "890bc9304f037427",
+          "allHtml": "3a5990a899ff1eed"
+        },
+        "handbook": {
+          "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 100%\n- Responsibilities: 49\n- Unowned: 0\n- Primary owners: Heavy\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 100%\n- Responsibilities: 46\n- Unowned: 0\n- Primary owners: Light, Heavy\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 100%\n- Responsibilities: 54\n- Unowned: 0\n- Primary owners: Heavy, Light\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 100%\n- Responsibilities: 38\n- Unowned: 0\n- Primary owners: Heavy\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 100%\n- Responsibilities: 20\n- Unowned: 0\n- Primary owners: Light\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 100%\n- Responsibilities: 50\n- Unowned: 0\n- Primary owners: Heavy, Light\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 100%\n- Responsibilities: 62\n- Unowned: 0\n- Primary owners: Heavy, Light\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
+          "gaps": "## Setup Gaps To Close\n\n- Add managed properties with unit counts and owner/client context.\n- Add tenants so maintenance and communication have resident context.\n- Add vendors so repair dispatch has a starter bench.\n- Create one starter work order to document maintenance flow.",
+          "team": "## Team Roster And Workload\n\n### Heavy\n\n- Owned responsibilities: 131\n- Department affinities: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins, Tenant Communications & Services, Delinquency & Collections, Maintenance Coordination, Vendor Management, Make-Ready & Unit Turns, Move-Outs & Inspections, Field Services & Access Control, Utilities & Insurance, Owner Communications & Relations, Owner Onboarding, Accounting & Finance, Compliance & Legal, Reporting & KPIs, Technology & Systems\n\n### Light\n\n- Owned responsibilities: 131\n- Department affinities: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins, Tenant Communications & Services, Delinquency & Collections, Maintenance Coordination, Vendor Management, Make-Ready & Unit Turns, Move-Outs & Inspections, Field Services & Access Control, Utilities & Insurance, Owner Communications & Relations, Owner Onboarding, Accounting & Finance, Compliance & Legal, Reporting & KPIs, Technology & Systems",
+          "wholeFromSnapshot": "a6939f037b642962"
+        }
+      },
+      "undo": {
+        "ownersRestored": true,
+        "snapshotConsumed": true
+      }
+    },
+    "nothing-unowned": {
+      "before": {
+        "stats": {
+          "total": "262",
+          "assigned": "262",
+          "done": "0",
+          "in-progress": "0",
+          "blocked": "0",
+          "overdue": "0",
+          "unowned": "0",
+          "departments": "17"
+        },
+        "badge": {
+          "text": "0",
+          "display": "none"
+        },
+        "autoAssignButton": {
+          "disabled": true,
+          "title": "All tasks are assigned — nothing to auto-assign!"
+        },
+        "tabBeaconHidden": true,
+        "team": {
+          "alert": "✓ All tasks are assigned!",
+          "bars": [
+            "Owner Operator 262"
+          ]
+        },
+        "launch": {
+          "coverageCards": [
+            "Leasing 100% 0 unowned / 49 tasks Owner Operator",
+            "Rent Collection 100% 0 unowned / 46 tasks Owner Operator",
+            "Inspections 100% 0 unowned / 54 tasks Owner Operator",
+            "Maintenance 100% 0 unowned / 38 tasks Owner Operator",
+            "Compliance 100% 0 unowned / 20 tasks Owner Operator",
+            "Renewals 100% 0 unowned / 50 tasks Owner Operator",
+            "Emergencies 100% 0 unowned / 62 tasks Owner Operator"
+          ],
+          "allText": "9059e3a07b8e59a9",
+          "allHtml": "d509ccaa9072b5aa"
+        },
+        "handbook": {
+          "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 100%\n- Responsibilities: 49\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 100%\n- Responsibilities: 46\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 100%\n- Responsibilities: 54\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 100%\n- Responsibilities: 38\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 100%\n- Responsibilities: 20\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 100%\n- Responsibilities: 50\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 100%\n- Responsibilities: 62\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
+          "gaps": "## Setup Gaps To Close\n\n- Add managed properties with unit counts and owner/client context.\n- Add tenants so maintenance and communication have resident context.\n- Add vendors so repair dispatch has a starter bench.\n- Create one starter work order to document maintenance flow.",
+          "team": "## Team Roster And Workload\n\n### Owner Operator\n\n- Owned responsibilities: 262\n- Department affinities: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins, Tenant Communications & Services, Delinquency & Collections, Maintenance Coordination, Vendor Management, Make-Ready & Unit Turns, Move-Outs & Inspections, Field Services & Access Control, Utilities & Insurance, Owner Communications & Relations, Owner Onboarding, Accounting & Finance, Compliance & Legal, Reporting & KPIs, Technology & Systems",
+          "wholeFromSnapshot": "8a4ba7f7b90e2c45"
+        }
+      },
+      "countsBefore": {
+        "Owner Operator": 262
+      },
+      "run": {
+        "alerts": [],
+        "toast": {
+          "text": "✓ All tasks already assigned",
+          "className": "save-toast save-toast--success"
+        },
+        "ownersSha": "dbb3b6ff351f1dc0",
+        "firstTwenty": [
+          "leasing#0=Owner Operator",
+          "leasing#1=Owner Operator",
+          "leasing#2=Owner Operator",
+          "leasing#3=Owner Operator",
+          "leasing#4=Owner Operator",
+          "leasing#5=Owner Operator",
+          "leasing#6=Owner Operator",
+          "leasing#7=Owner Operator",
+          "leasing#8=Owner Operator",
+          "leasing#9=Owner Operator",
+          "leasing#10=Owner Operator",
+          "leasing#11=Owner Operator",
+          "leasing#12=Owner Operator",
+          "leasing#13=Owner Operator",
+          "leasing#14=Owner Operator",
+          "leasing#15=Owner Operator",
+          "leasing#16=Owner Operator",
+          "leasing#17=Owner Operator",
+          "leasing#18=Owner Operator",
+          "leasing#19=Owner Operator"
+        ],
+        "counts": {
+          "Owner Operator": 262
+        },
+        "audit": [],
+        "backups": [],
+        "undoSnapshotTaken": false,
+        "changedTasks": 0
+      },
+      "after": {
+        "stats": {
+          "total": "262",
+          "assigned": "262",
+          "done": "0",
+          "in-progress": "0",
+          "blocked": "0",
+          "overdue": "0",
+          "unowned": "0",
+          "departments": "17"
+        },
+        "badge": {
+          "text": "0",
+          "display": "none"
+        },
+        "autoAssignButton": {
+          "disabled": true,
+          "title": "All tasks are assigned — nothing to auto-assign!"
+        },
+        "tabBeaconHidden": true,
+        "team": {
+          "alert": "✓ All tasks are assigned!",
+          "bars": [
+            "Owner Operator 262"
+          ]
+        },
+        "launch": {
+          "coverageCards": [
+            "Leasing 100% 0 unowned / 49 tasks Owner Operator",
+            "Rent Collection 100% 0 unowned / 46 tasks Owner Operator",
+            "Inspections 100% 0 unowned / 54 tasks Owner Operator",
+            "Maintenance 100% 0 unowned / 38 tasks Owner Operator",
+            "Compliance 100% 0 unowned / 20 tasks Owner Operator",
+            "Renewals 100% 0 unowned / 50 tasks Owner Operator",
+            "Emergencies 100% 0 unowned / 62 tasks Owner Operator"
+          ],
+          "allText": "9059e3a07b8e59a9",
+          "allHtml": "d509ccaa9072b5aa"
+        },
+        "handbook": {
+          "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 100%\n- Responsibilities: 49\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 100%\n- Responsibilities: 46\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 100%\n- Responsibilities: 54\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 100%\n- Responsibilities: 38\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 100%\n- Responsibilities: 20\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 100%\n- Responsibilities: 50\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 100%\n- Responsibilities: 62\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
+          "gaps": "## Setup Gaps To Close\n\n- Add managed properties with unit counts and owner/client context.\n- Add tenants so maintenance and communication have resident context.\n- Add vendors so repair dispatch has a starter bench.\n- Create one starter work order to document maintenance flow.",
+          "team": "## Team Roster And Workload\n\n### Owner Operator\n\n- Owned responsibilities: 262\n- Department affinities: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins, Tenant Communications & Services, Delinquency & Collections, Maintenance Coordination, Vendor Management, Make-Ready & Unit Turns, Move-Outs & Inspections, Field Services & Access Control, Utilities & Insurance, Owner Communications & Relations, Owner Onboarding, Accounting & Finance, Compliance & Legal, Reporting & KPIs, Technology & Systems",
+          "wholeFromSnapshot": "8a4ba7f7b90e2c45"
+        }
+      },
+      "undo": {
+        "ownersRestored": true,
+        "snapshotConsumed": true
+      }
+    },
+    "empty-roster": {
+      "before": {
+        "stats": {
+          "total": "262",
+          "assigned": "0",
+          "done": "0",
+          "in-progress": "0",
+          "blocked": "0",
+          "overdue": "0",
+          "unowned": "262",
+          "departments": "17"
+        },
+        "badge": {
+          "text": "262",
+          "display": "inline-flex"
+        },
+        "autoAssignButton": {
+          "disabled": false,
+          "title": "Auto-assign 262 unowned tasks based on department affinities"
+        },
+        "tabBeaconHidden": false,
+        "team": {
+          "alert": "262 unowned tasks need assignment ⚡ Auto-Assign Now",
+          "bars": []
+        },
+        "launch": {
+          "coverageCards": [
+            "Leasing 0% 49 unowned / 49 tasks No named owner",
+            "Rent Collection 0% 46 unowned / 46 tasks No named owner",
+            "Inspections 0% 54 unowned / 54 tasks No named owner",
+            "Maintenance 0% 38 unowned / 38 tasks No named owner",
+            "Compliance 0% 20 unowned / 20 tasks No named owner",
+            "Renewals 0% 50 unowned / 50 tasks No named owner",
+            "Emergencies 0% 62 unowned / 62 tasks No named owner"
+          ],
+          "allText": "47c7adbea64360bf",
+          "allHtml": "53e65ffc70262a5b"
+        },
+        "handbook": {
+          "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 0%\n- Responsibilities: 49\n- Unowned: 49\n- Primary owners: No named owner\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 0%\n- Responsibilities: 46\n- Unowned: 46\n- Primary owners: No named owner\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 0%\n- Responsibilities: 54\n- Unowned: 54\n- Primary owners: No named owner\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 0%\n- Responsibilities: 38\n- Unowned: 38\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 0%\n- Responsibilities: 20\n- Unowned: 20\n- Primary owners: No named owner\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 0%\n- Responsibilities: 50\n- Unowned: 50\n- Primary owners: No named owner\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 0%\n- Responsibilities: 62\n- Unowned: 62\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
+          "gaps": "## Setup Gaps To Close\n\n- Add managed properties with unit counts and owner/client context.\n- Add tenants so maintenance and communication have resident context.\n- Add vendors so repair dispatch has a starter bench.\n- Add team members so the handbook can name real owners.\n- Assign 262 unowned responsibilities.\n- Create one starter work order to document maintenance flow.\n- Improve Leasing coverage (0% covered).\n- Improve Rent Collection coverage (0% covered).\n- Improve Inspections coverage (0% covered).\n- Improve Maintenance coverage (0% covered).\n- Improve Compliance coverage (0% covered).\n- Improve Renewals coverage (0% covered).\n- Improve Emergencies coverage (0% covered).",
+          "team": "## Team Roster And Workload\n\n- No team members have been added yet.",
+          "wholeFromSnapshot": "634681343119f3d3"
+        }
+      },
+      "countsBefore": {
+        "UNOWNED": 262
+      },
+      "run": {
+        "alerts": [
+          "No employees in your team roster.\nAdd at least one employee in the Team Manager tab first."
+        ],
+        "toast": {
+          "text": "",
+          "className": "save-toast"
+        },
+        "ownersSha": "f7fd98d5a0097d5b",
+        "firstTwenty": [
+          "leasing#0=UNOWNED",
+          "leasing#1=UNOWNED",
+          "leasing#2=UNOWNED",
+          "leasing#3=UNOWNED",
+          "leasing#4=UNOWNED",
+          "leasing#5=UNOWNED",
+          "leasing#6=UNOWNED",
+          "leasing#7=UNOWNED",
+          "leasing#8=UNOWNED",
+          "leasing#9=UNOWNED",
+          "leasing#10=UNOWNED",
+          "leasing#11=UNOWNED",
+          "leasing#12=UNOWNED",
+          "leasing#13=UNOWNED",
+          "leasing#14=UNOWNED",
+          "leasing#15=UNOWNED",
+          "leasing#16=UNOWNED",
+          "leasing#17=UNOWNED",
+          "leasing#18=UNOWNED",
+          "leasing#19=UNOWNED"
+        ],
+        "counts": {
+          "UNOWNED": 262
+        },
+        "audit": [],
+        "backups": [],
+        "undoSnapshotTaken": false,
+        "changedTasks": 0
+      },
+      "after": {
+        "stats": {
+          "total": "262",
+          "assigned": "0",
+          "done": "0",
+          "in-progress": "0",
+          "blocked": "0",
+          "overdue": "0",
+          "unowned": "262",
+          "departments": "17"
+        },
+        "badge": {
+          "text": "262",
+          "display": "inline-flex"
+        },
+        "autoAssignButton": {
+          "disabled": false,
+          "title": "Auto-assign 262 unowned tasks based on department affinities"
+        },
+        "tabBeaconHidden": false,
+        "team": {
+          "alert": "262 unowned tasks need assignment ⚡ Auto-Assign Now",
+          "bars": []
+        },
+        "launch": {
+          "coverageCards": [
+            "Leasing 0% 49 unowned / 49 tasks No named owner",
+            "Rent Collection 0% 46 unowned / 46 tasks No named owner",
+            "Inspections 0% 54 unowned / 54 tasks No named owner",
+            "Maintenance 0% 38 unowned / 38 tasks No named owner",
+            "Compliance 0% 20 unowned / 20 tasks No named owner",
+            "Renewals 0% 50 unowned / 50 tasks No named owner",
+            "Emergencies 0% 62 unowned / 62 tasks No named owner"
+          ],
+          "allText": "47c7adbea64360bf",
+          "allHtml": "53e65ffc70262a5b"
+        },
+        "handbook": {
+          "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 0%\n- Responsibilities: 49\n- Unowned: 49\n- Primary owners: No named owner\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 0%\n- Responsibilities: 46\n- Unowned: 46\n- Primary owners: No named owner\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 0%\n- Responsibilities: 54\n- Unowned: 54\n- Primary owners: No named owner\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 0%\n- Responsibilities: 38\n- Unowned: 38\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 0%\n- Responsibilities: 20\n- Unowned: 20\n- Primary owners: No named owner\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 0%\n- Responsibilities: 50\n- Unowned: 50\n- Primary owners: No named owner\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 0%\n- Responsibilities: 62\n- Unowned: 62\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
+          "gaps": "## Setup Gaps To Close\n\n- Add managed properties with unit counts and owner/client context.\n- Add tenants so maintenance and communication have resident context.\n- Add vendors so repair dispatch has a starter bench.\n- Add team members so the handbook can name real owners.\n- Assign 262 unowned responsibilities.\n- Create one starter work order to document maintenance flow.\n- Improve Leasing coverage (0% covered).\n- Improve Rent Collection coverage (0% covered).\n- Improve Inspections coverage (0% covered).\n- Improve Maintenance coverage (0% covered).\n- Improve Compliance coverage (0% covered).\n- Improve Renewals coverage (0% covered).\n- Improve Emergencies coverage (0% covered).",
+          "team": "## Team Roster And Workload\n\n- No team members have been added yet.",
+          "wholeFromSnapshot": "634681343119f3d3"
+        }
+      },
+      "undo": {
+        "ownersRestored": true,
+        "snapshotConsumed": true
+      }
+    }
+  },
+  "sites": {
+    "auto-assign@tracking": {
+      "before": {
+        "view": "tracking",
+        "departments": "76bee04ef220db2b",
+        "expandedDepartments": 0,
+        "legend": "ef5acc885cbf53ee",
+        "ownerFilter": [
+          "",
+          "Dana Whitfield",
+          "Marcus Reyes",
+          "Priya Raman",
+          "UNOWNED"
+        ],
+        "teamView": "031271312934a486",
+        "mapControls": "ca45a8f578b1b490",
+        "mapSvg": "4c142a51546d9717",
+        "portfolioView": "25d71154c808026a",
+        "workOrdersView": "284d848b74331b57",
+        "launchPlan": "018b3ed07624120c",
+        "stats": {
+          "total": "262",
+          "assigned": "153",
+          "unowned": "109"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": false
+        },
+        "badge": "109",
+        "stored": {
+          "tasks": "6e9c960fd025b2e5",
+          "team": "6e9c960fd025b2e5",
+          "workOrders": "6e9c960fd025b2e5",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": []
+      },
+      "after": {
+        "view": "tracking",
+        "departments": "49c79bca11f8dc11",
+        "expandedDepartments": 0,
+        "legend": "ef5acc885cbf53ee",
+        "ownerFilter": [
+          "",
+          "Dana Whitfield",
+          "Marcus Reyes",
+          "Priya Raman"
+        ],
+        "teamView": "031271312934a486",
+        "mapControls": "ca45a8f578b1b490",
+        "mapSvg": "4c142a51546d9717",
+        "portfolioView": "25d71154c808026a",
+        "workOrdersView": "284d848b74331b57",
+        "launchPlan": "a42e1b0caa12f6e6",
+        "stats": {
+          "total": "262",
+          "assigned": "262",
+          "unowned": "0"
+        },
+        "beacons": {
+          "tab": true,
+          "workOrders": false
+        },
+        "badge": "0",
+        "toast": "⚡ 109 tasks assigned · ⚠ 3 depts had no affinity match (Compliance & Legal, Reporting & KPIs +1 more) · Ctrl+Z to undo",
+        "stored": {
+          "tasks": "054c67f7833ee24a",
+          "team": "6e9c960fd025b2e5",
+          "workOrders": "6e9c960fd025b2e5",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": [
+          {
+            "action": "auto_assign",
+            "count": 109
+          }
+        ]
+      },
+      "alerts": [],
+      "handbookDownloads": 0
+    },
+    "undo@tracking": {
+      "before": {
+        "view": "tracking",
+        "departments": "49c79bca11f8dc11",
+        "expandedDepartments": 0,
+        "legend": "ef5acc885cbf53ee",
+        "ownerFilter": [
+          "",
+          "Dana Whitfield",
+          "Marcus Reyes",
+          "Priya Raman"
+        ],
+        "teamView": "3a92e858941b267e",
+        "mapControls": "884e83a3cff5d356",
+        "mapSvg": "285696407d8891a7",
+        "portfolioView": "25d71154c808026a",
+        "workOrdersView": "284d848b74331b57",
+        "launchPlan": "a42e1b0caa12f6e6",
+        "stats": {
+          "total": "262",
+          "assigned": "262",
+          "unowned": "0"
+        },
+        "beacons": {
+          "tab": true,
+          "workOrders": false
+        },
+        "badge": "0",
+        "stored": {
+          "tasks": "054c67f7833ee24a",
+          "team": "6e9c960fd025b2e5",
+          "workOrders": "6e9c960fd025b2e5",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": [
+          {
+            "action": "auto_assign",
+            "count": 109
+          }
+        ]
+      },
+      "after": {
+        "view": "tracking",
+        "departments": "76bee04ef220db2b",
+        "expandedDepartments": 0,
+        "legend": "ef5acc885cbf53ee",
+        "ownerFilter": [
+          "",
+          "Dana Whitfield",
+          "Marcus Reyes",
+          "Priya Raman",
+          "UNOWNED"
+        ],
+        "teamView": "3a92e858941b267e",
+        "mapControls": "884e83a3cff5d356",
+        "mapSvg": "285696407d8891a7",
+        "portfolioView": "25d71154c808026a",
+        "workOrdersView": "284d848b74331b57",
+        "launchPlan": "018b3ed07624120c",
+        "stats": {
+          "total": "262",
+          "assigned": "153",
+          "unowned": "109"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": false
+        },
+        "badge": "109",
+        "toast": "✓ Saved",
+        "stored": {
+          "tasks": "2f233a7f2c9a6420",
+          "team": "6e9c960fd025b2e5",
+          "workOrders": "6e9c960fd025b2e5",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": [
+          {
+            "action": "auto_assign",
+            "count": 109
+          }
+        ]
+      },
+      "alerts": [],
+      "handbookDownloads": 0
+    },
+    "auto-assign@map": {
+      "before": {
+        "view": "map",
+        "departments": "76bee04ef220db2b",
+        "expandedDepartments": 0,
+        "legend": "ef5acc885cbf53ee",
+        "ownerFilter": [
+          "",
+          "Dana Whitfield",
+          "Marcus Reyes",
+          "Priya Raman",
+          "UNOWNED"
+        ],
+        "teamView": "031271312934a486",
+        "mapControls": "ca45a8f578b1b490",
+        "mapSvg": "4c142a51546d9717",
+        "portfolioView": "25d71154c808026a",
+        "workOrdersView": "284d848b74331b57",
+        "launchPlan": "018b3ed07624120c",
+        "stats": {
+          "total": "262",
+          "assigned": "153",
+          "unowned": "109"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": false
+        },
+        "badge": "109",
+        "stored": {
+          "tasks": "6e9c960fd025b2e5",
+          "team": "6e9c960fd025b2e5",
+          "workOrders": "6e9c960fd025b2e5",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": []
+      },
+      "after": {
+        "view": "map",
+        "departments": "49c79bca11f8dc11",
+        "expandedDepartments": 0,
+        "legend": "ef5acc885cbf53ee",
+        "ownerFilter": [
+          "",
+          "Dana Whitfield",
+          "Marcus Reyes",
+          "Priya Raman"
+        ],
+        "teamView": "031271312934a486",
+        "mapControls": "884e83a3cff5d356",
+        "mapSvg": "285696407d8891a7",
+        "portfolioView": "25d71154c808026a",
+        "workOrdersView": "284d848b74331b57",
+        "launchPlan": "a42e1b0caa12f6e6",
+        "stats": {
+          "total": "262",
+          "assigned": "262",
+          "unowned": "0"
+        },
+        "beacons": {
+          "tab": true,
+          "workOrders": false
+        },
+        "badge": "0",
+        "toast": "⚡ 109 tasks assigned · ⚠ 3 depts had no affinity match (Compliance & Legal, Reporting & KPIs +1 more) · Ctrl+Z to undo",
+        "stored": {
+          "tasks": "054c67f7833ee24a",
+          "team": "6e9c960fd025b2e5",
+          "workOrders": "6e9c960fd025b2e5",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": [
+          {
+            "action": "auto_assign",
+            "count": 109
+          }
+        ]
+      },
+      "alerts": [],
+      "handbookDownloads": 0
+    },
+    "undo@map": {
+      "before": {
+        "view": "map",
+        "departments": "49c79bca11f8dc11",
+        "expandedDepartments": 0,
+        "legend": "ef5acc885cbf53ee",
+        "ownerFilter": [
+          "",
+          "Dana Whitfield",
+          "Marcus Reyes",
+          "Priya Raman"
+        ],
+        "teamView": "3a92e858941b267e",
+        "mapControls": "884e83a3cff5d356",
+        "mapSvg": "285696407d8891a7",
+        "portfolioView": "25d71154c808026a",
+        "workOrdersView": "284d848b74331b57",
+        "launchPlan": "a42e1b0caa12f6e6",
+        "stats": {
+          "total": "262",
+          "assigned": "262",
+          "unowned": "0"
+        },
+        "beacons": {
+          "tab": true,
+          "workOrders": false
+        },
+        "badge": "0",
+        "stored": {
+          "tasks": "054c67f7833ee24a",
+          "team": "6e9c960fd025b2e5",
+          "workOrders": "6e9c960fd025b2e5",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": [
+          {
+            "action": "auto_assign",
+            "count": 109
+          }
+        ]
+      },
+      "after": {
+        "view": "map",
+        "departments": "76bee04ef220db2b",
+        "expandedDepartments": 0,
+        "legend": "ef5acc885cbf53ee",
+        "ownerFilter": [
+          "",
+          "Dana Whitfield",
+          "Marcus Reyes",
+          "Priya Raman",
+          "UNOWNED"
+        ],
+        "teamView": "3a92e858941b267e",
+        "mapControls": "ca45a8f578b1b490",
+        "mapSvg": "4c142a51546d9717",
+        "portfolioView": "25d71154c808026a",
+        "workOrdersView": "284d848b74331b57",
+        "launchPlan": "018b3ed07624120c",
+        "stats": {
+          "total": "262",
+          "assigned": "153",
+          "unowned": "109"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": false
+        },
+        "badge": "109",
+        "toast": "✓ Saved",
+        "stored": {
+          "tasks": "2f233a7f2c9a6420",
+          "team": "6e9c960fd025b2e5",
+          "workOrders": "6e9c960fd025b2e5",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": [
+          {
+            "action": "auto_assign",
+            "count": 109
+          }
+        ]
+      },
+      "alerts": [],
+      "handbookDownloads": 0
+    },
+    "auto-assign@team": {
+      "before": {
+        "view": "team",
+        "departments": "76bee04ef220db2b",
+        "expandedDepartments": 0,
+        "legend": "ef5acc885cbf53ee",
+        "ownerFilter": [
+          "",
+          "Dana Whitfield",
+          "Marcus Reyes",
+          "Priya Raman",
+          "UNOWNED"
+        ],
+        "teamView": "031271312934a486",
+        "mapControls": "ca45a8f578b1b490",
+        "mapSvg": "4c142a51546d9717",
+        "portfolioView": "25d71154c808026a",
+        "workOrdersView": "284d848b74331b57",
+        "launchPlan": "018b3ed07624120c",
+        "stats": {
+          "total": "262",
+          "assigned": "153",
+          "unowned": "109"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": false
+        },
+        "badge": "109",
+        "stored": {
+          "tasks": "6e9c960fd025b2e5",
+          "team": "6e9c960fd025b2e5",
+          "workOrders": "6e9c960fd025b2e5",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": []
+      },
+      "after": {
+        "view": "team",
+        "departments": "49c79bca11f8dc11",
+        "expandedDepartments": 0,
+        "legend": "ef5acc885cbf53ee",
+        "ownerFilter": [
+          "",
+          "Dana Whitfield",
+          "Marcus Reyes",
+          "Priya Raman"
+        ],
+        "teamView": "3a92e858941b267e",
+        "mapControls": "ca45a8f578b1b490",
+        "mapSvg": "4c142a51546d9717",
+        "portfolioView": "25d71154c808026a",
+        "workOrdersView": "284d848b74331b57",
+        "launchPlan": "a42e1b0caa12f6e6",
+        "stats": {
+          "total": "262",
+          "assigned": "262",
+          "unowned": "0"
+        },
+        "beacons": {
+          "tab": true,
+          "workOrders": false
+        },
+        "badge": "0",
+        "toast": "⚡ 109 tasks assigned · ⚠ 3 depts had no affinity match (Compliance & Legal, Reporting & KPIs +1 more) · Ctrl+Z to undo",
+        "stored": {
+          "tasks": "054c67f7833ee24a",
+          "team": "6e9c960fd025b2e5",
+          "workOrders": "6e9c960fd025b2e5",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": [
+          {
+            "action": "auto_assign",
+            "count": 109
+          }
+        ]
+      },
+      "alerts": [],
+      "handbookDownloads": 0
+    },
+    "undo@team": {
+      "before": {
+        "view": "team",
+        "departments": "49c79bca11f8dc11",
+        "expandedDepartments": 0,
+        "legend": "ef5acc885cbf53ee",
+        "ownerFilter": [
+          "",
+          "Dana Whitfield",
+          "Marcus Reyes",
+          "Priya Raman"
+        ],
+        "teamView": "3a92e858941b267e",
+        "mapControls": "884e83a3cff5d356",
+        "mapSvg": "285696407d8891a7",
+        "portfolioView": "25d71154c808026a",
+        "workOrdersView": "284d848b74331b57",
+        "launchPlan": "a42e1b0caa12f6e6",
+        "stats": {
+          "total": "262",
+          "assigned": "262",
+          "unowned": "0"
+        },
+        "beacons": {
+          "tab": true,
+          "workOrders": false
+        },
+        "badge": "0",
+        "stored": {
+          "tasks": "054c67f7833ee24a",
+          "team": "6e9c960fd025b2e5",
+          "workOrders": "6e9c960fd025b2e5",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": [
+          {
+            "action": "auto_assign",
+            "count": 109
+          }
+        ]
+      },
+      "after": {
+        "view": "team",
+        "departments": "76bee04ef220db2b",
+        "expandedDepartments": 0,
+        "legend": "ef5acc885cbf53ee",
+        "ownerFilter": [
+          "",
+          "Dana Whitfield",
+          "Marcus Reyes",
+          "Priya Raman",
+          "UNOWNED"
+        ],
+        "teamView": "031271312934a486",
+        "mapControls": "884e83a3cff5d356",
+        "mapSvg": "285696407d8891a7",
+        "portfolioView": "25d71154c808026a",
+        "workOrdersView": "284d848b74331b57",
+        "launchPlan": "018b3ed07624120c",
+        "stats": {
+          "total": "262",
+          "assigned": "153",
+          "unowned": "109"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": false
+        },
+        "badge": "109",
+        "toast": "✓ Saved",
+        "stored": {
+          "tasks": "2f233a7f2c9a6420",
+          "team": "6e9c960fd025b2e5",
+          "workOrders": "6e9c960fd025b2e5",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": [
+          {
+            "action": "auto_assign",
+            "count": 109
+          }
+        ]
+      },
+      "alerts": [],
+      "handbookDownloads": 0
+    },
+    "remove-employee@tracking": {
+      "before": {
+        "view": "tracking",
+        "departments": "76bee04ef220db2b",
+        "expandedDepartments": 0,
+        "legend": "ef5acc885cbf53ee",
+        "ownerFilter": [
+          "",
+          "Dana Whitfield",
+          "Marcus Reyes",
+          "Priya Raman",
+          "UNOWNED"
+        ],
+        "teamView": "031271312934a486",
+        "mapControls": "ca45a8f578b1b490",
+        "mapSvg": "4c142a51546d9717",
+        "portfolioView": "25d71154c808026a",
+        "workOrdersView": "284d848b74331b57",
+        "launchPlan": "018b3ed07624120c",
+        "stats": {
+          "total": "262",
+          "assigned": "153",
+          "unowned": "109"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": false
+        },
+        "badge": "109",
+        "stored": {
+          "tasks": "6e9c960fd025b2e5",
+          "team": "6e9c960fd025b2e5",
+          "workOrders": "6e9c960fd025b2e5",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": []
+      },
+      "after": {
+        "view": "tracking",
+        "departments": "120b0d033a6571be",
+        "expandedDepartments": 0,
+        "legend": "8dab39af26d09dfa",
+        "ownerFilter": [
+          "",
+          "Dana Whitfield",
+          "Priya Raman",
+          "UNOWNED"
+        ],
+        "teamView": "ce0fae62e7167a7a",
+        "mapControls": "ca45a8f578b1b490",
+        "mapSvg": "4c142a51546d9717",
+        "portfolioView": "25d71154c808026a",
+        "workOrdersView": "284d848b74331b57",
+        "launchPlan": "e0de563f95edabb5",
+        "stats": {
+          "total": "262",
+          "assigned": "119",
+          "unowned": "143"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": false
+        },
+        "badge": "143",
+        "toast": "✓ Saved",
+        "stored": {
+          "tasks": "a378feab5bd2c0c5",
+          "team": "f68e8d3b126e65c7",
+          "workOrders": "da68b4f34f7523c8",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": []
+      },
+      "alerts": [],
+      "handbookDownloads": 0
+    },
+    "remove-employee@map": {
+      "before": {
+        "view": "map",
+        "departments": "76bee04ef220db2b",
+        "expandedDepartments": 0,
+        "legend": "ef5acc885cbf53ee",
+        "ownerFilter": [
+          "",
+          "Dana Whitfield",
+          "Marcus Reyes",
+          "Priya Raman",
+          "UNOWNED"
+        ],
+        "teamView": "031271312934a486",
+        "mapControls": "ca45a8f578b1b490",
+        "mapSvg": "4c142a51546d9717",
+        "portfolioView": "25d71154c808026a",
+        "workOrdersView": "284d848b74331b57",
+        "launchPlan": "018b3ed07624120c",
+        "stats": {
+          "total": "262",
+          "assigned": "153",
+          "unowned": "109"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": false
+        },
+        "badge": "109",
+        "stored": {
+          "tasks": "6e9c960fd025b2e5",
+          "team": "6e9c960fd025b2e5",
+          "workOrders": "6e9c960fd025b2e5",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": []
+      },
+      "after": {
+        "view": "map",
+        "departments": "120b0d033a6571be",
+        "expandedDepartments": 0,
+        "legend": "8dab39af26d09dfa",
+        "ownerFilter": [
+          "",
+          "Dana Whitfield",
+          "Priya Raman",
+          "UNOWNED"
+        ],
+        "teamView": "ce0fae62e7167a7a",
+        "mapControls": "92d9a7fad250dc5b",
+        "mapSvg": "1677c02301fde50f",
+        "portfolioView": "25d71154c808026a",
+        "workOrdersView": "284d848b74331b57",
+        "launchPlan": "e0de563f95edabb5",
+        "stats": {
+          "total": "262",
+          "assigned": "119",
+          "unowned": "143"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": false
+        },
+        "badge": "143",
+        "toast": "✓ Saved",
+        "stored": {
+          "tasks": "a378feab5bd2c0c5",
+          "team": "f68e8d3b126e65c7",
+          "workOrders": "da68b4f34f7523c8",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": []
+      },
+      "alerts": [],
+      "handbookDownloads": 0
+    },
+    "remove-employee@workorders": {
+      "before": {
+        "view": "workorders",
+        "departments": "76bee04ef220db2b",
+        "expandedDepartments": 0,
+        "legend": "ef5acc885cbf53ee",
+        "ownerFilter": [
+          "",
+          "Dana Whitfield",
+          "Marcus Reyes",
+          "Priya Raman",
+          "UNOWNED"
+        ],
+        "teamView": "031271312934a486",
+        "mapControls": "ca45a8f578b1b490",
+        "mapSvg": "4c142a51546d9717",
+        "portfolioView": "25d71154c808026a",
+        "workOrdersView": "284d848b74331b57",
+        "launchPlan": "018b3ed07624120c",
+        "stats": {
+          "total": "262",
+          "assigned": "153",
+          "unowned": "109"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": false
+        },
+        "badge": "109",
+        "stored": {
+          "tasks": "6e9c960fd025b2e5",
+          "team": "6e9c960fd025b2e5",
+          "workOrders": "6e9c960fd025b2e5",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": []
+      },
+      "after": {
+        "view": "workorders",
+        "departments": "120b0d033a6571be",
+        "expandedDepartments": 0,
+        "legend": "8dab39af26d09dfa",
+        "ownerFilter": [
+          "",
+          "Dana Whitfield",
+          "Priya Raman",
+          "UNOWNED"
+        ],
+        "teamView": "ce0fae62e7167a7a",
+        "mapControls": "ca45a8f578b1b490",
+        "mapSvg": "4c142a51546d9717",
+        "portfolioView": "25d71154c808026a",
+        "workOrdersView": "ddb8e36d912b54f1",
+        "launchPlan": "e0de563f95edabb5",
+        "stats": {
+          "total": "262",
+          "assigned": "119",
+          "unowned": "143"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": false
+        },
+        "badge": "143",
+        "toast": "✓ Saved",
+        "stored": {
+          "tasks": "a378feab5bd2c0c5",
+          "team": "f68e8d3b126e65c7",
+          "workOrders": "da68b4f34f7523c8",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": []
+      },
+      "alerts": [],
+      "handbookDownloads": 0
+    },
+    "remove-employee@team": {
+      "before": {
+        "view": "team",
+        "departments": "76bee04ef220db2b",
+        "expandedDepartments": 0,
+        "legend": "ef5acc885cbf53ee",
+        "ownerFilter": [
+          "",
+          "Dana Whitfield",
+          "Marcus Reyes",
+          "Priya Raman",
+          "UNOWNED"
+        ],
+        "teamView": "031271312934a486",
+        "mapControls": "ca45a8f578b1b490",
+        "mapSvg": "4c142a51546d9717",
+        "portfolioView": "25d71154c808026a",
+        "workOrdersView": "284d848b74331b57",
+        "launchPlan": "018b3ed07624120c",
+        "stats": {
+          "total": "262",
+          "assigned": "153",
+          "unowned": "109"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": false
+        },
+        "badge": "109",
+        "stored": {
+          "tasks": "6e9c960fd025b2e5",
+          "team": "6e9c960fd025b2e5",
+          "workOrders": "6e9c960fd025b2e5",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": []
+      },
+      "after": {
+        "view": "team",
+        "departments": "120b0d033a6571be",
+        "expandedDepartments": 0,
+        "legend": "8dab39af26d09dfa",
+        "ownerFilter": [
+          "",
+          "Dana Whitfield",
+          "Priya Raman",
+          "UNOWNED"
+        ],
+        "teamView": "ce0fae62e7167a7a",
+        "mapControls": "ca45a8f578b1b490",
+        "mapSvg": "4c142a51546d9717",
+        "portfolioView": "25d71154c808026a",
+        "workOrdersView": "284d848b74331b57",
+        "launchPlan": "e0de563f95edabb5",
+        "stats": {
+          "total": "262",
+          "assigned": "119",
+          "unowned": "143"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": false
+        },
+        "badge": "143",
+        "toast": "✓ Saved",
+        "stored": {
+          "tasks": "a378feab5bd2c0c5",
+          "team": "f68e8d3b126e65c7",
+          "workOrders": "da68b4f34f7523c8",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": []
+      },
+      "alerts": [],
+      "handbookDownloads": 0
+    },
+    "apply-role-template@tracking": {
+      "before": {
+        "view": "tracking",
+        "departments": "76bee04ef220db2b",
+        "expandedDepartments": 0,
+        "legend": "ef5acc885cbf53ee",
+        "ownerFilter": [
+          "",
+          "Dana Whitfield",
+          "Marcus Reyes",
+          "Priya Raman",
+          "UNOWNED"
+        ],
+        "teamView": "031271312934a486",
+        "mapControls": "ca45a8f578b1b490",
+        "mapSvg": "4c142a51546d9717",
+        "portfolioView": "25d71154c808026a",
+        "workOrdersView": "284d848b74331b57",
+        "launchPlan": "018b3ed07624120c",
+        "stats": {
+          "total": "262",
+          "assigned": "153",
+          "unowned": "109"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": false
+        },
+        "badge": "109",
+        "stored": {
+          "tasks": "6e9c960fd025b2e5",
+          "team": "6e9c960fd025b2e5",
+          "workOrders": "6e9c960fd025b2e5",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": []
+      },
+      "after": {
+        "view": "tracking",
+        "departments": "1bdcbff51da7c2b5",
+        "expandedDepartments": 0,
+        "legend": "5b141afb6c0d7579",
+        "ownerFilter": [
+          "",
+          "UNOWNED"
+        ],
+        "teamView": "284dec3b2840aedb",
+        "mapControls": "ca45a8f578b1b490",
+        "mapSvg": "4c142a51546d9717",
+        "portfolioView": "25d71154c808026a",
+        "workOrdersView": "284d848b74331b57",
+        "launchPlan": "ce948b360a4bb83c",
+        "stats": {
+          "total": "262",
+          "assigned": "0",
+          "unowned": "262"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": false
+        },
+        "badge": "262",
+        "toast": "Solo PM template applied",
+        "stored": {
+          "tasks": "887db17a579694dc",
+          "team": "1de52b659ebc1931",
+          "workOrders": "b2986778178e5855",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": []
+      },
+      "alerts": [],
+      "handbookDownloads": 0
+    },
+    "load-demo-company@tracking": {
+      "before": {
+        "view": "tracking",
+        "departments": "f1aa0e059217ccb6",
+        "expandedDepartments": 0,
+        "legend": "c66ca84645042044",
+        "ownerFilter": [
+          "",
+          "UNOWNED"
+        ],
+        "teamView": "3bf751abfb1538b4",
+        "mapControls": "7d284e11fff296b1",
+        "mapSvg": "c3f9a9894aedbeb8",
+        "portfolioView": "3cdc91028d04a6e8",
+        "workOrdersView": "3971f9627436b73c",
+        "launchPlan": "545b9497e11f4664",
+        "stats": {
+          "total": "262",
+          "assigned": "0",
+          "unowned": "262"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": true
+        },
+        "badge": "262",
+        "stored": {
+          "tasks": "6e9c960fd025b2e5",
+          "team": "6e9c960fd025b2e5",
+          "workOrders": "6e9c960fd025b2e5",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": []
+      },
+      "after": {
+        "view": "tracking",
+        "departments": "70579fc93aee322d",
+        "expandedDepartments": 0,
+        "legend": "971f6809d6782991",
+        "ownerFilter": [
+          "",
+          "Maintenance Coordinator",
+          "Portfolio Admin",
+          "Resident Coordinator"
+        ],
+        "teamView": "3bf751abfb1538b4",
+        "mapControls": "7d284e11fff296b1",
+        "mapSvg": "c3f9a9894aedbeb8",
+        "portfolioView": "3cdc91028d04a6e8",
+        "workOrdersView": "3971f9627436b73c",
+        "launchPlan": "2e65f2cdfd032b9b",
+        "stats": {
+          "total": "262",
+          "assigned": "262",
+          "unowned": "0"
+        },
+        "beacons": {
+          "tab": true,
+          "workOrders": true
+        },
+        "badge": "0",
+        "toast": "Demo company loaded",
+        "stored": {
+          "tasks": "a4986035d6a1e980",
+          "team": "10f951b65e6d4578",
+          "workOrders": "bbbe41f5c18f7772",
+          "portfolio": "47f15cf984a9dd08"
+        },
+        "audit": [
+          {
+            "action": "demo_company_loaded",
+            "title": "Demo Door Property Management"
+          }
+        ]
+      },
+      "alerts": [],
+      "handbookDownloads": 0
+    },
+    "apply-role-template@team": {
+      "before": {
+        "view": "team",
+        "departments": "76bee04ef220db2b",
+        "expandedDepartments": 0,
+        "legend": "ef5acc885cbf53ee",
+        "ownerFilter": [
+          "",
+          "Dana Whitfield",
+          "Marcus Reyes",
+          "Priya Raman",
+          "UNOWNED"
+        ],
+        "teamView": "031271312934a486",
+        "mapControls": "ca45a8f578b1b490",
+        "mapSvg": "4c142a51546d9717",
+        "portfolioView": "25d71154c808026a",
+        "workOrdersView": "284d848b74331b57",
+        "launchPlan": "018b3ed07624120c",
+        "stats": {
+          "total": "262",
+          "assigned": "153",
+          "unowned": "109"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": false
+        },
+        "badge": "109",
+        "stored": {
+          "tasks": "6e9c960fd025b2e5",
+          "team": "6e9c960fd025b2e5",
+          "workOrders": "6e9c960fd025b2e5",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": []
+      },
+      "after": {
+        "view": "team",
+        "departments": "1bdcbff51da7c2b5",
+        "expandedDepartments": 0,
+        "legend": "5b141afb6c0d7579",
+        "ownerFilter": [
+          "",
+          "UNOWNED"
+        ],
+        "teamView": "284dec3b2840aedb",
+        "mapControls": "ca45a8f578b1b490",
+        "mapSvg": "4c142a51546d9717",
+        "portfolioView": "25d71154c808026a",
+        "workOrdersView": "284d848b74331b57",
+        "launchPlan": "ce948b360a4bb83c",
+        "stats": {
+          "total": "262",
+          "assigned": "0",
+          "unowned": "262"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": false
+        },
+        "badge": "262",
+        "toast": "Solo PM template applied",
+        "stored": {
+          "tasks": "887db17a579694dc",
+          "team": "1de52b659ebc1931",
+          "workOrders": "b2986778178e5855",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": []
+      },
+      "alerts": [],
+      "handbookDownloads": 0
+    },
+    "load-demo-company@team": {
+      "before": {
+        "view": "team",
+        "departments": "f1aa0e059217ccb6",
+        "expandedDepartments": 0,
+        "legend": "c66ca84645042044",
+        "ownerFilter": [
+          "",
+          "UNOWNED"
+        ],
+        "teamView": "3bf751abfb1538b4",
+        "mapControls": "7d284e11fff296b1",
+        "mapSvg": "c3f9a9894aedbeb8",
+        "portfolioView": "3cdc91028d04a6e8",
+        "workOrdersView": "3971f9627436b73c",
+        "launchPlan": "545b9497e11f4664",
+        "stats": {
+          "total": "262",
+          "assigned": "0",
+          "unowned": "262"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": true
+        },
+        "badge": "262",
+        "stored": {
+          "tasks": "6e9c960fd025b2e5",
+          "team": "6e9c960fd025b2e5",
+          "workOrders": "6e9c960fd025b2e5",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": []
+      },
+      "after": {
+        "view": "team",
+        "departments": "70579fc93aee322d",
+        "expandedDepartments": 0,
+        "legend": "971f6809d6782991",
+        "ownerFilter": [
+          "",
+          "Maintenance Coordinator",
+          "Portfolio Admin",
+          "Resident Coordinator"
+        ],
+        "teamView": "3bf751abfb1538b4",
+        "mapControls": "7d284e11fff296b1",
+        "mapSvg": "c3f9a9894aedbeb8",
+        "portfolioView": "3cdc91028d04a6e8",
+        "workOrdersView": "3971f9627436b73c",
+        "launchPlan": "2e65f2cdfd032b9b",
+        "stats": {
+          "total": "262",
+          "assigned": "262",
+          "unowned": "0"
+        },
+        "beacons": {
+          "tab": true,
+          "workOrders": true
+        },
+        "badge": "0",
+        "toast": "Demo company loaded",
+        "stored": {
+          "tasks": "a4986035d6a1e980",
+          "team": "10f951b65e6d4578",
+          "workOrders": "bbbe41f5c18f7772",
+          "portfolio": "47f15cf984a9dd08"
+        },
+        "audit": [
+          {
+            "action": "demo_company_loaded",
+            "title": "Demo Door Property Management"
+          }
+        ]
+      },
+      "alerts": [],
+      "handbookDownloads": 0
+    },
+    "import@tracking": {
+      "before": {
+        "view": "tracking",
+        "departments": "f1aa0e059217ccb6",
+        "expandedDepartments": 0,
+        "legend": "c66ca84645042044",
+        "ownerFilter": [
+          "",
+          "UNOWNED"
+        ],
+        "teamView": "3bf751abfb1538b4",
+        "mapControls": "7d284e11fff296b1",
+        "mapSvg": "c3f9a9894aedbeb8",
+        "portfolioView": "3cdc91028d04a6e8",
+        "workOrdersView": "3971f9627436b73c",
+        "launchPlan": "545b9497e11f4664",
+        "stats": {
+          "total": "262",
+          "assigned": "0",
+          "unowned": "262"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": true
+        },
+        "badge": "262",
+        "stored": {
+          "tasks": "6e9c960fd025b2e5",
+          "team": "6e9c960fd025b2e5",
+          "workOrders": "6e9c960fd025b2e5",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": []
+      },
+      "after": {
+        "view": "tracking",
+        "departments": "a43cf40951d5f00e",
+        "expandedDepartments": 17,
+        "legend": "ef5acc885cbf53ee",
+        "ownerFilter": [
+          "",
+          "Dana Whitfield",
+          "Marcus Reyes",
+          "Priya Raman",
+          "UNOWNED"
+        ],
+        "teamView": "3bf751abfb1538b4",
+        "mapControls": "7d284e11fff296b1",
+        "mapSvg": "c3f9a9894aedbeb8",
+        "portfolioView": "25d71154c808026a",
+        "workOrdersView": "3971f9627436b73c",
+        "launchPlan": "0d54a6891e88a9f4",
+        "stats": {
+          "total": "262",
+          "assigned": "153",
+          "unowned": "109"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": false
+        },
+        "badge": "109",
+        "toast": "✓ Saved",
+        "stored": {
+          "tasks": "2f233a7f2c9a6420",
+          "team": "bc032a30f308e491",
+          "workOrders": "bf216adab9c44582",
+          "portfolio": "bddd8afb7b234420"
+        },
+        "audit": []
+      },
+      "alerts": [],
+      "handbookDownloads": 0
+    },
+    "import@map": {
+      "before": {
+        "view": "map",
+        "departments": "f1aa0e059217ccb6",
+        "expandedDepartments": 0,
+        "legend": "c66ca84645042044",
+        "ownerFilter": [
+          "",
+          "UNOWNED"
+        ],
+        "teamView": "3bf751abfb1538b4",
+        "mapControls": "7d284e11fff296b1",
+        "mapSvg": "c3f9a9894aedbeb8",
+        "portfolioView": "3cdc91028d04a6e8",
+        "workOrdersView": "3971f9627436b73c",
+        "launchPlan": "545b9497e11f4664",
+        "stats": {
+          "total": "262",
+          "assigned": "0",
+          "unowned": "262"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": true
+        },
+        "badge": "262",
+        "stored": {
+          "tasks": "6e9c960fd025b2e5",
+          "team": "6e9c960fd025b2e5",
+          "workOrders": "6e9c960fd025b2e5",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": []
+      },
+      "after": {
+        "view": "map",
+        "departments": "a43cf40951d5f00e",
+        "expandedDepartments": 17,
+        "legend": "ef5acc885cbf53ee",
+        "ownerFilter": [
+          "",
+          "Dana Whitfield",
+          "Marcus Reyes",
+          "Priya Raman",
+          "UNOWNED"
+        ],
+        "teamView": "3bf751abfb1538b4",
+        "mapControls": "7d284e11fff296b1",
+        "mapSvg": "c3f9a9894aedbeb8",
+        "portfolioView": "25d71154c808026a",
+        "workOrdersView": "3971f9627436b73c",
+        "launchPlan": "0d54a6891e88a9f4",
+        "stats": {
+          "total": "262",
+          "assigned": "153",
+          "unowned": "109"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": false
+        },
+        "badge": "109",
+        "toast": "✓ Saved",
+        "stored": {
+          "tasks": "2f233a7f2c9a6420",
+          "team": "bc032a30f308e491",
+          "workOrders": "bf216adab9c44582",
+          "portfolio": "bddd8afb7b234420"
+        },
+        "audit": []
+      },
+      "alerts": [],
+      "handbookDownloads": 0
+    },
+    "import@team": {
+      "before": {
+        "view": "team",
+        "departments": "f1aa0e059217ccb6",
+        "expandedDepartments": 0,
+        "legend": "c66ca84645042044",
+        "ownerFilter": [
+          "",
+          "UNOWNED"
+        ],
+        "teamView": "3bf751abfb1538b4",
+        "mapControls": "7d284e11fff296b1",
+        "mapSvg": "c3f9a9894aedbeb8",
+        "portfolioView": "3cdc91028d04a6e8",
+        "workOrdersView": "3971f9627436b73c",
+        "launchPlan": "545b9497e11f4664",
+        "stats": {
+          "total": "262",
+          "assigned": "0",
+          "unowned": "262"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": true
+        },
+        "badge": "262",
+        "stored": {
+          "tasks": "6e9c960fd025b2e5",
+          "team": "6e9c960fd025b2e5",
+          "workOrders": "6e9c960fd025b2e5",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": []
+      },
+      "after": {
+        "view": "team",
+        "departments": "a43cf40951d5f00e",
+        "expandedDepartments": 17,
+        "legend": "ef5acc885cbf53ee",
+        "ownerFilter": [
+          "",
+          "Dana Whitfield",
+          "Marcus Reyes",
+          "Priya Raman",
+          "UNOWNED"
+        ],
+        "teamView": "3bf751abfb1538b4",
+        "mapControls": "7d284e11fff296b1",
+        "mapSvg": "c3f9a9894aedbeb8",
+        "portfolioView": "25d71154c808026a",
+        "workOrdersView": "3971f9627436b73c",
+        "launchPlan": "0d54a6891e88a9f4",
+        "stats": {
+          "total": "262",
+          "assigned": "153",
+          "unowned": "109"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": false
+        },
+        "badge": "109",
+        "toast": "✓ Saved",
+        "stored": {
+          "tasks": "2f233a7f2c9a6420",
+          "team": "bc032a30f308e491",
+          "workOrders": "bf216adab9c44582",
+          "portfolio": "bddd8afb7b234420"
+        },
+        "audit": []
+      },
+      "alerts": [],
+      "handbookDownloads": 0
+    }
+  }
+}
