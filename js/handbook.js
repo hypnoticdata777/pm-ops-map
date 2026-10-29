@@ -2,8 +2,8 @@
 import {
   orgData, teamData, workOrders, portfolio,
   STATUS_LABELS, PRIORITY_LABELS, WO_STATUS_LABELS,
-  buildWorkloadMap, countUnowned,
 } from './state.js';
+import { buildWorkloadMap, countUnowned } from './domain/workload.js';
 import {
   getCompanyName, getOpsProfile, _fileSlug,
 } from './storage.js';
@@ -174,7 +174,7 @@ function getOperatingSummary() {
   return {
     totalTasks: tasks.length,
     assignedTasks: tasks.filter(task => task.owner !== 'UNOWNED').length,
-    unownedTasks: countUnowned(),
+    unownedTasks: countUnowned(orgData.departments),
     blockedTasks: tasks.filter(task => (task.status || 'todo') === 'blocked').length,
     overdueTasks: tasks.filter(isTaskOverdue).length,
     openWorkOrders: workOrders.filter(wo => wo.status !== 'completed').length,
@@ -274,7 +274,7 @@ function buildSevenDaySection() {
 function buildTeamSection() {
   if (!teamData.employees.length) return '- No team members have been added yet.';
 
-  const workload = buildWorkloadMap();
+  const workload = buildWorkloadMap(orgData.departments, teamData.employees);
   return teamData.employees
     .map(emp => {
       const affinities = emp.affinities

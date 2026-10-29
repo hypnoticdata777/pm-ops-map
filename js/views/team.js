@@ -5,9 +5,9 @@ import {
   _selectedColor, setSelectedColor, COLOR_PALETTE,
   STATUS_LABELS, PRIORITY_LABELS, WO_STATUS_LABELS,
   currentView, asHex, getEmployeeHex, getEmployeeNames,
-  buildWorkloadMap, countUnowned,
   auditLog, setAuditLog, AUDIT_LABELS,
 } from '../state.js';
+import { buildWorkloadMap, countUnowned } from '../domain/workload.js';
 import {
   saveToStorage, saveTeamData, saveWorkOrders, logAudit,
   getCompanyName, _showActionToast, showSaveToast, _fileSlug,
@@ -29,9 +29,9 @@ export function renderTeamView() {
   const container = document.getElementById('team-view-inner');
   if (!container) return;
 
-  const workload = buildWorkloadMap();
+  const workload = buildWorkloadMap(orgData.departments, teamData.employees);
   const maxTasks = Math.max(...[...workload.values()], 1);
-  const unowned  = countUnowned();
+  const unowned  = countUnowned(orgData.departments);
 
   container.innerHTML = `
     <div class="team-header">
@@ -402,7 +402,7 @@ export function renderLegend() {
 
 // ── Auto-assign engine ────────────────────────────────────────────────────────
 export function runAutoAssign() {
-  const unownedCount = countUnowned();
+  const unownedCount = countUnowned(orgData.departments);
 
   if (unownedCount === 0) {
     showAutoAssignToast(0);
@@ -417,7 +417,7 @@ export function runAutoAssign() {
   saveBackupSnapshot('Before auto-assign');
   window._saveUndoSnapshot && window._saveUndoSnapshot();
 
-  const workload = buildWorkloadMap();
+  const workload = buildWorkloadMap(orgData.departments, teamData.employees);
   let assignedCount = 0;
   const fallbackDepts = [];
 

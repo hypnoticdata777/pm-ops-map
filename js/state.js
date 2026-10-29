@@ -164,28 +164,3 @@ export function getEmployeeHex(name) {
 export function getEmployeeNames() {
   return teamData.employees.map(e => e.name);
 }
-
-// Tallies tasks per employee. Returns Map<name, taskCount>.
-/** @returns {Map<string, number>} */
-export function buildWorkloadMap() {
-  /** @type {Map<string, number>} */
-  const counts = new Map();
-  getEmployeeNames().forEach(name => counts.set(name, 0));
-  /** @type {OrgData} */ (orgData).departments.forEach(dept => { // loaded at boot, before any view calls this
-    dept.tasks.forEach(task => {
-      if (task.owner !== 'UNOWNED') {
-        counts.set(task.owner, (counts.get(task.owner) || 0) + 1);
-      }
-    });
-  });
-  return counts;
-}
-
-// Returns the total number of UNOWNED tasks across all departments.
-/** @returns {number} */
-export function countUnowned() {
-  return /** @type {OrgData} */ (orgData).departments.reduce(
-    (sum, dept) => sum + dept.tasks.filter(t => t.owner === 'UNOWNED').length,
-    0
-  );
-}

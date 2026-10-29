@@ -1,8 +1,9 @@
 // @ts-nocheck — TODO(types): not converted to checked JSDoc yet. Delete this line and fix what `npm run typecheck` reports.
 import {
   orgData, teamData, setTeamData, workOrders, setWorkOrders, portfolio, setPortfolio,
-  ownerColors, countUnowned,
+  ownerColors,
 } from './state.js';
+import { countUnowned } from './domain/workload.js';
 import {
   getOpsProfile, getCompanyName, _showActionToast,
   COMPANY_KEY, OPS_PROFILE_KEY, LAUNCH_CHECKLIST_KEY, applyCompanyName, applyOpsProfile,
@@ -66,7 +67,7 @@ const BASE_CHECKLIST = [
     id: 'owners',
     label: 'Assign every red UNOWNED responsibility',
     detail: 'Start with daily tenant, maintenance, rent, and owner communication work.',
-    metric: () => countUnowned() === 0,
+    metric: () => countUnowned(orgData.departments) === 0,
   },
   {
     id: 'critical-coverage',
@@ -827,7 +828,7 @@ function getReadinessScore(checklist, saved) {
 
 function getOperationsSnapshot() {
   const totalTasks = orgData.departments.reduce((sum, dept) => sum + dept.tasks.length, 0);
-  const unownedTasks = countUnowned();
+  const unownedTasks = countUnowned(orgData.departments);
   const assignedTasks = totalTasks - unownedTasks;
   const blockedTasks = orgData.departments.reduce(
     (sum, dept) => sum + dept.tasks.filter(task => task.status === 'blocked').length,
@@ -1063,7 +1064,7 @@ function getNextAction() {
   // Beginner guidance engine. Order is intentional:
   // define portfolio -> personalize sample roster -> close UNOWNED task gaps ->
   // create maintenance workflow -> export handbook. Changing this order changes first-run UX.
-  const unowned = countUnowned();
+  const unowned = countUnowned(orgData.departments);
   const openUnassignedWorkOrders = workOrders.filter(w => w.assignee === 'UNASSIGNED' && w.status !== 'completed').length;
 
   if (!portfolio.properties.length || !portfolio.tenants.length || !portfolio.vendors.length) {
@@ -1245,7 +1246,7 @@ function getDataQualityChecks() {
 
 function getLaunchGaps() {
   const gaps = [];
-  const unowned = countUnowned();
+  const unowned = countUnowned(orgData.departments);
   const overloaded = getOverloadedOwners();
   const unassignedWorkOrders = workOrders.filter(w => w.assignee === 'UNASSIGNED' && w.status !== 'completed').length;
   const qualityIssues = getDataQualityChecks().checks.filter(check => check.tone !== 'good');
