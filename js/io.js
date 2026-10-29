@@ -18,6 +18,7 @@ import { renderTrackingView, populateOwnerFilter } from './views/tracking.js';
 import { renderMapControls, renderFlowMap } from './views/map.js';
 import { renderTeamView, renderLegend } from './views/team.js';
 import { renderPortfolioView } from './views/portfolio.js';
+import { commit, REFRESH_AFTER_TASK_CHANGE, REFRESH_AFTER_IMPORT } from './commit.js';
 
 let pendingImport = null;
 
@@ -46,13 +47,7 @@ export function undoLastAction() {
   // fill: true — undo must put back exactly what was there, including "no notes".
   applySavedTasks(orgData.departments, _undoSnapshot, { fill: true });
   setUndoSnapshot(null);
-  saveToStorage();
-  renderTrackingView();
-  updateStats();
-  populateOwnerFilter();
-  renderLegend();
-  if (currentView === 'map') { renderMapControls(); renderFlowMap(); }
-  if (currentView === 'team') renderTeamView();
+  commit({ persist: ['tasks'], refresh: REFRESH_AFTER_TASK_CHANGE });
 }
 
 // ── Shared import logic ───────────────────────────────────────────────────────
@@ -71,28 +66,15 @@ export function _applyImportedState(data) {
     applyCompanyName(clean.company);
   }
 
-  if (clean.team) {
-    setTeamData(clean.team);
-    saveTeamData();
-  }
+  // Only the sections the file actually contained are replaced and saved; tasks are always saved.
+  /** @type {import('./commit.js').PersistTarget[]} */
+  const persist = [];
+  if (clean.team) { setTeamData(clean.team); persist.push('team'); }
+  if (clean.workOrders) { setWorkOrders(clean.workOrders); persist.push('workOrders'); }
+  if (clean.portfolio) { setPortfolio(clean.portfolio); persist.push('portfolio'); }
+  persist.push('tasks');
 
-  if (clean.workOrders) {
-    setWorkOrders(clean.workOrders);
-    saveWorkOrders();
-  }
-
-  if (clean.portfolio) {
-    setPortfolio(clean.portfolio);
-    savePortfolio();
-  }
-
-  saveToStorage();
-  renderTrackingView();
-  updateStats();
-  document.querySelectorAll('.department').forEach(d => d.classList.add('expanded'));
-  populateOwnerFilter();
-  renderLegend();
-  renderPortfolioView();
+  commit({ persist, refresh: REFRESH_AFTER_IMPORT });
 }
 
 // ── Export ────────────────────────────────────────────────────────────────────

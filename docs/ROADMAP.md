@@ -2,7 +2,7 @@
 
 The single source of truth for what has shipped, what is in progress, and what comes next. The README's [Roadmap](../README.md#roadmap) section is the short version; this is the detail. Update this file in the same PR that finishes (or re-scopes) a step.
 
-**Last updated:** 2026-10-28 · **Current focus:** Phase 1B
+**Last updated:** 2026-10-28 · **Current focus:** finishing Phase 1B step 5
 
 ## Status at a glance
 
@@ -10,7 +10,7 @@ The single source of truth for what has shipped, what is in progress, and what c
 |---|---|---|
 | 0 | Trust: security, data safety, privacy, demo, dependency hygiene | ✅ Done |
 | 1A | Foundations: stable task IDs, runtime schemas, JSDoc types (steps 1–3) | ✅ Done |
-| 1B | Foundations: pure domain layer, one commit path (steps 4–5) | ⏭ Next |
+| 1B | Foundations: pure domain layer, one commit path (steps 4–5) | 🔧 In progress: step 4 done, step 5 partly done |
 | 1C | Foundations: event delegation, E2E expansion (steps 6–7) | ⏳ After 1B |
 | 2 | Positioning: Map → Assign → Review → Share | ✅ Done |
 | 3 | Responsibility intelligence | 📋 Planned |
@@ -52,7 +52,9 @@ Shipped-module tests (Vitest + jsdom importing the real ES modules), XSS and CSV
 2. **Runtime schemas.** A small hand-rolled schema layer (`js/schema.js`) returning `{ value, errors[] }` with field paths. The import review names the field and record it repairs; sync replies are checked; storage load records its repairs; the sync server validates pushes.
 3. **Types without a migration.** JSDoc types with `npm run typecheck` (strict) in CI. The data and boundary modules are fully checked; the rest carry `// @ts-nocheck — TODO(types)` until converted.
 
-### 1B: next
+### 1B: in progress
+
+**Status:** step 4 is done. Step 5 is partly done: `js/commit.js` exists and auto-assign, undo and import use it. Still on the old copy-pasted block: `removeEmployee`, `applyRoleTemplate` and the demo-company loader (`launchPlan.js`). Presets for them (`REFRESH_AFTER_ROSTER_CHANGE`, `REFRESH_AFTER_TEMPLATE`, `REFRESH_AFTER_DEMO_COMPANY`) already exist in `commit.js` and are pinned by tests.
 
 4. **Pure domain layer** (`js/domain/`: no DOM, no shared-state imports).
    - **Coverage:** de-duplicate the near-identical copies in `launchPlan.js` and `handbook.js`. Today "covered" only means "not UNOWNED".
@@ -74,7 +76,7 @@ Shipped-module tests (Vitest + jsdom importing the real ES modules), XSS and CSV
 | PR | Steps | Status |
 |---|---|---|
 | A | 1–3 | Merged (#64) |
-| B | 4–5 | Next |
+| B | 4–5 | In review (step 5 finished in a follow-up) |
 | C | 6–7 | After B |
 
 ## Phase 2: Positioning (done)

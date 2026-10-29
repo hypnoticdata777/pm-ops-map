@@ -1,8 +1,10 @@
 // @ts-nocheck — TODO(types): not converted to checked JSDoc yet. Delete this line and fix what `npm run typecheck` reports.
 import {
   orgData, teamData, setTeamData, workOrders, setWorkOrders, portfolio, setPortfolio,
-  ownerColors, countUnowned,
+  ownerColors,
 } from './state.js';
+import { countUnowned } from './domain/workload.js';
+import { CRITICAL_COVERAGE_AREAS, WEAK_COVERAGE_PCT, summarizeCoverage } from './domain/coverage.js';
 import {
   getOpsProfile, getCompanyName, _showActionToast,
   COMPANY_KEY, OPS_PROFILE_KEY, LAUNCH_CHECKLIST_KEY, applyCompanyName, applyOpsProfile,
@@ -66,13 +68,13 @@ const BASE_CHECKLIST = [
     id: 'owners',
     label: 'Assign every red UNOWNED responsibility',
     detail: 'Start with daily tenant, maintenance, rent, and owner communication work.',
-    metric: () => countUnowned() === 0,
+    metric: () => countUnowned(orgData.departments) === 0,
   },
   {
     id: 'critical-coverage',
     label: 'Cover the seven critical PM responsibility lanes',
     detail: 'Confirm leasing, rent collection, inspections, maintenance, compliance, renewals, and emergencies have named owners.',
-    metric: () => getCriticalCoverageAreas().every(area => area.coveragePct >= 70),
+    metric: () => summarizeCoverage(orgData.departments).every(area => area.coveragePct >= WEAK_COVERAGE_PCT),
   },
   {
     id: 'maintenance',
@@ -135,51 +137,6 @@ const FOCUS_CHECKLIST = {
   ],
 };
 
-const CRITICAL_COVERAGE_AREAS = [
-  {
-    id: 'leasing',
-    label: 'Leasing',
-    detail: 'Listings, showings, applications, and move-in handoff.',
-    departments: ['leasing', 'applications', 'move-ins'],
-  },
-  {
-    id: 'rent',
-    label: 'Rent Collection',
-    detail: 'Delinquencies, ledgers, notices, and payment follow-up.',
-    departments: ['delinquency', 'accounting'],
-  },
-  {
-    id: 'inspections',
-    label: 'Inspections',
-    detail: 'Move-ins, move-outs, turns, field visits, and condition reports.',
-    departments: ['move-ins', 'move-outs', 'unit-turns', 'field-services'],
-  },
-  {
-    id: 'maintenance',
-    label: 'Maintenance',
-    detail: 'Intake, triage, vendors, emergency dispatch, and closeout.',
-    departments: ['maintenance', 'vendors'],
-  },
-  {
-    id: 'compliance',
-    label: 'Compliance',
-    detail: 'Fair housing, notices, insurance, records, and risk controls.',
-    departments: ['compliance', 'reporting'],
-  },
-  {
-    id: 'renewals',
-    label: 'Renewals',
-    detail: 'Rent increases, lease questions, move-outs, and owner alignment.',
-    departments: ['tenant-comms', 'owner-relations', 'leasing'],
-  },
-  {
-    id: 'emergencies',
-    label: 'Emergencies',
-    detail: 'After-hours repair response, access, vendors, and tenant updates.',
-    departments: ['maintenance', 'vendors', 'field-services', 'tenant-comms'],
-  },
-];
-
 const SEVEN_DAY_PLAN = [
   {
     day: 1,
@@ -234,7 +191,7 @@ const SEVEN_DAY_PLAN = [
     title: 'Review critical coverage',
     base: 'Check leasing, rent collection, inspections, maintenance, compliance, renewals, and emergencies.',
     focus: {
-      stability: 'Confirm every critical lane is at least 70% covered.',
+      stability: `Confirm every critical lane is at least ${WEAK_COVERAGE_PCT}% covered.`,
       maintenance: 'Confirm maintenance and emergencies have named primary and backup coverage.',
       growth: 'Confirm leasing, applications, and move-ins can absorb new doors.',
       compliance: 'Confirm compliance, inspections, reporting, and collections are covered.',
@@ -292,7 +249,7 @@ export function renderLaunchPlan() {
   const snapshot = getOperationsSnapshot();
   const commandModules = getCommandModules(snapshot);
   const riskQueue = getRiskQueue(snapshot);
-  const coverageAreas = getCriticalCoverageAreas();
+  const coverageAreas = summarizeCoverage(orgData.departments);
   const dataQuality = getDataQualityChecks();
   const sevenDayPlan = getSevenDayPlan(profile);
   const blueprintDepts = blueprint.departments
@@ -545,7 +502,7 @@ export function downloadLaunchPlan() {
   const saved = readChecklistState();
   const checklist = getLaunchChecklist(focus);
   const gaps = getLaunchGaps();
-  const coverage = getCriticalCoverageAreas();
+  const coverage = summarizeCoverage(orgData.departments);
   const sevenDayPlan = getSevenDayPlan(profile);
   const company = getCompanyName();
   const lines = [
@@ -586,7 +543,7 @@ export function printLaunchPlan() {
   const blueprint = FOCUS_BLUEPRINTS[focus] || FOCUS_BLUEPRINTS.stability;
   const saved = readChecklistState();
   const checklist = getLaunchChecklist(focus);
-  const coverage = getCriticalCoverageAreas();
+  const coverage = summarizeCoverage(orgData.departments);
   const gaps = getLaunchGaps();
   const html = `
     <html>
@@ -726,7 +683,7 @@ function renderRiskItem(risk) {
 }
 
 function renderCoverageArea(area) {
-  const tone = area.coveragePct === 100 ? 'good' : area.coveragePct >= 70 ? 'warn' : 'danger';
+  const tone = area.coveragePct === 100 ? 'good' : area.coveragePct >= WEAK_COVERAGE_PCT ? 'warn' : 'danger';
   return `
     <button class="launch-coverage-card launch-coverage-card--${tone}" onclick="focusCoverageArea('${area.id}')">
       <span>${escapeHtml(area.label)}</span>
@@ -827,7 +784,7 @@ function getReadinessScore(checklist, saved) {
 
 function getOperationsSnapshot() {
   const totalTasks = orgData.departments.reduce((sum, dept) => sum + dept.tasks.length, 0);
-  const unownedTasks = countUnowned();
+  const unownedTasks = countUnowned(orgData.departments);
   const assignedTasks = totalTasks - unownedTasks;
   const blockedTasks = orgData.departments.reduce(
     (sum, dept) => sum + dept.tasks.filter(task => task.status === 'blocked').length,
@@ -866,33 +823,6 @@ function getOperationsSnapshot() {
     delinquentTenants,
     totalBalanceDue,
   };
-}
-
-function getCriticalCoverageAreas() {
-  return CRITICAL_COVERAGE_AREAS.map(area => {
-    const depts = area.departments
-      .map(id => orgData.departments.find(dept => dept.id === id))
-      .filter(Boolean);
-    const tasks = depts.flatMap(dept => dept.tasks);
-    const unownedCount = tasks.filter(task => task.owner === 'UNOWNED').length;
-    const ownerCounts = new Map();
-    tasks.forEach(task => {
-      if (task.owner !== 'UNOWNED') ownerCounts.set(task.owner, (ownerCounts.get(task.owner) || 0) + 1);
-    });
-    const primaryOwners = [...ownerCounts.entries()]
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 3)
-      .map(([name]) => name)
-      .join(', ') || 'No named owner';
-
-    return {
-      ...area,
-      taskCount: tasks.length,
-      unownedCount,
-      primaryOwners,
-      coveragePct: tasks.length ? Math.round(((tasks.length - unownedCount) / tasks.length) * 100) : 0,
-    };
-  });
 }
 
 function getCommandModules(snapshot) {
@@ -947,12 +877,12 @@ function getCommandModules(snapshot) {
 
 function getRiskQueue(snapshot) {
   const risks = [];
-  const weakCoverage = getCriticalCoverageAreas().filter(area => area.coveragePct < 70);
+  const weakCoverage = summarizeCoverage(orgData.departments).filter(area => area.coveragePct < WEAK_COVERAGE_PCT);
   const failingQualityChecks = getDataQualityChecks().checks.filter(check => check.tone !== 'good');
   if (weakCoverage.length) {
     risks.push({
       label: 'Ownership Map',
-      title: `${weakCoverage.length} critical coverage lane${weakCoverage.length === 1 ? '' : 's'} under 70%`,
+      title: `${weakCoverage.length} critical coverage lane${weakCoverage.length === 1 ? '' : 's'} under ${WEAK_COVERAGE_PCT}%`,
       detail: coverageRiskDetail(weakCoverage),
       tone: 'danger',
       onclick: `focusCoverageArea('${weakCoverage[0].id}')`,
@@ -1063,7 +993,7 @@ function getNextAction() {
   // Beginner guidance engine. Order is intentional:
   // define portfolio -> personalize sample roster -> close UNOWNED task gaps ->
   // create maintenance workflow -> export handbook. Changing this order changes first-run UX.
-  const unowned = countUnowned();
+  const unowned = countUnowned(orgData.departments);
   const openUnassignedWorkOrders = workOrders.filter(w => w.assignee === 'UNASSIGNED' && w.status !== 'completed').length;
 
   if (!portfolio.properties.length || !portfolio.tenants.length || !portfolio.vendors.length) {
@@ -1245,7 +1175,7 @@ function getDataQualityChecks() {
 
 function getLaunchGaps() {
   const gaps = [];
-  const unowned = countUnowned();
+  const unowned = countUnowned(orgData.departments);
   const overloaded = getOverloadedOwners();
   const unassignedWorkOrders = workOrders.filter(w => w.assignee === 'UNASSIGNED' && w.status !== 'completed').length;
   const qualityIssues = getDataQualityChecks().checks.filter(check => check.tone !== 'good');

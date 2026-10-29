@@ -1,8 +1,9 @@
 // @ts-nocheck — TODO(types): not converted to checked JSDoc yet. Delete this line and fix what `npm run typecheck` reports.
 // Global UI helpers: stats bar, beacons, onboarding, welcome guide, notifications.
 import {
-  orgData, teamData, workOrders, countUnowned,
+  orgData, teamData, workOrders,
 } from './state.js';
+import { countUnowned } from './domain/workload.js';
 import {
   COMPANY_KEY, OPS_PROFILE_KEY, GUIDE_KEY, NOTIF_DATE_KEY,
   getCompanyName, applyCompanyName, applyOpsProfile,
@@ -44,7 +45,7 @@ export function updateStats() {
 
 // ── Beacon updater ────────────────────────────────────────────────────────────
 export function updateBeacons() {
-  const count = countUnowned();
+  const count = countUnowned(orgData.departments);
 
   const tabBeacon = document.getElementById('tab-beacon');
   if (tabBeacon) tabBeacon.hidden = (count === 0);

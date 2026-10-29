@@ -5,9 +5,11 @@ import {
   _selectedColor, setSelectedColor, COLOR_PALETTE,
   STATUS_LABELS, PRIORITY_LABELS, WO_STATUS_LABELS,
   currentView, asHex, getEmployeeHex, getEmployeeNames,
-  buildWorkloadMap, countUnowned,
   auditLog, setAuditLog, AUDIT_LABELS,
 } from '../state.js';
+import { buildWorkloadMap, countUnowned } from '../domain/workload.js';
+import { planAssignments } from '../domain/assignment.js';
+import { commit, REFRESH_AFTER_TASK_CHANGE } from '../commit.js';
 import {
   saveToStorage, saveTeamData, saveWorkOrders, logAudit,
   getCompanyName, _showActionToast, showSaveToast, _fileSlug,
@@ -29,9 +31,9 @@ export function renderTeamView() {
   const container = document.getElementById('team-view-inner');
   if (!container) return;
 
-  const workload = buildWorkloadMap();
+  const workload = buildWorkloadMap(orgData.departments, teamData.employees);
   const maxTasks = Math.max(...[...workload.values()], 1);
-  const unowned  = countUnowned();
+  const unowned  = countUnowned(orgData.departments);
 
   container.innerHTML = `
     <div class="team-header">
@@ -402,7 +404,7 @@ export function renderLegend() {
 
 // ── Auto-assign engine ────────────────────────────────────────────────────────
 export function runAutoAssign() {
-  const unownedCount = countUnowned();
+  const unownedCount = countUnowned(orgData.departments);
 
   if (unownedCount === 0) {
     showAutoAssignToast(0);
@@ -417,52 +419,15 @@ export function runAutoAssign() {
   saveBackupSnapshot('Before auto-assign');
   window._saveUndoSnapshot && window._saveUndoSnapshot();
 
-  const workload = buildWorkloadMap();
-  let assignedCount = 0;
-  const fallbackDepts = [];
-
-  orgData.departments.forEach(dept => {
-    dept.tasks.forEach((task) => {
-      if (task.owner !== 'UNOWNED') return;
-
-      const affinityMatches = teamData.employees.filter(emp =>
-        emp.affinities.includes(dept.id)
-      );
-
-      let candidates;
-      if (affinityMatches.length > 0) {
-        candidates = affinityMatches;
-      } else {
-        candidates = [...teamData.employees];
-        if (!fallbackDepts.includes(dept.name)) fallbackDepts.push(dept.name);
-      }
-
-      candidates.sort((a, b) =>
-        (workload.get(a.name) || 0) - (workload.get(b.name) || 0)
-      );
-
-      const winner = candidates[0];
-      if (!winner) return;
-
-      task.owner = winner.name;
-      workload.set(winner.name, (workload.get(winner.name) || 0) + 1);
-      assignedCount++;
-    });
+  // The domain layer decides who gets what (and why); this only applies the plan.
+  const plan = planAssignments({ departments: orgData.departments, employees: teamData.employees });
+  plan.assignments.forEach(assignment => {
+    orgData.departments.find(dept => dept.id === assignment.deptId).tasks[assignment.taskIndex].owner = assignment.owner;
   });
+  const assignedCount = plan.assignments.length;
+  const fallbackDepts = plan.fallbackDepartments;
 
-  saveToStorage();
-  renderTrackingView();
-  updateStats();
-  populateOwnerFilter();
-  renderLegend();
-
-  if (currentView === 'map') {
-    renderMapControls();
-    renderFlowMap();
-  }
-  if (currentView === 'team') {
-    renderTeamView();
-  }
+  commit({ persist: ['tasks'], refresh: REFRESH_AFTER_TASK_CHANGE });
 
   logAudit('auto_assign', { count: assignedCount });
   showAutoAssignToast(assignedCount, fallbackDepts);
