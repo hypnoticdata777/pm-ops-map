@@ -18,6 +18,7 @@ import { renderTrackingView, populateOwnerFilter } from './views/tracking.js';
 import { renderMapControls, renderFlowMap } from './views/map.js';
 import { renderTeamView, renderLegend } from './views/team.js';
 import { renderPortfolioView } from './views/portfolio.js';
+import { commit, REFRESH_AFTER_TASK_CHANGE } from './commit.js';
 
 let pendingImport = null;
 
@@ -46,13 +47,7 @@ export function undoLastAction() {
   // fill: true — undo must put back exactly what was there, including "no notes".
   applySavedTasks(orgData.departments, _undoSnapshot, { fill: true });
   setUndoSnapshot(null);
-  saveToStorage();
-  renderTrackingView();
-  updateStats();
-  populateOwnerFilter();
-  renderLegend();
-  if (currentView === 'map') { renderMapControls(); renderFlowMap(); }
-  if (currentView === 'team') renderTeamView();
+  commit({ persist: ['tasks'], refresh: REFRESH_AFTER_TASK_CHANGE });
 }
 
 // ── Shared import logic ───────────────────────────────────────────────────────

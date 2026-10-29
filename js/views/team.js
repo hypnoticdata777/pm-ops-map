@@ -9,6 +9,7 @@ import {
 } from '../state.js';
 import { buildWorkloadMap, countUnowned } from '../domain/workload.js';
 import { planAssignments } from '../domain/assignment.js';
+import { commit, REFRESH_AFTER_TASK_CHANGE } from '../commit.js';
 import {
   saveToStorage, saveTeamData, saveWorkOrders, logAudit,
   getCompanyName, _showActionToast, showSaveToast, _fileSlug,
@@ -426,19 +427,7 @@ export function runAutoAssign() {
   const assignedCount = plan.assignments.length;
   const fallbackDepts = plan.fallbackDepartments;
 
-  saveToStorage();
-  renderTrackingView();
-  updateStats();
-  populateOwnerFilter();
-  renderLegend();
-
-  if (currentView === 'map') {
-    renderMapControls();
-    renderFlowMap();
-  }
-  if (currentView === 'team') {
-    renderTeamView();
-  }
+  commit({ persist: ['tasks'], refresh: REFRESH_AFTER_TASK_CHANGE });
 
   logAudit('auto_assign', { count: assignedCount });
   showAutoAssignToast(assignedCount, fallbackDepts);
