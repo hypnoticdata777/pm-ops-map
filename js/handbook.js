@@ -4,6 +4,7 @@ import {
   STATUS_LABELS, PRIORITY_LABELS, WO_STATUS_LABELS,
 } from './state.js';
 import { buildWorkloadMap, countUnowned } from './domain/workload.js';
+import { WEAK_COVERAGE_PCT, summarizeCoverage } from './domain/coverage.js';
 import {
   getCompanyName, getOpsProfile, _fileSlug,
 } from './storage.js';
@@ -27,16 +28,6 @@ const PROFILE_LABELS = {
   growth: 'Scale team capacity',
   compliance: 'Reduce compliance risk',
 };
-
-const CRITICAL_COVERAGE_AREAS = [
-  { label: 'Leasing', departments: ['leasing', 'applications', 'move-ins'] },
-  { label: 'Rent Collection', departments: ['delinquency', 'accounting'] },
-  { label: 'Inspections', departments: ['move-ins', 'move-outs', 'unit-turns', 'field-services'] },
-  { label: 'Maintenance', departments: ['maintenance', 'vendors'] },
-  { label: 'Compliance', departments: ['compliance', 'reporting'] },
-  { label: 'Renewals', departments: ['tenant-comms', 'owner-relations', 'leasing'] },
-  { label: 'Emergencies', departments: ['maintenance', 'vendors', 'field-services', 'tenant-comms'] },
-];
 
 const SEVEN_DAY_PLAN = [
   ['Build the source of truth', 'Add properties, units, tenants, owners/clients, and vendor bench.'],
@@ -238,7 +229,7 @@ function buildVendorList() {
 }
 
 function buildCriticalCoverageSection() {
-  return getCriticalCoverageAreas().map(area => [
+  return summarizeCoverage(orgData.departments).map(area => [
     `### ${area.label}`,
     '',
     `- Coverage: ${area.coveragePct}%`,
@@ -333,8 +324,8 @@ function buildWorkOrderSection() {
 function buildMaintenanceSOPSection() {
   const openOrders = workOrders.filter(wo => wo.status !== 'completed');
   const unassigned = openOrders.filter(wo => wo.assignee === 'UNASSIGNED').length;
-  const emergencyCoverage = getCriticalCoverageAreas().find(area => area.label === 'Emergencies');
-  const maintenanceCoverage = getCriticalCoverageAreas().find(area => area.label === 'Maintenance');
+  const emergencyCoverage = summarizeCoverage(orgData.departments).find(area => area.label === 'Emergencies');
+  const maintenanceCoverage = summarizeCoverage(orgData.departments).find(area => area.label === 'Maintenance');
 
   return [
     '### Intake Standard',
@@ -378,36 +369,6 @@ function getPropertyName(propertyId) {
   return portfolio.properties.find(property => property.id === propertyId)?.name || 'Unassigned property';
 }
 
-function getCriticalCoverageAreas() {
-  return CRITICAL_COVERAGE_AREAS.map(area => {
-    const depts = area.departments
-      .map(id => orgData.departments.find(dept => dept.id === id))
-      .filter(Boolean);
-    const tasks = depts.flatMap(dept => dept.tasks);
-    const unownedCount = tasks.filter(task => task.owner === 'UNOWNED').length;
-    const ownerCounts = new Map();
-
-    tasks.forEach(task => {
-      if (task.owner !== 'UNOWNED') ownerCounts.set(task.owner, (ownerCounts.get(task.owner) || 0) + 1);
-    });
-
-    const primaryOwners = [...ownerCounts.entries()]
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 3)
-      .map(([name]) => name)
-      .join(', ') || 'No named owner';
-
-    return {
-      ...area,
-      departmentNames: depts.map(dept => dept.name),
-      taskCount: tasks.length,
-      unownedCount,
-      primaryOwners,
-      coveragePct: tasks.length ? Math.round(((tasks.length - unownedCount) / tasks.length) * 100) : 0,
-    };
-  });
-}
-
 function getHandbookGaps() {
   const summary = getOperatingSummary();
   const gaps = [];
@@ -419,8 +380,8 @@ function getHandbookGaps() {
   if (summary.blockedTasks > 0) gaps.push(`Resolve or document ${summary.blockedTasks} blocked responsibilities.`);
   if (summary.overdueTasks > 0) gaps.push(`Review ${summary.overdueTasks} overdue responsibilities.`);
   if (!workOrders.length) gaps.push('Create one starter work order to document maintenance flow.');
-  getCriticalCoverageAreas()
-    .filter(area => area.coveragePct < 70)
+  summarizeCoverage(orgData.departments)
+    .filter(area => area.coveragePct < WEAK_COVERAGE_PCT)
     .forEach(area => gaps.push(`Improve ${area.label} coverage (${area.coveragePct}% covered).`));
   return gaps;
 }

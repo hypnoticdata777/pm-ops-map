@@ -121,6 +121,26 @@
 /** @typedef {{ properties: Property[], tenants: Tenant[], vendors: Vendor[] }} Portfolio */
 
 /**
+ * One of the critical responsibility lanes a property manager needs named before the work gets noisy.
+ * @typedef {object} CoverageAreaDefinition
+ * @property {string} id
+ * @property {string} label
+ * @property {string} detail        One sentence on what the lane covers.
+ * @property {string[]} departments Department ids whose tasks make up the lane.
+ */
+
+/**
+ * A lane with its numbers for the current workspace.
+ * @typedef {CoverageAreaDefinition & {
+ *   departmentNames: string[],
+ *   taskCount: number,
+ *   unownedCount: number,
+ *   primaryOwners: string,
+ *   coveragePct: number,
+ * }} CoverageArea
+ */
+
+/**
  * @typedef {object} AuditEntry
  * @property {string} ts
  * @property {string} action
