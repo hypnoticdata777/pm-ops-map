@@ -13,7 +13,7 @@ const code = f => read(f).replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/
 
 describe('js/domain is pure', () => {
   test('the domain modules exist', () => {
-    expect(files.sort()).toEqual(expect.arrayContaining(['coverage.js', 'workload.js']));
+    expect(files.sort()).toEqual(expect.arrayContaining(['assignment.js', 'coverage.js', 'workload.js']));
   });
 
   test.each(files)('%s imports only other domain modules', file => {

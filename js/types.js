@@ -141,6 +141,39 @@
  */
 
 /**
+ * Why one task was given to one person. `candidates` are the people who were considered, with their
+ * workload at the moment of the decision, lightest first (ties keep roster order). `text` is a plain
+ * sentence; escape it before putting it in HTML.
+ * @typedef {object} AssignmentReason
+ * @property {'affinity' | 'no-affinity'} basis  "affinity": someone has the department's affinity. "no-affinity": nobody does, so the whole roster was considered.
+ * @property {{ name: string, workload: number }[]} candidates
+ * @property {number} workloadBefore             The chosen person's workload before this task.
+ * @property {string} text
+ */
+
+/**
+ * One proposed assignment. Identifies the task three ways (department, position, id) so it can be applied now
+ * or previewed and applied later.
+ * @typedef {object} Assignment
+ * @property {string} deptId
+ * @property {string} deptName
+ * @property {number} taskIndex  Position within the department's task list.
+ * @property {string} taskId
+ * @property {string} taskName
+ * @property {string} owner      Who the task goes to.
+ * @property {AssignmentReason} reason
+ */
+
+/**
+ * What an auto-assign run would do. Nothing has been changed yet: the caller applies it.
+ * @typedef {object} AssignmentPlan
+ * @property {Assignment[]} assignments
+ * @property {string[]} fallbackDepartments  Names of departments nobody has an affinity for, in first-seen order.
+ * @property {Map<string, number>} workloadBefore
+ * @property {Map<string, number>} workloadAfter
+ */
+
+/**
  * @typedef {object} AuditEntry
  * @property {string} ts
  * @property {string} action
