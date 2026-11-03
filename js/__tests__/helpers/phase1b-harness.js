@@ -26,6 +26,11 @@ const html = fs.readFileSync(path.join(process.cwd(), 'index.html'), 'utf8');
 export const sha = text => crypto.createHash('sha256').update(String(text)).digest('hex').slice(0, 16);
 const squash = text => String(text).replace(/\s+/g, ' ').trim();
 
+// How a control is wired to its function (onclick="..." before Phase 1C, data-action="..." after) is not
+// something these tests are about, so it is removed before hashing. What a control looks like, says and
+// carries as data still is compared.
+export const withoutWiring = html => String(html).replace(/\s(?:on[a-z]+|data-action[a-z-]*)="[^"]*"/g, '');
+
 // ── Golden files ──────────────────────────────────────────────────────────────
 // A golden file records what the code did BEFORE a refactor; the refactor must reproduce it exactly.
 //   UPDATE_GOLDEN=1 npx vitest run <file>   rewrites the file. Do that only on the pre-refactor code, or
@@ -177,7 +182,7 @@ export function captureModel() {
     launch: {
       coverageCards: [...document.querySelectorAll('.launch-coverage-card')].map(card => squash(card.textContent)),
       allText: sha(squash(document.getElementById('launch-plan').textContent)),
-      allHtml: sha(document.getElementById('launch-plan').innerHTML),
+      allHtml: sha(withoutWiring(document.getElementById('launch-plan').innerHTML)),
     },
     handbook: {
       coverage: section('## Critical Coverage', '## First-Week Operating Rhythm'),
@@ -204,7 +209,7 @@ export function renderEverything() {
 // Raw DOM and storage after an action, WITHOUT calling any renderer: this is what tells us which parts
 // of the page each save-and-refresh site actually updates.
 export function captureDom() {
-  const html = id => sha(document.getElementById(id)?.innerHTML ?? '<missing>');
+  const html = id => sha(withoutWiring(document.getElementById(id)?.innerHTML ?? '<missing>'));
   const storageHash = key => sha(localStorage.getItem(key) ?? '<none>');
   return {
     view: state.currentView,
@@ -214,7 +219,7 @@ export function captureDom() {
     ownerFilter: [...document.querySelectorAll('#owner-filter option')].map(o => o.value),
     teamView: html('team-view-inner'),
     mapControls: html('map-controls'),
-    mapSvg: sha(document.querySelector('#map-view svg')?.outerHTML ?? '<none>'),
+    mapSvg: sha(withoutWiring(document.querySelector('#map-view svg')?.outerHTML ?? '<none>')),
     portfolioView: html('portfolio-view-inner'),
     workOrdersView: html('workorders-view-inner'),
     launchPlan: html('launch-plan'),
