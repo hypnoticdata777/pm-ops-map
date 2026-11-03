@@ -128,6 +128,28 @@ PM Ops Map renders data it did not create — imported JSON, pasted clipboard te
 
 Browser tests find the nav tabs by `data-view` (`.nav-tab[data-view="map"]`), not by their visible text, so changing a tab's label is safe. If you add a tab, give it a `data-view` that matches both the view it opens and its `#<view>-view` container; `js/__tests__/nav-tabs.test.js` checks this. For other UI text, search `e2e/` and `js/__tests__/` for the old wording before you rename it, or select by `data-*` / `id` instead of text in new tests.
 
+## Writing the history
+
+Commit messages and PR descriptions are the project's long-term memory: a merge commit is read years later by someone who was not in the conversation. Write them for that reader.
+
+**Voice.** Neutral and factual, about the project. No "I", no "you", no "as we discussed", and no requests to a reviewer (those belong in a comment on the PR, not in the text that becomes history).
+
+**Structure.** Each PR description (see `.github/pull_request_template.md`) answers five questions:
+
+- **Milestone:** what this marks in the project's story.
+- **Evolution:** what existed before, what this changes, what it sets up next.
+- **Why:** the reason, in terms of the user or the system.
+- **Tradeoffs:** what was chosen and what it costs, plus the alternatives that were not taken and why.
+- **Verification:** what was run and what it showed, including anything that failed or could not be checked.
+
+A short example of the difference:
+
+> Before: "I broke the logic on purpose in 11 ways and the golden file caught them. Please decide whether the map should refresh."
+>
+> After: "The refactor was verified against a golden file recorded beforehand; deliberately breaking the logic in 11 ways failed between 3 and 29 tests each. Whether the map redraws after an import is recorded in docs/ROADMAP.md as a product decision."
+
+**Comments in code** follow the same idea: say *why*, not what the next line does. When a choice has a history or a cost, record it next to the code with a date, for example `History: until Nov 2026 this list stopped at 'portfolio'...` and `Tradeoff: ...`, so the next person does not have to rediscover it.
+
 ## Types (JSDoc + `npm run typecheck`)
 
 The client is plain JavaScript with no build step, and it is type-checked with JSDoc comments: `npm run typecheck` runs `tsc` over `js/` (`allowJs`, `checkJs`, `strict`, `noEmit`). CI runs it before the tests.
