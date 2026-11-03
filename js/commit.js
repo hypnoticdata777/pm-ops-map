@@ -92,21 +92,23 @@ export const REFRESH_AFTER_TASK_CHANGE = ['tracking', 'stats', 'ownerFilter', 'l
  *
  * History: until Nov 2026 this list stopped at 'portfolio', so the map and the team view kept drawing the
  * previous workspace until the user switched tabs and back, which made an import look half-finished. That was
- * treated as a bug and the two current-screen refreshes were added at the end.
+ * treated as a bug and the two current-screen refreshes were added at the end. The work-orders view had the
+ * same gap (an import replaces the work orders too) and was added in the same release.
  * Tradeoff: a little extra rendering when one of those screens is open, negligible next to parsing the file.
  * @type {RefreshStep[]}
  */
-export const REFRESH_AFTER_IMPORT = ['tracking', 'stats', 'expandDepartments', 'ownerFilter', 'legend', 'portfolio', 'mapIfCurrent', 'teamIfCurrent'];
+export const REFRESH_AFTER_IMPORT = ['tracking', 'stats', 'expandDepartments', 'ownerFilter', 'legend', 'portfolio', 'mapIfCurrent', 'teamIfCurrent', 'workOrdersIfCurrent'];
 /** @type {RefreshStep[]} Someone was removed from the roster. */
 export const REFRESH_AFTER_ROSTER_CHANGE = ['team', 'tracking', 'stats', 'legend', 'ownerFilter', 'workOrdersIfCurrent', 'workOrderBeacon', 'mapIfCurrent'];
 /** @type {RefreshStep[]} A role template replaced the roster. */
 export const REFRESH_AFTER_TEMPLATE = ['team', 'tracking', 'stats', 'legend', 'ownerFilter', 'workOrderBeacon'];
 /**
  * The demo company was loaded; it replaces the roster, portfolio and work orders. Same history as the import
- * list above: the map and team view are redrawn when they are the current screen (changed Nov 2026).
+ * list above: the map, team and work-orders views are redrawn when they are the current screen, and the
+ * portfolio is always redrawn because the demo company replaces it (changed Nov 2026).
  * @type {RefreshStep[]}
  */
-export const REFRESH_AFTER_DEMO_COMPANY = ['launchPlan', 'tracking', 'ownerFilter', 'legend', 'stats', 'mapIfCurrent', 'teamIfCurrent'];
+export const REFRESH_AFTER_DEMO_COMPANY = ['launchPlan', 'tracking', 'ownerFilter', 'legend', 'stats', 'portfolio', 'mapIfCurrent', 'teamIfCurrent', 'workOrdersIfCurrent'];
 
 /** @type {(change?: Change) => void} */
 export const commit = createCommit({ savers: SAVERS, refreshers: REFRESHERS });

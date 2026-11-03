@@ -52,6 +52,47 @@ describe('importing a workspace', () => {
   });
 });
 
+// The same promise for the work-orders and portfolio screens (added after the first pass left them out).
+describe('the work-orders screen after replacing the workspace', () => {
+  test('importing shows the imported work orders immediately', () => {
+    const file = importableWorkspace();
+    const imported = state.workOrders[0].title;
+    load('template-solo'); // no work orders at all
+    renderEverything();
+    goTo('workorders');
+    expect(text('workorders-view-inner')).not.toContain(imported);
+
+    _applyImportedState(file);
+
+    expect(text('workorders-view-inner')).toContain(imported);
+  });
+
+  test('loading the demo company shows the demo work orders immediately', () => {
+    load('template-solo');
+    renderEverything();
+    goTo('workorders');
+
+    loadDemoCompany();
+
+    expect(state.workOrders.length).toBeGreaterThan(0);
+    expect(text('workorders-view-inner')).toContain(state.workOrders[0].title);
+  });
+});
+
+describe('the portfolio screen after loading the demo company', () => {
+  test('shows the demo properties immediately', () => {
+    load('template-solo'); // empty portfolio
+    renderEverything();
+    goTo('portfolio');
+    expect(state.portfolio.properties).toHaveLength(0);
+
+    loadDemoCompany();
+
+    expect(state.portfolio.properties.length).toBeGreaterThan(0);
+    expect(text('portfolio-view-inner')).toContain(state.portfolio.properties[0].name);
+  });
+});
+
 describe('loading the demo company', () => {
   test('the team screen you are on shows the demo team immediately', () => {
     load('template-solo');

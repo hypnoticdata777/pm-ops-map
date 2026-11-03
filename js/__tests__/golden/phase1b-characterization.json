@@ -2512,84 +2512,6 @@
       "alerts": [],
       "handbookDownloads": 0
     },
-    "load-demo-company@tracking": {
-      "before": {
-        "view": "tracking",
-        "departments": "f1aa0e059217ccb6",
-        "expandedDepartments": 0,
-        "legend": "c66ca84645042044",
-        "ownerFilter": [
-          "",
-          "UNOWNED"
-        ],
-        "teamView": "3bf751abfb1538b4",
-        "mapControls": "7d284e11fff296b1",
-        "mapSvg": "c3f9a9894aedbeb8",
-        "portfolioView": "3cdc91028d04a6e8",
-        "workOrdersView": "3971f9627436b73c",
-        "launchPlan": "545b9497e11f4664",
-        "stats": {
-          "total": "262",
-          "assigned": "0",
-          "unowned": "262"
-        },
-        "beacons": {
-          "tab": false,
-          "workOrders": true
-        },
-        "badge": "262",
-        "stored": {
-          "tasks": "6e9c960fd025b2e5",
-          "team": "6e9c960fd025b2e5",
-          "workOrders": "6e9c960fd025b2e5",
-          "portfolio": "6e9c960fd025b2e5"
-        },
-        "audit": []
-      },
-      "after": {
-        "view": "tracking",
-        "departments": "70579fc93aee322d",
-        "expandedDepartments": 0,
-        "legend": "971f6809d6782991",
-        "ownerFilter": [
-          "",
-          "Maintenance Coordinator",
-          "Portfolio Admin",
-          "Resident Coordinator"
-        ],
-        "teamView": "3bf751abfb1538b4",
-        "mapControls": "7d284e11fff296b1",
-        "mapSvg": "c3f9a9894aedbeb8",
-        "portfolioView": "3cdc91028d04a6e8",
-        "workOrdersView": "3971f9627436b73c",
-        "launchPlan": "2e65f2cdfd032b9b",
-        "stats": {
-          "total": "262",
-          "assigned": "262",
-          "unowned": "0"
-        },
-        "beacons": {
-          "tab": true,
-          "workOrders": true
-        },
-        "badge": "0",
-        "toast": "Demo company loaded",
-        "stored": {
-          "tasks": "a4986035d6a1e980",
-          "team": "10f951b65e6d4578",
-          "workOrders": "bbbe41f5c18f7772",
-          "portfolio": "47f15cf984a9dd08"
-        },
-        "audit": [
-          {
-            "action": "demo_company_loaded",
-            "title": "Demo Door Property Management"
-          }
-        ]
-      },
-      "alerts": [],
-      "handbookDownloads": 0
-    },
     "apply-role-template@team": {
       "before": {
         "view": "team",
@@ -2664,6 +2586,84 @@
       "alerts": [],
       "handbookDownloads": 0
     },
+    "load-demo-company@tracking": {
+      "before": {
+        "view": "tracking",
+        "departments": "f1aa0e059217ccb6",
+        "expandedDepartments": 0,
+        "legend": "c66ca84645042044",
+        "ownerFilter": [
+          "",
+          "UNOWNED"
+        ],
+        "teamView": "3bf751abfb1538b4",
+        "mapControls": "7d284e11fff296b1",
+        "mapSvg": "c3f9a9894aedbeb8",
+        "portfolioView": "3cdc91028d04a6e8",
+        "workOrdersView": "3971f9627436b73c",
+        "launchPlan": "545b9497e11f4664",
+        "stats": {
+          "total": "262",
+          "assigned": "0",
+          "unowned": "262"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": true
+        },
+        "badge": "262",
+        "stored": {
+          "tasks": "6e9c960fd025b2e5",
+          "team": "6e9c960fd025b2e5",
+          "workOrders": "6e9c960fd025b2e5",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": []
+      },
+      "after": {
+        "view": "tracking",
+        "departments": "70579fc93aee322d",
+        "expandedDepartments": 0,
+        "legend": "971f6809d6782991",
+        "ownerFilter": [
+          "",
+          "Maintenance Coordinator",
+          "Portfolio Admin",
+          "Resident Coordinator"
+        ],
+        "teamView": "3bf751abfb1538b4",
+        "mapControls": "7d284e11fff296b1",
+        "mapSvg": "c3f9a9894aedbeb8",
+        "portfolioView": "b5442936a0ad3c2e",
+        "workOrdersView": "3971f9627436b73c",
+        "launchPlan": "2e65f2cdfd032b9b",
+        "stats": {
+          "total": "262",
+          "assigned": "262",
+          "unowned": "0"
+        },
+        "beacons": {
+          "tab": true,
+          "workOrders": true
+        },
+        "badge": "0",
+        "toast": "Demo company loaded",
+        "stored": {
+          "tasks": "a4986035d6a1e980",
+          "team": "10f951b65e6d4578",
+          "workOrders": "bbbe41f5c18f7772",
+          "portfolio": "47f15cf984a9dd08"
+        },
+        "audit": [
+          {
+            "action": "demo_company_loaded",
+            "title": "Demo Door Property Management"
+          }
+        ]
+      },
+      "alerts": [],
+      "handbookDownloads": 0
+    },
     "load-demo-company@team": {
       "before": {
         "view": "team",
@@ -2712,8 +2712,86 @@
         "teamView": "0b14dffbaefe3f6f",
         "mapControls": "7d284e11fff296b1",
         "mapSvg": "c3f9a9894aedbeb8",
+        "portfolioView": "b5442936a0ad3c2e",
+        "workOrdersView": "3971f9627436b73c",
+        "launchPlan": "2e65f2cdfd032b9b",
+        "stats": {
+          "total": "262",
+          "assigned": "262",
+          "unowned": "0"
+        },
+        "beacons": {
+          "tab": true,
+          "workOrders": true
+        },
+        "badge": "0",
+        "toast": "Demo company loaded",
+        "stored": {
+          "tasks": "a4986035d6a1e980",
+          "team": "10f951b65e6d4578",
+          "workOrders": "bbbe41f5c18f7772",
+          "portfolio": "47f15cf984a9dd08"
+        },
+        "audit": [
+          {
+            "action": "demo_company_loaded",
+            "title": "Demo Door Property Management"
+          }
+        ]
+      },
+      "alerts": [],
+      "handbookDownloads": 0
+    },
+    "load-demo-company@workorders": {
+      "before": {
+        "view": "workorders",
+        "departments": "f1aa0e059217ccb6",
+        "expandedDepartments": 0,
+        "legend": "c66ca84645042044",
+        "ownerFilter": [
+          "",
+          "UNOWNED"
+        ],
+        "teamView": "3bf751abfb1538b4",
+        "mapControls": "7d284e11fff296b1",
+        "mapSvg": "c3f9a9894aedbeb8",
         "portfolioView": "3cdc91028d04a6e8",
         "workOrdersView": "3971f9627436b73c",
+        "launchPlan": "545b9497e11f4664",
+        "stats": {
+          "total": "262",
+          "assigned": "0",
+          "unowned": "262"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": true
+        },
+        "badge": "262",
+        "stored": {
+          "tasks": "6e9c960fd025b2e5",
+          "team": "6e9c960fd025b2e5",
+          "workOrders": "6e9c960fd025b2e5",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": []
+      },
+      "after": {
+        "view": "workorders",
+        "departments": "70579fc93aee322d",
+        "expandedDepartments": 0,
+        "legend": "971f6809d6782991",
+        "ownerFilter": [
+          "",
+          "Maintenance Coordinator",
+          "Portfolio Admin",
+          "Resident Coordinator"
+        ],
+        "teamView": "3bf751abfb1538b4",
+        "mapControls": "7d284e11fff296b1",
+        "mapSvg": "c3f9a9894aedbeb8",
+        "portfolioView": "b5442936a0ad3c2e",
+        "workOrdersView": "c2795a2bed95d7fb",
         "launchPlan": "2e65f2cdfd032b9b",
         "stats": {
           "total": "262",
@@ -2941,6 +3019,80 @@
         "mapSvg": "c3f9a9894aedbeb8",
         "portfolioView": "25d71154c808026a",
         "workOrdersView": "3971f9627436b73c",
+        "launchPlan": "0d54a6891e88a9f4",
+        "stats": {
+          "total": "262",
+          "assigned": "153",
+          "unowned": "109"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": false
+        },
+        "badge": "109",
+        "toast": "✓ Saved",
+        "stored": {
+          "tasks": "2f233a7f2c9a6420",
+          "team": "bc032a30f308e491",
+          "workOrders": "bf216adab9c44582",
+          "portfolio": "bddd8afb7b234420"
+        },
+        "audit": []
+      },
+      "alerts": [],
+      "handbookDownloads": 0
+    },
+    "import@workorders": {
+      "before": {
+        "view": "workorders",
+        "departments": "f1aa0e059217ccb6",
+        "expandedDepartments": 0,
+        "legend": "c66ca84645042044",
+        "ownerFilter": [
+          "",
+          "UNOWNED"
+        ],
+        "teamView": "3bf751abfb1538b4",
+        "mapControls": "7d284e11fff296b1",
+        "mapSvg": "c3f9a9894aedbeb8",
+        "portfolioView": "3cdc91028d04a6e8",
+        "workOrdersView": "3971f9627436b73c",
+        "launchPlan": "545b9497e11f4664",
+        "stats": {
+          "total": "262",
+          "assigned": "0",
+          "unowned": "262"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": true
+        },
+        "badge": "262",
+        "stored": {
+          "tasks": "6e9c960fd025b2e5",
+          "team": "6e9c960fd025b2e5",
+          "workOrders": "6e9c960fd025b2e5",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": []
+      },
+      "after": {
+        "view": "workorders",
+        "departments": "a43cf40951d5f00e",
+        "expandedDepartments": 17,
+        "legend": "ef5acc885cbf53ee",
+        "ownerFilter": [
+          "",
+          "Dana Whitfield",
+          "Marcus Reyes",
+          "Priya Raman",
+          "UNOWNED"
+        ],
+        "teamView": "3bf751abfb1538b4",
+        "mapControls": "7d284e11fff296b1",
+        "mapSvg": "c3f9a9894aedbeb8",
+        "portfolioView": "25d71154c808026a",
+        "workOrdersView": "284d848b74331b57",
         "launchPlan": "0d54a6891e88a9f4",
         "stats": {
           "total": "262",
