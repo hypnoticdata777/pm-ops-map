@@ -5,6 +5,7 @@ import {
 } from './state.js';
 import { countUnowned } from './domain/workload.js';
 import { CRITICAL_COVERAGE_AREAS, WEAK_COVERAGE_PCT, summarizeCoverage } from './domain/coverage.js';
+import { commit, REFRESH_AFTER_DEMO_COMPANY } from './commit.js';
 import {
   getOpsProfile, getCompanyName, _showActionToast,
   COMPANY_KEY, OPS_PROFILE_KEY, LAUNCH_CHECKLIST_KEY, applyCompanyName, applyOpsProfile,
@@ -458,16 +459,8 @@ function _applyDemoCompanyData() {
   } catch (_) {}
   applyCompanyName(demo.company);
   applyOpsProfile(demo.profile);
-  saveTeamData();
-  savePortfolio();
-  saveWorkOrders();
-  saveToStorage();
   logAudit('demo_company_loaded', { title: demo.company });
-  renderLaunchPlan();
-  if (window.renderTrackingView) window.renderTrackingView();
-  if (window.populateOwnerFilter) window.populateOwnerFilter();
-  if (window.renderLegend) window.renderLegend();
-  if (window.updateStats) window.updateStats();
+  commit({ persist: ['team', 'portfolio', 'workOrders', 'tasks'], refresh: REFRESH_AFTER_DEMO_COMPANY });
 }
 
 export function loadDemoCompany() {

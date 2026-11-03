@@ -2,7 +2,7 @@
 
 The single source of truth for what has shipped, what is in progress, and what comes next. The README's [Roadmap](../README.md#roadmap) section is the short version; this is the detail. Update this file in the same PR that finishes (or re-scopes) a step.
 
-**Last updated:** 2026-10-28 · **Current focus:** finishing Phase 1B step 5
+**Last updated:** 2026-11-03 · **Current focus:** Phase 1C
 
 ## Status at a glance
 
@@ -10,8 +10,8 @@ The single source of truth for what has shipped, what is in progress, and what c
 |---|---|---|
 | 0 | Trust: security, data safety, privacy, demo, dependency hygiene | ✅ Done |
 | 1A | Foundations: stable task IDs, runtime schemas, JSDoc types (steps 1–3) | ✅ Done |
-| 1B | Foundations: pure domain layer, one commit path (steps 4–5) | 🔧 In progress: step 4 done, step 5 partly done |
-| 1C | Foundations: event delegation, E2E expansion (steps 6–7) | ⏳ After 1B |
+| 1B | Foundations: pure domain layer, one commit path (steps 4–5) | ✅ Done |
+| 1C | Foundations: event delegation, E2E expansion (steps 6–7) | ⏭ Next |
 | 2 | Positioning: Map → Assign → Review → Share | ✅ Done |
 | 3 | Responsibility intelligence | 📋 Planned |
 | 4 | Onboarding and responsibilities import | 📋 Planned |
@@ -52,9 +52,11 @@ Shipped-module tests (Vitest + jsdom importing the real ES modules), XSS and CSV
 2. **Runtime schemas.** A small hand-rolled schema layer (`js/schema.js`) returning `{ value, errors[] }` with field paths. The import review names the field and record it repairs; sync replies are checked; storage load records its repairs; the sync server validates pushes.
 3. **Types without a migration.** JSDoc types with `npm run typecheck` (strict) in CI. The data and boundary modules are fully checked; the rest carry `// @ts-nocheck — TODO(types)` until converted.
 
-### 1B: in progress
+### 1B: done
 
-**Status:** step 4 is done. Step 5 is partly done: `js/commit.js` exists and auto-assign, undo and import use it. Still on the old copy-pasted block: `removeEmployee`, `applyRoleTemplate` and the demo-company loader (`launchPlan.js`). Presets for them (`REFRESH_AFTER_ROSTER_CHANGE`, `REFRESH_AFTER_TEMPLATE`, `REFRESH_AFTER_DEMO_COMPANY`) already exist in `commit.js` and are pinned by tests.
+**Status:** both steps are done. `js/domain/` holds workload, coverage and `planAssignments` (with a reason per assignment); `js/commit.js` is the one save-and-refresh path, used by auto-assign, undo, import, removing a person, applying a role template and loading the demo company. A static test (`commit-path.test.js`) keeps the hand-written blocks from coming back, and a golden file recorded before the refactor (`js/__tests__/golden/`) proves behavior did not change.
+
+**Open product decisions found along the way** (today's behavior, deliberately preserved): importing a workspace while on the map or team view does not refresh that view, and loading the demo company does not refresh the team or map view. Each is a one-word change in `js/commit.js` (add `mapIfCurrent` / `teamIfCurrent` to a preset) but visible to users, so it needs a decision.
 
 4. **Pure domain layer** (`js/domain/`: no DOM, no shared-state imports).
    - **Coverage:** de-duplicate the near-identical copies in `launchPlan.js` and `handbook.js`. Today "covered" only means "not UNOWNED".
@@ -65,7 +67,7 @@ Shipped-module tests (Vitest + jsdom importing the real ES modules), XSS and CSV
 5. **One commit path.** The "save + re-render" block (`saveToStorage`, `renderTrackingView`, `updateStats`, `populateOwnerFilter`, `renderLegend`, map/team refresh) is copy-pasted in `runAutoAssign`, `undoLastAction`, `_applyImportedState`, `setTaskOwner` and others. Replace it with one `commit()` helper (persist, re-render affected views, update beacons and stats), starting with the duplicated sites.
    - *Done when:* those sites use `commit()` with no behavior change.
 
-### 1C: after 1B
+### 1C: next
 
 6. **Event delegation.** Replace the ~139 inline `on*=` handlers and the `Object.assign(window, …)` block in `app.js` with `data-action` attributes and one delegated listener per view, **incrementally, one view at a time** (tracking → team → work orders → portfolio → map/launch plan → modals). Update `render-escaping.test.js` (it asserts exact `onclick` strings), CONTRIBUTING and the e2e scanner.
    - *Done when:* a test proves rendered HTML contains no `on*=` attributes, the `window` bindings are gone, and the XSS suite is still green.
@@ -76,7 +78,7 @@ Shipped-module tests (Vitest + jsdom importing the real ES modules), XSS and CSV
 | PR | Steps | Status |
 |---|---|---|
 | A | 1–3 | Merged (#64) |
-| B | 4–5 | In review (step 5 finished in a follow-up) |
+| B | 4–5 | Merged (#78, then a follow-up finishing step 5) |
 | C | 6–7 | After B |
 
 ## Phase 2: Positioning (done)

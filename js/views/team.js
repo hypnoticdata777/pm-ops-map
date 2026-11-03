@@ -9,7 +9,9 @@ import {
 } from '../state.js';
 import { buildWorkloadMap, countUnowned } from '../domain/workload.js';
 import { planAssignments } from '../domain/assignment.js';
-import { commit, REFRESH_AFTER_TASK_CHANGE } from '../commit.js';
+import {
+  commit, REFRESH_AFTER_TASK_CHANGE, REFRESH_AFTER_ROSTER_CHANGE, REFRESH_AFTER_TEMPLATE,
+} from '../commit.js';
 import {
   saveToStorage, saveTeamData, saveWorkOrders, logAudit,
   getCompanyName, _showActionToast, showSaveToast, _fileSlug,
@@ -241,21 +243,7 @@ export function removeEmployee(name) {
 
   teamData.employees = teamData.employees.filter(e => e.name !== name);
 
-  saveTeamData();
-  saveToStorage();
-  saveWorkOrders();
-  renderTeamView();
-  renderTrackingView();
-  updateStats();
-  renderLegend();
-  populateOwnerFilter();
-  if (currentView === 'workorders') renderWorkOrdersView();
-  updateWorkOrderBeacon();
-
-  if (currentView === 'map') {
-    renderMapControls();
-    renderFlowMap();
-  }
+  commit({ persist: ['team', 'tasks', 'workOrders'], refresh: REFRESH_AFTER_ROSTER_CHANGE });
 }
 
 export function toggleAffinity(empName, deptId) {
@@ -372,15 +360,7 @@ export function applyRoleTemplate(templateId, skipConfirm = false) {
   });
 
   setTeamData({ employees: nextEmployees });
-  saveTeamData();
-  saveToStorage();
-  saveWorkOrders();
-  renderTeamView();
-  renderTrackingView();
-  updateStats();
-  renderLegend();
-  populateOwnerFilter();
-  updateWorkOrderBeacon();
+  commit({ persist: ['team', 'tasks', 'workOrders'], refresh: REFRESH_AFTER_TEMPLATE });
   _showActionToast(`${template.label} template applied`, 'save-toast--success');
 }
 
