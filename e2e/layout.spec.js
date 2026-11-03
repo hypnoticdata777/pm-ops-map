@@ -2,6 +2,7 @@
 // width. The populated demo is the stress case — rows with a due date, a dependency
 // chip, notes and custom-field buttons, a status pill, and an owner badge all at once.
 import { test, expect } from '@playwright/test';
+import { clickExpandAll } from './helpers/tracking.js';
 
 const WIDTHS = [1440, 1280, 1024, 820, 600, 390];
 
@@ -43,7 +44,7 @@ for (const width of WIDTHS) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('index.html?demo=1');
     await page.waitForSelector('#departments .department');
-    await page.evaluate(() => window.toggleExpandAllDepartments());
+    await clickExpandAll(page);
     await page.waitForTimeout(100);
     const problems = await overlaps(page);
     expect(problems.slice(0, 12), `${problems.length} layout problems`).toEqual([]);
@@ -54,7 +55,7 @@ test('rows with every kind of chip stay readable: the task name keeps a usable w
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto('index.html?demo=1');
   await page.waitForSelector('#departments .department');
-  await page.evaluate(() => window.toggleExpandAllDepartments());
+  await clickExpandAll(page);
   const narrow = await page.evaluate(() => [...document.querySelectorAll('.department .task-name')]
     .filter(el => el.getClientRects().length && el.getBoundingClientRect().width < 100)
     .map(el => `${Math.round(el.getBoundingClientRect().width)}px: ${el.textContent.slice(0, 40)}`));

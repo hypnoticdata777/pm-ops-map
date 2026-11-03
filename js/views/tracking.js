@@ -144,9 +144,9 @@ function _updateBulkBar() {
       <option value="blocked">Blocked</option>
       <option value="done">Done</option>
     </select>
-    <button class="btn btn-primary" onclick="applyBulkAction()">Apply</button>
-    <button class="btn btn-secondary" onclick="selectAllVisibleTasks()">Select All</button>
-    <button class="btn btn-secondary" onclick="cancelBulkMode()">Cancel</button>
+    <button class="btn btn-primary" data-action="apply-bulk-action">Apply</button>
+    <button class="btn btn-secondary" data-action="select-all-visible-tasks">Select All</button>
+    <button class="btn btn-secondary" data-action="cancel-bulk-mode">Cancel</button>
   `;
   bar.classList.add('visible');
 }
@@ -168,7 +168,7 @@ export function renderTrackingView() {
       ? Math.round((doneCount / dept.tasks.length) * 100) : 0;
 
     deptDiv.innerHTML = `
-      <div class="department-header" style="background: ${dept.color}" onclick="toggleDepartment('${dept.id}')">
+      <div class="department-header" style="background: ${dept.color}" data-action="toggle-department">
         <div class="dept-header-top">
           <span>
             ${dept.name}
@@ -196,44 +196,44 @@ export function renderTrackingView() {
                data-status="${status}"
                data-priority="${priority}">
             <div class="task-left">
-              ${_bulkMode ? `<input type="checkbox" class="task-bulk-check" ${_bulkSelected.has(`${dept.id}:${taskIdx}`) ? 'checked' : ''} onclick="toggleTaskCheck('${dept.id}',${taskIdx});event.stopPropagation()" aria-label="Select task">` : ''}
+              ${_bulkMode ? `<input type="checkbox" class="task-bulk-check" ${_bulkSelected.has(`${dept.id}:${taskIdx}`) ? 'checked' : ''} data-action="toggle-task-check" aria-label="Select task">` : ''}
               <span class="priority-dot priority-${priority}"
-                    onclick="cycleTaskPriority('${dept.id}', ${taskIdx})"
+                    data-action="cycle-priority"
                     title="Priority: ${PRIORITY_LABELS[priority]} — click to change"></span>
               ${task.dueDate
                 ? `<span class="due-date-chip${isTaskOverdue(task) ? ' due-date-overdue' : ''}"
                          title="Due: ${escapeHtml(task.dueDate)}"
-                         onclick="openDueDatePicker('${dept.id}', ${taskIdx}, this)">${escapeHtml(formatDueChip(task.dueDate))}</span>`
+                         data-action="open-due-date-picker">${escapeHtml(formatDueChip(task.dueDate))}</span>`
                 : `<span class="due-date-empty"
-                         onclick="openDueDatePicker('${dept.id}', ${taskIdx}, this)">+ date</span>`
+                         data-action="open-due-date-picker">+ date</span>`
               }
               ${task.blockedBy
                 ? `<span class="dep-chip${isDependencyBlocking(task) ? ' dep-chip--blocking' : ' dep-chip--resolved'}"
                          title="Blocked by: ${escapeHtml(task.blockedBy.name)}"
-                         onclick="openDependencyPicker('${dept.id}', ${taskIdx}, this)">&#128279; ${escapeHtml(task.blockedBy.name.slice(0, 16))}${task.blockedBy.name.length > 16 ? '…' : ''}</span>`
-                : `<span class="dep-add-btn" title="Add dependency" onclick="openDependencyPicker('${dept.id}', ${taskIdx}, this)">&#128279;</span>`
+                         data-action="open-dependency-picker">&#128279; ${escapeHtml(task.blockedBy.name.slice(0, 16))}${task.blockedBy.name.length > 16 ? '…' : ''}</span>`
+                : `<span class="dep-add-btn" title="Add dependency" data-action="open-dependency-picker">&#128279;</span>`
               }
               <div class="task-name"
-                   ondblclick="startTaskEdit('${dept.id}', ${taskIdx})"
+                   data-action-dblclick="start-task-edit"
                    title="Double-click to rename">${escapeHtml(task.name)}</div>
             </div>
             <div class="task-right">
               <button class="task-notes-btn${task.notes ? ' task-notes-btn--has-notes' : ''}"
-                      onclick="openTaskNotes('${dept.id}',${taskIdx})"
+                      data-action="open-task-notes"
                       title="${task.notes ? 'Edit notes' : 'Add notes'}"
                       aria-label="${task.notes ? 'Edit notes' : 'Add notes'}">&#128221;</button>
               <button class="task-fields-btn${task.customFields && Object.keys(task.customFields).length > 0 ? ' task-fields-btn--has-fields' : ''}"
-                      onclick="openCustomFields('${dept.id}',${taskIdx})"
+                      data-action="open-custom-fields"
                       title="${task.customFields && Object.keys(task.customFields).length > 0 ? 'Edit custom fields' : 'Add custom fields'}"
                       aria-label="Custom fields">&#127991;</button>
               <span class="status-pill status-${status}"
-                    onclick="cycleTaskStatus('${dept.id}', ${taskIdx})"
+                    data-action="cycle-status"
                     title="Status: ${STATUS_LABELS[status]} — click to change">
                 ${STATUS_LABELS[status]}
               </span>
               <div class="task-owner${isUnowned ? ' owner-unowned' : ''}"
                    style="${!isUnowned ? `background:${escapeHtml(getEmployeeHex(task.owner))}` : ''}"
-                   onclick="showOwnerPicker('${dept.id}', ${taskIdx}, this)"
+                   data-action="show-owner-picker"
                    title="Click to reassign">
                 ${escapeHtml(task.owner)}
               </div>
@@ -300,7 +300,6 @@ export function startTaskEdit(deptId, taskIdx) {
     } else if (e.key === 'Escape') {
       saved = true;
       nameEl.textContent = originalName;
-      nameEl.ondblclick = () => startTaskEdit(deptId, taskIdx);
     }
   });
 
@@ -326,7 +325,6 @@ function _commitTaskName(deptId, taskIdx, newValue, originalName, nameEl, taskEl
     nameEl.textContent = trimmed;
   }
   nameEl.title = 'Double-click to rename';
-  nameEl.ondblclick = () => startTaskEdit(deptId, taskIdx);
 
   saveToStorage();
   if (currentView === 'map') renderFlowMap();
@@ -669,23 +667,23 @@ export function setTaskDueDate(deptId, taskIdx, dateStr) {
       const priority = asPriority(task.priority);
       taskLeft.innerHTML = `
         <span class="priority-dot priority-${priority}"
-              onclick="cycleTaskPriority('${deptId}', ${taskIdx})"
+              data-action="cycle-priority"
               title="Priority: ${PRIORITY_LABELS[priority]} — click to change"></span>
         ${task.dueDate
           ? `<span class="due-date-chip${overdue ? ' due-date-overdue' : ''}"
                    title="Due: ${escapeHtml(task.dueDate)}"
-                   onclick="openDueDatePicker('${deptId}', ${taskIdx}, this)">${escapeHtml(formatDueChip(task.dueDate))}</span>`
+                   data-action="open-due-date-picker">${escapeHtml(formatDueChip(task.dueDate))}</span>`
           : `<span class="due-date-empty"
-                   onclick="openDueDatePicker('${deptId}', ${taskIdx}, this)">+ date</span>`
+                   data-action="open-due-date-picker">+ date</span>`
         }
         ${task.blockedBy
           ? `<span class="dep-chip${isDependencyBlocking(task) ? ' dep-chip--blocking' : ' dep-chip--resolved'}"
                    title="Blocked by: ${escapeHtml(task.blockedBy.name)}"
-                   onclick="openDependencyPicker('${deptId}', ${taskIdx}, this)">&#128279; ${escapeHtml(task.blockedBy.name.slice(0, 16))}${task.blockedBy.name.length > 16 ? '…' : ''}</span>`
-          : `<span class="dep-add-btn" title="Add dependency" onclick="openDependencyPicker('${deptId}', ${taskIdx}, this)">&#128279;</span>`
+                   data-action="open-dependency-picker">&#128279; ${escapeHtml(task.blockedBy.name.slice(0, 16))}${task.blockedBy.name.length > 16 ? '…' : ''}</span>`
+          : `<span class="dep-add-btn" title="Add dependency" data-action="open-dependency-picker">&#128279;</span>`
         }
         <div class="task-name"
-             ondblclick="startTaskEdit('${deptId}', ${taskIdx})"
+             data-action-dblclick="start-task-edit"
              title="Double-click to rename">${escapeHtml(task.name)}</div>
       `;
     }
@@ -926,7 +924,7 @@ function _renderCustomFieldsBody(body, deptId, taskIdx, task) {
             <div class="custom-field-row">
               <span class="custom-field-key">${escapeHtml(k)}</span>
               <span class="custom-field-value">${escapeHtml(v)}</span>
-              <button class="custom-field-delete" onclick="deleteCustomField('${escapeHtml(deptId)}',${taskIdx},${escapeHtml(JSON.stringify(k))})" title="Remove field">&times;</button>
+              <button class="custom-field-delete" data-action="delete-custom-field" data-key="${escapeHtml(k)}" title="Remove field">&times;</button>
             </div>
           `).join('')}
         </div>`
@@ -934,7 +932,7 @@ function _renderCustomFieldsBody(body, deptId, taskIdx, task) {
     <div class="custom-field-add">
       <input id="cf-key-input"   type="text" class="cf-input" placeholder="Field name (e.g. Billing Code)" maxlength="40" autocomplete="off">
       <input id="cf-val-input"   type="text" class="cf-input" placeholder="Value (e.g. BC-001)" maxlength="200" autocomplete="off">
-      <button class="btn btn-primary" onclick="addCustomField('${escapeHtml(deptId)}',${taskIdx})">Add</button>
+      <button class="btn btn-primary" data-action="add-custom-field">Add</button>
     </div>
   `;
 
@@ -1008,3 +1006,56 @@ export function isDependencyBlocking(task) {
   if (!depTask) return false;
   return (depTask.status || 'todo') !== 'done';
 }
+
+// ── Actions ───────────────────────────────────────────────────────────────────
+// What the controls on this screen do when clicked (see js/actions.js). A task control does not carry its
+// department and position itself: the task row around it already has data-dept-id and data-task-idx, so one
+// helper reads them and the markup stays free of per-control arguments.
+
+/** @param {HTMLElement} el A control inside a task row. */
+function _taskRef(el) {
+  const row = /** @type {HTMLElement} */ (el.closest('.task-item'));
+  return { deptId: row.dataset.deptId, taskIdx: Number(row.dataset.taskIdx) };
+}
+
+/** The task whose custom fields are open: the modal remembers it. */
+function _openFieldsTask() {
+  const modal = /** @type {HTMLElement} */ (document.getElementById('custom-fields-modal'));
+  return { deptId: modal.dataset.deptId, taskIdx: Number(modal.dataset.taskIdx) };
+}
+
+export const trackingActions = {
+  // Departments
+  'toggle-department': el => toggleDepartment(/** @type {HTMLElement} */ (el.closest('.department')).dataset.id),
+  'toggle-expand-all': () => toggleExpandAllDepartments(),
+
+  // One task
+  'cycle-priority': el => { const { deptId, taskIdx } = _taskRef(el); cycleTaskPriority(deptId, taskIdx); },
+  'cycle-status': el => { const { deptId, taskIdx } = _taskRef(el); cycleTaskStatus(deptId, taskIdx); },
+  'start-task-edit': el => { const { deptId, taskIdx } = _taskRef(el); startTaskEdit(deptId, taskIdx); },
+  'show-owner-picker': el => { const { deptId, taskIdx } = _taskRef(el); showOwnerPicker(deptId, taskIdx, el); },
+  'open-due-date-picker': el => { const { deptId, taskIdx } = _taskRef(el); openDueDatePicker(deptId, taskIdx, el); },
+  'open-dependency-picker': el => { const { deptId, taskIdx } = _taskRef(el); openDependencyPicker(deptId, taskIdx, el); },
+  'open-task-notes': el => { const { deptId, taskIdx } = _taskRef(el); openTaskNotes(deptId, taskIdx); },
+  'open-custom-fields': el => { const { deptId, taskIdx } = _taskRef(el); openCustomFields(deptId, taskIdx); },
+  'add-custom-field': () => { const { deptId, taskIdx } = _openFieldsTask(); addCustomField(deptId, taskIdx); },
+  'delete-custom-field': el => { const { deptId, taskIdx } = _openFieldsTask(); deleteCustomField(deptId, taskIdx, el.dataset.key); },
+
+  // Search and filters
+  'debounce-apply-filter': () => debounceApplyFilter(),
+  'apply-filter': () => applyFilter(),
+  'clear-filter': () => clearFilter(),
+
+  // Bulk select
+  'toggle-bulk-mode': () => toggleBulkMode(),
+  'cancel-bulk-mode': () => cancelBulkMode(),
+  'select-all-visible-tasks': () => selectAllVisibleTasks(),
+  'apply-bulk-action': () => applyBulkAction(),
+  // The checkbox used to stop the click from reaching the document, so a picker's click-outside closer did not
+  // fire when someone ticked a box; stopImmediatePropagation keeps that.
+  'toggle-task-check': (el, event) => {
+    const { deptId, taskIdx } = _taskRef(el);
+    toggleTaskCheck(deptId, taskIdx);
+    event.stopImmediatePropagation();
+  },
+};

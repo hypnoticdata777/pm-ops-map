@@ -1,0 +1,270 @@
+[
+  {
+    "label": "start",
+    "rows": [
+      [
+        "leasing:0",
+        {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Create property listings and syndicate to platforms",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      ],
+      [
+        "leasing:1",
+        {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Conduct pricing strategy & rent comp analysis",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      ],
+      [
+        "maintenance:0",
+        {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Monitor work order queue daily",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      ]
+    ],
+    "departments": {
+      "total": 17,
+      "expanded": [],
+      "hidden": [],
+      "counts": {},
+      "completion": {},
+      "progress": {}
+    },
+    "visibleTasks": 262,
+    "byStatus": {
+      "todo": 262
+    },
+    "byOwner": {
+      "UNOWNED": 262
+    },
+    "byPriority": {
+      "medium": 262
+    },
+    "filters": {
+      "search": "",
+      "owner": "",
+      "status": "",
+      "priority": "",
+      "count": "",
+      "countShown": false,
+      "noResults": "none"
+    },
+    "ownerFilterOptions": [
+      "",
+      "UNOWNED"
+    ],
+    "buttons": {
+      "expandAll": "▼ Expand All",
+      "bulk": "☑ Bulk Select",
+      "bulkClass": "btn btn-secondary"
+    },
+    "bulkBar": {
+      "visible": false,
+      "text": ""
+    },
+    "stats": {
+      "total": "262",
+      "assigned": "0",
+      "done": "0",
+      "unowned": "262",
+      "blocked": "0"
+    },
+    "toast": "",
+    "pickers": {
+      "owner": [],
+      "dep": 0,
+      "depClear": false,
+      "due": false
+    },
+    "notesModal": {
+      "visible": false,
+      "title": "Task",
+      "value": ""
+    },
+    "fieldsModal": {
+      "visible": false,
+      "title": "Task",
+      "rows": []
+    },
+    "stored": {
+      "changedTasks": 0
+    }
+  },
+  {
+    "label": "open leasing",
+    "changed": {
+      "departments": {
+        "total": 17,
+        "expanded": [
+          "leasing"
+        ],
+        "hidden": [],
+        "counts": {},
+        "completion": {},
+        "progress": {}
+      }
+    }
+  },
+  {
+    "label": "close leasing",
+    "changed": {
+      "departments": {
+        "total": 17,
+        "expanded": [],
+        "hidden": [],
+        "counts": {},
+        "completion": {},
+        "progress": {}
+      }
+    }
+  },
+  {
+    "label": "expand all",
+    "changed": {
+      "departments": {
+        "total": 17,
+        "expanded": [
+          "leasing",
+          "applications",
+          "move-ins",
+          "tenant-comms",
+          "delinquency",
+          "maintenance",
+          "vendors",
+          "unit-turns",
+          "move-outs",
+          "field-services",
+          "utilities",
+          "owner-relations",
+          "owner-onboarding",
+          "accounting",
+          "compliance",
+          "reporting",
+          "systems"
+        ],
+        "hidden": [],
+        "counts": {},
+        "completion": {},
+        "progress": {}
+      },
+      "buttons": {
+        "expandAll": "▲ Collapse All",
+        "bulk": "☑ Bulk Select",
+        "bulkClass": "btn btn-secondary"
+      }
+    }
+  },
+  {
+    "label": "collapse all",
+    "changed": {
+      "departments": {
+        "total": 17,
+        "expanded": [],
+        "hidden": [],
+        "counts": {},
+        "completion": {},
+        "progress": {}
+      },
+      "buttons": {
+        "expandAll": "▼ Expand All",
+        "bulk": "☑ Bulk Select",
+        "bulkClass": "btn btn-secondary"
+      }
+    }
+  },
+  {
+    "label": "open one then expand all",
+    "changed": {
+      "departments": {
+        "total": 17,
+        "expanded": [
+          "leasing",
+          "applications",
+          "move-ins",
+          "tenant-comms",
+          "delinquency",
+          "maintenance",
+          "vendors",
+          "unit-turns",
+          "move-outs",
+          "field-services",
+          "utilities",
+          "owner-relations",
+          "owner-onboarding",
+          "accounting",
+          "compliance",
+          "reporting",
+          "systems"
+        ],
+        "hidden": [],
+        "counts": {},
+        "completion": {},
+        "progress": {}
+      },
+      "buttons": {
+        "expandAll": "▲ Collapse All",
+        "bulk": "☑ Bulk Select",
+        "bulkClass": "btn btn-secondary"
+      }
+    }
+  },
+  {
+    "dialogs": []
+  }
+]

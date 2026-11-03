@@ -63,10 +63,11 @@ npm start       # listens on :4000 — see server/README.md
 ```
 pm-ops-map/
 ├── config.json         Starter departments, tasks, owners, colors, and affinities
-├── index.html          Main layout, modals, navigation, and inline handlers
+├── index.html          Main layout, modals and navigation (controls use data-action; see "Wiring controls")
 ├── css/style.css       Application styles
 ├── js/
-│   ├── app.js          Browser entry point and window handler registration
+│   ├── app.js          Browser entry point; registers each screen's actions (and, until the conversion finishes, the remaining window handlers)
+│   ├── actions.js      Event delegation: data-action name -> function
 │   ├── state.js        Shared in-memory state and constants
 │   ├── storage.js      localStorage, profile, audit, and reset helpers
 │   ├── io.js           JSON/CSV export, import, clipboard sync, and undo
@@ -105,13 +106,14 @@ Every task has a permanent `id` (`<department>-<NNN>`, e.g. `maintenance-014`). 
 
 PM Ops Map renders data it did not create — imported JSON, pasted clipboard text, Team Sync snapshots, restored backups — so every contribution follows these rules:
 
-1. **Never put user data inside JavaScript source in an inline handler.** Pass it through a `data-*` attribute and read it from the element:
+1. **Never put user data inside JavaScript source.** Controls are wired with `data-action` (see "Wiring controls"), and the data they need travels in `data-*` attributes, escaped, never inside the attribute that names the action:
    ```js
    // Good
-   `<button data-id="${escapeHtml(wo.id)}" onclick="deleteWorkOrder(this.dataset.id)">`
+   `<button data-action="delete-work-order" data-id="${escapeHtml(wo.id)}">`
    // Bad — an id containing a quote runs attacker-controlled script
    `<button onclick="deleteWorkOrder('${wo.id}')">`
    ```
+   Screens that have not been converted yet still use `onclick="fn(this.dataset.id)"`; the rule there is the same (read from `this.dataset`, never interpolate into the call).
 2. **Escape every dynamic value** that goes into HTML with `escapeHtml()` — text, attributes, and `title`/`aria-label` alike. Numbers should go through `Number()`.
 3. **Class names and `data-*` values must come from a known list.** Use `asStatus()` / `asPriority()` / `asHex()` from `js/state.js` rather than interpolating the raw value.
 4. **Links:** only store and render `normalizeUrl(url)` (http/https only).
@@ -164,11 +166,32 @@ Dependabot opens weekly update PRs (`.github/dependabot.yml`): minor and patch b
 
 The client (`index.html`, `js/`, `css/`) has no runtime npm dependencies and should keep it — everything in the root `package.json` is test or build tooling.
 
+## Wiring controls
+
+A control says what it does with `data-action="name"`; one listener installed in `js/actions.js` looks the name up and calls the function. Nothing is global and no JavaScript is built from data.
+
+```js
+// in the view: markup carries the name, and the data it needs as data-* attributes
+`<span class="status-pill" data-action="cycle-status">…</span>`   // the row around it has data-dept-id / data-task-idx
+
+// in the view's actions table (exported, registered once in app.js)
+export const trackingActions = {
+  'cycle-status': el => { const { deptId, taskIdx } = _taskRef(el); cycleTaskStatus(deptId, taskIdx); },
+};
+```
+
+- Click is `data-action`; other events are `data-action-dblclick`, `data-action-change` and `data-action-input`.
+- A handler is called as `handler(element, event)`. `element` is the control that carries the attribute (what `this` was in an inline handler). Read data from `element.dataset` or from the element's row or modal.
+- Ancestors with an action run too, innermost first, until a handler calls `event.stopPropagation()`. To also keep a later document-level listener (a click-outside closer) from seeing the click, use `event.stopImmediatePropagation()`.
+- A name that is not registered logs `console.error`, and the browser test that clicks the control fails on it.
+- Add the new name to the screen's actions table and use it in markup; `js/__tests__/tracking-delegation.test.js` shows the checks a converted screen gets (no `on*` attributes in anything it renders, every name registered, none unused, no window binding).
+- Converted so far: the Map & Review screen. Remaining screens and modals are converted one at a time (see `docs/ROADMAP.md`, Phase 1C).
+
 ## Pull Request Guidelines
 
 - Keep PRs focused — one change per PR
 - If you're editing `config.json`, make sure the data structure matches the existing schema exactly
-- If you're editing an HTML-called handler, update both `index.html` and the `Object.assign(window, ...)` block in `js/app.js`
+- If you're wiring a control, use `data-action` (below). If you're editing a handler on a screen that still uses `onclick`, update both `index.html` and the `Object.assign(window, ...)` block in `js/app.js`
 - If you're editing a view, keep changes in the relevant `js/views/` module when possible
 - No new runtime dependencies in the client app (`index.html`, `js/`, `css/`) — it should keep working as browser-native HTML, CSS, and JavaScript with zero installs. `server/` is a separate package and may have its own minimal dependencies.
 - Run `npm run typecheck` and `npm test` before submitting — both must pass. If you touched rendering, import/export, or storage code, also run `npm run test:e2e` (one-time setup: `npx playwright install chromium`). If you touched `server/`, also run `npm test` inside `server/`.

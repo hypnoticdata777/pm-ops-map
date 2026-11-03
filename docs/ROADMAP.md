@@ -11,7 +11,7 @@ The single source of truth for what has shipped, what is in progress, and what c
 | 0 | Trust: security, data safety, privacy, demo, dependency hygiene | ✅ Done |
 | 1A | Foundations: stable task IDs, runtime schemas, JSDoc types (steps 1–3) | ✅ Done |
 | 1B | Foundations: pure domain layer, one commit path (steps 4–5) | ✅ Done |
-| 1C | Foundations: event delegation, E2E expansion (steps 6–7) | ⏭ Next |
+| 1C | Foundations: event delegation, E2E expansion (steps 6–7) | 🚧 In progress (Map & Review converted) |
 | 2 | Positioning: Map → Assign → Review → Share | ✅ Done |
 | 3 | Responsibility intelligence | 📋 Planned |
 | 4 | Onboarding and responsibilities import | 📋 Planned |
@@ -67,7 +67,13 @@ Shipped-module tests (Vitest + jsdom importing the real ES modules), XSS and CSV
 5. **One commit path.** The "save + re-render" block (`saveToStorage`, `renderTrackingView`, `updateStats`, `populateOwnerFilter`, `renderLegend`, map/team refresh) is copy-pasted in `runAutoAssign`, `undoLastAction`, `_applyImportedState`, `setTaskOwner` and others. Replace it with one `commit()` helper (persist, re-render affected views, update beacons and stats), starting with the duplicated sites.
    - *Done when:* those sites use `commit()` with no behavior change.
 
-### 1C: next
+### 1C: in progress
+
+**Status:** `js/actions.js` is the delegation layer. The Map & Review (tracking) screen is converted: no inline handlers in what it renders, its functions are no longer on `window` (two modal close buttons in `index.html` still use `closeTaskNotes` / `closeCustomFields` until the modals are converted), and a browser characterization recorded on the old code (`e2e/tracking-interactions.spec.js`, `e2e/golden/tracking/`) passes unchanged. Next: team, work orders, portfolio, map and launch plan, then modals and the navigation, then the E2E expansion.
+
+**Found along the way:** pressing Enter in the task rename box does not save (the Enter handler marks the edit as saved and then blurs, and the blur handler skips saving once it is marked). Recorded as-is by the characterization and left for its own change.
+
+**Hidden couplings to fix in their own slice:** `launchPlan.js` finds the Map tab with `document.querySelector('[onclick*=map]')` (breaks when the navigation is converted; select by `data-view` instead), and still reaches `showNewWorkOrderModal`, `downloadOperationsHandbook` and `switchView` through `window` (the window-binding removal for those must turn them into imports first). The tracking slice removed the same kind of coupling for `applyFilter`.
 
 6. **Event delegation.** Replace the ~139 inline `on*=` handlers and the `Object.assign(window, …)` block in `app.js` with `data-action` attributes and one delegated listener per view, **incrementally, one view at a time** (tracking → team → work orders → portfolio → map/launch plan → modals). Update `render-escaping.test.js` (it asserts exact `onclick` strings), CONTRIBUTING and the e2e scanner.
    - *Done when:* a test proves rendered HTML contains no `on*=` attributes, the `window` bindings are gone, and the XSS suite is still green.

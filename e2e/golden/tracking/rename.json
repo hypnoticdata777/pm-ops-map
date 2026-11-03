@@ -1,0 +1,413 @@
+[
+  {
+    "label": "start",
+    "rows": [
+      [
+        "leasing:0",
+        {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Create property listings and syndicate to platforms",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      ],
+      [
+        "leasing:1",
+        {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Conduct pricing strategy & rent comp analysis",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      ],
+      [
+        "maintenance:0",
+        {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Monitor work order queue daily",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      ]
+    ],
+    "departments": {
+      "total": 17,
+      "expanded": [
+        "leasing"
+      ],
+      "hidden": [],
+      "counts": {},
+      "completion": {},
+      "progress": {}
+    },
+    "visibleTasks": 262,
+    "byStatus": {
+      "todo": 262
+    },
+    "byOwner": {
+      "UNOWNED": 262
+    },
+    "byPriority": {
+      "medium": 262
+    },
+    "filters": {
+      "search": "",
+      "owner": "",
+      "status": "",
+      "priority": "",
+      "count": "",
+      "countShown": false,
+      "noResults": "none"
+    },
+    "ownerFilterOptions": [
+      "",
+      "UNOWNED"
+    ],
+    "buttons": {
+      "expandAll": "▼ Expand All",
+      "bulk": "☑ Bulk Select",
+      "bulkClass": "btn btn-secondary"
+    },
+    "bulkBar": {
+      "visible": false,
+      "text": ""
+    },
+    "stats": {
+      "total": "262",
+      "assigned": "0",
+      "done": "0",
+      "unowned": "262",
+      "blocked": "0"
+    },
+    "toast": "",
+    "pickers": {
+      "owner": [],
+      "dep": 0,
+      "depClear": false,
+      "due": false
+    },
+    "notesModal": {
+      "visible": false,
+      "title": "Task",
+      "value": ""
+    },
+    "fieldsModal": {
+      "visible": false,
+      "title": "Task",
+      "rows": []
+    },
+    "stored": {
+      "changedTasks": 0
+    }
+  },
+  {
+    "label": "start editing",
+    "changed": {
+      "rows": {
+        "leasing:0": {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "",
+          "nameEditing": true,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      }
+    }
+  },
+  {
+    "label": "type and click away: saved",
+    "changed": {
+      "rows": {
+        "leasing:0": {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Renamed by hand",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      },
+      "toast": "✓ Saved",
+      "stored": {
+        "leasing": [
+          {
+            "name": "Renamed by hand",
+            "owner": "UNOWNED",
+            "status": "todo",
+            "priority": "medium",
+            "dueDate": null,
+            "blockedBy": null,
+            "notes": null,
+            "customFields": null
+          },
+          {
+            "name": "Conduct pricing strategy & rent comp analysis",
+            "owner": "UNOWNED",
+            "status": "todo",
+            "priority": "medium",
+            "dueDate": null,
+            "blockedBy": null,
+            "notes": null,
+            "customFields": null
+          },
+          {
+            "name": "Schedule and conduct showings",
+            "owner": "UNOWNED",
+            "status": "todo",
+            "priority": "medium",
+            "dueDate": null,
+            "blockedBy": null,
+            "notes": null,
+            "customFields": null
+          }
+        ],
+        "maintenance": [
+          {
+            "name": "Monitor work order queue daily",
+            "owner": "UNOWNED",
+            "status": "todo",
+            "priority": "medium",
+            "dueDate": null,
+            "blockedBy": null,
+            "notes": null,
+            "customFields": null
+          }
+        ],
+        "changedTasks": 262
+      }
+    }
+  },
+  {
+    "label": "start again",
+    "changed": {
+      "rows": {
+        "leasing:0": {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "",
+          "nameEditing": true,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      }
+    }
+  },
+  {
+    "label": "type and press Escape: cancelled",
+    "changed": {
+      "rows": {
+        "leasing:0": {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Renamed by hand",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      }
+    }
+  },
+  {
+    "label": "edit once more after cancelling",
+    "changed": {
+      "rows": {
+        "leasing:0": {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "",
+          "nameEditing": true,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      }
+    }
+  },
+  {
+    "label": "an empty name is refused",
+    "changed": {
+      "rows": {
+        "leasing:0": {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Renamed by hand",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      }
+    }
+  },
+  {
+    "label": "edit a second task",
+    "changed": {
+      "rows": {
+        "leasing:1": {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "",
+          "nameEditing": true,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      }
+    }
+  },
+  {
+    "label": "type and press Enter (currently stays in edit mode, see note)",
+    "changed": {}
+  },
+  {
+    "label": "clicking away afterwards does not save it either",
+    "changed": {}
+  },
+  {
+    "dialogs": []
+  }
+]

@@ -1,0 +1,1166 @@
+[
+  {
+    "label": "start",
+    "rows": [
+      [
+        "leasing:0",
+        {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Create property listings and syndicate to platforms",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      ],
+      [
+        "leasing:1",
+        {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Conduct pricing strategy & rent comp analysis",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      ],
+      [
+        "maintenance:0",
+        {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Monitor work order queue daily",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      ]
+    ],
+    "departments": {
+      "total": 17,
+      "expanded": [],
+      "hidden": [],
+      "counts": {},
+      "completion": {},
+      "progress": {}
+    },
+    "visibleTasks": 262,
+    "byStatus": {
+      "todo": 262
+    },
+    "byOwner": {
+      "UNOWNED": 262
+    },
+    "byPriority": {
+      "medium": 262
+    },
+    "filters": {
+      "search": "",
+      "owner": "",
+      "status": "",
+      "priority": "",
+      "count": "",
+      "countShown": false,
+      "noResults": "none"
+    },
+    "ownerFilterOptions": [
+      "",
+      "UNOWNED"
+    ],
+    "buttons": {
+      "expandAll": "▼ Expand All",
+      "bulk": "☑ Bulk Select",
+      "bulkClass": "btn btn-secondary"
+    },
+    "bulkBar": {
+      "visible": false,
+      "text": ""
+    },
+    "stats": {
+      "total": "262",
+      "assigned": "0",
+      "done": "0",
+      "unowned": "262",
+      "blocked": "0"
+    },
+    "toast": "",
+    "pickers": {
+      "owner": [],
+      "dep": 0,
+      "depClear": false,
+      "due": false
+    },
+    "notesModal": {
+      "visible": false,
+      "title": "Task",
+      "value": ""
+    },
+    "fieldsModal": {
+      "visible": false,
+      "title": "Task",
+      "rows": []
+    },
+    "stored": {
+      "changedTasks": 0
+    }
+  },
+  {
+    "label": "turn on bulk mode",
+    "changed": {
+      "rows": {
+        "leasing:0": {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Create property listings and syndicate to platforms",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": false
+        },
+        "leasing:1": {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Conduct pricing strategy & rent comp analysis",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": false
+        },
+        "maintenance:0": {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Monitor work order queue daily",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": false
+        }
+      },
+      "departments": {
+        "total": 17,
+        "expanded": [
+          "leasing",
+          "applications",
+          "move-ins",
+          "tenant-comms",
+          "delinquency",
+          "maintenance",
+          "vendors",
+          "unit-turns",
+          "move-outs",
+          "field-services",
+          "utilities",
+          "owner-relations",
+          "owner-onboarding",
+          "accounting",
+          "compliance",
+          "reporting",
+          "systems"
+        ],
+        "hidden": [],
+        "counts": {},
+        "completion": {},
+        "progress": {}
+      },
+      "buttons": {
+        "expandAll": "▼ Expand All",
+        "bulk": "✕ Cancel Select",
+        "bulkClass": "btn btn-primary"
+      }
+    }
+  },
+  {
+    "label": "check two tasks",
+    "changed": {
+      "rows": {
+        "leasing:0": {
+          "classes": [
+            "task-bulk-selected",
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Create property listings and syndicate to platforms",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": true
+        },
+        "leasing:1": {
+          "classes": [
+            "task-bulk-selected",
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Conduct pricing strategy & rent comp analysis",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": true
+        }
+      },
+      "bulkBar": {
+        "visible": true,
+        "text": "2 tasks selected Assign to — keep current — UNOWNEDMariaJoe Set status — keep current — To Do In Progress Blocked Done Apply Select All Cancel"
+      }
+    }
+  },
+  {
+    "label": "uncheck one",
+    "changed": {
+      "rows": {
+        "leasing:1": {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Conduct pricing strategy & rent comp analysis",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": false
+        }
+      },
+      "bulkBar": {
+        "visible": true,
+        "text": "1 task selected Assign to — keep current — UNOWNEDMariaJoe Set status — keep current — To Do In Progress Blocked Done Apply Select All Cancel"
+      }
+    }
+  },
+  {
+    "label": "apply with nothing chosen",
+    "changed": {}
+  },
+  {
+    "label": "select all",
+    "changed": {
+      "rows": {
+        "leasing:1": {
+          "classes": [
+            "task-bulk-selected",
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Conduct pricing strategy & rent comp analysis",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": true
+        },
+        "maintenance:0": {
+          "classes": [
+            "task-bulk-selected",
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Monitor work order queue daily",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": true
+        }
+      },
+      "bulkBar": {
+        "visible": true,
+        "text": "262 tasks selected Assign to — keep current — UNOWNEDMariaJoe Set status — keep current — To Do In Progress Blocked Done Apply Select All Cancel"
+      }
+    }
+  },
+  {
+    "label": "cancel from the bar",
+    "changed": {
+      "rows": {
+        "leasing:0": {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Create property listings and syndicate to platforms",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        },
+        "leasing:1": {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Conduct pricing strategy & rent comp analysis",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        },
+        "maintenance:0": {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Monitor work order queue daily",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      },
+      "departments": {
+        "total": 17,
+        "expanded": [],
+        "hidden": [],
+        "counts": {},
+        "completion": {},
+        "progress": {}
+      },
+      "buttons": {
+        "expandAll": "▼ Expand All",
+        "bulk": "☑ Bulk Select",
+        "bulkClass": "btn btn-secondary"
+      },
+      "bulkBar": {
+        "visible": false,
+        "text": ""
+      }
+    }
+  },
+  {
+    "label": "turn on again and pick two",
+    "changed": {
+      "rows": {
+        "leasing:0": {
+          "classes": [
+            "task-bulk-selected",
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Create property listings and syndicate to platforms",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": true
+        },
+        "leasing:1": {
+          "classes": [
+            "task-bulk-selected",
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Conduct pricing strategy & rent comp analysis",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": true
+        },
+        "maintenance:0": {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Monitor work order queue daily",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": false
+        }
+      },
+      "departments": {
+        "total": 17,
+        "expanded": [
+          "leasing",
+          "applications",
+          "move-ins",
+          "tenant-comms",
+          "delinquency",
+          "maintenance",
+          "vendors",
+          "unit-turns",
+          "move-outs",
+          "field-services",
+          "utilities",
+          "owner-relations",
+          "owner-onboarding",
+          "accounting",
+          "compliance",
+          "reporting",
+          "systems"
+        ],
+        "hidden": [],
+        "counts": {},
+        "completion": {},
+        "progress": {}
+      },
+      "buttons": {
+        "expandAll": "▼ Expand All",
+        "bulk": "✕ Cancel Select",
+        "bulkClass": "btn btn-primary"
+      },
+      "bulkBar": {
+        "visible": true,
+        "text": "2 tasks selected Assign to — keep current — UNOWNEDMariaJoe Set status — keep current — To Do In Progress Blocked Done Apply Select All Cancel"
+      }
+    }
+  },
+  {
+    "label": "apply owner and status",
+    "changed": {
+      "rows": {
+        "leasing:0": {
+          "classes": [
+            "task-done",
+            "task-item"
+          ],
+          "hidden": false,
+          "name": "Create property listings and syndicate to platforms",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "✓ Done",
+          "statusClass": "status-pill status-done",
+          "owner": "Maria",
+          "checkbox": null
+        },
+        "leasing:1": {
+          "classes": [
+            "task-done",
+            "task-item"
+          ],
+          "hidden": false,
+          "name": "Conduct pricing strategy & rent comp analysis",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "✓ Done",
+          "statusClass": "status-pill status-done",
+          "owner": "Maria",
+          "checkbox": null
+        },
+        "maintenance:0": {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Monitor work order queue daily",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      },
+      "departments": {
+        "total": 17,
+        "expanded": [],
+        "hidden": [],
+        "counts": {},
+        "completion": {
+          "leasing": "· ✓ 2 done"
+        },
+        "progress": {
+          "leasing": "10%"
+        }
+      },
+      "byStatus": {
+        "done": 2,
+        "todo": 260
+      },
+      "byOwner": {
+        "Maria": 2,
+        "UNOWNED": 260
+      },
+      "ownerFilterOptions": [
+        "",
+        "Maria",
+        "UNOWNED"
+      ],
+      "buttons": {
+        "expandAll": "▼ Expand All",
+        "bulk": "☑ Bulk Select",
+        "bulkClass": "btn btn-secondary"
+      },
+      "bulkBar": {
+        "visible": false,
+        "text": ""
+      },
+      "stats": {
+        "total": "262",
+        "assigned": "2",
+        "done": "2",
+        "unowned": "260",
+        "blocked": "0"
+      },
+      "toast": "✓ 2 tasks updated",
+      "stored": {
+        "leasing": [
+          {
+            "name": "Create property listings and syndicate to platforms",
+            "owner": "Maria",
+            "status": "done",
+            "priority": "medium",
+            "dueDate": null,
+            "blockedBy": null,
+            "notes": null,
+            "customFields": null
+          },
+          {
+            "name": "Conduct pricing strategy & rent comp analysis",
+            "owner": "Maria",
+            "status": "done",
+            "priority": "medium",
+            "dueDate": null,
+            "blockedBy": null,
+            "notes": null,
+            "customFields": null
+          },
+          {
+            "name": "Schedule and conduct showings",
+            "owner": "UNOWNED",
+            "status": "todo",
+            "priority": "medium",
+            "dueDate": null,
+            "blockedBy": null,
+            "notes": null,
+            "customFields": null
+          }
+        ],
+        "maintenance": [
+          {
+            "name": "Monitor work order queue daily",
+            "owner": "UNOWNED",
+            "status": "todo",
+            "priority": "medium",
+            "dueDate": null,
+            "blockedBy": null,
+            "notes": null,
+            "customFields": null
+          }
+        ],
+        "changedTasks": 262
+      }
+    }
+  },
+  {
+    "label": "turn on with the toolbar button",
+    "changed": {
+      "rows": {
+        "leasing:0": {
+          "classes": [
+            "task-done",
+            "task-item"
+          ],
+          "hidden": false,
+          "name": "Create property listings and syndicate to platforms",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "✓ Done",
+          "statusClass": "status-pill status-done",
+          "owner": "Maria",
+          "checkbox": false
+        },
+        "leasing:1": {
+          "classes": [
+            "task-done",
+            "task-item"
+          ],
+          "hidden": false,
+          "name": "Conduct pricing strategy & rent comp analysis",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "✓ Done",
+          "statusClass": "status-pill status-done",
+          "owner": "Maria",
+          "checkbox": false
+        },
+        "maintenance:0": {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Monitor work order queue daily",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": false
+        }
+      },
+      "departments": {
+        "total": 17,
+        "expanded": [
+          "leasing",
+          "applications",
+          "move-ins",
+          "tenant-comms",
+          "delinquency",
+          "maintenance",
+          "vendors",
+          "unit-turns",
+          "move-outs",
+          "field-services",
+          "utilities",
+          "owner-relations",
+          "owner-onboarding",
+          "accounting",
+          "compliance",
+          "reporting",
+          "systems"
+        ],
+        "hidden": [],
+        "counts": {},
+        "completion": {
+          "leasing": "· ✓ 2 done"
+        },
+        "progress": {
+          "leasing": "10%"
+        }
+      },
+      "buttons": {
+        "expandAll": "▼ Expand All",
+        "bulk": "✕ Cancel Select",
+        "bulkClass": "btn btn-primary"
+      }
+    }
+  },
+  {
+    "label": "turn off with the toolbar button",
+    "changed": {
+      "rows": {
+        "leasing:0": {
+          "classes": [
+            "task-done",
+            "task-item"
+          ],
+          "hidden": false,
+          "name": "Create property listings and syndicate to platforms",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "✓ Done",
+          "statusClass": "status-pill status-done",
+          "owner": "Maria",
+          "checkbox": null
+        },
+        "leasing:1": {
+          "classes": [
+            "task-done",
+            "task-item"
+          ],
+          "hidden": false,
+          "name": "Conduct pricing strategy & rent comp analysis",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "✓ Done",
+          "statusClass": "status-pill status-done",
+          "owner": "Maria",
+          "checkbox": null
+        },
+        "maintenance:0": {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Monitor work order queue daily",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      },
+      "departments": {
+        "total": 17,
+        "expanded": [],
+        "hidden": [],
+        "counts": {},
+        "completion": {
+          "leasing": "· ✓ 2 done"
+        },
+        "progress": {
+          "leasing": "10%"
+        }
+      },
+      "buttons": {
+        "expandAll": "▼ Expand All",
+        "bulk": "☑ Bulk Select",
+        "bulkClass": "btn btn-secondary"
+      }
+    }
+  },
+  {
+    "label": "turn on again",
+    "changed": {
+      "rows": {
+        "leasing:0": {
+          "classes": [
+            "task-done",
+            "task-item"
+          ],
+          "hidden": false,
+          "name": "Create property listings and syndicate to platforms",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "✓ Done",
+          "statusClass": "status-pill status-done",
+          "owner": "Maria",
+          "checkbox": false
+        },
+        "leasing:1": {
+          "classes": [
+            "task-done",
+            "task-item"
+          ],
+          "hidden": false,
+          "name": "Conduct pricing strategy & rent comp analysis",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "✓ Done",
+          "statusClass": "status-pill status-done",
+          "owner": "Maria",
+          "checkbox": false
+        },
+        "maintenance:0": {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Monitor work order queue daily",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": false
+        }
+      },
+      "departments": {
+        "total": 17,
+        "expanded": [
+          "leasing",
+          "applications",
+          "move-ins",
+          "tenant-comms",
+          "delinquency",
+          "maintenance",
+          "vendors",
+          "unit-turns",
+          "move-outs",
+          "field-services",
+          "utilities",
+          "owner-relations",
+          "owner-onboarding",
+          "accounting",
+          "compliance",
+          "reporting",
+          "systems"
+        ],
+        "hidden": [],
+        "counts": {},
+        "completion": {
+          "leasing": "· ✓ 2 done"
+        },
+        "progress": {
+          "leasing": "10%"
+        }
+      },
+      "buttons": {
+        "expandAll": "▼ Expand All",
+        "bulk": "✕ Cancel Select",
+        "bulkClass": "btn btn-primary"
+      }
+    }
+  },
+  {
+    "label": "open an owner picker",
+    "changed": {
+      "pickers": {
+        "owner": [
+          "Maria",
+          "Joe",
+          "UNOWNED"
+        ],
+        "dep": 0,
+        "depClear": false,
+        "due": false
+      }
+    }
+  },
+  {
+    "label": "ticking a checkbox leaves the picker open",
+    "changed": {
+      "rows": {
+        "leasing:0": {
+          "classes": [
+            "task-bulk-selected",
+            "task-done",
+            "task-item"
+          ],
+          "hidden": false,
+          "name": "Create property listings and syndicate to platforms",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "✓ Done",
+          "statusClass": "status-pill status-done",
+          "owner": "Maria",
+          "checkbox": true
+        }
+      },
+      "bulkBar": {
+        "visible": true,
+        "text": "1 task selected Assign to — keep current — UNOWNEDMariaJoe Set status — keep current — To Do In Progress Blocked Done Apply Select All Cancel"
+      }
+    }
+  },
+  {
+    "label": "clicking a department header does close it",
+    "changed": {
+      "departments": {
+        "total": 17,
+        "expanded": [
+          "applications",
+          "move-ins",
+          "tenant-comms",
+          "delinquency",
+          "maintenance",
+          "vendors",
+          "unit-turns",
+          "move-outs",
+          "field-services",
+          "utilities",
+          "owner-relations",
+          "owner-onboarding",
+          "accounting",
+          "compliance",
+          "reporting",
+          "systems"
+        ],
+        "hidden": [],
+        "counts": {},
+        "completion": {
+          "leasing": "· ✓ 2 done"
+        },
+        "progress": {
+          "leasing": "10%"
+        }
+      },
+      "pickers": {
+        "owner": [],
+        "dep": 0,
+        "depClear": false,
+        "due": false
+      }
+    }
+  },
+  {
+    "dialogs": [
+      "Choose a new owner or status to apply to the selected tasks."
+    ]
+  }
+]
