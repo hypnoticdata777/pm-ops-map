@@ -49,7 +49,19 @@ async function snap(page, label) {
     const bar = document.getElementById('bulk-action-bar');
     return {
       rows: ['leasing:0', 'leasing:1', 'maintenance:0'].map(k => { const [d, i] = k.split(':'); const el = document.querySelector(`.department[data-id="${d}"] .task-item[data-task-idx="${i}"]`); return [k, el ? rowInfo(el) : null]; }),
-      departments: [...document.querySelectorAll('.department')].map(d => ({ id: d.dataset.id, expanded: d.classList.contains('expanded'), hidden: hidden(d), count: text(d.querySelector('.dept-task-count')), completion: text(d.querySelector('.dept-completion')), fill: d.querySelector('.dept-progress-fill')?.style.width })),
+      // Only what differs from a freshly loaded screen, so the recording stays small enough to read.
+      departments: (() => {
+        const all = [...document.querySelectorAll('.department')];
+        const pick = (keep, value) => Object.fromEntries(all.filter(keep).map(d => [d.dataset.id, value(d)]));
+        return {
+          total: all.length,
+          expanded: all.filter(d => d.classList.contains('expanded')).map(d => d.dataset.id),
+          hidden: all.filter(hidden).map(d => d.dataset.id),
+          counts: pick(d => text(d.querySelector('.dept-task-count')) !== String(d.querySelectorAll('.task-item').length), d => text(d.querySelector('.dept-task-count'))),
+          completion: pick(d => text(d.querySelector('.dept-completion')) !== '', d => text(d.querySelector('.dept-completion'))),
+          progress: pick(d => d.querySelector('.dept-progress-fill')?.style.width !== '0%', d => d.querySelector('.dept-progress-fill')?.style.width),
+        };
+      })(),
       visibleTasks: tasks.filter(t => !hidden(t)).length,
       byStatus: tally('status'), byOwner: tally('owner'), byPriority: tally('priority'),
       filters: { search: document.getElementById('search-input').value, owner: document.getElementById('owner-filter').value, status: document.getElementById('status-filter').value, priority: document.getElementById('priority-filter').value, count: text(document.getElementById('filter-count')), countShown: !hidden(document.getElementById('filter-count')) && document.getElementById('filter-count').style.display !== '', noResults: document.getElementById('no-results').style.display },
@@ -77,13 +89,34 @@ test.beforeEach(async ({ page }) => {
   await page.waitForSelector('#departments .department');
 });
 
-// Runs the steps in order and records a snapshot after each, then compares the whole story with its golden file.
+// What a step changed, compared with the step before: whole values for top-level fields, and for the task rows
+// only the rows that differ. An empty object means the step changed nothing a person could see or that was saved.
+function delta(prev, cur) {
+  const out = {};
+  for (const key of Object.keys(cur)) {
+    if (key === 'label') continue;
+    if (key === 'rows') {
+      const rows = {};
+      cur.rows.forEach(([name, value], i) => { if (JSON.stringify(value) !== JSON.stringify(prev.rows[i][1])) rows[name] = value; });
+      if (Object.keys(rows).length) out.rows = rows;
+    } else if (JSON.stringify(cur[key]) !== JSON.stringify(prev[key])) {
+      out[key] = cur[key];
+    }
+  }
+  return out;
+}
+
+// Runs the steps in order. The recording is the starting state in full, then what each step changed, so the
+// golden file reads as a story and a reviewer can follow it.
 async function scenario(page, name, steps) {
-  const story = [await snap(page, 'start')];
+  let previous = await snap(page, 'start');
+  const story = [previous];
   for (const [label, act] of steps) {
     await act();
     await page.waitForTimeout(40);
-    story.push(await snap(page, label));
+    const current = await snap(page, label);
+    story.push({ label, changed: delta(previous, current) });
+    previous = current;
   }
   story.push({ dialogs });
   checkGolden('tracking', name, story);
@@ -215,5 +248,9 @@ test('bulk select and apply', async ({ page }) => {
     ['apply owner and status', async () => { await page.locator('#bulk-owner-select').selectOption('Maria'); await page.locator('#bulk-status-select').selectOption('done'); await page.locator('#bulk-action-bar button', { hasText: 'Apply' }).click(); }],
     ['turn on with the toolbar button', () => page.locator('#bulk-toggle-btn').click()],
     ['turn off with the toolbar button', () => page.locator('#bulk-toggle-btn').click()],
+    ['turn on again', () => page.locator('#bulk-toggle-btn').click()],
+    ['open an owner picker', () => row(page, 'leasing', 2).locator('.task-owner').click()],
+    ['ticking a checkbox leaves the picker open', () => row(page, 'leasing', 0).locator('.task-bulk-check').click()],
+    ['clicking a department header does close it', () => header(page, 'leasing').click()],
   ]);
 });
