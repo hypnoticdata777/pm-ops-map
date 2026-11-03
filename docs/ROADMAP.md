@@ -56,7 +56,9 @@ Shipped-module tests (Vitest + jsdom importing the real ES modules), XSS and CSV
 
 **Status:** both steps are done. `js/domain/` holds workload, coverage and `planAssignments` (with a reason per assignment); `js/commit.js` is the one save-and-refresh path, used by auto-assign, undo, import, removing a person, applying a role template and loading the demo company. A static test (`commit-path.test.js`) keeps the hand-written blocks from coming back, and a golden file recorded before the refactor (`js/__tests__/golden/`) proves behavior did not change.
 
-**Open product decisions found along the way** (today's behavior, deliberately preserved): importing a workspace while on the map or team view does not refresh that view, and loading the demo company does not refresh the team or map view. Each is a one-word change in `js/commit.js` (add `mapIfCurrent` / `teamIfCurrent` to a preset) but visible to users, so it needs a decision.
+**Decided along the way (Nov 2026):** importing a workspace or loading the demo company now redraws the map and team view when they are the current screen. Before, both kept showing the previous workspace until the user switched tabs. The behavior was preserved through the Phase 1B refactor, then changed deliberately in its own PR so the refactor stayed provably neutral.
+
+**Still open:** the same kind of gap remains for two other screens. Importing does not redraw the work-orders view, and loading the demo company does not redraw the portfolio or work-orders view. Each is one more step name in a preset in `js/commit.js`; the golden file will show exactly which cases change.
 
 4. **Pure domain layer** (`js/domain/`: no DOM, no shared-state imports).
    - **Coverage:** de-duplicate the near-identical copies in `launchPlan.js` and `handbook.js`. Today "covered" only means "not UNOWNED".
