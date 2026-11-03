@@ -3,6 +3,7 @@
 import fs from 'node:fs';
 import { test, expect } from '@playwright/test';
 import { prepare, importWorkspace, call, writeTemp } from './helpers/security.js';
+import { clickAddCustomField, clickCustomFields, clickExpandAll, clickNotes } from './helpers/tracking.js';
 
 const NOTE = 'Call the owner before listing — gate code 4471';
 const SENTINEL = 'SENTINEL-TENANT-PII-9f3a';
@@ -18,22 +19,22 @@ test.beforeEach(async ({ page }, testInfo) => {
 const storageDump = page => page.evaluate(() => Object.fromEntries(Object.entries(localStorage)));
 
 async function addNoteAndField(page) {
-  await call(page, 'openTaskNotes', 'leasing', 0);
+  await clickNotes(page, 'leasing', 0);
   await page.fill('#task-notes-textarea', NOTE);
   await page.click('#task-notes-save-btn');
-  await call(page, 'openCustomFields', 'leasing', 0);
+  await clickCustomFields(page, 'leasing', 0);
   await page.fill('#cf-key-input', 'Gate code');
   await page.fill('#cf-val-input', '4471');
-  await call(page, 'addCustomField', 'leasing', 0);
+  await clickAddCustomField(page);
   await call(page, 'closeCustomFields');
 }
 
 async function expectNoteAndField(page) {
-  await call(page, 'toggleExpandAllDepartments');
+  await clickExpandAll(page);
   const row = page.locator('.department[data-id="leasing"] .task-item').first();
   await expect(row.locator('.task-notes-btn--has-notes')).toHaveCount(1);
   await expect(row.locator('.task-fields-btn--has-fields')).toHaveCount(1);
-  await call(page, 'openTaskNotes', 'leasing', 0);
+  await clickNotes(page, 'leasing', 0);
   await expect(page.locator('#task-notes-textarea')).toHaveValue(NOTE);
   await call(page, 'closeTaskNotes');
 }
@@ -70,7 +71,7 @@ test('an older export without notes keys does not wipe notes on this device', as
     departments: [{ id: 'leasing', tasks: [{ _configName: await page.evaluate(() => document.querySelector('.department[data-id="leasing"] .task-name').textContent), name: 'Renamed in old export', owner: 'UNOWNED' }] }],
   };
   await importWorkspace(page, v2);
-  await call(page, 'toggleExpandAllDepartments');
+  await clickExpandAll(page);
   await expect(page.locator('.department[data-id="leasing"] .task-name').first()).toHaveText('Renamed in old export');
   await expect(page.locator('.department[data-id="leasing"] .task-item').first().locator('.task-notes-btn--has-notes')).toHaveCount(1);
 });
@@ -86,7 +87,7 @@ test('restoring an automatic backup brings notes and custom fields back', async 
   expect(backups[0].state).toContain(NOTE);
 
   // Lose the notes, then restore from the Backups dialog.
-  await call(page, 'openTaskNotes', 'leasing', 0);
+  await clickNotes(page, 'leasing', 0);
   await page.fill('#task-notes-textarea', '');
   await page.click('#task-notes-save-btn');
   await call(page, 'openBackupsModal');

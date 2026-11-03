@@ -16,12 +16,11 @@ import {
   setOrgData, setDefaultAffinities, setOwnerColors, setCurrentView,
 } from './state.js';
 // Maintainer note:
-// index.html calls many functions through inline onclick/onchange/oninput
-// attributes. ES modules do not expose imports to window automatically, so
-// every HTML-called handler must be imported here and added to
-// Object.assign(window, ...) below. If you rename, remove, or move a handler,
-// update index.html and this window binding together or the GitHub Pages app
-// can render while clicks silently fail.
+// Controls are being moved from inline onclick/onchange/oninput attributes to data-action (js/actions.js).
+// A converted screen registers its actions table below and needs no window binding. Controls that still use
+// an inline attribute call their function through Object.assign(window, ...) at the bottom of this file, so
+// when you rename, remove or move one of those, update index.html (or the view's template) and that binding
+// together or the GitHub Pages app can render while clicks silently fail. See CONTRIBUTING, "Wiring controls".
 import {
   loadFromStorage, loadTeamData, loadWorkOrders, loadAuditLog,
   loadPortfolio,
@@ -37,17 +36,12 @@ import {
   requestNotificationPermission, initNotifications,
 } from './ui.js';
 import {
-  renderTrackingView, toggleDepartment, toggleExpandAllDepartments,
-  startTaskEdit, showOwnerPicker, closeOwnerPicker, setTaskOwner,
-  populateOwnerFilter, applyFilter, clearFilter, debounceApplyFilter,
-  cycleTaskStatus, cycleTaskPriority,
-  openDueDatePicker, setTaskDueDate,
-  openDependencyPicker, setTaskDependency, clearTaskDependency,
-  toggleBulkMode, cancelBulkMode, toggleTaskCheck,
-  selectAllVisibleTasks, applyBulkAction,
-  openTaskNotes, closeTaskNotes,
-  openCustomFields, closeCustomFields, addCustomField, deleteCustomField,
+  renderTrackingView, populateOwnerFilter,
+  closeOwnerPicker, clearFilter, cancelBulkMode,
+  closeTaskNotes, closeCustomFields,
+  trackingActions,
 } from './views/tracking.js';
+import { registerActions, installActionDelegation } from './actions.js';
 import {
   renderMapControls, renderFlowMap,
   showDeptPanel, closeDeptPanel,
@@ -254,39 +248,19 @@ document.addEventListener('DOMContentLoaded', () => {
 // - launchPlan.js calls some through window.* for guided next-step buttons.
 // - team.js calls window._saveUndoSnapshot before bulk auto-assign.
 // Add new UI handlers here when adding inline HTML actions.
+// Controls that use data-action (js/actions.js) need no window binding. Each view adds its table here as it is
+// converted; the listeners are installed now, before any picker adds its own click-outside listener, so a
+// control's action always runs first, as its inline handler did.
+registerActions(trackingActions);
+installActionDelegation();
+
 Object.assign(window, {
   // View
   switchView,
-  // Tracking tab: departments, tasks, ownership, status, priority, due dates,
-  // dependencies, and filters.
-  renderTrackingView,
-  toggleDepartment,
-  toggleExpandAllDepartments,
-  startTaskEdit,
-  showOwnerPicker,
-  closeOwnerPicker,
-  setTaskOwner,
-  applyFilter,
-  clearFilter,
-  debounceApplyFilter,
-  cycleTaskStatus,
-  cycleTaskPriority,
-  openDueDatePicker,
-  setTaskDueDate,
-  openDependencyPicker,
-  setTaskDependency,
-  clearTaskDependency,
-  toggleBulkMode,
-  cancelBulkMode,
-  toggleTaskCheck,
-  selectAllVisibleTasks,
-  applyBulkAction,
-  openTaskNotes,
+  // Tracking tab: only the modal close buttons that index.html still calls inline.
+  // The rest of this screen is wired through data-action (js/actions.js, trackingActions).
   closeTaskNotes,
-  openCustomFields,
   closeCustomFields,
-  addCustomField,
-  deleteCustomField,
   // Map tab: visual operational flow and department detail panels.
   renderMapControls,
   renderFlowMap,

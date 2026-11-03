@@ -3,6 +3,7 @@
 // the "new release" is simulated by intercepting that request.
 import { test, expect } from '@playwright/test';
 import { prepare, call, config } from './helpers/security.js';
+import { chooseOwner, clickStatus } from './helpers/tracking.js';
 
 const REWORDED = 'Create listings and syndicate them to every platform';
 const first = config.orgData.departments[0].tasks[0];
@@ -17,20 +18,22 @@ async function serveConfig(page, mutate) {
 
 test.beforeEach(async ({ page }) => {
   await prepare(page);
+  // Owners are chosen from the roster, so the team these tests assign work to has to exist.
+  await page.addInitScript(() => localStorage.setItem('pm-ops-team-v1', JSON.stringify({ employees: [{ name: 'Maria', hex: '#336699', affinities: [] }] })));
   await page.goto('/index.html');
   await page.waitForSelector('#departments .department');
 });
 
 test('config ships ids and the app persists them with saved progress', async ({ page }) => {
   expect(first.id).toBe('leasing-001');
-  await call(page, 'setTaskOwner', 'leasing', 0, 'Maria');
+  await chooseOwner(page, 'leasing', 0, 'Maria');
   const saved = await page.evaluate(() => JSON.parse(localStorage.getItem('pm-ops-data-v1')));
   expect(saved.find(d => d.id === 'leasing').tasks[0]).toMatchObject({ id: 'leasing-001', owner: 'Maria', _configName: first.name });
 });
 
 test('progress survives the starter task being reworded in config.json', async ({ page }) => {
-  await call(page, 'setTaskOwner', 'leasing', 0, 'Maria');
-  await call(page, 'cycleTaskStatus', 'leasing', 0);
+  await chooseOwner(page, 'leasing', 0, 'Maria');
+  await clickStatus(page, 'leasing', 0);
   await expect(firstLeasingRow(page).locator('.task-owner')).toContainText('Maria');
 
   await serveConfig(page, t => { t.name = REWORDED; });
@@ -67,7 +70,7 @@ test('without an alias, old-format data for a reworded task is left alone rather
 });
 
 test('an export from this version carries ids (schema v4) and re-imports onto the same tasks', async ({ page }) => {
-  await call(page, 'setTaskOwner', 'leasing', 0, 'Maria');
+  await chooseOwner(page, 'leasing', 0, 'Maria');
   const [download] = await Promise.all([page.waitForEvent('download'), call(page, 'exportJSON')]);
   const fs = await import('node:fs');
   const file = JSON.parse(fs.readFileSync(await download.path(), 'utf8'));
