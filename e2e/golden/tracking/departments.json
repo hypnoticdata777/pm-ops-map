@@ -1,0 +1,1667 @@
+[
+  {
+    "label": "start",
+    "rows": [
+      [
+        "leasing:0",
+        {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Create property listings and syndicate to platforms",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      ],
+      [
+        "leasing:1",
+        {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Conduct pricing strategy & rent comp analysis",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      ],
+      [
+        "maintenance:0",
+        {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Monitor work order queue daily",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      ]
+    ],
+    "departments": [
+      {
+        "id": "leasing",
+        "expanded": false,
+        "hidden": false,
+        "count": "20",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "applications",
+        "expanded": false,
+        "hidden": false,
+        "count": "16",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "move-ins",
+        "expanded": false,
+        "hidden": false,
+        "count": "13",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "tenant-comms",
+        "expanded": false,
+        "hidden": false,
+        "count": "10",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "delinquency",
+        "expanded": false,
+        "hidden": false,
+        "count": "16",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "maintenance",
+        "expanded": false,
+        "hidden": false,
+        "count": "25",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "vendors",
+        "expanded": false,
+        "hidden": false,
+        "count": "13",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "unit-turns",
+        "expanded": false,
+        "hidden": false,
+        "count": "13",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "move-outs",
+        "expanded": false,
+        "hidden": false,
+        "count": "14",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "field-services",
+        "expanded": false,
+        "hidden": false,
+        "count": "14",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "utilities",
+        "expanded": false,
+        "hidden": false,
+        "count": "9",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "owner-relations",
+        "expanded": false,
+        "hidden": false,
+        "count": "20",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "owner-onboarding",
+        "expanded": false,
+        "hidden": false,
+        "count": "17",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "accounting",
+        "expanded": false,
+        "hidden": false,
+        "count": "30",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "compliance",
+        "expanded": false,
+        "hidden": false,
+        "count": "13",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "reporting",
+        "expanded": false,
+        "hidden": false,
+        "count": "7",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "systems",
+        "expanded": false,
+        "hidden": false,
+        "count": "12",
+        "completion": "",
+        "fill": "0%"
+      }
+    ],
+    "visibleTasks": 262,
+    "byStatus": {
+      "todo": 262
+    },
+    "byOwner": {
+      "UNOWNED": 262
+    },
+    "byPriority": {
+      "medium": 262
+    },
+    "filters": {
+      "search": "",
+      "owner": "",
+      "status": "",
+      "priority": "",
+      "count": "",
+      "countShown": false,
+      "noResults": "none"
+    },
+    "ownerFilterOptions": [
+      "",
+      "UNOWNED"
+    ],
+    "buttons": {
+      "expandAll": "▼ Expand All",
+      "bulk": "☑ Bulk Select",
+      "bulkClass": "btn btn-secondary"
+    },
+    "bulkBar": {
+      "visible": false,
+      "text": ""
+    },
+    "stats": {
+      "total": "262",
+      "assigned": "0",
+      "done": "0",
+      "unowned": "262",
+      "blocked": "0"
+    },
+    "toast": "",
+    "pickers": {
+      "owner": [],
+      "dep": 0,
+      "depClear": false,
+      "due": false
+    },
+    "notesModal": {
+      "visible": false,
+      "title": "Task",
+      "value": ""
+    },
+    "fieldsModal": {
+      "visible": false,
+      "title": "Task",
+      "rows": []
+    },
+    "stored": {
+      "changedTasks": 0
+    }
+  },
+  {
+    "label": "open leasing",
+    "rows": [
+      [
+        "leasing:0",
+        {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Create property listings and syndicate to platforms",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      ],
+      [
+        "leasing:1",
+        {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Conduct pricing strategy & rent comp analysis",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      ],
+      [
+        "maintenance:0",
+        {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Monitor work order queue daily",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      ]
+    ],
+    "departments": [
+      {
+        "id": "leasing",
+        "expanded": true,
+        "hidden": false,
+        "count": "20",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "applications",
+        "expanded": false,
+        "hidden": false,
+        "count": "16",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "move-ins",
+        "expanded": false,
+        "hidden": false,
+        "count": "13",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "tenant-comms",
+        "expanded": false,
+        "hidden": false,
+        "count": "10",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "delinquency",
+        "expanded": false,
+        "hidden": false,
+        "count": "16",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "maintenance",
+        "expanded": false,
+        "hidden": false,
+        "count": "25",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "vendors",
+        "expanded": false,
+        "hidden": false,
+        "count": "13",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "unit-turns",
+        "expanded": false,
+        "hidden": false,
+        "count": "13",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "move-outs",
+        "expanded": false,
+        "hidden": false,
+        "count": "14",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "field-services",
+        "expanded": false,
+        "hidden": false,
+        "count": "14",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "utilities",
+        "expanded": false,
+        "hidden": false,
+        "count": "9",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "owner-relations",
+        "expanded": false,
+        "hidden": false,
+        "count": "20",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "owner-onboarding",
+        "expanded": false,
+        "hidden": false,
+        "count": "17",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "accounting",
+        "expanded": false,
+        "hidden": false,
+        "count": "30",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "compliance",
+        "expanded": false,
+        "hidden": false,
+        "count": "13",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "reporting",
+        "expanded": false,
+        "hidden": false,
+        "count": "7",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "systems",
+        "expanded": false,
+        "hidden": false,
+        "count": "12",
+        "completion": "",
+        "fill": "0%"
+      }
+    ],
+    "visibleTasks": 262,
+    "byStatus": {
+      "todo": 262
+    },
+    "byOwner": {
+      "UNOWNED": 262
+    },
+    "byPriority": {
+      "medium": 262
+    },
+    "filters": {
+      "search": "",
+      "owner": "",
+      "status": "",
+      "priority": "",
+      "count": "",
+      "countShown": false,
+      "noResults": "none"
+    },
+    "ownerFilterOptions": [
+      "",
+      "UNOWNED"
+    ],
+    "buttons": {
+      "expandAll": "▼ Expand All",
+      "bulk": "☑ Bulk Select",
+      "bulkClass": "btn btn-secondary"
+    },
+    "bulkBar": {
+      "visible": false,
+      "text": ""
+    },
+    "stats": {
+      "total": "262",
+      "assigned": "0",
+      "done": "0",
+      "unowned": "262",
+      "blocked": "0"
+    },
+    "toast": "",
+    "pickers": {
+      "owner": [],
+      "dep": 0,
+      "depClear": false,
+      "due": false
+    },
+    "notesModal": {
+      "visible": false,
+      "title": "Task",
+      "value": ""
+    },
+    "fieldsModal": {
+      "visible": false,
+      "title": "Task",
+      "rows": []
+    },
+    "stored": {
+      "changedTasks": 0
+    }
+  },
+  {
+    "label": "close leasing",
+    "rows": [
+      [
+        "leasing:0",
+        {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Create property listings and syndicate to platforms",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      ],
+      [
+        "leasing:1",
+        {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Conduct pricing strategy & rent comp analysis",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      ],
+      [
+        "maintenance:0",
+        {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Monitor work order queue daily",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      ]
+    ],
+    "departments": [
+      {
+        "id": "leasing",
+        "expanded": false,
+        "hidden": false,
+        "count": "20",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "applications",
+        "expanded": false,
+        "hidden": false,
+        "count": "16",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "move-ins",
+        "expanded": false,
+        "hidden": false,
+        "count": "13",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "tenant-comms",
+        "expanded": false,
+        "hidden": false,
+        "count": "10",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "delinquency",
+        "expanded": false,
+        "hidden": false,
+        "count": "16",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "maintenance",
+        "expanded": false,
+        "hidden": false,
+        "count": "25",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "vendors",
+        "expanded": false,
+        "hidden": false,
+        "count": "13",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "unit-turns",
+        "expanded": false,
+        "hidden": false,
+        "count": "13",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "move-outs",
+        "expanded": false,
+        "hidden": false,
+        "count": "14",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "field-services",
+        "expanded": false,
+        "hidden": false,
+        "count": "14",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "utilities",
+        "expanded": false,
+        "hidden": false,
+        "count": "9",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "owner-relations",
+        "expanded": false,
+        "hidden": false,
+        "count": "20",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "owner-onboarding",
+        "expanded": false,
+        "hidden": false,
+        "count": "17",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "accounting",
+        "expanded": false,
+        "hidden": false,
+        "count": "30",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "compliance",
+        "expanded": false,
+        "hidden": false,
+        "count": "13",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "reporting",
+        "expanded": false,
+        "hidden": false,
+        "count": "7",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "systems",
+        "expanded": false,
+        "hidden": false,
+        "count": "12",
+        "completion": "",
+        "fill": "0%"
+      }
+    ],
+    "visibleTasks": 262,
+    "byStatus": {
+      "todo": 262
+    },
+    "byOwner": {
+      "UNOWNED": 262
+    },
+    "byPriority": {
+      "medium": 262
+    },
+    "filters": {
+      "search": "",
+      "owner": "",
+      "status": "",
+      "priority": "",
+      "count": "",
+      "countShown": false,
+      "noResults": "none"
+    },
+    "ownerFilterOptions": [
+      "",
+      "UNOWNED"
+    ],
+    "buttons": {
+      "expandAll": "▼ Expand All",
+      "bulk": "☑ Bulk Select",
+      "bulkClass": "btn btn-secondary"
+    },
+    "bulkBar": {
+      "visible": false,
+      "text": ""
+    },
+    "stats": {
+      "total": "262",
+      "assigned": "0",
+      "done": "0",
+      "unowned": "262",
+      "blocked": "0"
+    },
+    "toast": "",
+    "pickers": {
+      "owner": [],
+      "dep": 0,
+      "depClear": false,
+      "due": false
+    },
+    "notesModal": {
+      "visible": false,
+      "title": "Task",
+      "value": ""
+    },
+    "fieldsModal": {
+      "visible": false,
+      "title": "Task",
+      "rows": []
+    },
+    "stored": {
+      "changedTasks": 0
+    }
+  },
+  {
+    "label": "expand all",
+    "rows": [
+      [
+        "leasing:0",
+        {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Create property listings and syndicate to platforms",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      ],
+      [
+        "leasing:1",
+        {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Conduct pricing strategy & rent comp analysis",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      ],
+      [
+        "maintenance:0",
+        {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Monitor work order queue daily",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      ]
+    ],
+    "departments": [
+      {
+        "id": "leasing",
+        "expanded": true,
+        "hidden": false,
+        "count": "20",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "applications",
+        "expanded": true,
+        "hidden": false,
+        "count": "16",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "move-ins",
+        "expanded": true,
+        "hidden": false,
+        "count": "13",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "tenant-comms",
+        "expanded": true,
+        "hidden": false,
+        "count": "10",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "delinquency",
+        "expanded": true,
+        "hidden": false,
+        "count": "16",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "maintenance",
+        "expanded": true,
+        "hidden": false,
+        "count": "25",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "vendors",
+        "expanded": true,
+        "hidden": false,
+        "count": "13",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "unit-turns",
+        "expanded": true,
+        "hidden": false,
+        "count": "13",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "move-outs",
+        "expanded": true,
+        "hidden": false,
+        "count": "14",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "field-services",
+        "expanded": true,
+        "hidden": false,
+        "count": "14",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "utilities",
+        "expanded": true,
+        "hidden": false,
+        "count": "9",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "owner-relations",
+        "expanded": true,
+        "hidden": false,
+        "count": "20",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "owner-onboarding",
+        "expanded": true,
+        "hidden": false,
+        "count": "17",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "accounting",
+        "expanded": true,
+        "hidden": false,
+        "count": "30",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "compliance",
+        "expanded": true,
+        "hidden": false,
+        "count": "13",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "reporting",
+        "expanded": true,
+        "hidden": false,
+        "count": "7",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "systems",
+        "expanded": true,
+        "hidden": false,
+        "count": "12",
+        "completion": "",
+        "fill": "0%"
+      }
+    ],
+    "visibleTasks": 262,
+    "byStatus": {
+      "todo": 262
+    },
+    "byOwner": {
+      "UNOWNED": 262
+    },
+    "byPriority": {
+      "medium": 262
+    },
+    "filters": {
+      "search": "",
+      "owner": "",
+      "status": "",
+      "priority": "",
+      "count": "",
+      "countShown": false,
+      "noResults": "none"
+    },
+    "ownerFilterOptions": [
+      "",
+      "UNOWNED"
+    ],
+    "buttons": {
+      "expandAll": "▲ Collapse All",
+      "bulk": "☑ Bulk Select",
+      "bulkClass": "btn btn-secondary"
+    },
+    "bulkBar": {
+      "visible": false,
+      "text": ""
+    },
+    "stats": {
+      "total": "262",
+      "assigned": "0",
+      "done": "0",
+      "unowned": "262",
+      "blocked": "0"
+    },
+    "toast": "",
+    "pickers": {
+      "owner": [],
+      "dep": 0,
+      "depClear": false,
+      "due": false
+    },
+    "notesModal": {
+      "visible": false,
+      "title": "Task",
+      "value": ""
+    },
+    "fieldsModal": {
+      "visible": false,
+      "title": "Task",
+      "rows": []
+    },
+    "stored": {
+      "changedTasks": 0
+    }
+  },
+  {
+    "label": "collapse all",
+    "rows": [
+      [
+        "leasing:0",
+        {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Create property listings and syndicate to platforms",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      ],
+      [
+        "leasing:1",
+        {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Conduct pricing strategy & rent comp analysis",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      ],
+      [
+        "maintenance:0",
+        {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Monitor work order queue daily",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      ]
+    ],
+    "departments": [
+      {
+        "id": "leasing",
+        "expanded": false,
+        "hidden": false,
+        "count": "20",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "applications",
+        "expanded": false,
+        "hidden": false,
+        "count": "16",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "move-ins",
+        "expanded": false,
+        "hidden": false,
+        "count": "13",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "tenant-comms",
+        "expanded": false,
+        "hidden": false,
+        "count": "10",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "delinquency",
+        "expanded": false,
+        "hidden": false,
+        "count": "16",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "maintenance",
+        "expanded": false,
+        "hidden": false,
+        "count": "25",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "vendors",
+        "expanded": false,
+        "hidden": false,
+        "count": "13",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "unit-turns",
+        "expanded": false,
+        "hidden": false,
+        "count": "13",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "move-outs",
+        "expanded": false,
+        "hidden": false,
+        "count": "14",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "field-services",
+        "expanded": false,
+        "hidden": false,
+        "count": "14",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "utilities",
+        "expanded": false,
+        "hidden": false,
+        "count": "9",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "owner-relations",
+        "expanded": false,
+        "hidden": false,
+        "count": "20",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "owner-onboarding",
+        "expanded": false,
+        "hidden": false,
+        "count": "17",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "accounting",
+        "expanded": false,
+        "hidden": false,
+        "count": "30",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "compliance",
+        "expanded": false,
+        "hidden": false,
+        "count": "13",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "reporting",
+        "expanded": false,
+        "hidden": false,
+        "count": "7",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "systems",
+        "expanded": false,
+        "hidden": false,
+        "count": "12",
+        "completion": "",
+        "fill": "0%"
+      }
+    ],
+    "visibleTasks": 262,
+    "byStatus": {
+      "todo": 262
+    },
+    "byOwner": {
+      "UNOWNED": 262
+    },
+    "byPriority": {
+      "medium": 262
+    },
+    "filters": {
+      "search": "",
+      "owner": "",
+      "status": "",
+      "priority": "",
+      "count": "",
+      "countShown": false,
+      "noResults": "none"
+    },
+    "ownerFilterOptions": [
+      "",
+      "UNOWNED"
+    ],
+    "buttons": {
+      "expandAll": "▼ Expand All",
+      "bulk": "☑ Bulk Select",
+      "bulkClass": "btn btn-secondary"
+    },
+    "bulkBar": {
+      "visible": false,
+      "text": ""
+    },
+    "stats": {
+      "total": "262",
+      "assigned": "0",
+      "done": "0",
+      "unowned": "262",
+      "blocked": "0"
+    },
+    "toast": "",
+    "pickers": {
+      "owner": [],
+      "dep": 0,
+      "depClear": false,
+      "due": false
+    },
+    "notesModal": {
+      "visible": false,
+      "title": "Task",
+      "value": ""
+    },
+    "fieldsModal": {
+      "visible": false,
+      "title": "Task",
+      "rows": []
+    },
+    "stored": {
+      "changedTasks": 0
+    }
+  },
+  {
+    "label": "open one then expand all",
+    "rows": [
+      [
+        "leasing:0",
+        {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Create property listings and syndicate to platforms",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      ],
+      [
+        "leasing:1",
+        {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Conduct pricing strategy & rent comp analysis",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      ],
+      [
+        "maintenance:0",
+        {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Monitor work order queue daily",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      ]
+    ],
+    "departments": [
+      {
+        "id": "leasing",
+        "expanded": true,
+        "hidden": false,
+        "count": "20",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "applications",
+        "expanded": true,
+        "hidden": false,
+        "count": "16",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "move-ins",
+        "expanded": true,
+        "hidden": false,
+        "count": "13",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "tenant-comms",
+        "expanded": true,
+        "hidden": false,
+        "count": "10",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "delinquency",
+        "expanded": true,
+        "hidden": false,
+        "count": "16",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "maintenance",
+        "expanded": true,
+        "hidden": false,
+        "count": "25",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "vendors",
+        "expanded": true,
+        "hidden": false,
+        "count": "13",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "unit-turns",
+        "expanded": true,
+        "hidden": false,
+        "count": "13",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "move-outs",
+        "expanded": true,
+        "hidden": false,
+        "count": "14",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "field-services",
+        "expanded": true,
+        "hidden": false,
+        "count": "14",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "utilities",
+        "expanded": true,
+        "hidden": false,
+        "count": "9",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "owner-relations",
+        "expanded": true,
+        "hidden": false,
+        "count": "20",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "owner-onboarding",
+        "expanded": true,
+        "hidden": false,
+        "count": "17",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "accounting",
+        "expanded": true,
+        "hidden": false,
+        "count": "30",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "compliance",
+        "expanded": true,
+        "hidden": false,
+        "count": "13",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "reporting",
+        "expanded": true,
+        "hidden": false,
+        "count": "7",
+        "completion": "",
+        "fill": "0%"
+      },
+      {
+        "id": "systems",
+        "expanded": true,
+        "hidden": false,
+        "count": "12",
+        "completion": "",
+        "fill": "0%"
+      }
+    ],
+    "visibleTasks": 262,
+    "byStatus": {
+      "todo": 262
+    },
+    "byOwner": {
+      "UNOWNED": 262
+    },
+    "byPriority": {
+      "medium": 262
+    },
+    "filters": {
+      "search": "",
+      "owner": "",
+      "status": "",
+      "priority": "",
+      "count": "",
+      "countShown": false,
+      "noResults": "none"
+    },
+    "ownerFilterOptions": [
+      "",
+      "UNOWNED"
+    ],
+    "buttons": {
+      "expandAll": "▲ Collapse All",
+      "bulk": "☑ Bulk Select",
+      "bulkClass": "btn btn-secondary"
+    },
+    "bulkBar": {
+      "visible": false,
+      "text": ""
+    },
+    "stats": {
+      "total": "262",
+      "assigned": "0",
+      "done": "0",
+      "unowned": "262",
+      "blocked": "0"
+    },
+    "toast": "",
+    "pickers": {
+      "owner": [],
+      "dep": 0,
+      "depClear": false,
+      "due": false
+    },
+    "notesModal": {
+      "visible": false,
+      "title": "Task",
+      "value": ""
+    },
+    "fieldsModal": {
+      "visible": false,
+      "title": "Task",
+      "rows": []
+    },
+    "stored": {
+      "changedTasks": 0
+    }
+  },
+  {
+    "dialogs": []
+  }
+]
