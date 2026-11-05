@@ -71,7 +71,7 @@ Shipped-module tests (Vitest + jsdom importing the real ES modules), XSS and CSV
 
 **Status:** `js/actions.js` is the delegation layer. The Map & Review (tracking) screen is converted: no inline handlers in what it renders, its functions are no longer on `window` (two modal close buttons in `index.html` still use `closeTaskNotes` / `closeCustomFields` until the modals are converted), and a browser characterization recorded on the old code (`e2e/tracking-interactions.spec.js`, `e2e/golden/tracking/`) passes unchanged. Next: team, work orders, portfolio, map and launch plan, then modals and the navigation, then the E2E expansion.
 
-**Found along the way:** pressing Enter in the task rename box does not save (the Enter handler marks the edit as saved and then blurs, and the blur handler skips saving once it is marked). Recorded as-is by the characterization and left for its own change.
+**Found along the way, and fixed:** pressing Enter in the task rename box did not save (the Enter handler marked the edit as saved and then blurred, and the blur handler skips saving once an edit is marked). The conversion left it as recorded so it stayed provably neutral; it was then fixed on its own (Nov 2026), with the recording updated for exactly the Enter step.
 
 **Hidden couplings to fix in their own slice:** `launchPlan.js` finds the Map tab with `document.querySelector('[onclick*=map]')` (breaks when the navigation is converted; select by `data-view` instead), and still reaches `showNewWorkOrderModal`, `downloadOperationsHandbook` and `switchView` through `window` (the window-binding removal for those must turn them into imports first). The tracking slice removed the same kind of coupling for `applyFilter`.
 

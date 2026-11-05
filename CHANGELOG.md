@@ -9,6 +9,7 @@
 - Server: `npm audit fix` clears a critical advisory in `proxy-addr` (a production dependency of Express); the sync server's Docker image moves from Node 20 (end-of-life) to Node 22.
 
 ### Fixed
+- Pressing **Enter** while renaming a task now saves the new name (and closes the box). Before, Enter did nothing and the name was lost unless you clicked away instead.
 - Importing a workspace, or loading the demo company, now redraws whichever screen you are on (map, team, work orders; the portfolio too after the demo company). Before, they kept showing the previous workspace until you switched tabs.
 - The demo's tenants and vendors were missing the `documentUrl` field every real record has (found by the new type check).
 - Per-task **notes and custom fields** are now part of the portable workspace (schema v3): they were missing from JSON export, Copy State, and Team Sync, and were not restored from backups. Version 2 files still import.
