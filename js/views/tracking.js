@@ -295,7 +295,8 @@ export function startTaskEdit(deptId, taskIdx) {
 
   input.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
-      saved = true;
+      // Enter just leaves the box; the blur handler above is the one place that saves. It used to also set
+      // `saved = true` here, which made that handler skip the save, so Enter silently lost the new name.
       input.blur();
     } else if (e.key === 'Escape') {
       saved = true;

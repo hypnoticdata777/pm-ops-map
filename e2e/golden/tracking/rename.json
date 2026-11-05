@@ -400,11 +400,83 @@
     }
   },
   {
-    "label": "type and press Enter (currently stays in edit mode, see note)",
-    "changed": {}
+    "label": "type and press Enter: saved",
+    "changed": {
+      "rows": {
+        "leasing:1": {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Second rename",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      },
+      "stored": {
+        "leasing": [
+          {
+            "name": "Renamed by hand",
+            "owner": "UNOWNED",
+            "status": "todo",
+            "priority": "medium",
+            "dueDate": null,
+            "blockedBy": null,
+            "notes": null,
+            "customFields": null
+          },
+          {
+            "name": "Second rename",
+            "owner": "UNOWNED",
+            "status": "todo",
+            "priority": "medium",
+            "dueDate": null,
+            "blockedBy": null,
+            "notes": null,
+            "customFields": null
+          },
+          {
+            "name": "Schedule and conduct showings",
+            "owner": "UNOWNED",
+            "status": "todo",
+            "priority": "medium",
+            "dueDate": null,
+            "blockedBy": null,
+            "notes": null,
+            "customFields": null
+          }
+        ],
+        "maintenance": [
+          {
+            "name": "Monitor work order queue daily",
+            "owner": "UNOWNED",
+            "status": "todo",
+            "priority": "medium",
+            "dueDate": null,
+            "blockedBy": null,
+            "notes": null,
+            "customFields": null
+          }
+        ],
+        "changedTasks": 262
+      }
+    }
   },
   {
-    "label": "clicking away afterwards does not save it either",
+    "label": "clicking away afterwards changes nothing more",
     "changed": {}
   },
   {

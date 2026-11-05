@@ -178,9 +178,6 @@ test('renaming a task: save, cancel', async ({ page }) => {
   await open(page, 'leasing');
   const input = () => row(page, 'leasing', 0).locator('.task-name-input');
   const clickAway = () => page.locator('#stat-total').click();
-  // NOTE: pressing Enter currently does NOT save (the Enter handler marks the edit as saved and then blurs, and
-  // the blur handler skips saving once it is marked). That bug predates the conversion and is recorded here as
-  // it is; only clicking away commits a rename. Fixing it is a separate, deliberate change.
   await scenario(page, 'rename', [
     ['start editing', () => row(page, 'leasing', 0).locator('.task-name').dblclick()],
     ['type and click away: saved', async () => { await input().fill('Renamed by hand'); await clickAway(); }],
@@ -189,8 +186,8 @@ test('renaming a task: save, cancel', async ({ page }) => {
     ['edit once more after cancelling', () => row(page, 'leasing', 0).locator('.task-name').dblclick()],
     ['an empty name is refused', async () => { await input().fill('   '); await clickAway(); }],
     ['edit a second task', () => row(page, 'leasing', 1).locator('.task-name').dblclick()],
-    ['type and press Enter (currently stays in edit mode, see note)', async () => { await row(page, 'leasing', 1).locator('.task-name-input').fill('Second rename'); await row(page, 'leasing', 1).locator('.task-name-input').press('Enter'); }],
-    ['clicking away afterwards does not save it either', clickAway],
+    ['type and press Enter: saved', async () => { await row(page, 'leasing', 1).locator('.task-name-input').fill('Second rename'); await row(page, 'leasing', 1).locator('.task-name-input').press('Enter'); }],
+    ['clicking away afterwards changes nothing more', clickAway],
   ]);
 });
 
