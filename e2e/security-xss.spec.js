@@ -9,6 +9,7 @@ import { test, expect } from '@playwright/test';
 import {
   buildEvilWorkspace, evil, prepare, importWorkspace, scan, call, poke, writeTemp,
 } from './helpers/security.js';
+import { clickBulkToggle, clickExpandAll, closeOpenDialogs } from './helpers/tracking.js';
 
 // Most surfaces just need confirm() prompts out of the way. Exports of resident data now ask
 // for confirmation first, so the one test that downloads a file passes acceptDialogs.
@@ -43,7 +44,7 @@ test.describe('hostile import is inert', () => {
 
   test('tracking view, pickers and modals', async ({ page }, testInfo) => {
     await loadEvilApp(page, testInfo);
-    await call(page, 'toggleExpandAllDepartments');
+    await clickExpandAll(page);
     await expectClean(page, 'tracking (expanded)');
 
     const leasing = '.department[data-id="leasing"]';
@@ -53,7 +54,8 @@ test.describe('hostile import is inert', () => {
     await expectClean(page, 'tracking dependency picker');
     await poke(page, `${leasing} .task-notes-btn, ${leasing} .task-fields-btn, ${leasing} .due-date-chip`);
     await expectClean(page, 'tracking notes/custom/due');
-    await call(page, 'toggleBulkMode');
+    await closeOpenDialogs(page); // the poke above opened notes / custom fields
+    await clickBulkToggle(page);
     await expectClean(page, 'tracking bulk mode');
   });
 
@@ -145,7 +147,7 @@ test.describe('hostile import is inert', () => {
 test.describe('hostile text is displayed, not executed', () => {
   test('free-text fields render literally and enums/ids/colors are repaired', async ({ page }, testInfo) => {
     await loadEvilApp(page, testInfo);
-    await call(page, 'toggleExpandAllDepartments');
+    await clickExpandAll(page);
 
     // Tracking: task name + owner come through as literal text.
     await expect(page.locator('.department[data-id="leasing"] .task-name').first()).toHaveText(evil('task.name'));

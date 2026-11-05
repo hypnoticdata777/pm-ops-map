@@ -72,12 +72,14 @@ describe('the real wiring', () => {
       .flat().forEach(step => expect(REFRESH_STEPS, step).toContain(step));
   });
 
-  test('the presets are the lists the old copy-pasted blocks used, in the same order', () => {
+  // The task-change, roster and template lists are still exactly what the old copy-pasted blocks did. The import
+  // and demo-company lists gained the map / team / work-orders (and, for the demo company, portfolio) refresh on purpose (Nov 2026), which is the only change.
+  test('the presets are pinned, in order', () => {
     expect(REFRESH_AFTER_TASK_CHANGE).toEqual(['tracking', 'stats', 'ownerFilter', 'legend', 'mapIfCurrent', 'teamIfCurrent']);
-    expect(REFRESH_AFTER_IMPORT).toEqual(['tracking', 'stats', 'expandDepartments', 'ownerFilter', 'legend', 'portfolio']);
+    expect(REFRESH_AFTER_IMPORT).toEqual(['tracking', 'stats', 'expandDepartments', 'ownerFilter', 'legend', 'portfolio', 'mapIfCurrent', 'teamIfCurrent', 'workOrdersIfCurrent']);
     expect(REFRESH_AFTER_ROSTER_CHANGE).toEqual(['team', 'tracking', 'stats', 'legend', 'ownerFilter', 'workOrdersIfCurrent', 'workOrderBeacon', 'mapIfCurrent']);
     expect(REFRESH_AFTER_TEMPLATE).toEqual(['team', 'tracking', 'stats', 'legend', 'ownerFilter', 'workOrderBeacon']);
-    expect(REFRESH_AFTER_DEMO_COMPANY).toEqual(['launchPlan', 'tracking', 'ownerFilter', 'legend', 'stats']);
+    expect(REFRESH_AFTER_DEMO_COMPANY).toEqual(['launchPlan', 'tracking', 'ownerFilter', 'legend', 'stats', 'portfolio', 'mapIfCurrent', 'teamIfCurrent', 'workOrdersIfCurrent']);
   });
 
   test('the shared commit rejects a typo too', () => {

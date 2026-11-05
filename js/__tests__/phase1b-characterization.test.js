@@ -114,12 +114,14 @@ const SITES = {};
     fixture: 'showcase-partial', view,
     act: () => applyRoleTemplate('solo', true),
   };
+});
+['tracking', 'team', 'workorders'].forEach(view => {
   SITES[`load-demo-company@${view}`] = {
     fixture: 'template-twoPerson', view,
     act: () => loadDemoCompany(),
   };
 });
-['tracking', 'map', 'team'].forEach(view => {
+['tracking', 'map', 'team', 'workorders'].forEach(view => {
   SITES[`import@${view}`] = {
     fixture: 'template-twoPerson', view,
     act: ctx => _applyImportedState(ctx.payload),

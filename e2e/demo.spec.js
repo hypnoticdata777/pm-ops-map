@@ -1,6 +1,7 @@
 // The hosted demo (?demo=1): opens straight into a populated, fictional workspace,
 // says so permanently, can be reset in one click, and never touches a real workspace.
 import { test, expect } from '@playwright/test';
+import { clickExpandAll, clickPriority, clickStatus } from './helpers/tracking.js';
 
 const DEMO = 'index.html?demo=1';
 const dump = page => page.evaluate(() => Object.fromEntries(Object.entries(localStorage)));
@@ -38,7 +39,7 @@ test.describe('opening the demo', () => {
 
   test('the banner stays pinned while scrolling', async ({ page }) => {
     await page.goto(DEMO);
-    await call(page, 'toggleExpandAllDepartments');
+    await clickExpandAll(page);
     await page.mouse.wheel(0, 3000);
     await page.waitForTimeout(150);
     const box = await page.locator('#demo-banner').boundingBox();
@@ -110,7 +111,7 @@ test.describe('editing and resetting', () => {
   test('edits survive a reload', async ({ page }) => {
     await page.goto(DEMO);
     const before = await firstRowStatus(page);
-    await call(page, 'cycleTaskStatus', 'leasing', 0);
+    await clickStatus(page, 'leasing', 0);
     const after = await firstRowStatus(page);
     expect(after).not.toBe(before);
     await page.reload();
@@ -120,8 +121,8 @@ test.describe('editing and resetting', () => {
   test('"Reset demo" restores the pristine workspace in one click', async ({ page }) => {
     await page.goto(DEMO);
     const pristine = await firstRowStatus(page);
-    await call(page, 'cycleTaskStatus', 'leasing', 0);
-    await call(page, 'cycleTaskPriority', 'leasing', 0);
+    await clickStatus(page, 'leasing', 0);
+    await clickPriority(page, 'leasing', 0);
     expect(await firstRowStatus(page)).not.toBe(pristine);
     await Promise.all([page.waitForEvent('load'), page.getByRole('button', { name: 'Reset demo' }).click()]);
     await page.waitForSelector('#departments .department');
@@ -133,7 +134,7 @@ test.describe('editing and resetting', () => {
     page.removeAllListeners('dialog');
     page.on('dialog', d => d.dismiss());
     await page.goto(DEMO);
-    await call(page, 'cycleTaskStatus', 'leasing', 0);
+    await clickStatus(page, 'leasing', 0);
     const edited = await firstRowStatus(page);
     await page.getByRole('button', { name: 'Reset demo' }).click();
     await page.waitForTimeout(300);
@@ -147,7 +148,7 @@ test.describe('isolation from a real workspace on the same origin', () => {
     await page.goto('index.html');
     await page.fill('#company-input', 'Real Company LLC');
     await page.getByRole('button', { name: /Start Mapping/ }).click();
-    await call(page, 'cycleTaskStatus', 'leasing', 0);
+    await clickStatus(page, 'leasing', 0);
     const realBefore = await dump(page);
     expect(realBefore['pm-ops-company-name']).toBe('Real Company LLC');
     expect(demoKeys(realBefore)).toEqual([]);
@@ -155,7 +156,7 @@ test.describe('isolation from a real workspace on the same origin', () => {
     // The demo, same origin, same browser profile.
     await page.goto(DEMO);
     await expect(page.locator('#company-heading')).toHaveText('DEMO DOOR PROPERTY MANAGEMENT');
-    await call(page, 'cycleTaskStatus', 'leasing', 1);
+    await clickStatus(page, 'leasing', 1);
     let both = await dump(page);
     expect(demoKeys(both).length).toBeGreaterThanOrEqual(5);
     realKeys(realBefore).forEach(key => expect(both[key], key).toBe(realBefore[key]));

@@ -38,7 +38,7 @@
             "Emergencies 0% 62 unowned / 62 tasks No named owner"
           ],
           "allText": "4976636fa510a1b3",
-          "allHtml": "6dd07b462979bd9b"
+          "allHtml": "27bc718ab10da14d"
         },
         "handbook": {
           "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 0%\n- Responsibilities: 49\n- Unowned: 49\n- Primary owners: No named owner\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 0%\n- Responsibilities: 46\n- Unowned: 46\n- Primary owners: No named owner\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 0%\n- Responsibilities: 54\n- Unowned: 54\n- Primary owners: No named owner\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 0%\n- Responsibilities: 38\n- Unowned: 38\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 0%\n- Responsibilities: 20\n- Unowned: 20\n- Primary owners: No named owner\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 0%\n- Responsibilities: 50\n- Unowned: 50\n- Primary owners: No named owner\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 0%\n- Responsibilities: 62\n- Unowned: 62\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
@@ -131,7 +131,7 @@
             "Emergencies 100% 0 unowned / 62 tasks Owner Operator"
           ],
           "allText": "9059e3a07b8e59a9",
-          "allHtml": "d509ccaa9072b5aa"
+          "allHtml": "0aa4ad6e86a422c6"
         },
         "handbook": {
           "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 100%\n- Responsibilities: 49\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 100%\n- Responsibilities: 46\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 100%\n- Responsibilities: 54\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 100%\n- Responsibilities: 38\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 100%\n- Responsibilities: 20\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 100%\n- Responsibilities: 50\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 100%\n- Responsibilities: 62\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
@@ -184,7 +184,7 @@
             "Emergencies 0% 62 unowned / 62 tasks No named owner"
           ],
           "allText": "b052c67294036546",
-          "allHtml": "545b9497e11f4664"
+          "allHtml": "b77fd195c91fa50d"
         },
         "handbook": {
           "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 0%\n- Responsibilities: 49\n- Unowned: 49\n- Primary owners: No named owner\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 0%\n- Responsibilities: 46\n- Unowned: 46\n- Primary owners: No named owner\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 0%\n- Responsibilities: 54\n- Unowned: 54\n- Primary owners: No named owner\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 0%\n- Responsibilities: 38\n- Unowned: 38\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 0%\n- Responsibilities: 20\n- Unowned: 20\n- Primary owners: No named owner\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 0%\n- Responsibilities: 50\n- Unowned: 50\n- Primary owners: No named owner\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 0%\n- Responsibilities: 62\n- Unowned: 62\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
@@ -279,7 +279,7 @@
             "Emergencies 100% 0 unowned / 62 tasks Ops Coordinator, Portfolio Lead"
           ],
           "allText": "3ee4745da5d8e0cc",
-          "allHtml": "b5da1b39f682aa5a"
+          "allHtml": "b8bc7debb149801d"
         },
         "handbook": {
           "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 100%\n- Responsibilities: 49\n- Unowned: 0\n- Primary owners: Portfolio Lead\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 100%\n- Responsibilities: 46\n- Unowned: 0\n- Primary owners: Ops Coordinator\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 100%\n- Responsibilities: 54\n- Unowned: 0\n- Primary owners: Ops Coordinator, Portfolio Lead\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 100%\n- Responsibilities: 38\n- Unowned: 0\n- Primary owners: Ops Coordinator\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 100%\n- Responsibilities: 20\n- Unowned: 0\n- Primary owners: Ops Coordinator, Portfolio Lead\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 100%\n- Responsibilities: 50\n- Unowned: 0\n- Primary owners: Portfolio Lead\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 100%\n- Responsibilities: 62\n- Unowned: 0\n- Primary owners: Ops Coordinator, Portfolio Lead\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
@@ -333,7 +333,7 @@
             "Emergencies 0% 62 unowned / 62 tasks No named owner"
           ],
           "allText": "a5901c3c9d8d8ffd",
-          "allHtml": "530c12caee047fd1"
+          "allHtml": "133a2da0214d1d4d"
         },
         "handbook": {
           "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 0%\n- Responsibilities: 49\n- Unowned: 49\n- Primary owners: No named owner\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 0%\n- Responsibilities: 46\n- Unowned: 46\n- Primary owners: No named owner\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 0%\n- Responsibilities: 54\n- Unowned: 54\n- Primary owners: No named owner\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 0%\n- Responsibilities: 38\n- Unowned: 38\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 0%\n- Responsibilities: 20\n- Unowned: 20\n- Primary owners: No named owner\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 0%\n- Responsibilities: 50\n- Unowned: 50\n- Primary owners: No named owner\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 0%\n- Responsibilities: 62\n- Unowned: 62\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
@@ -430,7 +430,7 @@
             "Emergencies 100% 0 unowned / 62 tasks Maintenance Coordinator, Resident Coordinator"
           ],
           "allText": "c7cef13d41ba77e8",
-          "allHtml": "7cf71013c5a4d190"
+          "allHtml": "90641f12bd86e662"
         },
         "handbook": {
           "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 100%\n- Responsibilities: 49\n- Unowned: 0\n- Primary owners: Resident Coordinator\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 100%\n- Responsibilities: 46\n- Unowned: 0\n- Primary owners: Portfolio Admin\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 100%\n- Responsibilities: 54\n- Unowned: 0\n- Primary owners: Resident Coordinator, Maintenance Coordinator\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 100%\n- Responsibilities: 38\n- Unowned: 0\n- Primary owners: Maintenance Coordinator\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 100%\n- Responsibilities: 20\n- Unowned: 0\n- Primary owners: Portfolio Admin\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 100%\n- Responsibilities: 50\n- Unowned: 0\n- Primary owners: Resident Coordinator, Portfolio Admin\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 100%\n- Responsibilities: 62\n- Unowned: 0\n- Primary owners: Maintenance Coordinator, Resident Coordinator\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
@@ -484,7 +484,7 @@
             "Emergencies 0% 62 unowned / 62 tasks No named owner"
           ],
           "allText": "a5901c3c9d8d8ffd",
-          "allHtml": "530c12caee047fd1"
+          "allHtml": "133a2da0214d1d4d"
         },
         "handbook": {
           "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 0%\n- Responsibilities: 49\n- Unowned: 49\n- Primary owners: No named owner\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 0%\n- Responsibilities: 46\n- Unowned: 46\n- Primary owners: No named owner\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 0%\n- Responsibilities: 54\n- Unowned: 54\n- Primary owners: No named owner\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 0%\n- Responsibilities: 38\n- Unowned: 38\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 0%\n- Responsibilities: 20\n- Unowned: 20\n- Primary owners: No named owner\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 0%\n- Responsibilities: 50\n- Unowned: 50\n- Primary owners: No named owner\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 0%\n- Responsibilities: 62\n- Unowned: 62\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
@@ -581,7 +581,7 @@
             "Emergencies 100% 0 unowned / 62 tasks Operations Lead"
           ],
           "allText": "c0ab81d254eebb1b",
-          "allHtml": "2575e80aaeeecdc7"
+          "allHtml": "205c9b80e7b99250"
         },
         "handbook": {
           "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 100%\n- Responsibilities: 49\n- Unowned: 0\n- Primary owners: Leasing Lead\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 100%\n- Responsibilities: 46\n- Unowned: 0\n- Primary owners: Accounting Admin\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 100%\n- Responsibilities: 54\n- Unowned: 0\n- Primary owners: Operations Lead, Leasing Lead\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 100%\n- Responsibilities: 38\n- Unowned: 0\n- Primary owners: Operations Lead\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 100%\n- Responsibilities: 20\n- Unowned: 0\n- Primary owners: Accounting Admin\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 100%\n- Responsibilities: 50\n- Unowned: 0\n- Primary owners: Accounting Admin, Leasing Lead, Operations Lead\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 100%\n- Responsibilities: 62\n- Unowned: 0\n- Primary owners: Operations Lead\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
@@ -635,7 +635,7 @@
             "Emergencies 66% 21 unowned / 62 tasks Marcus Reyes, Dana Whitfield, Priya Raman"
           ],
           "allText": "8181dd72bd071986",
-          "allHtml": "018b3ed07624120c"
+          "allHtml": "d6ca64439f272a11"
         },
         "handbook": {
           "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 65%\n- Responsibilities: 49\n- Unowned: 17\n- Primary owners: Priya Raman\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 67%\n- Responsibilities: 46\n- Unowned: 15\n- Primary owners: Dana Whitfield\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 65%\n- Responsibilities: 54\n- Unowned: 19\n- Primary owners: Marcus Reyes, Priya Raman\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 66%\n- Responsibilities: 38\n- Unowned: 13\n- Primary owners: Marcus Reyes, Dana Whitfield\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 0%\n- Responsibilities: 20\n- Unowned: 20\n- Primary owners: No named owner\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 68%\n- Responsibilities: 50\n- Unowned: 16\n- Primary owners: Priya Raman, Dana Whitfield\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 66%\n- Responsibilities: 62\n- Unowned: 21\n- Primary owners: Marcus Reyes, Dana Whitfield, Priya Raman\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
@@ -735,7 +735,7 @@
             "Emergencies 100% 0 unowned / 62 tasks Marcus Reyes, Dana Whitfield, Priya Raman"
           ],
           "allText": "767bb9c27a7cd5bf",
-          "allHtml": "a42e1b0caa12f6e6"
+          "allHtml": "f4a873b1ef008ec8"
         },
         "handbook": {
           "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 100%\n- Responsibilities: 49\n- Unowned: 0\n- Primary owners: Priya Raman\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 100%\n- Responsibilities: 46\n- Unowned: 0\n- Primary owners: Dana Whitfield\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 100%\n- Responsibilities: 54\n- Unowned: 0\n- Primary owners: Priya Raman, Marcus Reyes\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 100%\n- Responsibilities: 38\n- Unowned: 0\n- Primary owners: Marcus Reyes, Dana Whitfield\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 100%\n- Responsibilities: 20\n- Unowned: 0\n- Primary owners: Marcus Reyes\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 100%\n- Responsibilities: 50\n- Unowned: 0\n- Primary owners: Priya Raman, Dana Whitfield\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 100%\n- Responsibilities: 62\n- Unowned: 0\n- Primary owners: Marcus Reyes, Dana Whitfield, Priya Raman\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
@@ -789,7 +789,7 @@
             "Emergencies 0% 62 unowned / 62 tasks No named owner"
           ],
           "allText": "a5901c3c9d8d8ffd",
-          "allHtml": "530c12caee047fd1"
+          "allHtml": "133a2da0214d1d4d"
         },
         "handbook": {
           "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 0%\n- Responsibilities: 49\n- Unowned: 49\n- Primary owners: No named owner\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 0%\n- Responsibilities: 46\n- Unowned: 46\n- Primary owners: No named owner\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 0%\n- Responsibilities: 54\n- Unowned: 54\n- Primary owners: No named owner\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 0%\n- Responsibilities: 38\n- Unowned: 38\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 0%\n- Responsibilities: 20\n- Unowned: 20\n- Primary owners: No named owner\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 0%\n- Responsibilities: 50\n- Unowned: 50\n- Primary owners: No named owner\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 0%\n- Responsibilities: 62\n- Unowned: 62\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
@@ -886,7 +886,7 @@
             "Emergencies 100% 0 unowned / 62 tasks Rae, Sol, Tia"
           ],
           "allText": "ca35afc18d9e2fec",
-          "allHtml": "402bc4ab2f191647"
+          "allHtml": "1573c7d77bdf2449"
         },
         "handbook": {
           "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 100%\n- Responsibilities: 49\n- Unowned: 0\n- Primary owners: Rae, Sol, Tia\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 100%\n- Responsibilities: 46\n- Unowned: 0\n- Primary owners: Tia, Rae, Sol\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 100%\n- Responsibilities: 54\n- Unowned: 0\n- Primary owners: Rae, Tia, Sol\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 100%\n- Responsibilities: 38\n- Unowned: 0\n- Primary owners: Rae, Sol, Tia\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 100%\n- Responsibilities: 20\n- Unowned: 0\n- Primary owners: Tia, Rae, Sol\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 100%\n- Responsibilities: 50\n- Unowned: 0\n- Primary owners: Sol, Tia, Rae\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 100%\n- Responsibilities: 62\n- Unowned: 0\n- Primary owners: Rae, Sol, Tia\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
@@ -941,7 +941,7 @@
             "Emergencies 8% 57 unowned / 62 tasks Bob"
           ],
           "allText": "859cae7fa762f634",
-          "allHtml": "d221d1602e694249"
+          "allHtml": "bbf5cfbb2251d5c3"
         },
         "handbook": {
           "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 12%\n- Responsibilities: 49\n- Unowned: 43\n- Primary owners: Ghost Person, Ann\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 0%\n- Responsibilities: 46\n- Unowned: 46\n- Primary owners: No named owner\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 0%\n- Responsibilities: 54\n- Unowned: 54\n- Primary owners: No named owner\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 13%\n- Responsibilities: 38\n- Unowned: 33\n- Primary owners: Bob\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 0%\n- Responsibilities: 20\n- Unowned: 20\n- Primary owners: No named owner\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 8%\n- Responsibilities: 50\n- Unowned: 46\n- Primary owners: Ghost Person\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 8%\n- Responsibilities: 62\n- Unowned: 57\n- Primary owners: Bob\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
@@ -1043,7 +1043,7 @@
             "Emergencies 100% 0 unowned / 62 tasks Bob, Cy, Ann"
           ],
           "allText": "3531477417fd5ed6",
-          "allHtml": "0bbd8fffe988bc8e"
+          "allHtml": "ccbc4097be53ace6"
         },
         "handbook": {
           "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 100%\n- Responsibilities: 49\n- Unowned: 0\n- Primary owners: Ann, Cy, Ghost Person\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 100%\n- Responsibilities: 46\n- Unowned: 0\n- Primary owners: Bob, Cy, Ann\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 100%\n- Responsibilities: 54\n- Unowned: 0\n- Primary owners: Cy, Ann, Bob\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 100%\n- Responsibilities: 38\n- Unowned: 0\n- Primary owners: Bob\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 100%\n- Responsibilities: 20\n- Unowned: 0\n- Primary owners: Bob, Cy, Ann\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 100%\n- Responsibilities: 50\n- Unowned: 0\n- Primary owners: Ann, Cy, Bob\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 100%\n- Responsibilities: 62\n- Unowned: 0\n- Primary owners: Bob, Cy, Ann\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
@@ -1097,7 +1097,7 @@
             "Emergencies 0% 62 unowned / 62 tasks No named owner"
           ],
           "allText": "a5901c3c9d8d8ffd",
-          "allHtml": "530c12caee047fd1"
+          "allHtml": "133a2da0214d1d4d"
         },
         "handbook": {
           "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 0%\n- Responsibilities: 49\n- Unowned: 49\n- Primary owners: No named owner\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 0%\n- Responsibilities: 46\n- Unowned: 46\n- Primary owners: No named owner\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 0%\n- Responsibilities: 54\n- Unowned: 54\n- Primary owners: No named owner\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 0%\n- Responsibilities: 38\n- Unowned: 38\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 0%\n- Responsibilities: 20\n- Unowned: 20\n- Primary owners: No named owner\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 0%\n- Responsibilities: 50\n- Unowned: 50\n- Primary owners: No named owner\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 0%\n- Responsibilities: 62\n- Unowned: 62\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
@@ -1194,7 +1194,7 @@
             "Emergencies 100% 0 unowned / 62 tasks Zed, Amy, Mia"
           ],
           "allText": "2ff6e1798f8ae5b4",
-          "allHtml": "2eaac5a663a3aedc"
+          "allHtml": "5708480dd9ff230a"
         },
         "handbook": {
           "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 100%\n- Responsibilities: 49\n- Unowned: 0\n- Primary owners: Zed, Amy, Mia\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 100%\n- Responsibilities: 46\n- Unowned: 0\n- Primary owners: Mia, Zed, Amy\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 100%\n- Responsibilities: 54\n- Unowned: 0\n- Primary owners: Zed, Mia, Amy\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 100%\n- Responsibilities: 38\n- Unowned: 0\n- Primary owners: Zed, Amy, Mia\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 100%\n- Responsibilities: 20\n- Unowned: 0\n- Primary owners: Mia, Zed, Amy\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 100%\n- Responsibilities: 50\n- Unowned: 0\n- Primary owners: Amy, Mia, Zed\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 100%\n- Responsibilities: 62\n- Unowned: 0\n- Primary owners: Zed, Amy, Mia\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
@@ -1247,7 +1247,7 @@
             "Emergencies 77% 14 unowned / 62 tasks Heavy"
           ],
           "allText": "7e424ebff57c022e",
-          "allHtml": "bcfc699c8f3d076c"
+          "allHtml": "81f9a2f3e33033fa"
         },
         "handbook": {
           "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 100%\n- Responsibilities: 49\n- Unowned: 0\n- Primary owners: Heavy\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 35%\n- Responsibilities: 46\n- Unowned: 30\n- Primary owners: Heavy\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 56%\n- Responsibilities: 54\n- Unowned: 24\n- Primary owners: Heavy\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 100%\n- Responsibilities: 38\n- Unowned: 0\n- Primary owners: Heavy\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 0%\n- Responsibilities: 20\n- Unowned: 20\n- Primary owners: No named owner\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 60%\n- Responsibilities: 50\n- Unowned: 20\n- Primary owners: Heavy\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 77%\n- Responsibilities: 62\n- Unowned: 14\n- Primary owners: Heavy\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
@@ -1343,7 +1343,7 @@
             "Emergencies 100% 0 unowned / 62 tasks Heavy, Light"
           ],
           "allText": "890bc9304f037427",
-          "allHtml": "3a5990a899ff1eed"
+          "allHtml": "7e88e7bd593a9481"
         },
         "handbook": {
           "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 100%\n- Responsibilities: 49\n- Unowned: 0\n- Primary owners: Heavy\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 100%\n- Responsibilities: 46\n- Unowned: 0\n- Primary owners: Light, Heavy\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 100%\n- Responsibilities: 54\n- Unowned: 0\n- Primary owners: Heavy, Light\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 100%\n- Responsibilities: 38\n- Unowned: 0\n- Primary owners: Heavy\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 100%\n- Responsibilities: 20\n- Unowned: 0\n- Primary owners: Light\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 100%\n- Responsibilities: 50\n- Unowned: 0\n- Primary owners: Heavy, Light\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 100%\n- Responsibilities: 62\n- Unowned: 0\n- Primary owners: Heavy, Light\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
@@ -1395,7 +1395,7 @@
             "Emergencies 100% 0 unowned / 62 tasks Owner Operator"
           ],
           "allText": "9059e3a07b8e59a9",
-          "allHtml": "d509ccaa9072b5aa"
+          "allHtml": "0aa4ad6e86a422c6"
         },
         "handbook": {
           "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 100%\n- Responsibilities: 49\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 100%\n- Responsibilities: 46\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 100%\n- Responsibilities: 54\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 100%\n- Responsibilities: 38\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 100%\n- Responsibilities: 20\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 100%\n- Responsibilities: 50\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 100%\n- Responsibilities: 62\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
@@ -1481,7 +1481,7 @@
             "Emergencies 100% 0 unowned / 62 tasks Owner Operator"
           ],
           "allText": "9059e3a07b8e59a9",
-          "allHtml": "d509ccaa9072b5aa"
+          "allHtml": "0aa4ad6e86a422c6"
         },
         "handbook": {
           "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 100%\n- Responsibilities: 49\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 100%\n- Responsibilities: 46\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 100%\n- Responsibilities: 54\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 100%\n- Responsibilities: 38\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 100%\n- Responsibilities: 20\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 100%\n- Responsibilities: 50\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 100%\n- Responsibilities: 62\n- Unowned: 0\n- Primary owners: Owner Operator\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
@@ -1531,7 +1531,7 @@
             "Emergencies 0% 62 unowned / 62 tasks No named owner"
           ],
           "allText": "47c7adbea64360bf",
-          "allHtml": "53e65ffc70262a5b"
+          "allHtml": "fd40452756502698"
         },
         "handbook": {
           "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 0%\n- Responsibilities: 49\n- Unowned: 49\n- Primary owners: No named owner\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 0%\n- Responsibilities: 46\n- Unowned: 46\n- Primary owners: No named owner\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 0%\n- Responsibilities: 54\n- Unowned: 54\n- Primary owners: No named owner\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 0%\n- Responsibilities: 38\n- Unowned: 38\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 0%\n- Responsibilities: 20\n- Unowned: 20\n- Primary owners: No named owner\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 0%\n- Responsibilities: 50\n- Unowned: 50\n- Primary owners: No named owner\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 0%\n- Responsibilities: 62\n- Unowned: 62\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
@@ -1617,7 +1617,7 @@
             "Emergencies 0% 62 unowned / 62 tasks No named owner"
           ],
           "allText": "47c7adbea64360bf",
-          "allHtml": "53e65ffc70262a5b"
+          "allHtml": "fd40452756502698"
         },
         "handbook": {
           "coverage": "## Critical Coverage\n\n### Leasing\n\n- Coverage: 0%\n- Responsibilities: 49\n- Unowned: 49\n- Primary owners: No named owner\n- Departments: Leasing & Marketing, Applications & Tenant Screening, Tenant Onboarding & Move-Ins\n\n### Rent Collection\n\n- Coverage: 0%\n- Responsibilities: 46\n- Unowned: 46\n- Primary owners: No named owner\n- Departments: Delinquency & Collections, Accounting & Finance\n\n### Inspections\n\n- Coverage: 0%\n- Responsibilities: 54\n- Unowned: 54\n- Primary owners: No named owner\n- Departments: Tenant Onboarding & Move-Ins, Move-Outs & Inspections, Make-Ready & Unit Turns, Field Services & Access Control\n\n### Maintenance\n\n- Coverage: 0%\n- Responsibilities: 38\n- Unowned: 38\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management\n\n### Compliance\n\n- Coverage: 0%\n- Responsibilities: 20\n- Unowned: 20\n- Primary owners: No named owner\n- Departments: Compliance & Legal, Reporting & KPIs\n\n### Renewals\n\n- Coverage: 0%\n- Responsibilities: 50\n- Unowned: 50\n- Primary owners: No named owner\n- Departments: Tenant Communications & Services, Owner Communications & Relations, Leasing & Marketing\n\n### Emergencies\n\n- Coverage: 0%\n- Responsibilities: 62\n- Unowned: 62\n- Primary owners: No named owner\n- Departments: Maintenance Coordination, Vendor Management, Field Services & Access Control, Tenant Communications & Services",
@@ -1636,7 +1636,7 @@
     "auto-assign@tracking": {
       "before": {
         "view": "tracking",
-        "departments": "76bee04ef220db2b",
+        "departments": "5d2ac9f1c256e711",
         "expandedDepartments": 0,
         "legend": "ef5acc885cbf53ee",
         "ownerFilter": [
@@ -1646,12 +1646,12 @@
           "Priya Raman",
           "UNOWNED"
         ],
-        "teamView": "031271312934a486",
+        "teamView": "4e67860d8b63a718",
         "mapControls": "ca45a8f578b1b490",
         "mapSvg": "4c142a51546d9717",
-        "portfolioView": "25d71154c808026a",
-        "workOrdersView": "284d848b74331b57",
-        "launchPlan": "018b3ed07624120c",
+        "portfolioView": "9c5b65495f100f11",
+        "workOrdersView": "782bc473807689fb",
+        "launchPlan": "d6ca64439f272a11",
         "stats": {
           "total": "262",
           "assigned": "153",
@@ -1672,7 +1672,7 @@
       },
       "after": {
         "view": "tracking",
-        "departments": "49c79bca11f8dc11",
+        "departments": "acf2e9b6959a19f9",
         "expandedDepartments": 0,
         "legend": "ef5acc885cbf53ee",
         "ownerFilter": [
@@ -1681,12 +1681,12 @@
           "Marcus Reyes",
           "Priya Raman"
         ],
-        "teamView": "031271312934a486",
+        "teamView": "4e67860d8b63a718",
         "mapControls": "ca45a8f578b1b490",
         "mapSvg": "4c142a51546d9717",
-        "portfolioView": "25d71154c808026a",
-        "workOrdersView": "284d848b74331b57",
-        "launchPlan": "a42e1b0caa12f6e6",
+        "portfolioView": "9c5b65495f100f11",
+        "workOrdersView": "782bc473807689fb",
+        "launchPlan": "f4a873b1ef008ec8",
         "stats": {
           "total": "262",
           "assigned": "262",
@@ -1717,7 +1717,7 @@
     "undo@tracking": {
       "before": {
         "view": "tracking",
-        "departments": "49c79bca11f8dc11",
+        "departments": "acf2e9b6959a19f9",
         "expandedDepartments": 0,
         "legend": "ef5acc885cbf53ee",
         "ownerFilter": [
@@ -1726,12 +1726,12 @@
           "Marcus Reyes",
           "Priya Raman"
         ],
-        "teamView": "3a92e858941b267e",
+        "teamView": "fc17461015c64ad7",
         "mapControls": "884e83a3cff5d356",
         "mapSvg": "285696407d8891a7",
-        "portfolioView": "25d71154c808026a",
-        "workOrdersView": "284d848b74331b57",
-        "launchPlan": "a42e1b0caa12f6e6",
+        "portfolioView": "9c5b65495f100f11",
+        "workOrdersView": "782bc473807689fb",
+        "launchPlan": "f4a873b1ef008ec8",
         "stats": {
           "total": "262",
           "assigned": "262",
@@ -1757,7 +1757,7 @@
       },
       "after": {
         "view": "tracking",
-        "departments": "76bee04ef220db2b",
+        "departments": "5d2ac9f1c256e711",
         "expandedDepartments": 0,
         "legend": "ef5acc885cbf53ee",
         "ownerFilter": [
@@ -1767,12 +1767,12 @@
           "Priya Raman",
           "UNOWNED"
         ],
-        "teamView": "3a92e858941b267e",
+        "teamView": "fc17461015c64ad7",
         "mapControls": "884e83a3cff5d356",
         "mapSvg": "285696407d8891a7",
-        "portfolioView": "25d71154c808026a",
-        "workOrdersView": "284d848b74331b57",
-        "launchPlan": "018b3ed07624120c",
+        "portfolioView": "9c5b65495f100f11",
+        "workOrdersView": "782bc473807689fb",
+        "launchPlan": "d6ca64439f272a11",
         "stats": {
           "total": "262",
           "assigned": "153",
@@ -1803,7 +1803,7 @@
     "auto-assign@map": {
       "before": {
         "view": "map",
-        "departments": "76bee04ef220db2b",
+        "departments": "5d2ac9f1c256e711",
         "expandedDepartments": 0,
         "legend": "ef5acc885cbf53ee",
         "ownerFilter": [
@@ -1813,12 +1813,12 @@
           "Priya Raman",
           "UNOWNED"
         ],
-        "teamView": "031271312934a486",
+        "teamView": "4e67860d8b63a718",
         "mapControls": "ca45a8f578b1b490",
         "mapSvg": "4c142a51546d9717",
-        "portfolioView": "25d71154c808026a",
-        "workOrdersView": "284d848b74331b57",
-        "launchPlan": "018b3ed07624120c",
+        "portfolioView": "9c5b65495f100f11",
+        "workOrdersView": "782bc473807689fb",
+        "launchPlan": "d6ca64439f272a11",
         "stats": {
           "total": "262",
           "assigned": "153",
@@ -1839,7 +1839,7 @@
       },
       "after": {
         "view": "map",
-        "departments": "49c79bca11f8dc11",
+        "departments": "acf2e9b6959a19f9",
         "expandedDepartments": 0,
         "legend": "ef5acc885cbf53ee",
         "ownerFilter": [
@@ -1848,12 +1848,12 @@
           "Marcus Reyes",
           "Priya Raman"
         ],
-        "teamView": "031271312934a486",
+        "teamView": "4e67860d8b63a718",
         "mapControls": "884e83a3cff5d356",
         "mapSvg": "285696407d8891a7",
-        "portfolioView": "25d71154c808026a",
-        "workOrdersView": "284d848b74331b57",
-        "launchPlan": "a42e1b0caa12f6e6",
+        "portfolioView": "9c5b65495f100f11",
+        "workOrdersView": "782bc473807689fb",
+        "launchPlan": "f4a873b1ef008ec8",
         "stats": {
           "total": "262",
           "assigned": "262",
@@ -1884,7 +1884,7 @@
     "undo@map": {
       "before": {
         "view": "map",
-        "departments": "49c79bca11f8dc11",
+        "departments": "acf2e9b6959a19f9",
         "expandedDepartments": 0,
         "legend": "ef5acc885cbf53ee",
         "ownerFilter": [
@@ -1893,12 +1893,12 @@
           "Marcus Reyes",
           "Priya Raman"
         ],
-        "teamView": "3a92e858941b267e",
+        "teamView": "fc17461015c64ad7",
         "mapControls": "884e83a3cff5d356",
         "mapSvg": "285696407d8891a7",
-        "portfolioView": "25d71154c808026a",
-        "workOrdersView": "284d848b74331b57",
-        "launchPlan": "a42e1b0caa12f6e6",
+        "portfolioView": "9c5b65495f100f11",
+        "workOrdersView": "782bc473807689fb",
+        "launchPlan": "f4a873b1ef008ec8",
         "stats": {
           "total": "262",
           "assigned": "262",
@@ -1924,7 +1924,7 @@
       },
       "after": {
         "view": "map",
-        "departments": "76bee04ef220db2b",
+        "departments": "5d2ac9f1c256e711",
         "expandedDepartments": 0,
         "legend": "ef5acc885cbf53ee",
         "ownerFilter": [
@@ -1934,12 +1934,12 @@
           "Priya Raman",
           "UNOWNED"
         ],
-        "teamView": "3a92e858941b267e",
+        "teamView": "fc17461015c64ad7",
         "mapControls": "ca45a8f578b1b490",
         "mapSvg": "4c142a51546d9717",
-        "portfolioView": "25d71154c808026a",
-        "workOrdersView": "284d848b74331b57",
-        "launchPlan": "018b3ed07624120c",
+        "portfolioView": "9c5b65495f100f11",
+        "workOrdersView": "782bc473807689fb",
+        "launchPlan": "d6ca64439f272a11",
         "stats": {
           "total": "262",
           "assigned": "153",
@@ -1970,7 +1970,7 @@
     "auto-assign@team": {
       "before": {
         "view": "team",
-        "departments": "76bee04ef220db2b",
+        "departments": "5d2ac9f1c256e711",
         "expandedDepartments": 0,
         "legend": "ef5acc885cbf53ee",
         "ownerFilter": [
@@ -1980,12 +1980,12 @@
           "Priya Raman",
           "UNOWNED"
         ],
-        "teamView": "031271312934a486",
+        "teamView": "4e67860d8b63a718",
         "mapControls": "ca45a8f578b1b490",
         "mapSvg": "4c142a51546d9717",
-        "portfolioView": "25d71154c808026a",
-        "workOrdersView": "284d848b74331b57",
-        "launchPlan": "018b3ed07624120c",
+        "portfolioView": "9c5b65495f100f11",
+        "workOrdersView": "782bc473807689fb",
+        "launchPlan": "d6ca64439f272a11",
         "stats": {
           "total": "262",
           "assigned": "153",
@@ -2006,7 +2006,7 @@
       },
       "after": {
         "view": "team",
-        "departments": "49c79bca11f8dc11",
+        "departments": "acf2e9b6959a19f9",
         "expandedDepartments": 0,
         "legend": "ef5acc885cbf53ee",
         "ownerFilter": [
@@ -2015,12 +2015,12 @@
           "Marcus Reyes",
           "Priya Raman"
         ],
-        "teamView": "3a92e858941b267e",
+        "teamView": "fc17461015c64ad7",
         "mapControls": "ca45a8f578b1b490",
         "mapSvg": "4c142a51546d9717",
-        "portfolioView": "25d71154c808026a",
-        "workOrdersView": "284d848b74331b57",
-        "launchPlan": "a42e1b0caa12f6e6",
+        "portfolioView": "9c5b65495f100f11",
+        "workOrdersView": "782bc473807689fb",
+        "launchPlan": "f4a873b1ef008ec8",
         "stats": {
           "total": "262",
           "assigned": "262",
@@ -2051,7 +2051,7 @@
     "undo@team": {
       "before": {
         "view": "team",
-        "departments": "49c79bca11f8dc11",
+        "departments": "acf2e9b6959a19f9",
         "expandedDepartments": 0,
         "legend": "ef5acc885cbf53ee",
         "ownerFilter": [
@@ -2060,12 +2060,12 @@
           "Marcus Reyes",
           "Priya Raman"
         ],
-        "teamView": "3a92e858941b267e",
+        "teamView": "fc17461015c64ad7",
         "mapControls": "884e83a3cff5d356",
         "mapSvg": "285696407d8891a7",
-        "portfolioView": "25d71154c808026a",
-        "workOrdersView": "284d848b74331b57",
-        "launchPlan": "a42e1b0caa12f6e6",
+        "portfolioView": "9c5b65495f100f11",
+        "workOrdersView": "782bc473807689fb",
+        "launchPlan": "f4a873b1ef008ec8",
         "stats": {
           "total": "262",
           "assigned": "262",
@@ -2091,7 +2091,7 @@
       },
       "after": {
         "view": "team",
-        "departments": "76bee04ef220db2b",
+        "departments": "5d2ac9f1c256e711",
         "expandedDepartments": 0,
         "legend": "ef5acc885cbf53ee",
         "ownerFilter": [
@@ -2101,12 +2101,12 @@
           "Priya Raman",
           "UNOWNED"
         ],
-        "teamView": "031271312934a486",
+        "teamView": "4e67860d8b63a718",
         "mapControls": "884e83a3cff5d356",
         "mapSvg": "285696407d8891a7",
-        "portfolioView": "25d71154c808026a",
-        "workOrdersView": "284d848b74331b57",
-        "launchPlan": "018b3ed07624120c",
+        "portfolioView": "9c5b65495f100f11",
+        "workOrdersView": "782bc473807689fb",
+        "launchPlan": "d6ca64439f272a11",
         "stats": {
           "total": "262",
           "assigned": "153",
@@ -2137,7 +2137,7 @@
     "remove-employee@tracking": {
       "before": {
         "view": "tracking",
-        "departments": "76bee04ef220db2b",
+        "departments": "5d2ac9f1c256e711",
         "expandedDepartments": 0,
         "legend": "ef5acc885cbf53ee",
         "ownerFilter": [
@@ -2147,12 +2147,12 @@
           "Priya Raman",
           "UNOWNED"
         ],
-        "teamView": "031271312934a486",
+        "teamView": "4e67860d8b63a718",
         "mapControls": "ca45a8f578b1b490",
         "mapSvg": "4c142a51546d9717",
-        "portfolioView": "25d71154c808026a",
-        "workOrdersView": "284d848b74331b57",
-        "launchPlan": "018b3ed07624120c",
+        "portfolioView": "9c5b65495f100f11",
+        "workOrdersView": "782bc473807689fb",
+        "launchPlan": "d6ca64439f272a11",
         "stats": {
           "total": "262",
           "assigned": "153",
@@ -2173,7 +2173,7 @@
       },
       "after": {
         "view": "tracking",
-        "departments": "120b0d033a6571be",
+        "departments": "da7b4f66c8b1fa23",
         "expandedDepartments": 0,
         "legend": "8dab39af26d09dfa",
         "ownerFilter": [
@@ -2182,12 +2182,12 @@
           "Priya Raman",
           "UNOWNED"
         ],
-        "teamView": "ce0fae62e7167a7a",
+        "teamView": "c31e5adcad39cf6c",
         "mapControls": "ca45a8f578b1b490",
         "mapSvg": "4c142a51546d9717",
-        "portfolioView": "25d71154c808026a",
-        "workOrdersView": "284d848b74331b57",
-        "launchPlan": "e0de563f95edabb5",
+        "portfolioView": "9c5b65495f100f11",
+        "workOrdersView": "782bc473807689fb",
+        "launchPlan": "acfe2d5d3ce5c5f4",
         "stats": {
           "total": "262",
           "assigned": "119",
@@ -2213,7 +2213,7 @@
     "remove-employee@map": {
       "before": {
         "view": "map",
-        "departments": "76bee04ef220db2b",
+        "departments": "5d2ac9f1c256e711",
         "expandedDepartments": 0,
         "legend": "ef5acc885cbf53ee",
         "ownerFilter": [
@@ -2223,12 +2223,12 @@
           "Priya Raman",
           "UNOWNED"
         ],
-        "teamView": "031271312934a486",
+        "teamView": "4e67860d8b63a718",
         "mapControls": "ca45a8f578b1b490",
         "mapSvg": "4c142a51546d9717",
-        "portfolioView": "25d71154c808026a",
-        "workOrdersView": "284d848b74331b57",
-        "launchPlan": "018b3ed07624120c",
+        "portfolioView": "9c5b65495f100f11",
+        "workOrdersView": "782bc473807689fb",
+        "launchPlan": "d6ca64439f272a11",
         "stats": {
           "total": "262",
           "assigned": "153",
@@ -2249,7 +2249,7 @@
       },
       "after": {
         "view": "map",
-        "departments": "120b0d033a6571be",
+        "departments": "da7b4f66c8b1fa23",
         "expandedDepartments": 0,
         "legend": "8dab39af26d09dfa",
         "ownerFilter": [
@@ -2258,12 +2258,12 @@
           "Priya Raman",
           "UNOWNED"
         ],
-        "teamView": "ce0fae62e7167a7a",
+        "teamView": "c31e5adcad39cf6c",
         "mapControls": "92d9a7fad250dc5b",
         "mapSvg": "1677c02301fde50f",
-        "portfolioView": "25d71154c808026a",
-        "workOrdersView": "284d848b74331b57",
-        "launchPlan": "e0de563f95edabb5",
+        "portfolioView": "9c5b65495f100f11",
+        "workOrdersView": "782bc473807689fb",
+        "launchPlan": "acfe2d5d3ce5c5f4",
         "stats": {
           "total": "262",
           "assigned": "119",
@@ -2289,7 +2289,7 @@
     "remove-employee@workorders": {
       "before": {
         "view": "workorders",
-        "departments": "76bee04ef220db2b",
+        "departments": "5d2ac9f1c256e711",
         "expandedDepartments": 0,
         "legend": "ef5acc885cbf53ee",
         "ownerFilter": [
@@ -2299,12 +2299,12 @@
           "Priya Raman",
           "UNOWNED"
         ],
-        "teamView": "031271312934a486",
+        "teamView": "4e67860d8b63a718",
         "mapControls": "ca45a8f578b1b490",
         "mapSvg": "4c142a51546d9717",
-        "portfolioView": "25d71154c808026a",
-        "workOrdersView": "284d848b74331b57",
-        "launchPlan": "018b3ed07624120c",
+        "portfolioView": "9c5b65495f100f11",
+        "workOrdersView": "782bc473807689fb",
+        "launchPlan": "d6ca64439f272a11",
         "stats": {
           "total": "262",
           "assigned": "153",
@@ -2325,7 +2325,7 @@
       },
       "after": {
         "view": "workorders",
-        "departments": "120b0d033a6571be",
+        "departments": "da7b4f66c8b1fa23",
         "expandedDepartments": 0,
         "legend": "8dab39af26d09dfa",
         "ownerFilter": [
@@ -2334,12 +2334,12 @@
           "Priya Raman",
           "UNOWNED"
         ],
-        "teamView": "ce0fae62e7167a7a",
+        "teamView": "c31e5adcad39cf6c",
         "mapControls": "ca45a8f578b1b490",
         "mapSvg": "4c142a51546d9717",
-        "portfolioView": "25d71154c808026a",
-        "workOrdersView": "ddb8e36d912b54f1",
-        "launchPlan": "e0de563f95edabb5",
+        "portfolioView": "9c5b65495f100f11",
+        "workOrdersView": "70d4c9c541cfbf54",
+        "launchPlan": "acfe2d5d3ce5c5f4",
         "stats": {
           "total": "262",
           "assigned": "119",
@@ -2365,7 +2365,7 @@
     "remove-employee@team": {
       "before": {
         "view": "team",
-        "departments": "76bee04ef220db2b",
+        "departments": "5d2ac9f1c256e711",
         "expandedDepartments": 0,
         "legend": "ef5acc885cbf53ee",
         "ownerFilter": [
@@ -2375,12 +2375,12 @@
           "Priya Raman",
           "UNOWNED"
         ],
-        "teamView": "031271312934a486",
+        "teamView": "4e67860d8b63a718",
         "mapControls": "ca45a8f578b1b490",
         "mapSvg": "4c142a51546d9717",
-        "portfolioView": "25d71154c808026a",
-        "workOrdersView": "284d848b74331b57",
-        "launchPlan": "018b3ed07624120c",
+        "portfolioView": "9c5b65495f100f11",
+        "workOrdersView": "782bc473807689fb",
+        "launchPlan": "d6ca64439f272a11",
         "stats": {
           "total": "262",
           "assigned": "153",
@@ -2401,7 +2401,7 @@
       },
       "after": {
         "view": "team",
-        "departments": "120b0d033a6571be",
+        "departments": "da7b4f66c8b1fa23",
         "expandedDepartments": 0,
         "legend": "8dab39af26d09dfa",
         "ownerFilter": [
@@ -2410,12 +2410,12 @@
           "Priya Raman",
           "UNOWNED"
         ],
-        "teamView": "ce0fae62e7167a7a",
+        "teamView": "c31e5adcad39cf6c",
         "mapControls": "ca45a8f578b1b490",
         "mapSvg": "4c142a51546d9717",
-        "portfolioView": "25d71154c808026a",
-        "workOrdersView": "284d848b74331b57",
-        "launchPlan": "e0de563f95edabb5",
+        "portfolioView": "9c5b65495f100f11",
+        "workOrdersView": "782bc473807689fb",
+        "launchPlan": "acfe2d5d3ce5c5f4",
         "stats": {
           "total": "262",
           "assigned": "119",
@@ -2441,7 +2441,7 @@
     "apply-role-template@tracking": {
       "before": {
         "view": "tracking",
-        "departments": "76bee04ef220db2b",
+        "departments": "5d2ac9f1c256e711",
         "expandedDepartments": 0,
         "legend": "ef5acc885cbf53ee",
         "ownerFilter": [
@@ -2451,12 +2451,12 @@
           "Priya Raman",
           "UNOWNED"
         ],
-        "teamView": "031271312934a486",
+        "teamView": "4e67860d8b63a718",
         "mapControls": "ca45a8f578b1b490",
         "mapSvg": "4c142a51546d9717",
-        "portfolioView": "25d71154c808026a",
-        "workOrdersView": "284d848b74331b57",
-        "launchPlan": "018b3ed07624120c",
+        "portfolioView": "9c5b65495f100f11",
+        "workOrdersView": "782bc473807689fb",
+        "launchPlan": "d6ca64439f272a11",
         "stats": {
           "total": "262",
           "assigned": "153",
@@ -2477,19 +2477,93 @@
       },
       "after": {
         "view": "tracking",
-        "departments": "1bdcbff51da7c2b5",
+        "departments": "8aa72a6f5186099c",
         "expandedDepartments": 0,
         "legend": "5b141afb6c0d7579",
         "ownerFilter": [
           "",
           "UNOWNED"
         ],
-        "teamView": "284dec3b2840aedb",
+        "teamView": "071c867ad0c259cc",
         "mapControls": "ca45a8f578b1b490",
         "mapSvg": "4c142a51546d9717",
-        "portfolioView": "25d71154c808026a",
-        "workOrdersView": "284d848b74331b57",
-        "launchPlan": "ce948b360a4bb83c",
+        "portfolioView": "9c5b65495f100f11",
+        "workOrdersView": "782bc473807689fb",
+        "launchPlan": "8359475c5e393744",
+        "stats": {
+          "total": "262",
+          "assigned": "0",
+          "unowned": "262"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": false
+        },
+        "badge": "262",
+        "toast": "Solo PM template applied",
+        "stored": {
+          "tasks": "887db17a579694dc",
+          "team": "1de52b659ebc1931",
+          "workOrders": "b2986778178e5855",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": []
+      },
+      "alerts": [],
+      "handbookDownloads": 0
+    },
+    "apply-role-template@team": {
+      "before": {
+        "view": "team",
+        "departments": "5d2ac9f1c256e711",
+        "expandedDepartments": 0,
+        "legend": "ef5acc885cbf53ee",
+        "ownerFilter": [
+          "",
+          "Dana Whitfield",
+          "Marcus Reyes",
+          "Priya Raman",
+          "UNOWNED"
+        ],
+        "teamView": "4e67860d8b63a718",
+        "mapControls": "ca45a8f578b1b490",
+        "mapSvg": "4c142a51546d9717",
+        "portfolioView": "9c5b65495f100f11",
+        "workOrdersView": "782bc473807689fb",
+        "launchPlan": "d6ca64439f272a11",
+        "stats": {
+          "total": "262",
+          "assigned": "153",
+          "unowned": "109"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": false
+        },
+        "badge": "109",
+        "stored": {
+          "tasks": "6e9c960fd025b2e5",
+          "team": "6e9c960fd025b2e5",
+          "workOrders": "6e9c960fd025b2e5",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": []
+      },
+      "after": {
+        "view": "team",
+        "departments": "8aa72a6f5186099c",
+        "expandedDepartments": 0,
+        "legend": "5b141afb6c0d7579",
+        "ownerFilter": [
+          "",
+          "UNOWNED"
+        ],
+        "teamView": "071c867ad0c259cc",
+        "mapControls": "ca45a8f578b1b490",
+        "mapSvg": "4c142a51546d9717",
+        "portfolioView": "9c5b65495f100f11",
+        "workOrdersView": "782bc473807689fb",
+        "launchPlan": "8359475c5e393744",
         "stats": {
           "total": "262",
           "assigned": "0",
@@ -2515,19 +2589,19 @@
     "load-demo-company@tracking": {
       "before": {
         "view": "tracking",
-        "departments": "f1aa0e059217ccb6",
+        "departments": "caceac589dc3921f",
         "expandedDepartments": 0,
         "legend": "c66ca84645042044",
         "ownerFilter": [
           "",
           "UNOWNED"
         ],
-        "teamView": "3bf751abfb1538b4",
+        "teamView": "e5890d472b9d23e4",
         "mapControls": "7d284e11fff296b1",
         "mapSvg": "c3f9a9894aedbeb8",
-        "portfolioView": "3cdc91028d04a6e8",
-        "workOrdersView": "3971f9627436b73c",
-        "launchPlan": "545b9497e11f4664",
+        "portfolioView": "f6eceeb64d7dc894",
+        "workOrdersView": "7e2bbc26f7820b49",
+        "launchPlan": "b77fd195c91fa50d",
         "stats": {
           "total": "262",
           "assigned": "0",
@@ -2548,7 +2622,7 @@
       },
       "after": {
         "view": "tracking",
-        "departments": "70579fc93aee322d",
+        "departments": "9ab6bea45c673d4b",
         "expandedDepartments": 0,
         "legend": "971f6809d6782991",
         "ownerFilter": [
@@ -2557,12 +2631,12 @@
           "Portfolio Admin",
           "Resident Coordinator"
         ],
-        "teamView": "3bf751abfb1538b4",
+        "teamView": "e5890d472b9d23e4",
         "mapControls": "7d284e11fff296b1",
         "mapSvg": "c3f9a9894aedbeb8",
-        "portfolioView": "3cdc91028d04a6e8",
-        "workOrdersView": "3971f9627436b73c",
-        "launchPlan": "2e65f2cdfd032b9b",
+        "portfolioView": "8cb7da519bf254d0",
+        "workOrdersView": "7e2bbc26f7820b49",
+        "launchPlan": "8932a65bce23dce6",
         "stats": {
           "total": "262",
           "assigned": "262",
@@ -2590,96 +2664,22 @@
       "alerts": [],
       "handbookDownloads": 0
     },
-    "apply-role-template@team": {
-      "before": {
-        "view": "team",
-        "departments": "76bee04ef220db2b",
-        "expandedDepartments": 0,
-        "legend": "ef5acc885cbf53ee",
-        "ownerFilter": [
-          "",
-          "Dana Whitfield",
-          "Marcus Reyes",
-          "Priya Raman",
-          "UNOWNED"
-        ],
-        "teamView": "031271312934a486",
-        "mapControls": "ca45a8f578b1b490",
-        "mapSvg": "4c142a51546d9717",
-        "portfolioView": "25d71154c808026a",
-        "workOrdersView": "284d848b74331b57",
-        "launchPlan": "018b3ed07624120c",
-        "stats": {
-          "total": "262",
-          "assigned": "153",
-          "unowned": "109"
-        },
-        "beacons": {
-          "tab": false,
-          "workOrders": false
-        },
-        "badge": "109",
-        "stored": {
-          "tasks": "6e9c960fd025b2e5",
-          "team": "6e9c960fd025b2e5",
-          "workOrders": "6e9c960fd025b2e5",
-          "portfolio": "6e9c960fd025b2e5"
-        },
-        "audit": []
-      },
-      "after": {
-        "view": "team",
-        "departments": "1bdcbff51da7c2b5",
-        "expandedDepartments": 0,
-        "legend": "5b141afb6c0d7579",
-        "ownerFilter": [
-          "",
-          "UNOWNED"
-        ],
-        "teamView": "284dec3b2840aedb",
-        "mapControls": "ca45a8f578b1b490",
-        "mapSvg": "4c142a51546d9717",
-        "portfolioView": "25d71154c808026a",
-        "workOrdersView": "284d848b74331b57",
-        "launchPlan": "ce948b360a4bb83c",
-        "stats": {
-          "total": "262",
-          "assigned": "0",
-          "unowned": "262"
-        },
-        "beacons": {
-          "tab": false,
-          "workOrders": false
-        },
-        "badge": "262",
-        "toast": "Solo PM template applied",
-        "stored": {
-          "tasks": "887db17a579694dc",
-          "team": "1de52b659ebc1931",
-          "workOrders": "b2986778178e5855",
-          "portfolio": "6e9c960fd025b2e5"
-        },
-        "audit": []
-      },
-      "alerts": [],
-      "handbookDownloads": 0
-    },
     "load-demo-company@team": {
       "before": {
         "view": "team",
-        "departments": "f1aa0e059217ccb6",
+        "departments": "caceac589dc3921f",
         "expandedDepartments": 0,
         "legend": "c66ca84645042044",
         "ownerFilter": [
           "",
           "UNOWNED"
         ],
-        "teamView": "3bf751abfb1538b4",
+        "teamView": "e5890d472b9d23e4",
         "mapControls": "7d284e11fff296b1",
         "mapSvg": "c3f9a9894aedbeb8",
-        "portfolioView": "3cdc91028d04a6e8",
-        "workOrdersView": "3971f9627436b73c",
-        "launchPlan": "545b9497e11f4664",
+        "portfolioView": "f6eceeb64d7dc894",
+        "workOrdersView": "7e2bbc26f7820b49",
+        "launchPlan": "b77fd195c91fa50d",
         "stats": {
           "total": "262",
           "assigned": "0",
@@ -2700,7 +2700,7 @@
       },
       "after": {
         "view": "team",
-        "departments": "70579fc93aee322d",
+        "departments": "9ab6bea45c673d4b",
         "expandedDepartments": 0,
         "legend": "971f6809d6782991",
         "ownerFilter": [
@@ -2709,12 +2709,90 @@
           "Portfolio Admin",
           "Resident Coordinator"
         ],
-        "teamView": "3bf751abfb1538b4",
+        "teamView": "eb5f1cb61d6159ee",
         "mapControls": "7d284e11fff296b1",
         "mapSvg": "c3f9a9894aedbeb8",
-        "portfolioView": "3cdc91028d04a6e8",
-        "workOrdersView": "3971f9627436b73c",
-        "launchPlan": "2e65f2cdfd032b9b",
+        "portfolioView": "8cb7da519bf254d0",
+        "workOrdersView": "7e2bbc26f7820b49",
+        "launchPlan": "8932a65bce23dce6",
+        "stats": {
+          "total": "262",
+          "assigned": "262",
+          "unowned": "0"
+        },
+        "beacons": {
+          "tab": true,
+          "workOrders": true
+        },
+        "badge": "0",
+        "toast": "Demo company loaded",
+        "stored": {
+          "tasks": "a4986035d6a1e980",
+          "team": "10f951b65e6d4578",
+          "workOrders": "bbbe41f5c18f7772",
+          "portfolio": "47f15cf984a9dd08"
+        },
+        "audit": [
+          {
+            "action": "demo_company_loaded",
+            "title": "Demo Door Property Management"
+          }
+        ]
+      },
+      "alerts": [],
+      "handbookDownloads": 0
+    },
+    "load-demo-company@workorders": {
+      "before": {
+        "view": "workorders",
+        "departments": "caceac589dc3921f",
+        "expandedDepartments": 0,
+        "legend": "c66ca84645042044",
+        "ownerFilter": [
+          "",
+          "UNOWNED"
+        ],
+        "teamView": "e5890d472b9d23e4",
+        "mapControls": "7d284e11fff296b1",
+        "mapSvg": "c3f9a9894aedbeb8",
+        "portfolioView": "f6eceeb64d7dc894",
+        "workOrdersView": "7e2bbc26f7820b49",
+        "launchPlan": "b77fd195c91fa50d",
+        "stats": {
+          "total": "262",
+          "assigned": "0",
+          "unowned": "262"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": true
+        },
+        "badge": "262",
+        "stored": {
+          "tasks": "6e9c960fd025b2e5",
+          "team": "6e9c960fd025b2e5",
+          "workOrders": "6e9c960fd025b2e5",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": []
+      },
+      "after": {
+        "view": "workorders",
+        "departments": "9ab6bea45c673d4b",
+        "expandedDepartments": 0,
+        "legend": "971f6809d6782991",
+        "ownerFilter": [
+          "",
+          "Maintenance Coordinator",
+          "Portfolio Admin",
+          "Resident Coordinator"
+        ],
+        "teamView": "e5890d472b9d23e4",
+        "mapControls": "7d284e11fff296b1",
+        "mapSvg": "c3f9a9894aedbeb8",
+        "portfolioView": "8cb7da519bf254d0",
+        "workOrdersView": "55daf76d33233bcd",
+        "launchPlan": "8932a65bce23dce6",
         "stats": {
           "total": "262",
           "assigned": "262",
@@ -2745,19 +2823,19 @@
     "import@tracking": {
       "before": {
         "view": "tracking",
-        "departments": "f1aa0e059217ccb6",
+        "departments": "caceac589dc3921f",
         "expandedDepartments": 0,
         "legend": "c66ca84645042044",
         "ownerFilter": [
           "",
           "UNOWNED"
         ],
-        "teamView": "3bf751abfb1538b4",
+        "teamView": "e5890d472b9d23e4",
         "mapControls": "7d284e11fff296b1",
         "mapSvg": "c3f9a9894aedbeb8",
-        "portfolioView": "3cdc91028d04a6e8",
-        "workOrdersView": "3971f9627436b73c",
-        "launchPlan": "545b9497e11f4664",
+        "portfolioView": "f6eceeb64d7dc894",
+        "workOrdersView": "7e2bbc26f7820b49",
+        "launchPlan": "b77fd195c91fa50d",
         "stats": {
           "total": "262",
           "assigned": "0",
@@ -2778,7 +2856,7 @@
       },
       "after": {
         "view": "tracking",
-        "departments": "a43cf40951d5f00e",
+        "departments": "55ac79f9bd602977",
         "expandedDepartments": 17,
         "legend": "ef5acc885cbf53ee",
         "ownerFilter": [
@@ -2788,12 +2866,12 @@
           "Priya Raman",
           "UNOWNED"
         ],
-        "teamView": "3bf751abfb1538b4",
+        "teamView": "e5890d472b9d23e4",
         "mapControls": "7d284e11fff296b1",
         "mapSvg": "c3f9a9894aedbeb8",
-        "portfolioView": "25d71154c808026a",
-        "workOrdersView": "3971f9627436b73c",
-        "launchPlan": "0d54a6891e88a9f4",
+        "portfolioView": "9c5b65495f100f11",
+        "workOrdersView": "7e2bbc26f7820b49",
+        "launchPlan": "1ce05c029f7c2c0d",
         "stats": {
           "total": "262",
           "assigned": "153",
@@ -2819,19 +2897,19 @@
     "import@map": {
       "before": {
         "view": "map",
-        "departments": "f1aa0e059217ccb6",
+        "departments": "caceac589dc3921f",
         "expandedDepartments": 0,
         "legend": "c66ca84645042044",
         "ownerFilter": [
           "",
           "UNOWNED"
         ],
-        "teamView": "3bf751abfb1538b4",
+        "teamView": "e5890d472b9d23e4",
         "mapControls": "7d284e11fff296b1",
         "mapSvg": "c3f9a9894aedbeb8",
-        "portfolioView": "3cdc91028d04a6e8",
-        "workOrdersView": "3971f9627436b73c",
-        "launchPlan": "545b9497e11f4664",
+        "portfolioView": "f6eceeb64d7dc894",
+        "workOrdersView": "7e2bbc26f7820b49",
+        "launchPlan": "b77fd195c91fa50d",
         "stats": {
           "total": "262",
           "assigned": "0",
@@ -2852,7 +2930,7 @@
       },
       "after": {
         "view": "map",
-        "departments": "a43cf40951d5f00e",
+        "departments": "55ac79f9bd602977",
         "expandedDepartments": 17,
         "legend": "ef5acc885cbf53ee",
         "ownerFilter": [
@@ -2862,12 +2940,12 @@
           "Priya Raman",
           "UNOWNED"
         ],
-        "teamView": "3bf751abfb1538b4",
-        "mapControls": "7d284e11fff296b1",
-        "mapSvg": "c3f9a9894aedbeb8",
-        "portfolioView": "25d71154c808026a",
-        "workOrdersView": "3971f9627436b73c",
-        "launchPlan": "0d54a6891e88a9f4",
+        "teamView": "e5890d472b9d23e4",
+        "mapControls": "ca45a8f578b1b490",
+        "mapSvg": "014599c93e016326",
+        "portfolioView": "9c5b65495f100f11",
+        "workOrdersView": "7e2bbc26f7820b49",
+        "launchPlan": "1ce05c029f7c2c0d",
         "stats": {
           "total": "262",
           "assigned": "153",
@@ -2893,19 +2971,19 @@
     "import@team": {
       "before": {
         "view": "team",
-        "departments": "f1aa0e059217ccb6",
+        "departments": "caceac589dc3921f",
         "expandedDepartments": 0,
         "legend": "c66ca84645042044",
         "ownerFilter": [
           "",
           "UNOWNED"
         ],
-        "teamView": "3bf751abfb1538b4",
+        "teamView": "e5890d472b9d23e4",
         "mapControls": "7d284e11fff296b1",
         "mapSvg": "c3f9a9894aedbeb8",
-        "portfolioView": "3cdc91028d04a6e8",
-        "workOrdersView": "3971f9627436b73c",
-        "launchPlan": "545b9497e11f4664",
+        "portfolioView": "f6eceeb64d7dc894",
+        "workOrdersView": "7e2bbc26f7820b49",
+        "launchPlan": "b77fd195c91fa50d",
         "stats": {
           "total": "262",
           "assigned": "0",
@@ -2926,7 +3004,7 @@
       },
       "after": {
         "view": "team",
-        "departments": "a43cf40951d5f00e",
+        "departments": "55ac79f9bd602977",
         "expandedDepartments": 17,
         "legend": "ef5acc885cbf53ee",
         "ownerFilter": [
@@ -2936,12 +3014,86 @@
           "Priya Raman",
           "UNOWNED"
         ],
-        "teamView": "3bf751abfb1538b4",
+        "teamView": "4e67860d8b63a718",
         "mapControls": "7d284e11fff296b1",
         "mapSvg": "c3f9a9894aedbeb8",
-        "portfolioView": "25d71154c808026a",
-        "workOrdersView": "3971f9627436b73c",
-        "launchPlan": "0d54a6891e88a9f4",
+        "portfolioView": "9c5b65495f100f11",
+        "workOrdersView": "7e2bbc26f7820b49",
+        "launchPlan": "1ce05c029f7c2c0d",
+        "stats": {
+          "total": "262",
+          "assigned": "153",
+          "unowned": "109"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": false
+        },
+        "badge": "109",
+        "toast": "✓ Saved",
+        "stored": {
+          "tasks": "2f233a7f2c9a6420",
+          "team": "bc032a30f308e491",
+          "workOrders": "bf216adab9c44582",
+          "portfolio": "bddd8afb7b234420"
+        },
+        "audit": []
+      },
+      "alerts": [],
+      "handbookDownloads": 0
+    },
+    "import@workorders": {
+      "before": {
+        "view": "workorders",
+        "departments": "caceac589dc3921f",
+        "expandedDepartments": 0,
+        "legend": "c66ca84645042044",
+        "ownerFilter": [
+          "",
+          "UNOWNED"
+        ],
+        "teamView": "e5890d472b9d23e4",
+        "mapControls": "7d284e11fff296b1",
+        "mapSvg": "c3f9a9894aedbeb8",
+        "portfolioView": "f6eceeb64d7dc894",
+        "workOrdersView": "7e2bbc26f7820b49",
+        "launchPlan": "b77fd195c91fa50d",
+        "stats": {
+          "total": "262",
+          "assigned": "0",
+          "unowned": "262"
+        },
+        "beacons": {
+          "tab": false,
+          "workOrders": true
+        },
+        "badge": "262",
+        "stored": {
+          "tasks": "6e9c960fd025b2e5",
+          "team": "6e9c960fd025b2e5",
+          "workOrders": "6e9c960fd025b2e5",
+          "portfolio": "6e9c960fd025b2e5"
+        },
+        "audit": []
+      },
+      "after": {
+        "view": "workorders",
+        "departments": "55ac79f9bd602977",
+        "expandedDepartments": 17,
+        "legend": "ef5acc885cbf53ee",
+        "ownerFilter": [
+          "",
+          "Dana Whitfield",
+          "Marcus Reyes",
+          "Priya Raman",
+          "UNOWNED"
+        ],
+        "teamView": "e5890d472b9d23e4",
+        "mapControls": "7d284e11fff296b1",
+        "mapSvg": "c3f9a9894aedbeb8",
+        "portfolioView": "9c5b65495f100f11",
+        "workOrdersView": "782bc473807689fb",
+        "launchPlan": "1ce05c029f7c2c0d",
         "stats": {
           "total": "262",
           "assigned": "153",

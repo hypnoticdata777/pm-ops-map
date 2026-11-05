@@ -11,7 +11,7 @@ The single source of truth for what has shipped, what is in progress, and what c
 | 0 | Trust: security, data safety, privacy, demo, dependency hygiene | ✅ Done |
 | 1A | Foundations: stable task IDs, runtime schemas, JSDoc types (steps 1–3) | ✅ Done |
 | 1B | Foundations: pure domain layer, one commit path (steps 4–5) | ✅ Done |
-| 1C | Foundations: event delegation, E2E expansion (steps 6–7) | ⏭ Next |
+| 1C | Foundations: event delegation, E2E expansion (steps 6–7) | 🚧 In progress (Map & Review converted) |
 | 2 | Positioning: Map → Assign → Review → Share | ✅ Done |
 | 3 | Responsibility intelligence | 📋 Planned |
 | 4 | Onboarding and responsibilities import | 📋 Planned |
@@ -56,7 +56,7 @@ Shipped-module tests (Vitest + jsdom importing the real ES modules), XSS and CSV
 
 **Status:** both steps are done. `js/domain/` holds workload, coverage and `planAssignments` (with a reason per assignment); `js/commit.js` is the one save-and-refresh path, used by auto-assign, undo, import, removing a person, applying a role template and loading the demo company. A static test (`commit-path.test.js`) keeps the hand-written blocks from coming back, and a golden file recorded before the refactor (`js/__tests__/golden/`) proves behavior did not change.
 
-**Open product decisions found along the way** (today's behavior, deliberately preserved): importing a workspace while on the map or team view does not refresh that view, and loading the demo company does not refresh the team or map view. Each is a one-word change in `js/commit.js` (add `mapIfCurrent` / `teamIfCurrent` to a preset) but visible to users, so it needs a decision.
+**Decided along the way (Nov 2026):** importing a workspace or loading the demo company now redraws the screen the user is on (map, team and work orders; the portfolio too after the demo company). Before, those screens kept showing the previous workspace until the user switched tabs. The behavior was preserved through the Phase 1B refactor, then changed deliberately in its own PR so the refactor stayed provably neutral. The golden file shows exactly which fields moved, and `screens-stay-current.test.js` states the promise in plain words.
 
 4. **Pure domain layer** (`js/domain/`: no DOM, no shared-state imports).
    - **Coverage:** de-duplicate the near-identical copies in `launchPlan.js` and `handbook.js`. Today "covered" only means "not UNOWNED".
@@ -67,7 +67,13 @@ Shipped-module tests (Vitest + jsdom importing the real ES modules), XSS and CSV
 5. **One commit path.** The "save + re-render" block (`saveToStorage`, `renderTrackingView`, `updateStats`, `populateOwnerFilter`, `renderLegend`, map/team refresh) is copy-pasted in `runAutoAssign`, `undoLastAction`, `_applyImportedState`, `setTaskOwner` and others. Replace it with one `commit()` helper (persist, re-render affected views, update beacons and stats), starting with the duplicated sites.
    - *Done when:* those sites use `commit()` with no behavior change.
 
-### 1C: next
+### 1C: in progress
+
+**Status:** `js/actions.js` is the delegation layer. The Map & Review (tracking) screen is converted: no inline handlers in what it renders, its functions are no longer on `window` (two modal close buttons in `index.html` still use `closeTaskNotes` / `closeCustomFields` until the modals are converted), and a browser characterization recorded on the old code (`e2e/tracking-interactions.spec.js`, `e2e/golden/tracking/`) passes unchanged. Next: team, work orders, portfolio, map and launch plan, then modals and the navigation, then the E2E expansion.
+
+**Found along the way:** pressing Enter in the task rename box does not save (the Enter handler marks the edit as saved and then blurs, and the blur handler skips saving once it is marked). Recorded as-is by the characterization and left for its own change.
+
+**Hidden couplings to fix in their own slice:** `launchPlan.js` finds the Map tab with `document.querySelector('[onclick*=map]')` (breaks when the navigation is converted; select by `data-view` instead), and still reaches `showNewWorkOrderModal`, `downloadOperationsHandbook` and `switchView` through `window` (the window-binding removal for those must turn them into imports first). The tracking slice removed the same kind of coupling for `applyFilter`.
 
 6. **Event delegation.** Replace the ~139 inline `on*=` handlers and the `Object.assign(window, …)` block in `app.js` with `data-action` attributes and one delegated listener per view, **incrementally, one view at a time** (tracking → team → work orders → portfolio → map/launch plan → modals). Update `render-escaping.test.js` (it asserts exact `onclick` strings), CONTRIBUTING and the e2e scanner.
    - *Done when:* a test proves rendered HTML contains no `on*=` attributes, the `window` bindings are gone, and the XSS suite is still green.

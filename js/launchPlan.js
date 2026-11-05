@@ -4,6 +4,7 @@ import {
   ownerColors,
 } from './state.js';
 import { countUnowned } from './domain/workload.js';
+import { applyFilter } from './views/tracking.js';
 import { CRITICAL_COVERAGE_AREAS, WEAK_COVERAGE_PCT, summarizeCoverage } from './domain/coverage.js';
 import { commit, REFRESH_AFTER_DEMO_COMPANY } from './commit.js';
 import {
@@ -418,11 +419,10 @@ export function startTeamSetup() {
 }
 
 export function showUnownedTasks() {
-  // Depends on tracking.js exposing applyFilter on window through app.js.
   switchToView('tracking', document.querySelector('.nav-tab'));
   const ownerFilter = document.getElementById('owner-filter');
   if (ownerFilter) ownerFilter.value = 'UNOWNED';
-  if (window.applyFilter) window.applyFilter();
+  applyFilter();
   document.getElementById('departments')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 

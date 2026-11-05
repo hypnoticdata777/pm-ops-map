@@ -1,0 +1,374 @@
+[
+  {
+    "label": "start",
+    "rows": [
+      [
+        "leasing:0",
+        {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Create property listings and syndicate to platforms",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      ],
+      [
+        "leasing:1",
+        {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Conduct pricing strategy & rent comp analysis",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      ],
+      [
+        "maintenance:0",
+        {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Monitor work order queue daily",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      ]
+    ],
+    "departments": {
+      "total": 17,
+      "expanded": [
+        "leasing"
+      ],
+      "hidden": [],
+      "counts": {},
+      "completion": {},
+      "progress": {}
+    },
+    "visibleTasks": 262,
+    "byStatus": {
+      "todo": 262
+    },
+    "byOwner": {
+      "UNOWNED": 262
+    },
+    "byPriority": {
+      "medium": 262
+    },
+    "filters": {
+      "search": "",
+      "owner": "",
+      "status": "",
+      "priority": "",
+      "count": "",
+      "countShown": false,
+      "noResults": "none"
+    },
+    "ownerFilterOptions": [
+      "",
+      "UNOWNED"
+    ],
+    "buttons": {
+      "expandAll": "▼ Expand All",
+      "bulk": "☑ Bulk Select",
+      "bulkClass": "btn btn-secondary"
+    },
+    "bulkBar": {
+      "visible": false,
+      "text": ""
+    },
+    "stats": {
+      "total": "262",
+      "assigned": "0",
+      "done": "0",
+      "unowned": "262",
+      "blocked": "0"
+    },
+    "toast": "",
+    "pickers": {
+      "owner": [],
+      "dep": 0,
+      "depClear": false,
+      "due": false
+    },
+    "notesModal": {
+      "visible": false,
+      "title": "Task",
+      "value": ""
+    },
+    "fieldsModal": {
+      "visible": false,
+      "title": "Task",
+      "rows": []
+    },
+    "stored": {
+      "changedTasks": 0
+    }
+  },
+  {
+    "label": "open picker",
+    "changed": {
+      "pickers": {
+        "owner": [],
+        "dep": 261,
+        "depClear": false,
+        "due": false
+      }
+    }
+  },
+  {
+    "label": "search",
+    "changed": {
+      "pickers": {
+        "owner": [],
+        "dep": 5,
+        "depClear": false,
+        "due": false
+      }
+    }
+  },
+  {
+    "label": "choose the first match",
+    "changed": {
+      "rows": {
+        "leasing:0": {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Create property listings and syndicate to platforms",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗 Coordinate lease…",
+          "depClass": "dep-chip dep-chip--blocking",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      },
+      "toast": "✓ Saved",
+      "pickers": {
+        "owner": [],
+        "dep": 0,
+        "depClear": false,
+        "due": false
+      },
+      "stored": {
+        "leasing": [
+          {
+            "name": "Create property listings and syndicate to platforms",
+            "owner": "UNOWNED",
+            "status": "todo",
+            "priority": "medium",
+            "dueDate": null,
+            "blockedBy": "Coordinate lease signing",
+            "notes": null,
+            "customFields": null
+          },
+          {
+            "name": "Conduct pricing strategy & rent comp analysis",
+            "owner": "UNOWNED",
+            "status": "todo",
+            "priority": "medium",
+            "dueDate": null,
+            "blockedBy": null,
+            "notes": null,
+            "customFields": null
+          },
+          {
+            "name": "Schedule and conduct showings",
+            "owner": "UNOWNED",
+            "status": "todo",
+            "priority": "medium",
+            "dueDate": null,
+            "blockedBy": null,
+            "notes": null,
+            "customFields": null
+          }
+        ],
+        "maintenance": [
+          {
+            "name": "Monitor work order queue daily",
+            "owner": "UNOWNED",
+            "status": "todo",
+            "priority": "medium",
+            "dueDate": null,
+            "blockedBy": null,
+            "notes": null,
+            "customFields": null
+          }
+        ],
+        "changedTasks": 262
+      }
+    }
+  },
+  {
+    "label": "reopen on the chip",
+    "changed": {
+      "pickers": {
+        "owner": [],
+        "dep": 261,
+        "depClear": true,
+        "due": false
+      }
+    }
+  },
+  {
+    "label": "clear it",
+    "changed": {
+      "rows": {
+        "leasing:0": {
+          "classes": [
+            "task-item",
+            "unowned"
+          ],
+          "hidden": false,
+          "name": "Create property listings and syndicate to platforms",
+          "nameEditing": false,
+          "priority": "priority-medium",
+          "priorityTitle": "Priority: Medium — click to change",
+          "due": "+ date",
+          "dueClass": "due-date-empty",
+          "dep": "🔗",
+          "depClass": "dep-add-btn",
+          "notesClass": "task-notes-btn",
+          "notesTitle": "Add notes",
+          "fieldsClass": "task-fields-btn",
+          "status": "To Do",
+          "statusClass": "status-pill status-todo",
+          "owner": "UNOWNED",
+          "checkbox": null
+        }
+      },
+      "pickers": {
+        "owner": [],
+        "dep": 0,
+        "depClear": false,
+        "due": false
+      },
+      "stored": {
+        "leasing": [
+          {
+            "name": "Create property listings and syndicate to platforms",
+            "owner": "UNOWNED",
+            "status": "todo",
+            "priority": "medium",
+            "dueDate": null,
+            "blockedBy": null,
+            "notes": null,
+            "customFields": null
+          },
+          {
+            "name": "Conduct pricing strategy & rent comp analysis",
+            "owner": "UNOWNED",
+            "status": "todo",
+            "priority": "medium",
+            "dueDate": null,
+            "blockedBy": null,
+            "notes": null,
+            "customFields": null
+          },
+          {
+            "name": "Schedule and conduct showings",
+            "owner": "UNOWNED",
+            "status": "todo",
+            "priority": "medium",
+            "dueDate": null,
+            "blockedBy": null,
+            "notes": null,
+            "customFields": null
+          }
+        ],
+        "maintenance": [
+          {
+            "name": "Monitor work order queue daily",
+            "owner": "UNOWNED",
+            "status": "todo",
+            "priority": "medium",
+            "dueDate": null,
+            "blockedBy": null,
+            "notes": null,
+            "customFields": null
+          }
+        ],
+        "changedTasks": 262
+      }
+    }
+  },
+  {
+    "label": "reopen on another row",
+    "changed": {
+      "pickers": {
+        "owner": [],
+        "dep": 261,
+        "depClear": false,
+        "due": false
+      }
+    }
+  },
+  {
+    "label": "click away closes it",
+    "changed": {
+      "pickers": {
+        "owner": [],
+        "dep": 0,
+        "depClear": false,
+        "due": false
+      }
+    }
+  },
+  {
+    "dialogs": []
+  }
+]

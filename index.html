@@ -70,14 +70,14 @@
         id="search-input"
         class="search-input"
         placeholder="Search tasks..."
-        oninput="debounceApplyFilter()"
+        data-action-input="debounce-apply-filter"
         aria-label="Search tasks by keyword"
       >
-      <select id="owner-filter" class="owner-select" onchange="applyFilter()" aria-label="Filter by owner">
+      <select id="owner-filter" class="owner-select" data-action-change="apply-filter" aria-label="Filter by owner">
         <option value="">All Owners</option>
       </select>
       <!-- Status filter — show only tasks in a given lifecycle state -->
-      <select id="status-filter" class="owner-select" onchange="applyFilter()" aria-label="Filter by status">
+      <select id="status-filter" class="owner-select" data-action-change="apply-filter" aria-label="Filter by status">
         <option value="">All Statuses</option>
         <option value="todo">To Do</option>
         <option value="in-progress">In Progress</option>
@@ -86,15 +86,15 @@
         <option value="overdue">📅 Overdue</option>
       </select>
       <!-- Priority filter — surface high-priority tasks quickly -->
-      <select id="priority-filter" class="owner-select" onchange="applyFilter()" aria-label="Filter by priority">
+      <select id="priority-filter" class="owner-select" data-action-change="apply-filter" aria-label="Filter by priority">
         <option value="">All Priorities</option>
         <option value="high">🔴 High</option>
         <option value="medium">🟡 Medium</option>
         <option value="low">🟢 Low</option>
       </select>
-      <button class="btn btn-secondary" onclick="clearFilter()">Clear</button>
-      <button class="btn btn-secondary" id="expand-all-btn" onclick="toggleExpandAllDepartments()" title="Expand or collapse every department at once">&#9660; Expand All</button>
-      <button class="btn btn-secondary" id="bulk-toggle-btn" onclick="toggleBulkMode()" title="Select multiple tasks to reassign or change status in bulk">&#9745; Bulk Select</button>
+      <button class="btn btn-secondary" data-action="clear-filter">Clear</button>
+      <button class="btn btn-secondary" id="expand-all-btn" data-action="toggle-expand-all" title="Expand or collapse every department at once">&#9660; Expand All</button>
+      <button class="btn btn-secondary" id="bulk-toggle-btn" data-action="toggle-bulk-mode" title="Select multiple tasks to reassign or change status in bulk">&#9745; Bulk Select</button>
       <!-- ★ BEACON: Auto-assign button. The badge inside shows the live UNOWNED count.
            JS keeps this disabled when count = 0 so managers always know the state. -->
       <button
@@ -168,7 +168,7 @@
 
       <div class="departments" id="departments"></div>
       <div id="no-results" class="no-results" style="display:none">
-        No tasks match your search. <button class="btn-link" onclick="clearFilter()">Clear filters</button>
+        No tasks match your search. <button class="btn-link" data-action="clear-filter">Clear filters</button>
       </div>
     </div>
 
