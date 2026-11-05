@@ -1,0 +1,64 @@
+name: CI canary
+
+# Why this exists: in Nov 2026 `ubuntu-latest` moved to Ubuntu 26.04, which the pinned Playwright cannot
+# install a browser on. GitHub had announced the move weeks earlier as an annotation on every CI run, but
+# nobody reads annotations, so the first anyone knew was a red check on a pull request that had changed nothing
+# relevant. CI is now pinned (ci.yml and pages.yml run their browser jobs on ubuntu-24.04), which keeps pull
+# requests green but also hides the next change coming.
+#
+# This workflow is the early warning. Once a week it runs the real browser suite on the UNPINNED runner
+# (`ubuntu-latest`, on purpose). If that fails, pull requests are still fine today, and an issue is opened so
+# the pin and the tooling get looked at before GitHub removes the pinned image.
+on:
+  schedule:
+    - cron: '41 7 * * 1'
+  workflow_dispatch:
+    inputs:
+      simulate_failure:
+        description: 'Fail on purpose, to check that a failed canary opens an issue'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  canary:
+    # Deliberately NOT pinned: the point is to see what the pinned jobs will meet next.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Simulated failure (manual runs only)
+        if: ${{ inputs.simulate_failure }}
+        run: |
+          echo "Failing on purpose (simulate_failure was ticked)."
+          exit 1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+
+  # A red scheduled run is easy to miss, so a failed canary also opens (or updates) an issue.
+  report:
+    needs: canary
+    if: ${{ always() && needs.canary.result == 'failure' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write   # open / comment on the issue
+      actions: read   # name which step failed
+    steps:
+      - uses: actions/checkout@v4
+      - name: Open or update the canary issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          FAILED_STEPS="$(gh run view "${{ github.run_id }}" --repo "$REPO" --json jobs \
+            --jq '[.jobs[] | select(.conclusion == "failure") | .steps[] | select(.conclusion == "failure") | .name] | join(", ")' || true)"
+          export FAILED_STEPS
+          bash .github/scripts/report-canary-failure.sh
