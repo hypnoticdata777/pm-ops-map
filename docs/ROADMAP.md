@@ -123,7 +123,7 @@ Make the optional, self-hosted **trusted-team** sync server safe to deploy, and 
 
 - **Type conversion backlog:** files marked `// @ts-nocheck — TODO(types)` (`grep -rn "ts-nocheck" js/`). A guard test (`js/__tests__/typecheck-guard.test.js`) lists them; delete a name when you convert the file.
 - **Dependabot:** 14 PRs were open at the last review. Several are real major upgrades (for example Express 5, which needs a careful look at `req.ip`, body parsing and routing). They are not part of any phase above.
-- **CI guardrails in place:** branch protection on `master`, Dependabot alerts and security updates, a weekly audit that opens an issue when it fails, and tests that find nav tabs by `data-view` rather than label text.
+- **CI guardrails in place:** branch protection on `master`, Dependabot alerts and security updates, a weekly audit that opens an issue when it fails, tests that find nav tabs by `data-view` rather than label text, browser jobs pinned to a specific Ubuntu image (a test fails if one goes back to `ubuntu-latest`), and a weekly CI canary that runs the browser suite on the unpinned runner and opens a `ci-canary` issue when it fails (see CONTRIBUTING, "When CI is red and your change did not cause it").
 
 ## Out of scope for now
 

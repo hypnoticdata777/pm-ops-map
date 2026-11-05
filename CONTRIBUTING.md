@@ -197,6 +197,17 @@ export const trackingActions = {
 - Run `npm run typecheck` and `npm test` before submitting — both must pass. If you touched rendering, import/export, or storage code, also run `npm run test:e2e` (one-time setup: `npx playwright install chromium`). If you touched `server/`, also run `npm test` inside `server/`.
 - Test the real modules: import from `js/*.js` in your tests. Don't add `.cjs` mirrors or test-only copies of browser code.
 
+## When CI is red and your change did not cause it
+
+Sometimes a check fails because the ground moved, not the code: a runner image changed, a tool no longer installs, an action runtime was retired. The Nov 2026 case: `ubuntu-latest` began resolving to Ubuntu 26.04, the pinned Playwright could not install a browser there, and every pull request went red at `npx playwright install` before a single test ran.
+
+- **Read the failing step first.** A failure in a setup or install step (before any test output) is about the environment, not your change. A failure with a test name is about your change.
+- **Re-running does not pick up a fix.** "Re-run all jobs" reuses the merge snapshot the first run was made on, so it fails the same way. After the fix has reached `master`, use **Update branch** on the pull request (or merge `master` into it), which makes a new snapshot and a new run.
+- **The browser jobs are pinned on purpose.** `ci.yml` (`e2e`) and `pages.yml` (`build`) run on a specific Ubuntu image, not `ubuntu-latest`, so the runner cannot change under a pull request. A test (`js/__tests__/ci-canary.test.js`) fails if a job that installs a browser goes back to a moving label.
+- **A weekly canary watches what the pin hides.** `.github/workflows/canary.yml` runs the browser suite on the unpinned runner every Monday. If it fails, it opens an issue labelled `ci-canary` saying what is coming; pull requests are unaffected until the pin moves. Fix it before GitHub removes the pinned image: usually upgrade Playwright in its own change, then move the pin.
+- **To prove the reporting works,** run Actions > CI canary > Run workflow with `simulate_failure` ticked; an issue should appear. Close it afterwards.
+- **Annotations are early warnings.** The yellow notices on a run's summary page (a runner label migrating, a Node runtime being retired) are how GitHub announces these changes. If one names a date, the canary should be green before that date.
+
 ## Code Style
 
 - Vanilla JS only — no frameworks, no build-time dependencies in runtime code
