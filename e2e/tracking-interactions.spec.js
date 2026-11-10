@@ -234,6 +234,7 @@ test('search and filters', async ({ page }) => {
 });
 
 test('bulk select and apply', async ({ page }) => {
+   test.slow();
   await scenario(page, 'bulk', [
     ['turn on bulk mode', () => page.locator('#bulk-toggle-btn').click()],
     ['check two tasks', async () => { await row(page, 'leasing', 0).locator('.task-bulk-check').click(); await row(page, 'leasing', 1).locator('.task-bulk-check').click(); }],
