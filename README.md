@@ -3,7 +3,7 @@
 # PM Ops Map
 
 **Set up your property-management operation, then keep it running.**
-Map the work, assign ownership, review the gaps, and share a clear operating picture.
+Set up one operating loop, assign ownership, review gaps, and expand across your portfolio.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.txt)
 [![Download](https://img.shields.io/badge/Download-v1.0.0-orange?style=flat-square)](https://github.com/hypnoticdata777/pm-ops-map/releases/latest)
@@ -20,11 +20,11 @@ Or run it yourself in under a minute, see below.
 
 ## What Is It?
 
-PM Ops Map is a free browser app for making operational responsibility visible. It helps a property management team map what it does, assign clear owners, review gaps and blockers, and share a lightweight operating picture without signing up for a new system of record.
+PM Ops Map is a free browser app for setting up a property-management operation and keeping its work organized. A seven-step guide connects company context, a first property, relevant contacts, people, essential responsibilities, maintenance review, and a final setup review. The full responsibility map helps the team assign clear owners, review gaps and blockers, and share an operating picture without adopting a new system of record.
 
 The product is built around a practical operator problem: important work is often spread across spreadsheets, inboxes, individual memory, and property-management software screens, so leadership can see activity without seeing clear ownership. PM Ops Map turns that ambiguity into an editable responsibility map: what the company does, who owns each responsibility, what is blocked, and where operating risk is accumulating.
 
-The workflow is intentionally simple:
+After setup, the ongoing responsibility workflow is:
 
 1. **Map** the responsibilities across your departments.
 2. **Assign** owners, priorities, due dates, and dependencies.
@@ -110,6 +110,8 @@ The site is deployed by [`.github/workflows/pages.yml`](.github/workflows/pages.
 ---
 
 ## Screenshots
+
+The operation setup image reflects the new guide. Other captures show earlier versions of the individual tools; see [screenshot provenance](docs/screenshots/README.md) for their scope.
 
 <table>
 <tr>
@@ -252,7 +254,7 @@ Click **Playbook** on any employee card for a full scrollable summary — worklo
 
 ---
 
-### Context: Work Orders — Maintenance Pipeline
+### Work Orders — Maintenance Pipeline
 
 Four-stage kanban: **Submitted → Scheduled → In Progress → Completed**
 
@@ -260,7 +262,7 @@ Each work order captures: property, unit, tenant/resident, issue title, notes, p
 
 ---
 
-### Context: Portfolio & Data Quality
+### Portfolio & Data Quality
 
 Track properties, tenants, and vendors in the **Portfolio tab**. Tenant records include monthly rent and lease start/end dates, with a color-coded chip that flags leases renewing within 60 days or already expired — surfaced both on the tenant card and in the Launch Plan's risk queue.
 
@@ -294,7 +296,7 @@ Custom SVG diagram: Company → Departments → Owners. Line thickness scales wi
 
 ---
 
-### Launch Plan — Guided First-Week Setup
+### Operation Setup & Supporting Launch Resources
 
 New companies enter the seven-step operation setup guide. Detailed launch resources use portfolio size and operating focus (stability / maintenance / growth / compliance) to provide supporting coverage checks and a first-week checklist. Departments start collapsed so a brand-new company sees a short list of headers, not all 260+ tasks expanded at once — click any department to open it, or **Expand All** in the filter bar to see everything.
 
@@ -355,7 +357,7 @@ PM Ops Map is an operating *map*, not a system of record: portfolio and payment 
 | Scope | Removes | Keeps |
 |-------|---------|-------|
 | **Tasks only** | Task names, owners, statuses, due dates, dependencies, notes, custom fields | Team, work orders, portfolio, **automatic backups**, company setup |
-| **Operating workspace** | Tasks, team, portfolio, work orders, audit log, launch checklist, **automatic backups** | Company setup, Team Sync connection |
+| **Operating workspace** | Tasks, team, portfolio, work orders, audit log, launch checklist, walkthrough choices, **automatic backups** | Company profile, Team Sync connection |
 | **Company setup** | Company profile, preferences, guide state, **the saved Team Sync connection (including its passphrase)** | Workspace data |
 | **Everything** | All of the above — every PM Ops Map key in this browser | — |
 
@@ -386,7 +388,7 @@ Add a new department the same way, using a new `id`. After adding tasks, run `np
 
 ### Fork and brand it
 
-Change the company name on first launch (it's saved to `localStorage`). To re-run the setup, open DevTools → Application → localStorage → delete `pm-ops-company-name` and reload.
+Change the company name on first launch (it's saved to `localStorage`). To revisit setup, choose **Open setup guide** (or **Resume setup review** after reviewing it). Use **Edit company details** in the Your operation step to change the profile. **Restart walkthrough** clears only walkthrough choices and keeps business records; no DevTools changes are needed.
 
 ---
 
@@ -396,6 +398,7 @@ Use the README for the product overview and setup path. Use the architecture not
 
 | Document | Best for |
 |----------|----------|
+| [Operation setup](docs/operation-setup.md) | Seven-step behavior, local preferences, completion rules, and rollback |
 | [Site walkthrough](docs/architecture/site-walkthrough.md) | Following startup, state hydration, and each main user journey from screen to code |
 | [Problem, algorithm, pseudocode, and flowchart](docs/architecture/problem-algorithm-pseudocode-flowchart.md) | Understanding the operating problem and the affinity-first workload-balancing algorithm |
 | [Code glossary](docs/architecture/code-glossary.md) | Looking up important files, functions, models, routes, and repository patterns |
@@ -423,7 +426,10 @@ pm-ops-map/
 │   ├── ui.js               Stats bar, beacons, onboarding modal, notifications
 │   ├── io.js               JSON/CSV export-import, clipboard sync, undo stack
 │   ├── sync.js             Optional team sync client (connect/push/pull/auto-sync loop)
-│   ├── launchPlan.js       Guided setup plan, data-quality checks, demo company
+│   ├── setupModel.js       Seven-step rules and 12 starter responsibility IDs
+│   ├── setupPreferences.js Local walkthrough choices and storage fallback
+│   ├── setupGuide.js       Shared guide UI and handoffs to existing forms
+│   ├── launchPlan.js       Supporting launch resources, quality checks, demo company
 │   ├── handbook.js         Markdown + HTML operations handbook generator
 │   ├── stateSchema.js      Versioned JSON export/import schema and validation
 │   ├── normalize.js        Boundary sanitizers for imports, sync, backups, and storage loads
@@ -543,15 +549,15 @@ This is an actively developed proof of concept, not a finished product — here'
 - Document links (lease PDFs, COIs, W9s) via external URL — no file storage needed
 - CSV bulk import/export for the whole portfolio
 - Optional self-hosted Team Sync so more than one person can use this at once
-- Operations handbook export, audit log, auto-backups, guided first-week setup
+- Operations handbook export, audit log, auto-backups, seven-step operation setup and supporting first-week resources
 - Phase 0 trust work: shipped-module tests, import/sync validation, XSS and CSV-safety fixes, privacy messaging, demo isolation, Dependabot, and GitHub Pages deployment
 - Phase 1A foundations: permanent task IDs, runtime schemas (the import review names each repaired field), JSDoc type checking, sync reply checks, and browser regression coverage
-- Phase 2 positioning: a focused Map → Assign → Review → Share workflow, explicit context views, and documented product non-goals
+- Phase 2 positioning: the Map → Assign → Review → Share responsibility workflow and documented product non-goals; the newer operation setup guide connects Portfolio and Work Orders as first-class steps
 
 **Next up** (the full plan, with status and "done when" criteria for each step, is in [docs/ROADMAP.md](docs/ROADMAP.md)):
-- Phase 1B/1C foundations: a pure domain layer (coverage, workload, assignment with reasons), one save-and-re-render path, event delegation in place of inline handlers, and broader end-to-end tests.
+- Phase 1B foundations shipped: pure domain functions and a shared commit path. Phase 1C continues with event delegation for the remaining views and broader end-to-end tests.
 - Responsibility intelligence: criticality, backup ownership, review cadence, readiness diagnostics, and transparent assignment previews.
-- Onboarding and responsibility import: a guided audit, responsibility CSV mapping, and documented sample paths.
+- Remaining onboarding work: deeper guided audits and responsibility CSV import with column mapping. The seven-step operation setup guide has shipped.
 - Sync and deployment hardening for the optional trusted-team server.
 
 **Further out, not committed to:**

@@ -1,5 +1,7 @@
 # Field Note: The Product Became Easier to Explain
 
+> Historical Phase 2 note. For current operation-first onboarding and navigation, see [Operation setup](../operation-setup.md). Original decisions and findings below are retained as history.
+
 ## Hook
 
 Most operations tools show activity. PM Ops Map shows ownership.

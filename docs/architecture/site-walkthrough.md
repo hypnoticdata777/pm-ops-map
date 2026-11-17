@@ -81,22 +81,20 @@ Task restoration is identity-aware. The visible task name is editable, so a save
 
 Before risky bulk replacements—imports, auto-assignment, and remote sync—the app records a backup. JSON import also has a one-step in-memory undo path in [`js/io.js`](../../js/io.js).
 
-## 5. First-run journey: onboarding to Launch Plan
+## 5. First-run journey: one operation setup guide
 
-The onboarding modal in [`index.html`](../../index.html) collects the company name, approximate portfolio size, and operating focus. [`submitCompanyName`](../../js/ui.js) stores those preferences, applies them to the page, and refreshes the Launch Plan.
+Onboarding collects company name, portfolio size, and focus. [`submitCompanyName`](../../js/ui.js) saves that context and opens the guide for a new company. Existing users can opt in without interrupting their normal workspace.
 
-[`js/launchPlan.js`](../../js/launchPlan.js) turns current state into an operator-facing setup dashboard. It derives:
+The guide appears above the filters and persists across views. Its seven steps are company, starter property, contacts, people, essential responsibilities, maintenance review, and review/share. It supports back, continue, deferral, vacancy exceptions, and restart without deleting records.
 
-- the next recommended action;
-- setup and data-quality gaps;
-- critical coverage areas;
-- a focus-specific seven-day plan;
-- risks such as unowned tasks, unassigned work orders, expiring leases, and delinquency; and
-- a readiness score.
+- [`setupModel.js`](../../js/setupModel.js) derives progress from current workspace facts. Its 12 starter task IDs are stable; owners must exist on the confirmed roster. This does not change the full map's coverage calculations.
+- [`setupPreferences.js`](../../js/setupPreferences.js) stores local acknowledgements, deferrals, and starter-property selection under the demo-namespaced `SETUP_KEY`. These choices are not portable business data.
+- [`setupGuide.js`](../../js/setupGuide.js) renders the guide and opens existing tools or forms. Updating guidance does not replace active work forms; users choose when to continue after saving.
+- [`launchPlan.js`](../../js/launchPlan.js) retains coverage, risks, data quality, the weighted readiness score, and first-week resources under an expandable section. Walkthrough progress and operational readiness remain distinct.
 
-The file is intentionally a derived-view layer: `renderLaunchPlan` reads current state but should not mutate it. Guided buttons route the user to the relevant tab or modal.
+“Show me an example first” opens the isolated `?demo=1` workspace in another tab. Return to the original tab for real setup; practice does not complete it. The separate **Load Demo Company** action uses `buildDemoWorkspace` and confirms before replacing current workspace data.
 
-For evaluation without real data, [`buildDemoWorkspace`](../../js/templates.js) supplies a fictional team, assignments, portfolio records, and work order. “Show me an example first” loads that data into the same real workflows; it is not a separate mock UI.
+A full import or reviewed sync replacement clears personal walkthrough choices. Ordinary background sync passes `preserveSetup: true`; operational facts and roster confirmation still recalculate. See [the setup specification](../operation-setup.md) for completion rules and rollback.
 
 ## 6. Core journey: map responsibilities and track execution
 

@@ -182,7 +182,10 @@ FUNCTION startApplication(config, browserStorage):
                 copy bounded, valid editable fields
 
     render all initial surfaces from reconciled shared state
-    show onboarding only when company profile is absent
+    show onboarding when company name is absent
+    enter seven-step guide after new company context is saved
+    offer optional guide entry to returning users
+    derive business progress; keep review acknowledgements local
     initialize notifications and optional sync
 END FUNCTION
 ```

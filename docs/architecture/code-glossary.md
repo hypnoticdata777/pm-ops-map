@@ -7,7 +7,7 @@ This glossary explains the repository in practical terms. Read [`site-walkthroug
 | File | Practical responsibility | Watch for |
 |---|---|---|
 | [`index.html`](../../index.html) | The single-page shell: navigation, persistent containers, forms, and modals. | Inline handler names must be exported to `window` in `js/app.js`. |
-| [`config.json`](../../config.json) | Product seed data: company placeholder, 17 departments, 262 starter tasks, affinities, and owner colors. | Task names become initial stable identity keys; duplicate/unstable names make persistence ambiguous. |
+| [`config.json`](../../config.json) | Product seed data: company placeholder, 17 departments, 262 starter tasks, affinities, and owner colors. | Permanent task IDs preserve identity; names remain editable and legacy name/alias matching supports older saves. |
 | [`css/style.css`](../../css/style.css) | Entire visual system, responsive layout, view styling, states, and animations. | There is no component-scoped CSS or preprocessor. |
 | [`package.json`](../../package.json) | Frontend development, Vitest tests, and Webpack build commands. | Dependencies are development-only; the browser bundle has no framework runtime. |
 | [`webpack.common.js`](../../webpack.common.js) | Defines `js/app.js` as the bundle entry and `dist/` as output. | Production and development settings extend it. |
@@ -212,7 +212,20 @@ This is a starter registry, not a full property-management database or accountin
 
 ### `js/launchPlan.js`
 
-The derived operator-guidance layer. `renderLaunchPlan` composes profile-specific onboarding, next action, coverage, risks, a seven-day checklist, and data-quality signals from current state. `loadDemoCompany` applies realistic fictional data from templates. Export/print helpers turn the plan into an artifact.
+The supporting launch-resource layer. `renderLaunchPlan` refreshes the shared setup guide and composes coverage, risks, weighted readiness, seven-day planning, and data-quality signals inside a disclosure. `loadDemoCompany` remains a confirmed workspace replacement; export/print helpers generate planning artifacts.
+
+### `js/setupModel.js`, `js/setupPreferences.js`, `js/setupGuide.js`
+
+| Symbol | Purpose |
+|---|---|
+| `SETUP_STEPS` / `STARTER_TASK_IDS` | One seven-step sequence and 12 existing responsibility IDs. |
+| `deriveSetup(facts, prefs)` | Pure completion, deferral, vacancy scoping, starter coverage, and next-step calculation. |
+| `rosterSignature(employees)` | Detects roster-name changes so confirmation becomes outstanding again. |
+| `readSetupPreferences()` / `writeSetupPreferences()` | Local versioned choices; a failed save reports failure while retaining a page-memory fallback. |
+| `resetSetupPreferences()` | Clears guide choices without deleting business records. |
+| `renderSetupGuide()` | Shared presentation, resume/review controls, owner choices, and direct handoffs into existing tools. |
+
+`SETUP_KEY` is registered in `storage.js` and demo-namespaced. Personal choices are excluded from exports and sync payloads. See [operation setup](../operation-setup.md).
 
 ### `js/templates.js`
 

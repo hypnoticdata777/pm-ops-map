@@ -72,7 +72,10 @@ pm-ops-map/
 │   ├── storage.js      localStorage, profile, audit, and reset helpers
 │   ├── io.js           JSON/CSV export, import, clipboard sync, and undo
 │   ├── sync.js         Optional team sync client — talks to server/
-│   ├── launchPlan.js   Beginner setup dashboard and readiness checks
+│   ├── setupModel.js  Pure seven-step progress and starter coverage rules
+│   ├── setupPreferences.js Local, demo-isolated walkthrough choices
+│   ├── setupGuide.js  Guided UI and form handoffs
+│   ├── launchPlan.js   Supporting launch resources and readiness checks
 │   ├── handbook.js     Markdown handbook export
 │   ├── schema.js       Hand-rolled schema layer: field helpers, record/collection validation, error paths
 │   ├── normalize.js    Sanitizers for every path that loads outside data (built on schema.js)
@@ -218,3 +221,16 @@ Sometimes a check fails because the ground moved, not the code: a runner image c
 ## License
 
 By contributing, you agree your changes will be licensed under the [MIT License](LICENSE.txt).
+
+
+## Changing the operation setup walkthrough
+
+Read [the setup specification](docs/operation-setup.md) before changing the sequence. Keep step definitions and business-evidence rules in `js/setupModel.js`; presentation belongs in `js/setupGuide.js`, and local choices in `js/setupPreferences.js`. New modules remain strictly type-checked.
+
+- Preserve the permanent IDs of the 12 starter responsibilities and test missing tasks and owners absent from the roster. Do not change company-wide coverage calculations implicitly.
+- Deferred steps remain outstanding; a final review is not operational certification. A vacant-property exception applies to the selected property only. Do not require closing a real work order.
+- Register local preference keys in `storage.js`, reset groups, and demo namespacing. Walkthrough acknowledgements are not exported or synced. Imports reset choices; normal background sync preserves choices while facts recalculate.
+- Guide refreshes must preserve unsaved inputs and keyboard focus. Test form handoffs within the same view as well as switching views.
+- Run unit tests, strict type checking, source browser tests, and production-build browser tests (`npm run test:e2e:pages`). `e2e/setup.spec.js` runs against both source and Pages builds; hostile-import tests cover guide text and owner choices.
+- Inspect phone-width layouts. Chromium emulation does not establish iPhone Safari compatibility; record WebKit and real-device results separately.
+- Update README, the setup specification, architecture notes, roadmap, changelog, and relevant screenshots when behavior changes. Keep historical field notes clearly labelled rather than rewriting their original findings.
