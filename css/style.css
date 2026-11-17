@@ -5098,3 +5098,37 @@ body[data-ops-focus="compliance"] {
   .demo-banner { padding: 8px 12px; gap: 8px; }
   .demo-banner-actions { width: 100%; }
 }
+
+/* One setup guide across all views; updates never replace active work forms. */
+.operation-setup { margin: 18px 0; padding: 22px; border: 1px solid var(--border, #cbd5e1); border-radius: 14px; background: var(--card-bg, #fff); color: var(--text, #263238); }
+.setup-heading { display:flex; align-items:flex-start; justify-content:space-between; gap:16px; }
+.setup-heading h2 { margin:0 0 8px; font-size:1.45rem; }
+.operation-setup p { line-height:1.6; margin:10px 0; }
+.operation-setup .btn { min-height:44px; margin:4px; white-space:normal; }
+.operation-setup summary, .setup-resources > summary { min-height:44px; padding:12px 0; cursor:pointer; font-weight:700; }
+.setup-steps { padding-left:22px; }
+.setup-steps .btn[aria-current="step"] { outline:2px solid #1976d2; outline-offset:2px; }
+.setup-current { border-top:1px solid #cbd5e1; padding-top:12px; }
+.setup-current h3 small { display:block; font-size:.85rem; font-weight:normal; }
+.setup-current select { display:block; width:100%; max-width:440px; min-height:44px; padding:8px; font-size:16px; border:1px solid #94a3b8; border-radius:6px; background:#fff; color:#263238; }
+.setup-task-list { list-style:none; padding:0; }
+.setup-task-list li { padding:12px 0; border-bottom:1px solid #cbd5e1; }
+.setup-task-list label { display:grid; grid-template-columns: minmax(0, 1fr) minmax(160px, 240px); gap:12px; align-items:center; }
+.setup-task-list small { display:block; }
+.setup-note { font-size:.85rem; }
+.operation-setup button:focus-visible, .operation-setup a:focus-visible, .operation-setup select:focus-visible { outline:3px solid #1976d2; outline-offset:3px; }
+@media (max-width:600px) {
+  .operation-setup { padding:16px; }
+  .setup-heading { flex-direction:column; }
+  .setup-task-list label { grid-template-columns:1fr; }
+  .setup-navigation { display:flex; flex-wrap:wrap; }
+}
+.operation-setup { margin: 16px 18px; }
+.operation-setup p { margin: 12px 0; line-height: 1.55; }
+.operation-setup h3 { margin: 12px 0; }
+.operation-setup .btn { min-height: 44px; margin: 4px 6px 4px 0; }
+.operation-setup summary, .setup-resources > summary { min-height: 44px; padding: 12px 4px; cursor: pointer; font-weight: 700; }
+.setup-resources > p { margin: 12px 0; }
+.setup-steps { padding-left: 22px; }
+@media (max-width:600px) { .operation-setup { margin:12px; } }
+.setup-navigation [data-setup="restart"] { background:transparent; border-color:transparent; font-size:12px; font-weight:normal; text-decoration:underline; }

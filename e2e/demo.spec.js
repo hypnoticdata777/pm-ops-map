@@ -147,7 +147,7 @@ test.describe('isolation from a real workspace on the same origin', () => {
     // A real workspace first.
     await page.goto('index.html');
     await page.fill('#company-input', 'Real Company LLC');
-    await page.getByRole('button', { name: /Start Mapping/ }).click();
+    await page.getByRole('button', { name: /Start setup/ }).click();
     await clickStatus(page, 'leasing', 0);
     const realBefore = await dump(page);
     expect(realBefore['pm-ops-company-name']).toBe('Real Company LLC');

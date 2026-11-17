@@ -39,7 +39,7 @@
   <div class="header">
     <div>
       <h1>PM Ops Map</h1>
-      <p>Map responsibilities. Assign owners. Review gaps. Share the operating picture.</p>
+      <p>Set up your operation. Assign responsibility. Keep work moving.</p>
     </div>
     <button class="nav-toggle-btn" id="nav-toggle-btn" onclick="toggleNavCompact()" aria-pressed="false" title="Make navigation less prominent">Hide nav</button>
   </div>
@@ -56,11 +56,13 @@
       <span class="tab-beacon" id="tab-beacon" hidden></span>
     </div>
     <div class="nav-tab" id="wo-tab" data-view="workorders" onclick="switchView('workorders', this)">
-      &#128295; Context: Work Orders
+      &#128295; Work Orders
       <span class="tab-beacon" id="wo-tab-beacon" hidden></span>
     </div>
-    <div class="nav-tab" id="portfolio-tab" data-view="portfolio" onclick="switchView('portfolio', this)">Context: Portfolio</div>
+    <div class="nav-tab" id="portfolio-tab" data-view="portfolio" onclick="switchView('portfolio', this)">Portfolio</div>
   </div>
+
+  <section id="operation-setup" class="operation-setup" aria-label="Operation setup guide"></section>
 
   <div class="controls" id="controls">
     <!-- Search/filter bar — only shown on Tracking view -->
@@ -126,45 +128,7 @@
 
       <!-- Welcome guide: shown once to new users, dismissed to localStorage.
            hidden attribute is toggled by initWelcomeGuide() in app.js. -->
-      <div id="welcome-guide" class="welcome-guide" hidden>
-        <div class="guide-header">
-          <span class="guide-title">&#x1F44B; Welcome to PM Ops Map &mdash; here&rsquo;s how to get started</span>
-        </div>
-        <div class="guide-steps">
-          <div class="guide-step">
-            <div class="guide-step-num">1</div>
-            <div class="guide-step-body">
-              <strong>Start at the top</strong>
-            <span>The Start Here panel tells you the one best next action based on your current setup.</span>
-            </div>
-          </div>
-          <div class="guide-divider"></div>
-          <div class="guide-step">
-            <div class="guide-step-num">2</div>
-            <div class="guide-step-body">
-              <strong>Add real people</strong>
-              <span>Open <strong>Assign Owners</strong>, add your team, and choose which departments each person covers.</span>
-            </div>
-          </div>
-          <div class="guide-divider"></div>
-          <div class="guide-step">
-            <div class="guide-step-num">3</div>
-            <div class="guide-step-body">
-              <strong>Close red gaps</strong>
-              <span>Assign every <em>UNOWNED</em> task, or use <strong>&#9889; Auto-Assign</strong> after affinities are set.</span>
-            </div>
-          </div>
-          <div class="guide-divider"></div>
-          <div class="guide-step">
-            <div class="guide-step-num">4</div>
-            <div class="guide-step-body">
-              <strong>Export the handbook</strong>
-              <span>When the map looks right, click <strong>Handbook</strong> to download a starter SOP for the team.</span>
-            </div>
-          </div>
-        </div>
-        <button class="guide-dismiss" onclick="dismissWelcomeGuide()">Got it &mdash; hide this &#10005;</button>
-      </div>
+      <div id="welcome-guide" hidden></div>
 
       <div class="departments" id="departments"></div>
       <div id="no-results" class="no-results" style="display:none">
@@ -253,8 +217,8 @@
   <div class="onboarding-card">
     <div class="setup-copy">
       <div class="onboarding-logo">PM Ops Map</div>
-      <h2 id="onboarding-title" class="onboarding-title">Build your operations map.</h2>
-      <p class="onboarding-subtitle">Start with your company context. The next screen will show your first recommended action, the setup gaps to close, and the handbook you can export when the map is ready.</p>
+      <h2 id="onboarding-title" class="onboarding-title">Set up your property-management operation.</h2>
+      <p class="onboarding-subtitle">Start with one property, connect the people who handle it, and build a clear process for everyday work. Every existing tool stays available.</p>
       <div class="setup-proof-grid" aria-label="What this setup unlocks">
         <div><strong>17</strong><span>departments</span></div>
         <div><strong>260+</strong><span>tasks</span></div>
@@ -282,8 +246,10 @@
 
       <p class="onboarding-privacy">&#128274; Everything you enter stays in this browser, unencrypted &mdash; there is no account and no server. Explore with the example workspace first, and read <strong>Data &amp; Privacy</strong> in the toolbar before adding real tenant details.</p>
 
-      <button class="onboarding-btn" onclick="submitCompanyName()">Start Mapping &rarr;</button>
-      <button class="onboarding-btn onboarding-btn--secondary" onclick="startWithDemoCompany()">Show me an example first</button>
+      <button class="onboarding-btn" onclick="submitCompanyName()">Start setup &rarr;</button>
+      <button class="onboarding-btn onboarding-btn--secondary" onclick="window.open('?demo=1', '_blank', 'noopener')">Show me an example first</button>
+      <button class="btn btn-secondary" onclick="document.getElementById('onboarding-modal').classList.remove('visible'); document.getElementById('import-file-input').click()">Import an existing workspace</button>
+      <button class="btn btn-secondary" onclick="document.getElementById('onboarding-modal').classList.remove('visible')">Return to workspace</button>
     </div>
   </div>
 </div>

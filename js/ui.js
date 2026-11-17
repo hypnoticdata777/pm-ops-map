@@ -1,4 +1,5 @@
 // @ts-nocheck — TODO(types): not converted to checked JSDoc yet. Delete this line and fix what `npm run typecheck` reports.
+import { writeSetupPreferences } from './setupPreferences.js';
 // Global UI helpers: stats bar, beacons, onboarding, welcome guide, notifications.
 import {
   orgData, teamData, workOrders,
@@ -6,7 +7,7 @@ import {
 import { countUnowned } from './domain/workload.js';
 import {
   COMPANY_KEY, OPS_PROFILE_KEY, GUIDE_KEY, NOTIF_DATE_KEY,
-  getCompanyName, applyCompanyName, applyOpsProfile,
+  getCompanyName, getOpsProfile, applyCompanyName, applyOpsProfile,
   showSaveToast, _showActionToast,
 } from './storage.js';
 import { isTaskOverdue, getTodayISO, shakeInput } from './utils.js';
@@ -80,6 +81,12 @@ export function showOnboardingModal() {
   const modal = document.getElementById('onboarding-modal');
   modal.classList.add('visible');
   const input = document.getElementById('company-input');
+  const savedCompany = localStorage.getItem(COMPANY_KEY) || '';
+  const savedProfile = getOpsProfile();
+  const profile = savedProfile.company === savedCompany ? savedProfile : {};
+  input.value = savedCompany;
+  document.getElementById('portfolio-size-input').value = profile.portfolioSize || 'mid';
+  document.getElementById('ops-focus-input').value = profile.focus || 'stability';
   setTimeout(() => input.focus(), 50);
   input.onkeydown = e => { if (e.key === 'Enter') submitCompanyName(); };
 }
@@ -91,6 +98,7 @@ export function submitCompanyName() {
     shakeInput(input);
     return;
   }
+  const firstSetup = !getOpsProfile().configuredAt;
   const profile = {
     company:        name,
     portfolioSize:  document.getElementById('portfolio-size-input')?.value || 'mid',
@@ -104,16 +112,14 @@ export function submitCompanyName() {
   applyCompanyName(name);
   applyOpsProfile(profile);
   document.getElementById('onboarding-modal').classList.remove('visible');
+  if (firstSetup) writeSetupPreferences({active:true,step:'property'});
   renderLaunchPlan();
 }
 
 // ── Welcome guide ─────────────────────────────────────────────────────────────
 export function initWelcomeGuide() {
   const guide = document.getElementById('welcome-guide');
-  if (!guide) return;
-  if (!localStorage.getItem(GUIDE_KEY)) {
-    guide.hidden = false;
-  }
+  if (guide) guide.hidden = true;
 }
 
 export function dismissWelcomeGuide() {
