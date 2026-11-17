@@ -2,7 +2,7 @@
 
 The single source of truth for what has shipped, what is in progress, and what comes next. The README's [Roadmap](../README.md#roadmap) section is the short version; this is the detail. Update this file in the same PR that finishes (or re-scopes) a step.
 
-**Last updated:** 2026-11-03 · **Current focus:** Phase 1C
+**Last updated:** 2026-11-16 · **Current focus:** Phase 1C continues; operation setup shipped in PR #92
 
 ## Status at a glance
 
@@ -14,7 +14,7 @@ The single source of truth for what has shipped, what is in progress, and what c
 | 1C | Foundations: event delegation, E2E expansion (steps 6–7) | 🚧 In progress (Map & Review converted) |
 | 2 | Positioning: Map → Assign → Review → Share | ✅ Done |
 | 3 | Responsibility intelligence | 📋 Planned |
-| 4 | Onboarding and responsibilities import | 📋 Planned |
+| 4 | Onboarding and responsibilities import | 🚧 Seven-step setup shipped; deeper audit and responsibility CSV mapping remain planned |
 | 5 | Sync and deployment hardening, threat model | 📋 Planned |
 
 ## Principles that apply to every phase
@@ -102,11 +102,17 @@ Deepen the Map → Assign → Review → Share loop rather than widening the pro
 - **Explainable auto-assign:** a preview showing the reason for each proposed assignment before anything is applied (builds on `planAssignments`)
 - **Reports**
 
-## Phase 4: Onboarding and responsibilities import (planned)
+## Phase 4: Onboarding and responsibilities import (partially shipped)
 
-- Guided onboarding / audit
-- **Responsibilities CSV import with column mapping**
-- Documented sample paths
+**Shipped in PR #92:** one seven-step operation setup guide, starter-property contact guidance, solo/team roster confirmation, 12 existing starter responsibilities, maintenance review without closing real repairs, deferral/resume, and a final review. Detailed launch resources and the full responsibility map remain available. Local preferences do not change business schemas or sync payloads. See [the setup specification](operation-setup.md).
+
+**Remaining:**
+
+- Deeper guided operational audits beyond the starter loop.
+- **Responsibilities CSV import with column mapping** (portfolio CSV imports are already available and are a separate capability).
+- Additional documented sample operating paths.
+
+This product walkthrough does not finish Phase 1C event-delegation work for the remaining legacy views.
 
 ## Phase 5: Sync and deployment hardening (planned)
 

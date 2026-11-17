@@ -1,5 +1,7 @@
 # Field Note: PM Ops Map Phase 2 — Positioning the Wedge
 
+> Historical Phase 2 note. For current operation-first onboarding and navigation, see [Operation setup](../operation-setup.md). Original decisions and findings below are retained as history.
+
 **Date:** 2026-10-13  
 **Phase:** 2 — Positioning  
 **Status:** Complete

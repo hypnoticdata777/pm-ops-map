@@ -1,5 +1,7 @@
 # Field Note: Phase 2 Production Audit
 
+> Historical Phase 2 note. For current operation-first onboarding and navigation, see [Operation setup](../operation-setup.md). Original decisions and findings below are retained as history.
+
 **Date:** 2026-10-13  
 **Scope:** client, build, tests, E2E configuration, sync server, documentation, and Phase 2 changes
 
