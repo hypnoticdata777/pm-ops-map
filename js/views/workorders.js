@@ -1,4 +1,5 @@
 // @ts-nocheck — TODO(types): not converted to checked JSDoc yet. Delete this line and fix what `npm run typecheck` reports.
+import { renderSetupGuide } from '../setupGuide.js';
 // Work Orders kanban: 4-column pipeline (Submitted → Scheduled → In Progress → Completed).
 import {
   workOrders, setWorkOrders, portfolio,
@@ -79,6 +80,7 @@ function buildWorkOrderCard(wo) {
 
 // ── Main render ───────────────────────────────────────────────────────────────
 export function renderWorkOrdersView() {
+  renderSetupGuide();
   const inner = document.getElementById('workorders-view-inner');
   if (!inner) return;
 

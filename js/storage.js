@@ -15,6 +15,7 @@ import {
 
 // ── Storage keys ──────────────────────────────────────────────────────────────
 export const STORAGE_KEY     = namespacedKey('pm-ops-data-v1');
+export const SETUP_KEY = namespacedKey('pm-ops-setup-v1');
 export const COMPANY_KEY     = namespacedKey('pm-ops-company-name');
 export const OPS_PROFILE_KEY = namespacedKey('pm-ops-profile-v1');
 export const NAV_COMPACT_KEY = namespacedKey('pm-ops-nav-compact');
@@ -164,7 +165,7 @@ export const RESET_EVENT = 'pm-ops-reset';
 export const ALL_STORAGE_KEYS = [
   STORAGE_KEY, COMPANY_KEY, OPS_PROFILE_KEY, NAV_COMPACT_KEY, TEAM_KEY, WORKORDERS_KEY,
   PORTFOLIO_KEY, AUDIT_KEY, GUIDE_KEY, NOTIF_DATE_KEY, LAUNCH_CHECKLIST_KEY, BACKUP_KEY,
-  SYNC_CONFIG_KEY,
+  SYNC_CONFIG_KEY, SETUP_KEY,
 ];
 
 // Automatic backups are full copies of the workspace (tenant records included),
@@ -177,11 +178,11 @@ export const RESET_GROUPS = {
   },
   '2': {
     label: 'operating workspace data, including automatic backups',
-    keys: [STORAGE_KEY, TEAM_KEY, WORKORDERS_KEY, PORTFOLIO_KEY, AUDIT_KEY, LAUNCH_CHECKLIST_KEY, BACKUP_KEY],
+    keys: [STORAGE_KEY, TEAM_KEY, WORKORDERS_KEY, PORTFOLIO_KEY, AUDIT_KEY, LAUNCH_CHECKLIST_KEY, BACKUP_KEY, SETUP_KEY],
   },
   '3': {
     label: 'company setup and preferences, including the saved Team Sync connection',
-    keys: [COMPANY_KEY, OPS_PROFILE_KEY, NAV_COMPACT_KEY, GUIDE_KEY, NOTIF_DATE_KEY, SYNC_CONFIG_KEY],
+    keys: [COMPANY_KEY, OPS_PROFILE_KEY, NAV_COMPACT_KEY, GUIDE_KEY, NOTIF_DATE_KEY, SYNC_CONFIG_KEY, SETUP_KEY],
   },
   '4': {
     label: 'all PM Ops Map data on this device, including automatic backups and the saved Team Sync connection',

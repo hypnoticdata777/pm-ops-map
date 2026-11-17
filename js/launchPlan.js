@@ -1,4 +1,6 @@
 // @ts-nocheck — TODO(types): not converted to checked JSDoc yet. Delete this line and fix what `npm run typecheck` reports.
+import { renderSetupGuide } from './setupGuide.js';
+import { resetSetupPreferences } from './setupPreferences.js';
 import {
   orgData, teamData, setTeamData, workOrders, setWorkOrders, portfolio, setPortfolio,
   ownerColors,
@@ -246,7 +248,6 @@ export function renderLaunchPlan() {
   const saved = readChecklistState();
   const completeCount = checklist.filter(item => saved[item.id] || item.metric()).length;
   const gaps = getLaunchGaps();
-  const nextAction = getNextAction();
   const readiness = getReadinessScore(checklist, saved);
   const snapshot = getOperationsSnapshot();
   const commandModules = getCommandModules(snapshot);
@@ -258,7 +259,11 @@ export function renderLaunchPlan() {
     .map(id => orgData.departments.find(dept => dept.id === id))
     .filter(Boolean);
 
+  renderSetupGuide();
+  const resourcesOpen = container.querySelector("details")?.open;
   container.innerHTML = `
+    <details class="setup-resources" ${resourcesOpen ? "open" : ""}><summary>Coverage, risks and detailed launch resources</summary>
+    <p>These operating indicators are separate from walkthrough progress. The weighted readiness score is a planning signal, not certification.</p>
     <div class="launch-dashboard-header">
       <div>
         <div class="launch-kicker">Beginner PM Command Center</div>
@@ -277,17 +282,6 @@ export function renderLaunchPlan() {
       ${renderMetricCard('Open repairs', String(snapshot.openWorkOrders), `${snapshot.unassignedWorkOrders} unassigned`, snapshot.unassignedWorkOrders ? 'warn' : 'good')}
       ${renderMetricCard('Blocked work', String(snapshot.blockedTasks), `${snapshot.overdueTasks} overdue`, snapshot.blockedTasks || snapshot.overdueTasks ? 'danger' : 'good')}
     </div>
-    <div class="launch-start">
-      <div>
-        <div class="launch-kicker">Start Here</div>
-        <h3>${escapeHtml(nextAction.title)}</h3>
-        <p>${escapeHtml(nextAction.detail)}</p>
-      </div>
-      <button class="btn btn-primary launch-primary-action" onclick="${nextAction.onclick}">
-        ${escapeHtml(nextAction.button)}
-      </button>
-    </div>
-    ${renderSetupWizard(snapshot)}
     <div class="launch-command-grid" aria-label="Beginner property manager modules">
       ${commandModules.map(renderCommandModule).join('')}
     </div>
@@ -397,6 +391,7 @@ export function renderLaunchPlan() {
       <button class="btn btn-secondary" onclick="loadDemoCompany()">Load Demo Company</button>
       <button class="btn btn-secondary" onclick="resetLaunchChecklist()">Reset Checklist</button>
     </div>
+    </details>
   `;
 }
 
@@ -440,6 +435,7 @@ export function downloadLaunchHandbook() {
 }
 
 function _applyDemoCompanyData() {
+  resetSetupPreferences();
   const demo = buildDemoWorkspace();
   const template = ROLE_TEMPLATES.maintenanceHeavy;
   const employees = template.employees.map(emp => ({
@@ -588,63 +584,6 @@ function renderMetricCard(label, value, detail, tone) {
       <span>${escapeHtml(label)}</span>
       <strong>${escapeHtml(value)}</strong>
       <small>${escapeHtml(detail)}</small>
-    </div>
-  `;
-}
-
-function renderSetupWizard(snapshot) {
-  const steps = [
-    {
-      label: 'Property',
-      detail: 'Add what you manage.',
-      done: snapshot.propertyCount > 0,
-      onclick: "switchView('portfolio', document.getElementById('portfolio-tab'))",
-    },
-    {
-      label: 'Tenant',
-      detail: 'Attach resident context.',
-      done: snapshot.tenantCount > 0,
-      onclick: "switchView('portfolio', document.getElementById('portfolio-tab'))",
-    },
-    {
-      label: 'Vendor',
-      detail: 'Build the repair bench.',
-      done: snapshot.vendorCount > 0,
-      onclick: "switchView('portfolio', document.getElementById('portfolio-tab'))",
-    },
-    {
-      label: 'Team',
-      detail: 'Add your people.',
-      done: snapshot.employeeCount > 0 && !snapshot.isStarterTeam,
-      onclick: 'startTeamSetup()',
-    },
-    {
-      label: 'First work order',
-      detail: 'Test maintenance flow.',
-      done: snapshot.workOrderCount > 0,
-      onclick: 'startWorkOrderSetup()',
-    },
-  ];
-  const complete = steps.filter(step => step.done).length;
-  return `
-    <div class="setup-wizard-panel" aria-label="Beginner setup wizard">
-      <div class="setup-wizard-head">
-        <div>
-          <div class="launch-kicker">Setup Wizard</div>
-          <h3>Property -> tenant -> vendor -> team -> first work order</h3>
-          <p>Walk the first operating loop in order. Each step opens the exact place to complete it.</p>
-        </div>
-        <div class="setup-wizard-score"><strong>${complete}/${steps.length}</strong><span>complete</span></div>
-      </div>
-      <div class="setup-wizard-steps">
-        ${steps.map((step, idx) => `
-          <button class="setup-wizard-step ${step.done ? 'is-complete' : ''}" onclick="${step.onclick}">
-            <span>${idx + 1}</span>
-            <strong>${escapeHtml(step.label)}</strong>
-            <small>${escapeHtml(step.detail)}</small>
-          </button>
-        `).join('')}
-      </div>
     </div>
   `;
 }
@@ -980,57 +919,6 @@ function getRiskQueue(snapshot) {
     });
   }
   return risks.slice(0, 4);
-}
-
-function getNextAction() {
-  // Beginner guidance engine. Order is intentional:
-  // define portfolio -> personalize sample roster -> close UNOWNED task gaps ->
-  // create maintenance workflow -> export handbook. Changing this order changes first-run UX.
-  const unowned = countUnowned(orgData.departments);
-  const openUnassignedWorkOrders = workOrders.filter(w => w.assignee === 'UNASSIGNED' && w.status !== 'completed').length;
-
-  if (!portfolio.properties.length || !portfolio.tenants.length || !portfolio.vendors.length) {
-    return {
-      title: 'Add your first property, tenant, and vendor',
-      detail: 'Start by recording what you manage, who lives there, and who you can call for repairs. This makes the rest of the operating map feel real.',
-      button: 'Open Portfolio',
-      onclick: "switchView('portfolio', document.getElementById('portfolio-tab'))",
-    };
-  }
-
-  if (!teamData.employees.length || isStarterTeam()) {
-    return {
-      title: 'Add your real team first',
-      detail: 'Every task starts unowned. Add your people so every responsibility can point to a real person.',
-      button: 'Open Team Manager',
-      onclick: 'startTeamSetup()',
-    };
-  }
-
-  if (unowned > 0) {
-    return {
-      title: `Assign ${unowned} unowned responsibilities`,
-      detail: 'Red UNOWNED items are the highest-priority setup gaps. Click each owner badge or use Auto-Assign after your team affinities look right.',
-      button: 'Show Unowned Tasks',
-      onclick: 'showUnownedTasks()',
-    };
-  }
-
-  if (!workOrders.length || openUnassignedWorkOrders > 0) {
-    return {
-      title: 'Create a starter work order',
-      detail: 'Use one sample repair to confirm intake, assignment, vendor, cost, target date, and closeout before real maintenance work arrives.',
-      button: 'Create Work Order',
-      onclick: 'startWorkOrderSetup()',
-    };
-  }
-
-  return {
-    title: 'Download your operations handbook',
-    detail: 'Your core setup signals look good. Export the handbook so the team has a simple SOP starter pack to review and improve.',
-    button: 'Download Handbook',
-    onclick: 'downloadLaunchHandbook()',
-  };
 }
 
 function switchToView(view, tabRef) {

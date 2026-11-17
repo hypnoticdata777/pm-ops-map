@@ -1,4 +1,5 @@
 // @ts-nocheck — TODO(types): not converted to checked JSDoc yet. Delete this line and fix what `npm run typecheck` reports.
+import { commit as setupCommit, REFRESH_AFTER_TASK_CHANGE as setupRefresh } from './commit.js';
 // Entry point for the browser app.
 //
 // This is the best file to read first when editing the project because it
@@ -257,6 +258,7 @@ installActionDelegation();
 Object.assign(window, {
   // View
   switchView,
+  refreshAfterSetupAssignment: () => setupCommit({ refresh: setupRefresh }),
   // Tracking tab: only the modal close buttons that index.html still calls inline.
   // The rest of this screen is wired through data-action (js/actions.js, trackingActions).
   closeTaskNotes,

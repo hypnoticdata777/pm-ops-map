@@ -226,6 +226,7 @@ export function commitAddEmployee() {
   renderLegend();
   populateOwnerFilter();
   updateBeacons();
+  updateStats();
 }
 
 export function removeEmployee(name) {

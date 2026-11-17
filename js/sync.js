@@ -372,7 +372,7 @@ async function pullIfNewerTick(manual) {
   // automatically, with a backup snapshot and an undo entry as the way back.
   saveBackupSnapshot('Before sync update');
   _saveUndoSnapshot();
-  _applyImportedState(remote.state);
+  _applyImportedState(remote.state, { preserveSetup: true });
   logAudit('import_sync', { title: sync.workspace });
   sync.version = remote.version;
   sync.lastSyncedSnapshot = currentSnapshot();

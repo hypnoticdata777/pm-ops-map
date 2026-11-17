@@ -1,0 +1,92 @@
+import { test, expect } from '@playwright/test';
+const guide = page => page.locator('#operation-setup');
+const action = (page,id) => guide(page).locator(`[data-setup="${id}"]`);
+async function step(page,id) {
+  const details=guide(page).locator('details');
+  if (!(await details.getAttribute('open')!==null)) await details.locator('summary').click();
+  await guide(page).locator(`[data-step="${id}"]`).click();
+}
+async function start(page) {
+  await page.goto('index.html');
+  await page.fill('#company-input','Setup Example');
+  await page.getByRole('button',{name:'Start setup →'}).click();
+  await expect(page.locator('#onboarding-modal')).not.toHaveClass(/visible/);
+}
+test('phone: a solo operator configures a vacant property and twelve owners, then resumes honestly',async({page})=>{
+  test.slow(); // A full operating loop includes twelve separate assignment saves.
+  await page.setViewportSize({width:390,height:844});
+  const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await start(page);
+  await action(page,'property-form').click();
+  await page.fill('#property-name','Starter House');
+  await page.getByRole('button',{name:'Add Property',exact:true}).click();
+  await action(page,'continue').click();
+  await action(page,'vacant').click();
+  await action(page,'vendor-form').click();
+  await page.fill('#vendor-name','Repair Partner');
+  await page.fill('#vendor-trade','General repairs');
+  await page.getByRole('button',{name:'Add Vendor',exact:true}).click();
+  await expect(guide(page)).toContainText('not applicable');
+  await action(page,'continue').click();
+  await action(page,'people-form').click();
+  await page.fill('#new-emp-name','Solo Operator');
+  await page.getByRole('button',{name:'+ Add Employee',exact:true}).click();
+  await action(page,'confirm-roster').click();
+  await action(page,'continue').click();
+  await expect(action(page,'owner')).toHaveCount(12);
+  for(let i=0;i<12;i++) await action(page,'owner').nth(i).selectOption('Solo Operator');
+  await expect(guide(page).locator('#setup-current-title')).toContainText('Complete');
+  await action(page,'continue').click();
+  await action(page,'confirm-maintenance').click();
+  await action(page,'continue').click();
+  await expect(guide(page)).toContainText('0 starter ownership gaps');
+  await action(page,'finish').click();
+  await expect(guide(page)).toContainText('What needs attention?');
+  await page.reload();
+  await action(page,'resume').click();
+  await expect(guide(page)).toContainText('7 of 7 steps complete');
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  expect(errors).toEqual([]);
+  expect(await page.evaluate(()=>JSON.parse(localStorage.getItem('pm-ops-workorders-v1') || '[]'))).toEqual([]);
+});
+test('defer, reload and review never pretend missing work is complete; form input survives guide actions',async({page})=>{
+  await start(page);
+  await action(page,'property-form').click();
+  await page.fill('#property-name','Unsaved property');
+  await action(page,'defer').click();
+  await expect(page.locator('#property-name')).toHaveValue('Unsaved property');
+  await action(page,'vendor-form').click();
+  await expect(page.locator('#property-name')).toHaveValue('Unsaved property');
+  await expect(page.locator('#vendor-name')).toBeFocused();
+  await page.reload();
+  await expect(guide(page)).toContainText('1 deferred');
+  await step(page,'review');
+  await expect(guide(page)).toContainText('First property: Deferred');
+  await action(page,'finish').click();
+  await expect(guide(page)).toContainText('setup items remain');
+  await action(page,'resume').click();
+  page.on('dialog',d=>d.accept());
+  await action(page,'restart').click();
+  await expect(guide(page)).toContainText('0 deferred');
+  await expect(page.locator('#company-heading')).toHaveText('SETUP EXAMPLE');
+});
+test('existing users keep tools available; guide demo practice stays isolated',async({page,context})=>{
+  await page.addInitScript(()=>localStorage.setItem('pm-ops-company-name','Existing Co'));
+  await page.goto('index.html');
+  await expect(action(page,'resume')).toBeVisible();
+  await expect(action(page,'continue')).toHaveCount(0);
+  await page.locator('[data-view="portfolio"]').click();
+  await page.fill('#property-name','Unchanged draft');
+  await action(page,'resume').click();
+  await step(page,'maintenance');
+  await expect(page.locator('#property-name')).toHaveValue('Unchanged draft');
+  const before=await page.evaluate(()=>localStorage.getItem('pm-ops-setup-v1'));
+  const popupPromise=context.waitForEvent('page');
+  await guide(page).getByRole('link',{name:/Practice in isolated demo/}).click();
+  const popup=await popupPromise;
+  await popup.waitForLoadState();
+  await action(popup,'resume').click();
+  await step(popup,'maintenance');
+  await action(popup,'confirm-maintenance').click();
+  expect(await page.evaluate(()=>localStorage.getItem('pm-ops-setup-v1'))).toBe(before);
+});

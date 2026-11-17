@@ -18,7 +18,7 @@ test('first visit: onboarding, then a full 17-department / 262-task map with no 
   await page.goto('index.html');
   await expect(page.locator('#onboarding-modal')).toHaveClass(/visible/);
   await page.fill('#company-input', 'Smoke Test Co');
-  await page.getByRole('button', { name: /Start Mapping/ }).click();
+  await page.getByRole('button', { name: /Start setup/ }).click();
   await expect(page.locator('#onboarding-modal')).not.toHaveClass(/visible/);
   await expect(page.locator('#company-heading')).toHaveText('SMOKE TEST CO');
   await expect(page.locator('#departments .department')).toHaveCount(17);
@@ -46,7 +46,7 @@ test('every tab opens without errors', async ({ page }) => {
 test('the company name survives a reload and onboarding does not return', async ({ page }) => {
   await page.goto('index.html');
   await page.fill('#company-input', 'Persistent Co');
-  await page.getByRole('button', { name: /Start Mapping/ }).click();
+  await page.getByRole('button', { name: /Start setup/ }).click();
   await page.reload();
   await expect(page.locator('#company-heading')).toHaveText('PERSISTENT CO');
   await expect(page.locator('#onboarding-modal')).not.toHaveClass(/visible/);

@@ -59,6 +59,16 @@ test.describe('hostile import is inert', () => {
     await expectClean(page, 'tracking bulk mode');
   });
 
+  test('setup guide renders hostile names and imported ownership as literal text', async ({ page }, testInfo) => {
+    await loadEvilApp(page, testInfo);
+    await page.locator('#operation-setup [data-setup="resume"]').click();
+    await page.locator('#operation-setup summary').click();
+    for (const step of ['property', 'contacts', 'people', 'responsibilities', 'maintenance', 'review']) {
+      await page.locator(`#operation-setup [data-step="${step}"]`).click();
+      await expectClean(page, `setup ${step}`);
+    }
+  });
+
   test('launch plan dashboard', async ({ page }, testInfo) => {
     await loadEvilApp(page, testInfo);
     await expectClean(page, 'launch plan');

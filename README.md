@@ -2,7 +2,7 @@
 
 # PM Ops Map
 
-**A responsibility map for property management teams.**
+**Set up your property-management operation, then keep it running.**
 Map the work, assign ownership, review the gaps, and share a clear operating picture.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.txt)
@@ -115,8 +115,8 @@ The site is deployed by [`.github/workflows/pages.yml`](.github/workflows/pages.
 <tr>
 <td width="50%">
 
-**Guided dashboard on day one**
-![Beginner PM Command Center dashboard](docs/screenshots/02-dashboard.png)
+**Guided operation setup on day one**
+![Seven-step operation setup guide on a phone](docs/screenshots/08-operation-setup.png)
 
 </td>
 <td width="50%">
@@ -296,9 +296,9 @@ Custom SVG diagram: Company → Departments → Owners. Line thickness scales wi
 
 ### Launch Plan — Guided First-Week Setup
 
-Appears automatically for new companies. Uses your portfolio size and operating focus (stability / maintenance / growth / compliance) to recommend the next best action, surface setup gaps, and walk through a structured first-week checklist. Departments start collapsed so a brand-new company sees a short list of headers, not all 260+ tasks expanded at once — click any department to open it, or **Expand All** in the filter bar to see everything.
+New companies enter the seven-step operation setup guide. Detailed launch resources use portfolio size and operating focus (stability / maintenance / growth / compliance) to provide supporting coverage checks and a first-week checklist. Departments start collapsed so a brand-new company sees a short list of headers, not all 260+ tasks expanded at once — click any department to open it, or **Expand All** in the filter bar to see everything.
 
-Click **"Show me an example first"** right on the onboarding screen (or **Load Demo Company** later from the dashboard) to explore a realistic sample workspace before entering real data.
+Click **"Show me an example first"** on onboarding to open the isolated demo in a separate tab. The existing **Load Demo Company** action remains in detailed launch resources and asks before replacing current workspace data.
 
 ---
 
@@ -584,3 +584,18 @@ Found a security issue? See [SECURITY.md](SECURITY.md) — please don't open a p
 ## License
 
 MIT — free to use, modify, and deploy. See [LICENSE.txt](LICENSE.txt).
+
+
+## Operation setup walkthrough
+
+A single seven-step guide connects company context, a starter property, relevant contacts, people, 12 essential responsibilities, maintenance review, and a final setup review. New companies enter the guide after saving company context. Existing users can open it without interrupting normal work. The guide stays above the work tools across views; Return to work keeps it compact.
+
+- Choose a starter property. Resident context must belong to that property; a vacant-property exception applies only there. Vendor records remain company-wide.
+- Add yourself as a solo operator or add a team, then confirm the roster. The 12 starter assignments require owners on that roster. The full 262-task map and its existing coverage calculations remain available.
+- Review the maintenance lifecycle without completing a real repair. Practice opens the isolated demo in another tab; return to the original tab to continue real setup.
+- Continue, defer, go back, or choose any step. Saving business records never automatically redirects you. Deferred work stays outstanding after finishing the review.
+- Setup progress is separate from operating readiness. The full coverage, risk, seven-day plan, checklists, and weighted readiness score remain under **Coverage, risks and detailed launch resources**.
+
+Walkthrough preferences use the local, versioned `pm-ops-setup-v1` key (namespaced in demo mode), not the portable workspace or sync payload. Facts are derived from current data. Importing/replacing a workspace clears personal acknowledgements; ordinary background sync updates preserve them and recalculate facts. Roster changes require confirmation again. **Restart walkthrough** only clears walkthrough choices; it keeps all business records. Browser storage failures show a warning when guide choices cannot be saved.
+
+See [Operation setup design and release notes](docs/operation-setup.md) for starter IDs, verification, and rollback.
