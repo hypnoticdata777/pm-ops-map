@@ -19,6 +19,7 @@
 - Work orders without a timestamp no longer display the text "Invalid Date".
 
 ### Added
+- **Operator Terms & Help glossary.** Search 40 approved definitions and aliases, filter by category, and open six contextual explanations. The read-only native dialog supports phone layouts, keyboard focus containment/restoration, Escape, and backdrop closing. Its generated Markdown reference shares `js/glossaryData.js` with the app; tests detect documentation drift. No dependency, workspace-schema, or sync changes.
 - **Seven-step operation setup.** One guide connects company context, a starter property, relevant contacts, a confirmed solo/team roster, 12 existing responsibilities, maintenance review, and a final summary. It supports deferral, vacancy exceptions, direct form handoffs, and reload/resume. Existing users can keep it compact; every tool remains accessible.
 - **Local walkthrough preferences.** Demo-isolated acknowledgements are separate from business evidence and operating readiness. Imports reset choices; ordinary background sync preserves them. Restarting the walkthrough keeps business records. No business-schema, dependency, backend, or sync-payload changes.
 - **Simpler launch presentation.** The old competing welcome/wizard/next-action sequences are consolidated. Coverage, risks, weighted readiness, checklists, and seven-day plans remain in supporting launch resources. Onboarding opens the isolated example in another tab; the existing workspace-replacing demo loader remains a separate confirmed action.

@@ -204,6 +204,7 @@
       <button class="btn btn-secondary" onclick="openAuditLog()" title="View change history">&#128203; Audit Log</button>
       <button class="btn btn-secondary" onclick="openBackupsModal()" title="View and restore automatic backups">&#128190; Backups</button>
       <button class="btn btn-secondary" id="notif-btn" onclick="requestNotificationPermission()" title="Enable browser alerts for overdue tasks" hidden>&#128276; Alerts</button>
+      <button type="button" class="btn btn-secondary" id="glossary-open" data-glossary="" aria-haspopup="dialog">Terms &amp; Help</button>
       <button class="btn btn-secondary" onclick="openPrivacyModal()" title="Where your data is stored, what to enter, and the copies exports create">&#128274; Data &amp; Privacy</button>
       <button class="btn btn-secondary stats-reset-btn" onclick="resetStorage()" title="Clear all saved changes and restore defaults">&#8635; Reset</button>
     </div>
@@ -566,6 +567,17 @@
 <div id="save-toast" class="save-toast"></div>
 <!-- Must stay type="module": GitHub Pages serves source files directly, and
      js/app.js uses browser-native ES module imports. -->
+<dialog id="glossary-dialog" class="glossary-dialog" aria-labelledby="glossary-title" aria-describedby="glossary-description">
+  <div class="glossary-header"><h2 id="glossary-title">Terms &amp; Help</h2><button type="button" class="btn btn-secondary" id="glossary-close">Close</button></div>
+  <p id="glossary-description">Plain-language definitions for PM Ops Map. These explain app behavior, not legal requirements.</p>
+  <div class="glossary-filters">
+    <label for="glossary-search">Search terms, aliases, or definitions<input id="glossary-search" type="search" autocomplete="off" placeholder="Try owner, tenant, or coverage"></label>
+    <label for="glossary-category">Category<select id="glossary-category"><option value="">All categories</option></select></label>
+    <button type="button" class="btn btn-secondary" id="glossary-clear">Clear filters</button>
+  </div>
+  <p id="glossary-count" role="status" aria-live="polite" aria-atomic="true"></p>
+  <div id="glossary-results" class="glossary-results" role="region" aria-label="Glossary definitions"></div>
+</dialog>
 <script type="module" src="js/app.js"></script>
 </body>
 </html>

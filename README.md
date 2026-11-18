@@ -401,6 +401,7 @@ Use the README for the product overview and setup path. Use the architecture not
 | [Operation setup](docs/operation-setup.md) | Seven-step behavior, local preferences, completion rules, and rollback |
 | [Site walkthrough](docs/architecture/site-walkthrough.md) | Following startup, state hydration, and each main user journey from screen to code |
 | [Problem, algorithm, pseudocode, and flowchart](docs/architecture/problem-algorithm-pseudocode-flowchart.md) | Understanding the operating problem and the affinity-first workload-balancing algorithm |
+| [User glossary](docs/user-glossary.md) | Plain-language operator terms, aliases, and capability limits |
 | [Code glossary](docs/architecture/code-glossary.md) | Looking up important files, functions, models, routes, and repository patterns |
 | [Explain-the-code practice guide](docs/architecture/explain-the-code-practice-guide.md) | Preparing a recruiter walkthrough, technical interview explanation, or portfolio demo |
 | [Sync server guide](server/README.md) | Running or deploying the optional shared-workspace service |
@@ -605,3 +606,14 @@ A single seven-step guide connects company context, a starter property, relevant
 Walkthrough preferences use the local, versioned `pm-ops-setup-v1` key (namespaced in demo mode), not the portable workspace or sync payload. Facts are derived from current data. Importing/replacing a workspace clears personal acknowledgements; ordinary background sync updates preserve them and recalculate facts. Roster changes require confirmation again. **Restart walkthrough** only clears walkthrough choices; it keeps all business records. Browser storage failures show a warning when guide choices cannot be saved.
 
 See [Operation setup design and release notes](docs/operation-setup.md) for starter IDs, verification, and rollback.
+
+
+## Terms & Help
+
+Open **Terms & Help** beside Data & Privacy in the toolbar to search the 40 approved operator definitions by term, alias, or definition, or filter by category. Tap a term to expand it. The glossary works offline in the production download and stores no search history or workspace changes. Close, Escape, or clicking the backdrop returns focus to the opener.
+
+Contextual **Explain** buttons open definitions for responsibility owner, department affinity, Auto-Assign, coverage, workload, and readiness score. Responsibility owner and property owner remain distinct; task/responsibility and resident/tenant are search aliases. Done applies to responsibilities; Completed applies to work orders. These definitions describe current behavior rather than legal requirements or certification.
+
+The [user glossary](docs/user-glossary.md) is generated from `js/glossaryData.js`; the separate [code glossary](docs/architecture/code-glossary.md) is for developers. After editing terminology, run `npm run glossary:generate` and verify with `npm run glossary:check`. Unit tests enforce that the checked-in reference matches the source.
+
+[Phone-width glossary screenshot](docs/screenshots/09-user-glossary.png).

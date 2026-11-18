@@ -5132,3 +5132,33 @@ body[data-ops-focus="compliance"] {
 .setup-steps { padding-left: 22px; }
 @media (max-width:600px) { .operation-setup { margin:12px; } }
 .setup-navigation [data-setup="restart"] { background:transparent; border-color:transparent; font-size:12px; font-weight:normal; text-decoration:underline; }
+
+/* Operator glossary: native dialog provides modal focus containment and Escape. */
+.glossary-dialog { position:fixed; inset:0; margin:auto; width:min(720px,calc(100% - 24px)); max-height:calc(100dvh - 24px); padding:22px; border:1px solid #b8cbd3; border-radius:16px; background:#fff; color:#263238; box-shadow:0 20px 60px #0005; font:16px/1.55 system-ui,-apple-system,sans-serif; }
+.glossary-dialog[open] { display:flex; flex-direction:column; gap:12px; }
+.glossary-dialog::backdrop { background:rgb(15 28 37 / 65%); }
+.glossary-header { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-shrink:0; }
+.glossary-header h2 { font-size:24px; }
+.glossary-dialog .btn { min-height:44px; white-space:normal; }
+.glossary-filters { display:grid; grid-template-columns:minmax(0,2fr) minmax(0,1fr); gap:12px; flex-shrink:0; }
+.glossary-filters label { display:flex; flex-direction:column; gap:6px; font-size:14px; font-weight:600; }
+.glossary-filters input, .glossary-filters select { min-width:0; width:100%; min-height:44px; font:16px system-ui,sans-serif; padding:10px; border:1px solid #8fa6b2; border-radius:8px; background:white; color:#263238; }
+.glossary-filters button { justify-self:start; }
+.glossary-results { overflow-y:auto; overscroll-behavior:contain; min-height:0; padding:0 4px 10px; }
+.glossary-entry { padding:10px 0; border-top:1px solid #d5e0e6; overflow-wrap:anywhere; }
+.glossary-entry summary { min-height:44px; padding:10px 2px; font-weight:700; cursor:pointer; }
+.glossary-entry small { color:#516774; }
+.glossary-entry p { margin:8px 0; }
+.term-help { display:inline-block; min-height:44px; padding:8px 10px; margin:2px 4px 2px 0; background:transparent; border:1px solid transparent; border-radius:6px; color:#075c77; font:inherit; font-size:13px; text-decoration:underline; text-underline-offset:3px; cursor:pointer; }
+.term-help:hover { background:#e7f3f6; }
+.term-help-links { display:flex; flex-wrap:wrap; }
+.glossary-dialog :focus-visible, .term-help:focus-visible { outline:3px solid #1976d2; outline-offset:2px; }
+@media (max-width:600px) {
+  .glossary-dialog { width:calc(100% - 16px); max-height:calc(100dvh - 16px); padding:16px; padding-bottom:max(16px,env(safe-area-inset-bottom)); }
+  .glossary-filters { grid-template-columns:minmax(0,1fr); gap:8px; }
+}
+@media (max-height:500px) {
+  .glossary-dialog { padding:10px; gap:6px; }
+  .glossary-dialog #glossary-description { display:none; }
+  .glossary-filters { grid-template-columns:minmax(0,2fr) minmax(0,1fr) auto; align-items:end; }
+}

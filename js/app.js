@@ -1,4 +1,5 @@
 // @ts-nocheck — TODO(types): not converted to checked JSDoc yet. Delete this line and fix what `npm run typecheck` reports.
+import { initGlossary } from './glossary.js';
 import { commit as setupCommit, REFRESH_AFTER_TASK_CHANGE as setupRefresh } from './commit.js';
 // Entry point for the browser app.
 //
@@ -142,6 +143,7 @@ function switchView(view, tabEl) {
 
 // ── App init ──────────────────────────────────────────────────────────────────
 function initApp() {
+  initGlossary();
   // Order matters:
   // 1. Load team/work order/audit/task state from localStorage.
   // 2. Render Tracking, Launch Plan, stats, filters, and legend from that state.

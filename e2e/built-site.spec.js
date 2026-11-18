@@ -84,3 +84,17 @@ test.describe('served under a Pages-style sub-path', () => {
     expect(outside).toEqual([]);
   });
 });
+
+test('downloaded build provides the user glossary without HTTP requests', async ({page}) => {
+  const network=[]; page.on('request', request=>{ if (/^https?:/.test(request.url())) network.push(request.url()); });
+  await page.goto(pathToFileURL(path.join(DIST, 'index.html')).href);
+  await page.waitForSelector('#departments .department');
+  await page.getByRole('button',{name:'Return to workspace',exact:true}).click();
+  await page.locator('#glossary-open').click();
+  await expect(page.locator('#glossary-count')).toHaveText('40 of 40 terms');
+  await page.fill('#glossary-search','tenant');
+  await expect(page.locator('#glossary-term-resident p')).toBeVisible();
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#glossary-open')).toBeFocused();
+  expect(network).toEqual([]);
+});

@@ -348,3 +348,19 @@ Every task in `config.json` has a permanent `id` (`maintenance-014`). Saved rows
 ### Tests import the shipped modules
 
 Vitest runs native ES modules, so tests import `js/*.js` directly (with jsdom for `document` and `localStorage`). There are no CommonJS mirrors or test-only shims; the browser and the tests execute the same code. (An earlier setup kept hand-maintained `.cjs` copies for Jest; they had already drifted apart, which is why they were removed.)
+
+
+## Operator glossary modules
+
+This document is the developer reference. For operator-facing terminology, use the generated [User Glossary](../user-glossary.md).
+
+| Module / symbol | Purpose |
+|---|---|
+| `js/glossaryData.js` | Shared term IDs, display names, aliases, categories, and approved definitions. |
+| `searchGlossary(query, category)` | Case/punctuation-insensitive word matching across names, aliases, definitions, and category labels; exact terms and aliases rank first. |
+| `glossaryLink(id, label)` | Validated contextual button with delegated behavior and text-escaped label. |
+| `initGlossary()` | Installs dialog controls and delegated contextual links during app initialization. |
+| `openGlossary(id)` / `closeGlossary()` | Opens relevant definitions, manages keyboard behavior, and restores opener focus. |
+| `scripts/generate-glossary.mjs` | Generates the Markdown reference; `--check` detects drift. |
+
+The glossary keeps no persistent state and changes no workspace data. It bundles with the app for file-based use; no runtime fetch or third-party library is required.

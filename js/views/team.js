@@ -1,4 +1,5 @@
 // @ts-nocheck — TODO(types): not converted to checked JSDoc yet. Delete this line and fix what `npm run typecheck` reports.
+import { glossaryLink } from '../glossary.js';
 // Team Manager view: roster, auto-assign, workload dashboard, role playbooks, audit log.
 import {
   orgData, teamData, setTeamData, workOrders,
@@ -42,6 +43,7 @@ export function renderTeamView() {
       <div>
         <h2 class="team-heading">&#128101; Team Manager</h2>
         <p class="team-subheading">Add employees, set department affinities, then hit Auto-Assign to map tasks automatically.</p>
+        <div class="term-help-links">${glossaryLink('department-affinity', 'Explain affinity')}${glossaryLink('auto-assign', 'Explain Auto-Assign')}</div>
       </div>
       ${unowned > 0 ? `
         <div class="team-unowned-alert">
@@ -105,6 +107,7 @@ export function renderTeamView() {
 
       <div class="workload-panel">
         <h3 class="team-panel-heading">Workload Dashboard</h3>
+        ${glossaryLink('workload', 'Explain workload')}
         <p class="workload-desc">
           Bar width = task share relative to the most-loaded employee.
           Auto-assign always picks the least-loaded eligible candidate.

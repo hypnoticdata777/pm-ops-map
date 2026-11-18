@@ -1,4 +1,5 @@
 // @ts-nocheck — TODO(types): not converted to checked JSDoc yet. Delete this line and fix what `npm run typecheck` reports.
+import { glossaryLink } from './glossary.js';
 import { renderSetupGuide } from './setupGuide.js';
 import { resetSetupPreferences } from './setupPreferences.js';
 import {
@@ -273,6 +274,7 @@ export function renderLaunchPlan() {
       <div class="launch-readiness-card" aria-label="${readiness.score} percent launch readiness">
         <strong>${readiness.score}%</strong>
         <span>${escapeHtml(readiness.label)}</span>
+        ${glossaryLink('readiness-score', 'Explain readiness score')}
       </div>
     </div>
     <div class="launch-metrics-grid" aria-label="Launch readiness metrics">
@@ -290,6 +292,7 @@ export function renderLaunchPlan() {
         <div>
           <div class="launch-kicker">Task Ownership Map</div>
           <h3>Critical PM coverage</h3>
+          ${glossaryLink('coverage', 'Explain coverage')}
           <p>These are the seven responsibility lanes a beginner property manager needs named before the work gets noisy.</p>
         </div>
         <div class="launch-coverage-score">

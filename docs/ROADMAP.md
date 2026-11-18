@@ -2,7 +2,7 @@
 
 The single source of truth for what has shipped, what is in progress, and what comes next. The README's [Roadmap](../README.md#roadmap) section is the short version; this is the detail. Update this file in the same PR that finishes (or re-scopes) a step.
 
-**Last updated:** 2026-11-16 · **Current focus:** Phase 1C continues; operation setup shipped in PR #92
+**Last updated:** 2026-11-17 · **Current focus:** Phase 1C continues; operation setup shipped in PR #92
 
 ## Status at a glance
 
@@ -105,6 +105,8 @@ Deepen the Map → Assign → Review → Share loop rather than widening the pro
 ## Phase 4: Onboarding and responsibilities import (partially shipped)
 
 **Shipped in PR #92:** one seven-step operation setup guide, starter-property contact guidance, solo/team roster confirmation, 12 existing starter responsibilities, maintenance review without closing real repairs, deferral/resume, and a final review. Detailed launch resources and the full responsibility map remain available. Local preferences do not change business schemas or sync payloads. See [the setup specification](operation-setup.md).
+
+**Operator guidance:** Terms & Help adds 40 shared-source definitions, aliases, category filtering, and six contextual explanations. The generated user reference is separate from the developer code glossary.
 
 **Remaining:**
 
