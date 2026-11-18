@@ -182,3 +182,10 @@ This is suitable for a small trusted team or product trial, not enterprise multi
 - Change Team Sync behavior in [`js/sync.js`](../../js/sync.js) and the server contract under [`server/src/`](../../server/src/).
 
 For the important symbols inside those files, continue with the [code glossary](code-glossary.md).
+
+
+## Operator terminology: Terms & Help
+
+`initGlossary()` in `js/app.js` wires the persistent toolbar entry and six delegated contextual buttons. `js/glossary.js` displays a native modal dialog, searches the shared `js/glossaryData.js` definitions, and renders text through DOM text boundaries. Search/category updates replace only the results region. Escape closes even when the search field is populated; focus returns to the opener. Tab boundaries are contained, and application shortcuts do not reach workspace actions while the dialog is open.
+
+The definitions are bundled, so the production download works without a server. Search history and help state are not persisted. The generated [user reference](../user-glossary.md) is checked against that same source by the unit suite. See CONTRIBUTING for regeneration commands.

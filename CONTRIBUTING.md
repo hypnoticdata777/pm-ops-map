@@ -234,3 +234,12 @@ Read [the setup specification](docs/operation-setup.md) before changing the sequ
 - Run unit tests, strict type checking, source browser tests, and production-build browser tests (`npm run test:e2e:pages`). `e2e/setup.spec.js` runs against both source and Pages builds; hostile-import tests cover guide text and owner choices.
 - Inspect phone-width layouts. Chromium emulation does not establish iPhone Safari compatibility; record WebKit and real-device results separately.
 - Update README, the setup specification, architecture notes, roadmap, changelog, and relevant screenshots when behavior changes. Keep historical field notes clearly labelled rather than rewriting their original findings.
+
+
+## Maintaining operator terminology
+
+`js/glossaryData.js` is the shared source for the in-app Terms & Help dialog and `docs/user-glossary.md`. Edit the source definitions, aliases, or categories, then run `npm run glossary:generate` and `npm run glossary:check`. Do not hand-edit the generated Markdown. A unit check rejects a stale reference during the normal test suite.
+
+`js/glossary.js` implements read-only search, the native dialog, focus restoration/containment, and delegated contextual help. Use `glossaryLink(id, label)` only with defined IDs. Render definitions and search content as text, never as executable HTML. Contextual help is intentionally limited to six ambiguous terms; avoid adding buttons to every row.
+
+Run the glossary unit tests, strict type check, and `e2e/glossary.spec.js` against source and the production build. Check portrait/landscape layouts, keyboard navigation, Escape from populated search, no-result recovery, and unchanged workspace storage. Keep physical iPhone Safari verification separate from Chromium phone emulation.

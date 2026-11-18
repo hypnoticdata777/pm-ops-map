@@ -17,7 +17,9 @@
     "start": "webpack serve --open --config webpack.config.dev.js",
     "build": "webpack --config webpack.config.prod.js",
     "ids:assign": "node scripts/assign-task-ids.mjs",
-    "ids:check": "node scripts/assign-task-ids.mjs --check"
+    "ids:check": "node scripts/assign-task-ids.mjs --check",
+    "glossary:generate": "node scripts/generate-glossary.mjs",
+    "glossary:check": "node scripts/generate-glossary.mjs --check"
   },
   "devDependencies": {
     "@playwright/test": "1.61.0",
