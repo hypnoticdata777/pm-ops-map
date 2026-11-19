@@ -151,7 +151,7 @@ Cross-screen presentation and onboarding.
 | `updateStats()` | Recalculates task totals, completion, ownership, overdue counts, and related global UI. |
 | `updateBeacons()` / `updateWorkOrderBeacon()` | Shows navigation warnings for unowned responsibilities or unassigned open work. |
 | `showOnboardingModal()` / `submitCompanyName()` | Captures and applies the initial company/profile setup. |
-| `requestNotificationPermission()` / `checkOverdueNotifications()` | Provides same-browser-session overdue notifications after explicit permission. |
+| `requestNotificationPermission()` / `checkOverdueNotifications()` | Attempts startup/hourly browser checks after permission; normal checks are suppressed after the stored calendar date is checked, while a forced permission-grant check bypasses that gate. |
 
 ### `js/views/tracking.js`
 

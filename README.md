@@ -6,13 +6,14 @@
 Set up one operating loop, assign ownership, review gaps, and expand across your portfolio.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.txt)
-[![Download](https://img.shields.io/badge/Download-v1.0.0-orange?style=flat-square)](https://github.com/hypnoticdata777/pm-ops-map/releases/latest)
 [![CI](https://github.com/hypnoticdata777/pm-ops-map/actions/workflows/ci.yml/badge.svg)](https://github.com/hypnoticdata777/pm-ops-map/actions)
 
 **No database required. No login required. No backend required. No monthly fee.**
 
-**▶ [Try the live demo](https://hypnoticdata777.github.io/pm-ops-map/?demo=1)** — a fictional property-management company, one click to open, one click to reset. Nothing leaves your browser.
-Or run it yourself in under a minute, see below.
+**[Open the app](https://hypnoticdata777.github.io/pm-ops-map/)** · **[Try the demo](https://hypnoticdata777.github.io/pm-ops-map/?demo=1)**
+
+The app opens your browser-local workspace. The demo uses isolated fictional data and disables Team Sync.
+A packaged release ZIP is not currently published; desktop local-build instructions are below.
 
 </div>
 
@@ -36,10 +37,10 @@ Open it, enter your company name, and you get:
 - **260+ standard PM tasks** across 17 departments, all editable to match your company
 - **Team assignment engine** with auto-assign, workload balancing, and role templates
 - **Review signals** for unowned work, blockers, overdue tasks, workload balance, and setup gaps
-- **Exportable responsibility map and operations handbook** (JSON, CSV, Markdown, and printable HTML)
-- **Optional context views** for maintenance work orders and a lightweight property, tenant, and vendor registry
-- **Recurring task templates** for weekly ops, monthly finance, compliance, and more
-- **Auto-backups** so nothing gets lost
+- **Exports**: workspace JSON; task, portfolio, and work-order CSV; Markdown and printable HTML handbooks
+- **Maintenance work orders and a lightweight registry** for properties, tenants, and vendors
+- **Manually applied work-order templates** for weekly ops, monthly finance, compliance, and more
+- **Five browser-local recovery snapshots** before supported bulk changes; export JSON for a separate copy
 - **Optional team sync (beta)** — self-host a small sync server so a small, trusted team shares one live workspace instead of one browser
 
 Everything saves to `localStorage` by default. Nothing goes to a server unless you turn on Team Sync yourself. Export your data anytime as JSON or CSV.
@@ -48,7 +49,15 @@ Everything saves to `localStorage` by default. Nothing goes to a server unless y
 
 ---
 
-## Get Started in 2 Minutes
+## Get Started
+
+### Open your workspace (recommended)
+
+1. Open **[the hosted app](https://hypnoticdata777.github.io/pm-ops-map/)** in your browser.
+2. Enter company context and follow the seven-step guide, or import an existing workspace through its review flow.
+3. Export JSON regularly and verify that you can find the downloaded file. Saving in the browser is not an off-device backup.
+
+Workspace data is associated with this browser profile and site. It does not automatically follow you to another browser, device, or a downloaded copy. Use JSON export/import to move it, or explicitly configure optional Team Sync. On iPhone, use the hosted URL; opening local HTML through Files has not been verified as an app delivery method.
 
 ### Option A — Live Demo (no setup)
 
@@ -57,12 +66,22 @@ Everything saves to `localStorage` by default. Nothing goes to a server unless y
 3. Made a mess? **Reset demo** in the purple banner restores it. Ready for your own data? **Use your own workspace →**
 
 The demo is clearly labelled as fictional, keeps its data under separate browser-storage keys (so it can never touch a real workspace opened from the same site), and has Team Sync switched off. See [The live demo](#the-live-demo) below.
-### Option B — Download the ZIP
+### Option B — Build a desktop local copy
 
-1. Go to [Releases](https://github.com/hypnoticdata777/pm-ops-map/releases/latest)
-2. Download `pm-ops-map.zip` under **Assets**
-3. Unzip → open `index.html` in any modern browser
-4. Done
+There is no published release ZIP yet. GitHub's source-code archive is not the ready-to-open production build. With Node.js 22.12+ installed, build the app yourself:
+
+```bash
+git clone https://github.com/hypnoticdata777/pm-ops-map.git
+cd pm-ops-map
+npm ci
+npm run build
+# Open dist/index.html in a compatible desktop browser.
+# Keep its asset folders beside index.html.
+```
+
+The production build includes its configuration and supports desktop `file://` use. The raw source checkout should be served over HTTP as described below. Export your workspace before moving or replacing a local build; do not assume browser storage transfers between file locations or delivery modes.
+
+A tested, versioned ZIP and reviewed draft-release workflow are planned in the [release specification](docs/releases.md). Download links will be enabled after an actual release asset is published.
 
 ### Option C — Run Locally from Source
 
@@ -186,13 +205,13 @@ Search by keyword, owner, status, or priority — all four compose together. The
 
 ### Bulk Select Mode
 
-Enable **Bulk Mode** from the filter bar to check multiple tasks at once. A floating action bar appears at the bottom of the screen with dropdowns to reassign all selected tasks to a new owner or change all their statuses in one click. Works across collapsed departments too.
+Enable **Bulk Select** from the filter bar to check multiple tasks at once. A floating action bar appears at the bottom of the screen with dropdowns to reassign all selected tasks to a new owner or change all their statuses in one click. Works across collapsed departments too.
 
 ---
 
 ### Per-Task Notes
 
-Click the **📝** icon on any task to open a notes panel. Freeform text, up to 1,000 characters, saved automatically to `localStorage`. The icon turns solid when a task has notes so nothing gets buried.
+Click the **📝** icon on any task to open a notes panel. Freeform text, up to 1,000 characters. Click **Save Notes** to persist it to `localStorage`; typing alone does not save it. The icon turns solid when a task has notes so nothing gets buried.
 
 ---
 
@@ -214,15 +233,17 @@ Click **📅 Recurring Templates** in the Work Orders toolbar to pick from five 
 | Quarterly Property Inspections | Quarterly |
 | Move Cycle (Move-In/Move-Out) | Per turn |
 
-Pick a template, enter a property name and due date, and the app creates the matching work orders automatically. Every created work order is tagged with the template name in its notes.
+Pick a template, enter a property name and due date, and the app creates the matching work orders automatically. Every created work order is tagged with the template name in its notes. Frequency labels describe when you might apply a template; the app does not schedule future batches or create them automatically on a timer.
 
 ---
 
 ### Auto-Backup Snapshots
 
-The app automatically saves a snapshot before every import, every auto-assign run, and every Team Sync update. Click **Backups** in the stats bar to see the last 5 snapshots and restore any of them with one click.
+The app attempts to save a recovery snapshot before applying imports, running auto-assignment, or accepting incoming Team Sync data. Outgoing sync pushes do not create a new local snapshot. Click **Backups** in the stats bar to see up to the last five snapshots, select one, and confirm restoration.
 
 Each backup captures: all tasks and their state (including per-task notes and custom fields), the full team roster, all work orders, and the portfolio registry. Restoring one brings all of that back.
+
+Snapshots are best-effort recovery points, not a guarantee against loss: they share browser storage with the workspace and can be lost through clearing site data, device loss, or storage failure. Export JSON to a separate location and verify the file is available.
 
 Backups are full copies of your workspace — tenant records included — and live in this browser's `localStorage`. They are removed by the **Operating workspace** and **Everything** resets (see [Resetting and deleting your data](#resetting-and-deleting-your-data)).
 
@@ -235,7 +256,7 @@ Add employees by name and badge color. Set **department affinities** on each car
 1. **Affinity match** — prefer employees tagged for that department
 2. **Workload balance** — among matching employees, pick the one with the fewest tasks
 
-No employee with no affinity for a department? The engine falls back to the globally least-loaded person. No task is ever left UNOWNED after a run.
+If nobody has an affinity for a department, the engine falls back to the globally least-loaded person. With at least one team member, a completed assignment run fills unowned tasks; an empty roster cannot receive assignments. Workload means assigned task counts, not hours, effort, qualifications, or availability. Review the resulting assignments.
 
 **Employee name validation** — names are capped at 60 characters and "UNOWNED" is blocked as a name.
 
@@ -270,9 +291,9 @@ Track properties, tenants, and vendors in the **Portfolio tab**. Tenant records 
 
 **Document links.** Properties, tenants, and vendors can each carry a link to an external document — a signed lease, a certificate of insurance, a deed — pasted from wherever you already store files (Google Drive, Dropbox, etc.). No file upload or storage backend involved; only `http(s)://` links are accepted and validated both on save and on render.
 
-The launch dashboard also runs four data-quality checks (missing owner, missing phone/email, open work orders without assignees) and feeds a readiness score before you export or hand off.
+The detailed launch resources run four grouped checks: property owner/unit context; tenant property/unit/contact context; vendor trade/contact context; and open-work-order assignee, vendor, date, and property context. These contribute to a planning score; they do not certify operational readiness.
 
-**Bulk import from CSV.** Already tracking properties, tenants, or vendors in a spreadsheet? Click **Import CSV** next to any of the three Portfolio forms to add them all at once instead of typing each one in — no need to change your existing sheet's column order, just the column names need to roughly match. Column headers match what **Export CSV** produces for that same record type, so exporting, editing in Excel/Sheets, and re-importing is a real round trip. Import always adds new records; it never edits or removes existing ones, and shows a summary of skipped/warned rows before anything is saved.
+**Bulk import from CSV.** Already tracking properties, tenants, or vendors in a spreadsheet? Click **Import CSV** next to any of the three Portfolio forms to add them all at once instead of typing each one in — no need to change your existing sheet's column order, just the column names need to roughly match. Column headers match what **Export CSV** produces for that same record type, so the format can be exported and imported. Re-importing an edited export adds new records and can create duplicates; it does not update the originals. Import always adds new records; it never edits or removes existing ones, and shows a summary of skipped/warned rows before anything is saved.
 
 **Spreadsheet safety.** Exported text cells that begin with `=`, `+`, `-`, or `@` get a leading apostrophe, so Excel and Google Sheets display them as text instead of running them as formulas ("CSV injection"). The importer removes that apostrophe again, so exporting, editing, and re-importing stays lossless. Imported rows go through the same validation as every other data source, and files over 5 MB are refused.
 
@@ -306,7 +327,7 @@ Click **"Show me an example first"** on onboarding to open the isolated demo in 
 
 ### Audit Log
 
-Every meaningful change (owner assignments, status and priority changes, task renames, auto-assign runs, work order advances and deletions, imports, paste-state operations, Team Sync connect/disconnect/sync events, rent payments recorded) is recorded in an append-only log. Capped at 500 entries. View or clear it from the stats bar.
+The rolling activity log records selected actions, including owner assignments, status and priority changes, task renames, auto-assign runs, work order advances and deletions, imports, paste-state operations, Team Sync connect/disconnect/sync events, and recorded rent payments. It is capped at 500 entries and can be cleared from the stats bar; it is not an immutable audit trail.
 
 ---
 
@@ -326,13 +347,13 @@ For a team of more than one, Copy/Paste State is a manual chore. **Team Sync** i
 - Changes (including per-task notes and custom fields) sync automatically in the background every ~8 seconds. If your local edits and a teammate's collide, you get the same import-preview-and-confirm screen used for file imports before anything overwrites your device.
 - Skip this entirely and the app works exactly as it always has, saved only to this browser.
 
-The server lives in [`server/`](server/) — see [`server/README.md`](server/README.md) for how to run it locally, deploy it with Docker Compose for durable team use, or one-click deploy a free trial instance to Render.
+The server lives in [`server/`](server/) — see [`server/README.md`](server/README.md) for how to run it locally, deploy it with Docker Compose for durable team use, or use the Render deployment blueprint. Provider accounts, availability, and hosting costs are separate from the client app.
 
 ---
 
 ### Overdue Notifications
 
-Grant browser notification permission from the stats bar (**🔔 Alerts**). On each page load, the app checks for overdue tasks and sends one grouped notification per session if any are found.
+Grant browser notification permission from the stats bar (**🔔 Alerts**). With permission granted, the app attempts a check at startup and hourly while it remains open. Normal checks are gated by a stored calendar date, including dates on which no overdue work was found; later checks on the same date are skipped. Granting permission forces an immediate check. A permitted check sends a grouped notification if overdue tasks exist. This is not a background, email, or SMS reminder service.
 
 ---
 
@@ -404,6 +425,8 @@ Use the README for the product overview and setup path. Use the architecture not
 | [User glossary](docs/user-glossary.md) | Plain-language operator terms, aliases, and capability limits |
 | [Code glossary](docs/architecture/code-glossary.md) | Looking up important files, functions, models, routes, and repository patterns |
 | [Explain-the-code practice guide](docs/architecture/explain-the-code-practice-guide.md) | Preparing a recruiter walkthrough, technical interview explanation, or portfolio demo |
+| [Delivery and release specification](docs/releases.md) | Current entry points and planned packaging/publication gates |
+| [Browser validation status](docs/browser-support.md) | Recorded checks, unverified browsers, and device limits |
 | [Sync server guide](server/README.md) | Running or deploying the optional shared-workspace service |
 | [Roadmap](docs/ROADMAP.md) | What has shipped, what is in progress, and what each phase and step is for |
 | [Contributing guide](CONTRIBUTING.md) | Making and validating changes |
@@ -431,6 +454,8 @@ pm-ops-map/
 │   ├── setupPreferences.js Local walkthrough choices and storage fallback
 │   ├── setupGuide.js       Shared guide UI and handoffs to existing forms
 │   ├── launchPlan.js       Supporting launch resources, quality checks, demo company
+│   ├── glossaryData.js     Shared operator terms, definitions, categories, aliases
+│   ├── glossary.js         Search, native Terms & Help dialog, contextual links
 │   ├── handbook.js         Markdown + HTML operations handbook generator
 │   ├── stateSchema.js      Versioned JSON export/import schema and validation
 │   ├── normalize.js        Boundary sanitizers for imports, sync, backups, and storage loads
@@ -453,7 +478,7 @@ pm-ops-map/
 │       ├── utils.test.js   Utility function tests
 │       ├── stateSchema.test.js
 │       └── templates.test.js
-├── scripts/                 assign-task-ids.mjs — adds permanent ids to new config.json tasks
+├── scripts/                 Task-ID assignment and user-glossary generation/checking
 ├── e2e/                     Playwright browser tests, including the XSS regression suite
 ├── server/                  Optional self-hosted sync server (own package.json, tests, Docker) — see server/README.md
 ├── docker-compose.yml       Runs the sync server locally with durable storage
@@ -487,31 +512,27 @@ pm-ops-map/
 
 ### Data flow
 
-`config.json` is fetched on load. `app.js` stamps each task with its starter name (`_configName`), makes sure it has a permanent `id`, and passes the result to `state.js`; saved data is matched back by `id` first (see `js/taskIdentity.js`). Every module imports from `state.js`. UI edits mutate in-memory objects; `storage.js` persists them to `localStorage` after each change. Nothing goes to a server unless `sync.js` is connected to a Team Sync workspace.
+`config.json` is fetched when running from source over HTTP; the production build embeds it so desktop `file://` use does not require a configuration fetch. `app.js` stamps each task with its starter name (`_configName`), makes sure it has a permanent `id`, and passes the result to `state.js`; saved data is matched back by `id` first (see `js/taskIdentity.js`). Every module imports from `state.js`. UI edits mutate in-memory objects; `storage.js` persists them to `localStorage` after each change. Nothing goes to a server unless `sync.js` is connected to a Team Sync workspace.
 
-### Module graph (no circular dependencies)
+### Module dependencies and initialization
 
-```
-utils.js            ← no dependencies
-state.js            ← no dependencies
-storage.js          ← state, utils
-ui.js               ← state, storage, utils
-views/tracking.js   ← state, storage, utils, ui
-views/map.js        ← state, storage, utils
-views/team.js       ← state, storage, utils, ui, views/tracking, views/map, views/workorders
-views/portfolio.js  ← state, storage, utils, launchPlan
-views/workorders.js ← state, storage, utils, ui
-views/recurring.js  ← state, storage, views/workorders
-launchPlan.js       ← state, storage, utils
-handbook.js         ← state, storage, utils, templates
-io.js               ← state, storage, utils, stateSchema, ui, views/*
-sync.js             ← state, storage, utils, stateSchema, io
-app.js              ← everything above
+The codebase has circular ES-module dependencies. For example, `ui.js → launchPlan.js → commit.js → ui.js` is an existing cycle. Successful startup depends on hydration and initialization order; do not add eager reads of uninitialized shared state during module evaluation.
+
+Selected dependencies, not an exhaustive graph:
+
+```text
+app.js            → initialization, views, setup guide, glossary, storage and sync
+ui.js             → launchPlan.js
+launchPlan.js     → commit.js, setupGuide.js, glossary.js
+commit.js         → ui.js and view refreshers
+setupGuide.js     → setupModel.js, setupPreferences.js, storage.js, glossary.js
+glossary.js       → glossaryData.js
+storage.js        → state.js, utils.js, normalize.js, demoMode.js
 ```
 
 ### Adding a new HTML-callable function
 
-ES modules do not automatically place functions on `window`. Every `onclick="fn()"` handler must be imported in `app.js` and added to `Object.assign(window, { ... })` at the bottom. If you add a new function callable from HTML, add it there or it will silently fail.
+ES modules do not automatically place functions on `window`. Every `onclick="fn()"` handler must be imported in `app.js` and added to `Object.assign(window, { ... })` at the bottom. If you add a legacy inline callback, register its binding or it will fail. New controls can instead use delegated `data-*` actions, as tracking and glossary controls do, without adding another global.
 
 ---
 
@@ -525,17 +546,21 @@ npm run test:coverage   # same, with a V8 coverage report
 npm run test:e2e   # Playwright browser tests (first run: npx playwright install chromium)
 npm run test:e2e:pages   # builds dist/, then tests it under a GitHub-Pages-style sub-path
 npm run build      # Production bundle → dist/
+npm run glossary:generate  # Regenerate docs/user-glossary.md from shared definitions
+npm run glossary:check     # Verify the generated reference is current
 ```
 
 Requires Node.js 22.12+ for development, tests, and the optional build (the app itself only needs a browser). The optional sync server has its own independent test suite — see [`server/README.md`](server/README.md).
 
-CI runs three jobs on every push and pull request: the app (`npm ci` → `npm test` → `npm audit --omit=dev` → `npm run build`), the browser E2E suite (`npm run test:e2e`), and the sync server (`cd server && npm ci && npm test && npm audit --omit=dev`). A scheduled workflow repeats the production audits weekly, and Dependabot keeps npm packages, GitHub Actions, and the server's Docker base image current.
+CI runs three jobs on every push and pull request: the app (`npm ci` → `npm run typecheck` → `npm test` → production dependency audit → `npm run build`), the browser E2E suite (`npm run test:e2e`), and the sync server (`cd server && npm ci && npm test && npm audit --omit=dev`). A scheduled workflow repeats the production audits weekly, and Dependabot keeps npm packages, GitHub Actions, and the server's Docker base image current.
 
 ---
 
 ## Browser Compatibility
 
-Chrome 80+, Firefox 74+, Safari 13.1+, Edge 80+. Mobile touch targets are optimized for phone/tablet use.
+The recorded automation evidence is Playwright Chromium on Linux, including phone-width and landscape layouts, Pages-style hosting, and desktop `file://` builds. The glossary uses native modal dialogs and modern JavaScript/CSS; the previous Chrome 80 / Firefox 74 / Safari 13.1 / Edge 80 minimums are not a verified support policy.
+
+Firefox, WebKit, and physical iPhone Safari validation remain outstanding. Use a current browser and consult [browser validation status](docs/browser-support.md) for evidence and limitations. Phone-width emulation is not a physical iPhone test.
 
 ---
 

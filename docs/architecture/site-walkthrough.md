@@ -79,7 +79,7 @@ The app uses shared mutable objects rather than Redux, a framework store, or an 
 
 Task restoration is identity-aware. The visible task name is editable, so a saved task is matched back to the current starter task by permanent `id` (then `_configName` or an alias), not the displayed name. Unsupported values are normalized: status and priority must be in their allowed cycles, note and custom-field sizes are capped, and malformed collections fall back safely.
 
-Before risky bulk replacements—imports, auto-assignment, and remote sync—the app records a backup. JSON import also has a one-step in-memory undo path in [`js/io.js`](../../js/io.js).
+Before applying imports, auto-assignment, and incoming sync replacements, the app attempts a browser-local recovery snapshot; outgoing sync pushes do not create one. Snapshots share the workspace’s storage failure risks. JSON import also has a one-step in-memory undo path in [`js/io.js`](../../js/io.js).
 
 ## 5. First-run journey: one operation setup guide
 
@@ -189,3 +189,10 @@ For the important symbols inside those files, continue with the [code glossary](
 `initGlossary()` in `js/app.js` wires the persistent toolbar entry and six delegated contextual buttons. `js/glossary.js` displays a native modal dialog, searches the shared `js/glossaryData.js` definitions, and renders text through DOM text boundaries. Search/category updates replace only the results region. Escape closes even when the search field is populated; focus returns to the opener. Tab boundaries are contained, and application shortcuts do not reach workspace actions while the dialog is open.
 
 The definitions are bundled, so the production download works without a server. Search history and help state are not persisted. The generated [user reference](../user-glossary.md) is checked against that same source by the unit suite. See CONTRIBUTING for regeneration commands.
+
+
+## Delivery and browser evidence
+
+The hosted application and isolated demo are the current user entry points. A developer can build `dist/` for desktop file-based use, but no packaged GitHub release ZIP is currently published. Do not confuse a source archive with a production build. See [release specification](../releases.md) and [browser validation status](../browser-support.md).
+
+Existing ES-module cycles include `ui.js → launchPlan.js → commit.js → ui.js`. The runtime map above is a startup overview, not proof of an acyclic import graph. Preserve hydration order and avoid eager access to uninitialized imported state.

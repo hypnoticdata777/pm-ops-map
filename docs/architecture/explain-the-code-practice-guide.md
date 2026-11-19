@@ -168,7 +168,7 @@ Use precise phrases like these:
 - “The assignment heuristic balances responsibility counts, not estimated effort.”
 - “Conflict detection is version-based and human-reviewed; it is not field-level merge.”
 - “Portfolio payments are operating records, not payment processing or accounting.”
-- “Browser notifications are session-level reminders, not a durable email/SMS system.”
+- “Browser notification checks are gated by a stored calendar date, with a forced check after permission is granted; they are not a durable background/email/SMS system.”
 - “The repository has unit and server integration coverage; browser end-to-end coverage is a next step.”
 - “The screenshots are repository evidence; the README does not currently identify a live production deployment.”
 
