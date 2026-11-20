@@ -81,7 +81,7 @@ npm run build
 
 The production build includes its configuration and supports desktop `file://` use. The raw source checkout should be served over HTTP as described below. Export your workspace before moving or replacing a local build; do not assume browser storage transfers between file locations or delivery modes.
 
-A tested, versioned ZIP and reviewed draft-release workflow are planned in the [release specification](docs/releases.md). Download links will be enabled after an actual release asset is published.
+Versioned packaging, extracted-ZIP tests, and draft-release automation are available; see [release packaging](docs/releases.md). To build a local candidate, run `npm run release:package` then `npm run test:release`. Tooling also requires `zip` and `unzip`. Download links will be enabled only after an actual release asset is published.
 
 ### Option C — Run Locally from Source
 
@@ -478,7 +478,7 @@ pm-ops-map/
 │       ├── utils.test.js   Utility function tests
 │       ├── stateSchema.test.js
 │       └── templates.test.js
-├── scripts/                 Task-ID assignment and user-glossary generation/checking
+├── scripts/                 Task IDs, glossary generation, release packaging/verification/draft guards
 ├── e2e/                     Playwright browser tests, including the XSS regression suite
 ├── server/                  Optional self-hosted sync server (own package.json, tests, Docker) — see server/README.md
 ├── docker-compose.yml       Runs the sync server locally with durable storage
@@ -548,6 +548,9 @@ npm run test:e2e:pages   # builds dist/, then tests it under a GitHub-Pages-styl
 npm run build      # Production bundle → dist/
 npm run glossary:generate  # Regenerate docs/user-glossary.md from shared definitions
 npm run glossary:check     # Verify the generated reference is current
+npm run test:release:unit  # Packaging, archive validation, and draft-only guard tests
+npm run release:package    # Build once and create release/ ZIP + checksum + metadata
+npm run test:release       # Test a fresh extraction and record checksum-bound evidence
 ```
 
 Requires Node.js 22.12+ for development, tests, and the optional build (the app itself only needs a browser). The optional sync server has its own independent test suite — see [`server/README.md`](server/README.md).

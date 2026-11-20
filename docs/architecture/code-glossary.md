@@ -364,3 +364,15 @@ This document is the developer reference. For operator-facing terminology, use t
 | `scripts/generate-glossary.mjs` | Generates the Markdown reference; `--check` detects drift. |
 
 The glossary keeps no persistent state and changes no workspace data. It bundles with the app for file-based use; no runtime fetch or third-party library is required.
+
+
+## Release tooling (development only)
+
+- `scripts/release-core.mjs`: source/version/tag checks, allowlisted packaging, central-directory checks, extraction, per-file digests, and report-bound verification.
+- `scripts/package-release.mjs`: package CLI, used after the production build.
+- `scripts/validate-release-ref.mjs`: fail-fast source validation and CI outputs.
+- `scripts/record-release-verification.mjs`: record successful extracted-artifact evidence.
+- `scripts/release-draft.mjs`: recheck source/proof/remote tag and create a draft only when no release exists.
+- `playwright.release.config.mjs` and `e2e/release-setup.mjs`: fresh extraction and release-only file-based tests; no hosted server or `dist/` substitution.
+
+These modules are not imported into the browser app and add no runtime dependency or workspace-schema change. See [release packaging](../releases.md).

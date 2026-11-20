@@ -19,7 +19,10 @@
     "ids:assign": "node scripts/assign-task-ids.mjs",
     "ids:check": "node scripts/assign-task-ids.mjs --check",
     "glossary:generate": "node scripts/generate-glossary.mjs",
-    "glossary:check": "node scripts/generate-glossary.mjs --check"
+    "glossary:check": "node scripts/generate-glossary.mjs --check",
+    "release:package": "npm run build && node scripts/package-release.mjs",
+    "test:release:unit": "node --test scripts/__tests__/release.test.mjs",
+    "test:release": "playwright test --config playwright.release.config.mjs && node scripts/record-release-verification.mjs"
   },
   "devDependencies": {
     "@playwright/test": "1.61.0",

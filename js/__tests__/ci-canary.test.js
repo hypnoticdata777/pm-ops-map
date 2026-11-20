@@ -136,7 +136,7 @@ describe('the pin the canary exists to watch', () => {
   });
 
   test('the repository has browser jobs to check (the scan itself is not empty)', () => {
-    expect(browserJobs.map(j => `${j.file}:${j.name}`).sort()).toEqual(['canary.yml:canary', 'ci.yml:e2e', 'pages.yml:build']);
+    expect(browserJobs.map(j => `${j.file}:${j.name}`).sort()).toEqual(['canary.yml:canary', 'ci.yml:e2e', 'pages.yml:build', 'release.yml:validate']);
   });
 
   test.each(browserJobs.filter(j => j.file !== 'canary.yml'))('$file "$name" runs on a pinned runner image, not a moving -latest label', ({ runsOn }) => {
