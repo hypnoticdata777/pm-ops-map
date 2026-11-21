@@ -12,3 +12,7 @@ coverage
 test-results
 playwright-report
 test-results-pages
+
+# Generated release candidates and extracted-artifact test output
+release/
+test-results-release/

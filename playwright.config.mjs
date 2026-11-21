@@ -8,7 +8,7 @@ export default defineConfig({
   testDir: 'e2e',
   testMatch: '**/*.spec.js',
   // Needs a production build; run through playwright.pages.config.mjs (npm run test:e2e:pages).
-  testIgnore: '**/built-site.spec.js',
+  testIgnore: ['**/built-site.spec.js', '**/release-artifact.spec.js'],
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,

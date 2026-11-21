@@ -1,0 +1,122 @@
+name: Validate release candidate and prepare draft
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing version tag matching package.json (for example v1.0.0)'
+        required: true
+        type: string
+  pull_request:
+    branches: [master]
+    paths:
+      - '.github/workflows/release.yml'
+      - 'scripts/**'
+      - 'e2e/release-*'
+      - 'playwright.release.config.mjs'
+      - 'package*.json'
+      - 'webpack*.js'
+      - 'js/**'
+      - 'css/**'
+      - 'index.html'
+      - 'config.json'
+      - 'LICENSE.txt'
+      - '*.png'
+      - '*.svg'
+      - '*.ico'
+      - '*.webmanifest'
+      - '404.html'
+      - 'robots.txt'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.event_name }}-${{ inputs.tag || github.ref }}
+  cancel-in-progress: false
+
+env:
+  RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || (github.ref_type == 'tag' && github.ref_name || '') }}
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    outputs:
+      tag: ${{ steps.source.outputs.tag }}
+      source_commit: ${{ steps.source.outputs.source_commit }}
+      artifact_id: ${{ steps.candidate.outputs.artifact-id }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref }}
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Validate version, tag and clean source
+        id: source
+        run: node scripts/validate-release-ref.mjs
+      - run: npm run glossary:check
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run test:release:unit
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+      - name: Build once and package candidate
+        run: |
+          if [ -n "$RELEASE_TAG" ]; then
+            npm run release:package -- --tag "$RELEASE_TAG"
+          else
+            npm run release:package
+          fi
+      - name: Test extracted ZIP and record checksum-bound verification
+        run: npm run test:release
+      - uses: actions/upload-artifact@v4
+        id: candidate
+        with:
+          name: release-candidate-${{ steps.source.outputs.source_commit }}
+          if-no-files-found: error
+          path: |
+            release/*.zip
+            release/*.sha256
+            release/release.json
+            release/verification.json
+            release/test-report.json
+            release/RELEASE-NOTES.md
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: release-failure-evidence
+          path: |
+            test-results-release/
+            release/test-report.json
+          retention-days: 7
+
+  draft:
+    needs: validate
+    if: ${{ github.event_name != 'pull_request' && needs.validate.outputs.tag != '' }}
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.validate.outputs.source_commit }}
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/download-artifact@v4
+        with:
+          artifact-ids: ${{ needs.validate.outputs.artifact_id }}
+          path: release
+          merge-multiple: true
+      - name: Create draft only; never overwrite an existing release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/release-draft.mjs

@@ -2,7 +2,7 @@
 
 The single source of truth for what has shipped, what is in progress, and what comes next. The README's [Roadmap](../README.md#roadmap) section is the short version; this is the detail. Update this file in the same PR that finishes (or re-scopes) a step.
 
-**Last updated:** 2026-11-17 · **Current focus:** Phase 1C continues; operation setup shipped in PR #92
+**Last updated:** 2026-11-20 · **Current focus:** Phase 1C continues; operation setup shipped in PR #92
 
 ## Status at a glance
 
@@ -136,3 +136,8 @@ Make the optional, self-hosted **trusted-team** sync server safe to deploy, and 
 ## Out of scope for now
 
 Anything that turns the map into a system of record, and any feature that requires an account to use the client app. Per the README's [Non-goals](../README.md#non-goals), PM Ops Map is not an accounting, rent-collection or payment platform; a tenant-facing portal or resident communications system; a maintenance dispatch or vendor marketplace; a document-storage system; or a full property-management system of record. The Portfolio and Work Orders views stay deliberately lightweight context around the responsibility map.
+
+
+## Delivery accuracy and release packaging
+
+Delivery documentation now distinguishes hosted use, source builds, and published assets. Versioned ZIP packaging, extracted-artifact checks, checksum-bound test evidence, and draft-only tag automation are implemented; the first release still requires explicit version/tag selection, artifact review, and publication. Backup reminders and physical iPhone Safari verification remain separate follow-up work. See [release packaging](releases.md).

@@ -243,3 +243,12 @@ Read [the setup specification](docs/operation-setup.md) before changing the sequ
 `js/glossary.js` implements read-only search, the native dialog, focus restoration/containment, and delegated contextual help. Use `glossaryLink(id, label)` only with defined IDs. Render definitions and search content as text, never as executable HTML. Contextual help is intentionally limited to six ambiguous terms; avoid adding buttons to every row.
 
 Run the glossary unit tests, strict type check, and `e2e/glossary.spec.js` against source and the production build. Check portrait/landscape layouts, keyboard navigation, Escape from populated search, no-result recovery, and unchanged workspace storage. Keep physical iPhone Safari verification separate from Chromium phone emulation.
+
+
+## Release tooling
+
+See [release packaging](docs/releases.md). `npm run test:release:unit` uses Node’s built-in test runner and temporary fixture repositories; it covers archive safety, source/tag/version agreement, tampered content and reports, and draft-only GitHub behavior using mocked CLI calls. No release is created by those tests.
+
+`npm run release:package` builds and packages an explicit production allowlist. `npm run test:release` verifies/extracts the ZIP and tests that temporary copy, then binds verification to the artifact and report hashes. Keep the release-only browser spec excluded from the normal source and Pages suites. Packaging requires `zip` and `unzip`; generated artifacts and traces stay ignored.
+
+Release workflow validation is read-only and pinned to Ubuntu 24.04. Only the dependent draft job receives release-write permission, only for validated tag/manual events. Never add automatic publication or `--clobber` behavior; existing drafts and public releases are left untouched. Update the browser-job pin guard if adding a browser job.
