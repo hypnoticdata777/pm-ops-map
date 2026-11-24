@@ -5162,3 +5162,11 @@ body[data-ops-focus="compliance"] {
   .glossary-dialog #glossary-description { display:none; }
   .glossary-filters { grid-template-columns:minmax(0,2fr) minmax(0,1fr) auto; align-items:end; }
 }
+
+/* Independent recovery copy reminder: non-modal and deliberately below the work tools. */
+.backup-reminder { flex:1 1 100%; grid-column:1 / -1; width:100%; border:1px solid #aac4d0; border-radius:10px; padding:16px; background:#f0f7fa; color:#263238; }
+.backup-reminder p, .backup-explanation p { margin:8px 0; line-height:1.6; overflow-wrap:anywhere; }
+.backup-reminder-actions { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0; }
+.backup-reminder .btn, .backup-explanation .btn { min-height:44px; white-space:normal; }
+.backup-explanation { padding:16px 22px; border-bottom:1px solid #cbd5e1; background:#f0f7fa; }
+.backup-reminder :focus-visible, .backup-explanation :focus-visible { outline:3px solid #1976d2; outline-offset:3px; }

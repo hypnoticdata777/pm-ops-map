@@ -239,6 +239,10 @@ Pick a template, enter a property name and due date, and the app creates the mat
 
 ### Auto-Backup Snapshots
 
+A configured workspace shows an independent JSON backup reminder. **Export JSON copy** uses the normal export confirmation; **Remind me in 7 days** hides the reminder for seven days in this browser. Exporting does not dismiss it or certify that a file was saved. Locate the file in Files or Downloads, keep it somewhere you trust, and use import review to inspect it before applying a restore (which replaces the workspace).
+
+The reminder is hidden in hosted demo mode. Its browser-local dismissal is excluded from JSON and Team Sync, cleared by a full workspace import and the applicable workspace/company resets, and retained during background sync. If the browser cannot save the dismissal, the reminder remains visible.
+
 The app attempts to save a recovery snapshot before applying imports, running auto-assignment, or accepting incoming Team Sync data. Outgoing sync pushes do not create a new local snapshot. Click **Backups** in the stats bar to see up to the last five snapshots, select one, and confirm restoration.
 
 Each backup captures: all tasks and their state (including per-task notes and custom fields), the full team roster, all work orders, and the portfolio registry. Restoring one brings all of that back.
@@ -446,6 +450,7 @@ pm-ops-map/
 ├── js/
 │   ├── app.js              Entry point — imports all modules, registers window globals
 │   ├── state.js            Shared mutable state, constants, and setters
+│   ├── backupReminder.js   Independent JSON backup reminder and browser-local seven-day dismissal
 │   ├── storage.js          localStorage persistence, backup snapshots, toast notifications
 │   ├── ui.js               Stats bar, beacons, onboarding modal, notifications
 │   ├── io.js               JSON/CSV export-import, clipboard sync, undo stack

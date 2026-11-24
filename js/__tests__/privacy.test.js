@@ -158,7 +158,9 @@ describe('confirmSensitiveExport', () => {
 describe('announceExport', () => {
   test('says the file is an unencrypted copy', () => {
     announceExport('pm-ops-acme.csv');
-    expect(toastText()).toMatch(/pm-ops-acme\.csv saved/);
+    expect(toastText()).toContain('Download requested: pm-ops-acme.csv');
+    expect(toastText()).not.toContain('csv saved');
+    expect(toastText()).toContain('saving has not been verified');
     expect(toastText()).toMatch(/unencrypted copy of your data/);
   });
 

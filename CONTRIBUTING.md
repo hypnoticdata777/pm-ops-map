@@ -252,3 +252,7 @@ See [release packaging](docs/releases.md). `npm run test:release:unit` uses Node
 `npm run release:package` builds and packages an explicit production allowlist. `npm run test:release` verifies/extracts the ZIP and tests that temporary copy, then binds verification to the artifact and report hashes. Keep the release-only browser spec excluded from the normal source and Pages suites. Packaging requires `zip` and `unzip`; generated artifacts and traces stay ignored.
 
 Release workflow validation is read-only and pinned to Ubuntu 24.04. Only the dependent draft job receives release-write permission, only for validated tag/manual events. Never add automatic publication or `--clobber` behavior; existing drafts and public releases are left untouched. Update the browser-job pin guard if adding a browser job.
+
+### Backup reminder changes
+
+`js/backupReminder.js` owns the independent JSON reminder. Register its preference through `BACKUP_REMINDER_KEY` in `js/storage.js`; keep it outside the portable workspace and Team Sync. Maintain demo isolation, seven-day expiry, reset/import behavior, and the existing sensitive-data export confirmation. A download request is not evidence of a saved or recoverable backup: do not persist export success or silently dismiss the reminder after export.

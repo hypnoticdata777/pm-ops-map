@@ -149,11 +149,11 @@ export function confirmSensitiveExport(what) {
   return ok;
 }
 
-// Confirms a finished export and says what it is: another unencrypted copy.
+// Describes a requested export without claiming the browser saved the file.
 /** @param {string} filename */
 export function announceExport(filename) {
   const note = hasSensitiveRecords()
     ? 'is an unencrypted copy with tenant data — keep it somewhere you trust'
     : 'is an unencrypted copy of your data';
-  _showActionToast(`✓ ${filename} saved — this file ${note}.`, 'save-toast--success', 6000);
+  _showActionToast(`Download requested: ${filename} — this file ${note}. Check Files or Downloads; saving has not been verified.`, 'save-toast--success', 6000);
 }

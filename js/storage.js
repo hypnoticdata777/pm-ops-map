@@ -26,6 +26,7 @@ export const AUDIT_KEY       = namespacedKey('pm-ops-audit-v1');
 export const GUIDE_KEY       = namespacedKey('pm-ops-guide-dismissed');
 export const NOTIF_DATE_KEY  = namespacedKey('pm-ops-notif-date');
 export const LAUNCH_CHECKLIST_KEY = namespacedKey('pm-ops-launch-checklist-v1');
+export const BACKUP_REMINDER_KEY = namespacedKey('pm-ops-backup-reminder-v1');
 export const BACKUP_KEY           = namespacedKey('pm-ops-backups-v1');
 export const SYNC_CONFIG_KEY      = namespacedKey('pm-ops-sync-config-v1');
 const MAX_BACKUPS = 5;
@@ -165,7 +166,7 @@ export const RESET_EVENT = 'pm-ops-reset';
 export const ALL_STORAGE_KEYS = [
   STORAGE_KEY, COMPANY_KEY, OPS_PROFILE_KEY, NAV_COMPACT_KEY, TEAM_KEY, WORKORDERS_KEY,
   PORTFOLIO_KEY, AUDIT_KEY, GUIDE_KEY, NOTIF_DATE_KEY, LAUNCH_CHECKLIST_KEY, BACKUP_KEY,
-  SYNC_CONFIG_KEY, SETUP_KEY,
+  SYNC_CONFIG_KEY, SETUP_KEY, BACKUP_REMINDER_KEY,
 ];
 
 // Automatic backups are full copies of the workspace (tenant records included),
@@ -178,11 +179,11 @@ export const RESET_GROUPS = {
   },
   '2': {
     label: 'operating workspace data, including automatic backups',
-    keys: [STORAGE_KEY, TEAM_KEY, WORKORDERS_KEY, PORTFOLIO_KEY, AUDIT_KEY, LAUNCH_CHECKLIST_KEY, BACKUP_KEY, SETUP_KEY],
+    keys: [STORAGE_KEY, TEAM_KEY, WORKORDERS_KEY, PORTFOLIO_KEY, AUDIT_KEY, LAUNCH_CHECKLIST_KEY, BACKUP_KEY, SETUP_KEY, BACKUP_REMINDER_KEY],
   },
   '3': {
     label: 'company setup and preferences, including the saved Team Sync connection',
-    keys: [COMPANY_KEY, OPS_PROFILE_KEY, NAV_COMPACT_KEY, GUIDE_KEY, NOTIF_DATE_KEY, SYNC_CONFIG_KEY, SETUP_KEY],
+    keys: [COMPANY_KEY, OPS_PROFILE_KEY, NAV_COMPACT_KEY, GUIDE_KEY, NOTIF_DATE_KEY, SYNC_CONFIG_KEY, SETUP_KEY, BACKUP_REMINDER_KEY],
   },
   '4': {
     label: 'all PM Ops Map data on this device, including automatic backups and the saved Team Sync connection',
@@ -396,9 +397,11 @@ export function openBackupsModal() {
   const modal = document.getElementById('backups-modal');
   const body  = document.getElementById('backups-body');
   if (!modal || !body) return;
+  const feedback = document.getElementById('backup-modal-export-feedback');
+  if (feedback) feedback.textContent = '';
   const backups = loadBackupSnapshots();
   if (backups.length === 0) {
-    body.innerHTML = '<p class="audit-empty">No backups yet. Backups are saved automatically after imports and auto-assign runs.</p>';
+    body.innerHTML = '<p class="audit-empty">No local snapshots yet. The app attempts to save one before imports, auto-assign runs, and incoming Team Sync replacements; outgoing pushes do not create one.</p>';
   } else {
     body.innerHTML = backups.map((b, i) => `
       <div class="backup-row">
