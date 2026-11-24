@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+- Added independent JSON backup guidance in the workspace and Backups dialog, with a browser-local seven-day reminder dismissal. Demo mode hides the reminder; a full import resets it.
+- Export feedback now reports a download request and asks users to verify the file, rather than claiming it was saved. JSON download-request failures report an error without recording backup success.
+
 ### Security
 - **Fixed stored XSS through imported or synced data.** A crafted JSON import, clipboard paste, or Team Sync snapshot could run script: record ids were placed inside inline `onclick` handlers, and `jsonAttr()` did not escape `&`, so an entity such as `&quot;` in an employee name ended the JS string. Ids and names now travel in `data-*` attributes, `jsonAttr()` escapes the whole literal, and every path that loads outside data (import, clipboard, sync, backup restore, `localStorage`) goes through the new `js/normalize.js` sanitizers (known enums, `#rrggbb` colors, safe ids, valid dates and numbers, http(s)-only links, length caps). The import review reports how many records will be repaired or skipped before anything is applied.
 - **Fixed CSV formula injection.** Exported cells beginning with `=`, `+`, `-`, or `@` could run as formulas in Excel or Sheets. They now get a leading apostrophe (reversed on import, so the round trip is lossless). CSV and JSON imports are also size-limited (5 MB) and sanitized.

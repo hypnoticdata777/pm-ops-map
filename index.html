@@ -202,12 +202,17 @@
       <button class="btn btn-export" onclick="pasteStateFromClipboard()" title="Paste a state copied from another device">&#128241; Paste State</button>
       <button class="btn btn-secondary" id="sync-status-pill" onclick="openSyncModal()" title="Beta: share this workspace with a small, trusted team through a server you run">&#8635; Team Sync <small>beta</small></button>
       <button class="btn btn-secondary" onclick="openAuditLog()" title="View change history">&#128203; Audit Log</button>
-      <button class="btn btn-secondary" onclick="openBackupsModal()" title="View and restore automatic backups">&#128190; Backups</button>
+      <button class="btn btn-secondary" id="backups-open" onclick="openBackupsModal()" title="View browser-local snapshots; export JSON for a separate recovery copy">&#128190; Backups</button>
       <button class="btn btn-secondary" id="notif-btn" onclick="requestNotificationPermission()" title="Enable browser alerts for overdue tasks" hidden>&#128276; Alerts</button>
       <button type="button" class="btn btn-secondary" id="glossary-open" data-glossary="" aria-haspopup="dialog">Terms &amp; Help</button>
       <button class="btn btn-secondary" onclick="openPrivacyModal()" title="Where your data is stored, what to enter, and the copies exports create">&#128274; Data &amp; Privacy</button>
       <button class="btn btn-secondary stats-reset-btn" onclick="resetStorage()" title="Clear all saved changes and restore defaults">&#8635; Reset</button>
     </div>
+    <aside id="backup-reminder" class="backup-reminder" aria-label="Independent backup reminder" hidden>
+      <div><strong>Keep a separate recovery copy.</strong><p>Your workspace and up to five snapshots stay in this browser. Clearing site data, device loss, or storage failure can remove both. Export JSON to a separate location and verify the file.</p></div>
+      <div class="backup-reminder-actions"><button type="button" class="btn btn-export" data-backup-export>Export JSON copy</button><button type="button" class="btn btn-secondary" id="backup-reminder-dismiss">Remind me in 7 days</button></div>
+      <p id="backup-reminder-feedback" role="status" aria-live="polite"></p>
+    </aside>
   </div>
 </div>
 
@@ -497,6 +502,7 @@
       </div>
       <button class="playbook-close-btn" onclick="closeBackupsModal()" aria-label="Close">&times;</button>
     </div>
+    <aside class="backup-explanation" aria-label="Snapshot and export limits"><strong>Snapshots stay in this browser.</strong><p>Up to five best-effort snapshots share storage with your workspace. Clearing site data, device loss, or storage failure can remove both. They are not off-device backups.</p><p>Export JSON separately, locate the file in Files or Downloads, and verify recovery through import review. Restoring a snapshot replaces the current workspace; it does not manage exported files.</p><button type="button" class="btn btn-export" data-backup-export>Export JSON copy</button><p id="backup-modal-export-feedback" role="status" aria-live="polite"></p></aside>
     <div id="backups-body" class="audit-body"></div>
     <div class="playbook-actions">
       <button class="btn btn-secondary" onclick="closeBackupsModal()">Close</button>

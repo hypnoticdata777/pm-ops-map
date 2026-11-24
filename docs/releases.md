@@ -93,4 +93,4 @@ Five best-effort browser-local snapshots are not off-device backup. Export JSON 
 
 Recurring templates remain manual batches; workload counts tasks, not capacity; balances are operating context, not a ledger; assigning a vendor does not dispatch them. This packaging change adds none of those services.
 
-Later steps remain: in-app backup explanation/export reminder; physical iPhone Safari and broader browser checks; and review/publication of a first tested asset. See [browser validation status](browser-support.md).
+The in-app backup explanation and seven-day export reminder are implemented. They distinguish browser-local snapshots from independent JSON copies and report a download request without claiming a saved backup. Later steps remain: physical iPhone Safari and broader browser checks; and review/publication of a first tested asset. See [browser validation status](browser-support.md).

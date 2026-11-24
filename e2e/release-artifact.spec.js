@@ -81,7 +81,7 @@ test('JSON export and import recover the saved operating data after a reset',asy
   await dept.locator('.task-item').first().locator('.status-pill').click();
   const changed=await dept.locator('.task-item').first().locator('.status-pill').textContent();
   const downloadPromise=page.waitForEvent('download');
-  await page.getByRole('button',{name:/Export JSON/}).click();
+  await page.locator('.stats-actions').getByRole('button',{name:/Export JSON/}).click();
   const file=testInfo.outputPath('workspace.json');await (await downloadPromise).saveAs(file);
   await page.evaluate(()=>{localStorage.removeItem('pm-ops-data-v1');});await page.reload();
   await page.setInputFiles('#import-file-input',file);

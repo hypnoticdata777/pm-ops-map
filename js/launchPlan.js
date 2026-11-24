@@ -1,4 +1,5 @@
 // @ts-nocheck — TODO(types): not converted to checked JSDoc yet. Delete this line and fix what `npm run typecheck` reports.
+import { renderBackupReminder, resetBackupReminder } from './backupReminder.js';
 import { glossaryLink } from './glossary.js';
 import { renderSetupGuide } from './setupGuide.js';
 import { resetSetupPreferences } from './setupPreferences.js';
@@ -261,6 +262,7 @@ export function renderLaunchPlan() {
     .filter(Boolean);
 
   renderSetupGuide();
+  renderBackupReminder();
   const resourcesOpen = container.querySelector("details")?.open;
   container.innerHTML = `
     <details class="setup-resources" ${resourcesOpen ? "open" : ""}><summary>Coverage, risks and detailed launch resources</summary>
@@ -439,6 +441,7 @@ export function downloadLaunchHandbook() {
 
 function _applyDemoCompanyData() {
   resetSetupPreferences();
+  resetBackupReminder();
   const demo = buildDemoWorkspace();
   const template = ROLE_TEMPLATES.maintenanceHeavy;
   const employees = template.employees.map(emp => ({

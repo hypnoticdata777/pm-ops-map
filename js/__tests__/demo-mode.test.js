@@ -58,7 +58,7 @@ describe('storage isolation', () => {
 
   test('demo mode moves every key under pm-ops-demo-', async () => {
     const { storage } = await load('?demo=1');
-    expect(storage.ALL_STORAGE_KEYS).toHaveLength(14);
+    expect(storage.ALL_STORAGE_KEYS).toHaveLength(15);
     storage.ALL_STORAGE_KEYS.forEach(key => expect(key, key).toMatch(/^pm-ops-demo-/));
     expect(storage.STORAGE_KEY).toBe('pm-ops-demo-data-v1');
   });

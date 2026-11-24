@@ -1,4 +1,5 @@
 // @ts-nocheck — TODO(types): not converted to checked JSDoc yet. Delete this line and fix what `npm run typecheck` reports.
+import { resetBackupReminder, reportBackupExportRequested } from './backupReminder.js';
 import { resetSetupPreferences } from './setupPreferences.js';
 // Export / Import / Clipboard sync / Undo stack.
 import {
@@ -55,7 +56,7 @@ export function undoLastAction() {
 // Exported so sync.js can apply a pulled/conflicting remote workspace through
 // the same path as a file/clipboard import.
 export function _applyImportedState(data, { preserveSetup = false } = {}) {
-  if (!preserveSetup) resetSetupPreferences();
+  if (!preserveSetup) { resetSetupPreferences(); resetBackupReminder(); }
   // Nothing from the file reaches shared state unvalidated: tasks are matched to
   // config by id (then _configName) and field-checked, everything else goes through
   // sanitizeWorkspace (enums, colors, ids, dates, numbers, links, lengths).
@@ -90,8 +91,14 @@ export function exportJSON() {
     portfolio:  portfolio
   });
   const filename = `pm-ops-${_fileSlug()}.json`;
-  _downloadBlob(JSON.stringify(payload, null, 2), 'application/json', filename);
+  try {
+    _downloadBlob(JSON.stringify(payload, null, 2), 'application/json', filename);
+  } catch (_) {
+    _showActionToast('The JSON download could not be requested. Check browser download settings and try again.', 'save-toast--error', 6000);
+    return;
+  }
   announceExport(filename);
+  reportBackupExportRequested(filename);
 }
 
 export function exportCSV() {
