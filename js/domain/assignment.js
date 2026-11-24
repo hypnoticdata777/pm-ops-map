@@ -1,11 +1,4 @@
-// Deciding who should own the tasks nobody owns yet, and saying why. Pure: it plans, it never changes anything.
-// The caller applies the plan (and, later, can show it first as a preview).
-//
-// The algorithm is the one auto-assign has always used, one task at a time, in department then task order:
-//   1. Candidates are the people whose affinities include the task's department. If nobody has that
-//      affinity, everyone on the roster is a candidate and the department is reported as a fallback.
-//   2. The candidate with the lightest workload wins; ties go to whoever is first on the roster.
-//   3. The winner's workload goes up by one before the next task is considered.
+// This is our assignment planning algorithm. It operates on provided data without changing the original objects and returns assignments with explanations.
 import { buildWorkloadMap, isUnowned } from './workload.js';
 /** @import { Department, Employee, Assignment, AssignmentPlan } from '../types.js' */
 
