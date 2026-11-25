@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+- Added a demo goal chooser with five clearly marked Coming next scenarios and Explore freely. Demo choices and reload return to the chooser while preserving demo edits.
+- Added isolated progress storage and reusable tour controls for future guided scenarios. Demo mode no longer presents the real seven-step setup checklist.
+
 - Added independent JSON backup guidance in the workspace and Backups dialog, with a browser-local seven-day reminder dismissal. Demo mode hides the reminder; a full import resets it.
 - Export feedback now reports a download request and asks users to verify the file, rather than claiming it was saved. JSON download-request failures report an error without recording backup success.
 

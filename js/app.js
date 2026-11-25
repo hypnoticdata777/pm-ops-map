@@ -1,4 +1,6 @@
 // @ts-nocheck — TODO(types): not converted to checked JSDoc yet. Delete this line and fix what `npm run typecheck` reports.
+import { DEMO_REPLACED_EVENT } from './storage.js';
+import { initDemoTour, demoTourViewChanged, resetDemoTour, showDemoChoices } from './demoTour.js';
 import { initBackupReminder } from './backupReminder.js';
 import { initGlossary } from './glossary.js';
 import { commit as setupCommit, REFRESH_AFTER_TASK_CHANGE as setupRefresh } from './commit.js';
@@ -140,6 +142,7 @@ function switchView(view, tabEl) {
   } else if (view === 'portfolio') {
     renderPortfolioView();
   }
+  demoTourViewChanged();
 }
 
 // ── App init ──────────────────────────────────────────────────────────────────
@@ -190,6 +193,12 @@ function initApp() {
     showOnboardingModal();
   }
 
+  initDemoTour(view => {
+    const tab = document.querySelector(`.nav-tab[data-view="${view}"]`);
+    if (tab) switchView(view, tab);
+  });
+  document.getElementById('demo-choices')?.addEventListener('click', showDemoChoices);
+  window.addEventListener(DEMO_REPLACED_EVENT, resetDemoTour);
   initNotifications();
 }
 

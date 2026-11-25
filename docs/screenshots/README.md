@@ -1,5 +1,7 @@
 # Screenshot provenance
 
+- `10-demo-chooser.png`: guided-demo phase 2 foundation, branch `feat/demo-tour-foundation` based on `9335224`, captured 2026-11-25 at 390 × 844 in Chromium. Shows Coming next goals and free exploration; not a physical iPhone capture.
+
 - `09-user-glossary.png`: searchable Terms & Help at a 390 × 844 Chromium viewport. This is phone-width emulation, not a physical iPhone Safari capture.
 - `08-operation-setup.png`: current seven-step guide at phone width, captured for PR #92. Refer to this for the setup experience.
 - `01-onboarding.png` and `02-dashboard.png`: historical captures from before the seven-step guide. They are retained as historical assets and should not be used as current onboarding instructions.

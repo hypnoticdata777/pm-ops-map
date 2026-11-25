@@ -60,6 +60,8 @@ test.describe('opened straight from disk (file://), no server at all', () => {
 
   test('the demo works from disk too', async ({ page }) => {
     await page.goto(fileUrl('?demo=1'));
+    await expect(page.getByRole('heading',{name:'What would you like to try?'})).toBeVisible();
+    await page.getByRole('button',{name:'Explore freely',exact:true}).click();
     await expect(page.locator('#demo-banner')).toBeVisible();
     await expect(page.locator('#company-heading')).toHaveText('DEMO DOOR PROPERTY MANAGEMENT');
     await expect(page.locator('#stat-unowned')).toHaveText('32');
@@ -80,6 +82,7 @@ test.describe('served under a Pages-style sub-path', () => {
       if (url.origin === new URL(baseURL).origin && !url.pathname.startsWith(prefix)) outside.push(req.url());
     });
     await page.goto('index.html?demo=1');
+    await page.getByRole('button',{name:'Explore freely',exact:true}).click();
     await expect(page.locator('#departments .task-item')).toHaveCount(262);
     expect(outside).toEqual([]);
   });

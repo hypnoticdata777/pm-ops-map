@@ -376,3 +376,13 @@ The glossary keeps no persistent state and changes no workspace data. It bundles
 - `playwright.release.config.mjs` and `e2e/release-setup.mjs`: fresh extraction and release-only file-based tests; no hosted server or `dist/` substitution.
 
 These modules are not imported into the browser app and add no runtime dependency or workspace-schema change. See [release packaging](../releases.md).
+
+## Guided demo foundation
+
+- `demoScenarios.js`: five goal definitions; all unavailable until their guidance is implemented and verified.
+- `demoTour.js`: chooser, reusable step controls, injected navigation/state checks, pause/resume, stable target lifecycle and recovery.
+- `demoTourPreferences.js`: validated, versioned demo progress and memory fallback. `DEMO_TOUR_KEY` is centrally registered in storage.js and never written in real mode.
+- `app.js`: initializes the chooser after hydration and provides normal switchView navigation.
+- `views/workorders.js`: stable card IDs and refreshes guidance after rendering.
+
+The shared controller supports future scenarios; no playable guided scenario ships in this phase. Real setup derivation remains separate.

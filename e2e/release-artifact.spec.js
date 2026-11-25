@@ -88,3 +88,15 @@ test('JSON export and import recover the saved operating data after a reset',asy
   await page.locator('#import-confirm-btn').click();
   await expect(page.locator('.department[data-id="leasing"] .task-item').first().locator('.status-pill')).toHaveText(changed);
 });
+
+test('the extracted demo opens its chooser and supports exploration without changing real data',async({page})=>{
+  await start(page);
+  const before=await page.evaluate(()=>Object.fromEntries(Object.entries(localStorage)));
+  await page.goto(`${entry()}?demo=1`);
+  await expect(page.getByRole('heading',{name:'What would you like to try?'})).toBeVisible();
+  await expect(page.locator('#demo-tour').getByText('Coming next',{exact:true})).toHaveCount(5);
+  await page.getByRole('button',{name:'Explore freely',exact:true}).click();
+  await page.locator('#wo-tab').click();await expect(page.locator('#workorders-view')).toHaveClass(/active/);
+  const after=await page.evaluate(()=>Object.fromEntries(Object.entries(localStorage).filter(([key])=>!key.startsWith('pm-ops-demo-'))));
+  expect(after).toEqual(before);
+});

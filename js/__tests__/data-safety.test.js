@@ -205,7 +205,7 @@ const KEYS = {
   nav: 'pm-ops-nav-compact', team: 'pm-ops-team-v1', workOrders: 'pm-ops-workorders-v1',
   portfolio: 'pm-ops-portfolio-v1', audit: 'pm-ops-audit-v1', guide: 'pm-ops-guide-dismissed',
   notif: 'pm-ops-notif-date', launch: 'pm-ops-launch-checklist-v1', backups: 'pm-ops-backups-v1',
-  sync: 'pm-ops-sync-config-v1', setup: 'pm-ops-setup-v1', reminder: 'pm-ops-backup-reminder-v1', reminder: 'pm-ops-backup-reminder-v1', reminder: 'pm-ops-backup-reminder-v1',
+  sync: 'pm-ops-sync-config-v1', setup: 'pm-ops-setup-v1', tour: 'pm-ops-tour-v1', reminder: 'pm-ops-backup-reminder-v1',
 };
 const EVERY_KEY = Object.values(KEYS);
 

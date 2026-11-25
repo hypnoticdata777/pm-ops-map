@@ -256,3 +256,9 @@ Release workflow validation is read-only and pinned to Ubuntu 24.04. Only the de
 ### Backup reminder changes
 
 `js/backupReminder.js` owns the independent JSON reminder. Register its preference through `BACKUP_REMINDER_KEY` in `js/storage.js`; keep it outside the portable workspace and Team Sync. Maintain demo isolation, seven-day expiry, reset/import behavior, and the existing sensitive-data export confirmation. A download request is not evidence of a saved or recoverable backup: do not persist export success or silently dismiss the reminder after export.
+
+### Guided demo foundation
+
+`demoScenarios.js` defines goals and future steps; only available scenarios with nonempty steps may start. Keep unfinished scenarios labelled Coming next. `demoTour.js` receives navigation and condition-check adapters; it must not import app.js or mutate operational data to advance guidance. `demoTourPreferences.js` validates demo-only progress and falls back to memory when persistence fails. Register keys centrally; never include tour progress in exports or sync.
+
+Use stable IDs for highlights, refresh after feature rerenders, remove highlights on pause/exit, and validate saved state instead of click events. Navigation to another tab pauses a running tour. The chooser always appears on entry; resume is explicit. Test the controller with fixture scenarios until a real scenario is ready. See [the specification](docs/plans/guided-demo.md) for completion/recovery rules.

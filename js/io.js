@@ -1,4 +1,6 @@
 // @ts-nocheck — TODO(types): not converted to checked JSDoc yet. Delete this line and fix what `npm run typecheck` reports.
+import { DEMO_MODE } from './demoMode.js';
+import { resetDemoTour } from './demoTour.js';
 import { resetBackupReminder, reportBackupExportRequested } from './backupReminder.js';
 import { resetSetupPreferences } from './setupPreferences.js';
 // Export / Import / Clipboard sync / Undo stack.
@@ -56,7 +58,7 @@ export function undoLastAction() {
 // Exported so sync.js can apply a pulled/conflicting remote workspace through
 // the same path as a file/clipboard import.
 export function _applyImportedState(data, { preserveSetup = false } = {}) {
-  if (!preserveSetup) { resetSetupPreferences(); resetBackupReminder(); }
+  if (!preserveSetup) { resetSetupPreferences(); resetBackupReminder(); if (DEMO_MODE) resetDemoTour(); }
   // Nothing from the file reaches shared state unvalidated: tasks are matched to
   // config by id (then _configName) and field-checked, everything else goes through
   // sanitizeWorkspace (enums, colors, ids, dates, numbers, links, lengths).

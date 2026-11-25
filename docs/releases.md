@@ -94,3 +94,7 @@ Five best-effort browser-local snapshots are not off-device backup. Export JSON 
 Recurring templates remain manual batches; workload counts tasks, not capacity; balances are operating context, not a ledger; assigning a vendor does not dispatch them. This packaging change adds none of those services.
 
 The in-app backup explanation and seven-day export reminder are implemented. They distinguish browser-local snapshots from independent JSON copies and report a download request without claiming a saved backup. Later steps remain: physical iPhone Safari and broader browser checks; and review/publication of a first tested asset. See [browser validation status](browser-support.md).
+
+## Demo foundation verification
+
+Verify demo entry opens the goal chooser in the production sub-path and file:// build. All five guided scenarios remain Coming next; free exploration and the real setup checklist continue to work in their respective modes. Verify Demo choices, reload, reset confirmation, keyboard focus and real-workspace isolation. A playable maintenance tour and its device validation remain later work.

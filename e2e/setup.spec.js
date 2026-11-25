@@ -85,8 +85,10 @@ test('existing users keep tools available; guide demo practice stays isolated',a
   await guide(page).getByRole('link',{name:/Practice in isolated demo/}).click();
   const popup=await popupPromise;
   await popup.waitForLoadState();
-  await action(popup,'resume').click();
-  await step(popup,'maintenance');
-  await action(popup,'confirm-maintenance').click();
+  await expect(popup.locator('#demo-tour')).toContainText('What would you like to try?');
+  await expect(guide(popup)).toBeHidden();
+  await popup.getByRole('button',{name:'Explore freely',exact:true}).click();
+  await popup.locator('#wo-tab').click();
+  await expect(popup.locator('#workorders-view')).toHaveClass(/active/);
   expect(await page.evaluate(()=>localStorage.getItem('pm-ops-setup-v1'))).toBe(before);
 });

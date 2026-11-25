@@ -5170,3 +5170,18 @@ body[data-ops-focus="compliance"] {
 .backup-reminder .btn, .backup-explanation .btn { min-height:44px; white-space:normal; }
 .backup-explanation { padding:16px 22px; border-bottom:1px solid #cbd5e1; background:#f0f7fa; }
 .backup-reminder :focus-visible, .backup-explanation :focus-visible { outline:3px solid #1976d2; outline-offset:3px; }
+
+/* Demo learning is separate from the real operation setup checklist. */
+.demo-tour { margin: 16px 0; padding: 20px; border: 1px solid #b4c9d8; border-radius: 12px; background: #f1f7fb; scroll-margin-top: 12px; }
+.demo-tour[hidden] { display: none; }
+.demo-tour h2, .demo-tour h3 { margin: 0 0 10px; }
+.demo-tour p { line-height: 1.6; margin: 10px 0; }
+.demo-scenario-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 14px; margin: 18px 0; }
+.demo-scenario-grid article { padding: 16px; background: #fff; border: 1px solid #cbd7df; border-radius: 10px; min-width: 0; }
+.demo-coming { font-weight: 700; color: #506170; }
+.demo-tour .btn, #demo-choices { min-height: 44px; white-space: normal; }
+.demo-tour-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.demo-tour button:focus-visible, .demo-tour h2:focus { outline: 3px solid #155e86; outline-offset: 3px; }
+.demo-tour-target { outline: 3px solid #155e86; outline-offset: 4px; }
+.demo-choosing .content, .demo-choosing #save-toast, .demo-choosing #nav-tabs, .demo-choosing #controls, .demo-choosing .stats, .demo-choosing #nav-toggle-btn { display: none !important; }
+.demo-mode #operation-setup, .demo-mode #welcome-guide, .demo-guided #launch-plan { display: none !important; }

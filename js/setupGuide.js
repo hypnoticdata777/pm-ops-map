@@ -70,6 +70,7 @@ function demoLink() {
 export function renderSetupGuide() {
   const el = document.getElementById('operation-setup');
   if (!el || !orgData) return;
+  if (DEMO_MODE) { el.hidden = true; el.replaceChildren(); return; }
   if (bound !== el) {
     el.addEventListener('click', onClick);
     el.addEventListener('change', onChange);
