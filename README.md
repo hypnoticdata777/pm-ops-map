@@ -61,7 +61,7 @@ Workspace data is associated with this browser profile and site. It does not aut
 
 ### Option A — Live Demo (no setup)
 
-1. Open the **[live demo](https://hypnoticdata777.github.io/pm-ops-map/?demo=1)** — it loads a fictional company with gaps, blocked work, an overloaded teammate, and work orders in every stage
+1. Open the **[live demo](https://hypnoticdata777.github.io/pm-ops-map/?demo=1)** — it opens a goal chooser. Guided scenarios are marked **Coming next**; choose **Explore freely** to use the fictional operation
 2. Poke around: reassign an owner, change a status, open the Assign Owners workload bars
 3. Made a mess? **Reset demo** in the purple banner restores it. Ready for your own data? **Use your own workspace →**
 
@@ -104,13 +104,15 @@ Or with Node: `npm install && npm start`
 
 ## The live demo
 
-Open any copy of the site with **`?demo=1`** (for example [`…/pm-ops-map/?demo=1`](https://hypnoticdata777.github.io/pm-ops-map/?demo=1)) and you get a populated, entirely fictional workspace instead of the setup screen. What makes it safe to put on a public URL:
+Open any copy of the site with **`?demo=1`** (for example [`…/pm-ops-map/?demo=1`](https://hypnoticdata777.github.io/pm-ops-map/?demo=1)) and you get a demo goal chooser instead of the real setup checklist. The five guided scenarios are **Coming next** in this foundation release. Choose **Explore freely** to open the populated fictional operation; **Demo choices** returns to the chooser. Reloading also returns to the chooser. What makes it safe to put on a public URL:
 
 - **Always labelled.** A purple banner — *"Fictional data only… please don't enter real tenant information"* — is pinned to the top of every screen. It cannot be dismissed.
 - **Isolated storage.** Demo mode keeps everything under `pm-ops-demo-*` keys. Visiting, editing, or resetting the demo never reads, overwrites, or deletes a real workspace stored under the normal `pm-ops-*` keys on the same site.
-- **One-click reset.** **Reset demo** removes only the demo's own keys and reloads the pristine data.
+- **Confirmed reset.** **Reset demo** asks before discarding demo edits and progress, then reloads the original fictional data. Opening Demo choices preserves edits.
 - **No sync.** Team Sync is hidden and disabled, so the demo can't be pointed at a server.
 - **Built to show the point.** Three departments nobody covers (compliance, reporting, systems), one teammate carrying far more than the others, a blocked dependency chain, overdue work, tenants in different lease and rent situations, and work orders in every column. Dates are computed relative to today, so it never goes stale. All names, `(555) 010-xxxx` phone numbers, and `example.com` addresses are made up.
+
+[View the phone-width demo chooser](docs/screenshots/10-demo-chooser.png). This Chromium capture is not physical iPhone validation.
 
 The site is deployed by [`.github/workflows/pages.yml`](.github/workflows/pages.yml): on every push to `master` it runs the unit tests, builds `dist/`, runs the browser suite against that build served under `/pm-ops-map/` (and straight from disk via `file://`), and only then publishes. **One-time setup:** *Settings → Pages → Source → GitHub Actions.*
 
@@ -450,6 +452,9 @@ pm-ops-map/
 ├── js/
 │   ├── app.js              Entry point — imports all modules, registers window globals
 │   ├── state.js            Shared mutable state, constants, and setters
+│   ├── demoScenarios.js    Demo goal catalogue and future scenario definitions
+│   ├── demoTour.js         Chooser and shared guidance/navigation lifecycle
+│   ├── demoTourPreferences.js Demo-only validated progress with memory fallback
 │   ├── backupReminder.js   Independent JSON backup reminder and browser-local seven-day dismissal
 │   ├── storage.js          localStorage persistence, backup snapshots, toast notifications
 │   ├── ui.js               Stats bar, beacons, onboarding modal, notifications

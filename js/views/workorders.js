@@ -1,4 +1,6 @@
 // @ts-nocheck — TODO(types): not converted to checked JSDoc yet. Delete this line and fix what `npm run typecheck` reports.
+import { DEMO_MODE } from '../demoMode.js';
+import { refreshDemoTour } from '../demoTour.js';
 import { renderSetupGuide } from '../setupGuide.js';
 // Work Orders kanban: 4-column pipeline (Submitted → Scheduled → In Progress → Completed).
 import {
@@ -34,7 +36,7 @@ function buildWorkOrderCard(wo) {
   const woOverdue    = wo.dueDate && wo.dueDate < todayISO && wo.status !== 'completed';
 
   return `
-    <div class="wo-card priority-border-${priority}${woOverdue ? ' wo-card--overdue' : ''}">
+    <div ${DEMO_MODE ? `id="wo-card-${escapeHtml(wo.id)}" ` : ''}class="wo-card priority-border-${priority}${woOverdue ? ' wo-card--overdue' : ''}">
       <div class="wo-card-top">
         <div class="wo-card-location">
           <span class="wo-property">${escapeHtml(wo.property)}</span>
@@ -121,6 +123,7 @@ export function renderWorkOrdersView() {
           </div>`;
       }).join('')}
     </div>`;
+  refreshDemoTour();
 }
 
 // ── Modal — open / close / submit ─────────────────────────────────────────────

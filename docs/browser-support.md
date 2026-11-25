@@ -22,3 +22,7 @@ A user-agent or viewport setting does not change Chromium into Safari. Passing C
 Before expanding the advertised browser support policy, record browser/OS versions, tested revision, delivery mode, and results for setup, glossary, task edits, work orders, reload/persistence, and JSON export/import recovery. Include an actual iPhone Safari pass and document failures rather than substituting emulation results.
 
 Desktop local builds must retain their assets beside `index.html`. Export before moving or replacing a build; browser storage continuity across file locations and browsers is not guaranteed. A packaged release will need its own extracted-artifact verification under the [release specification](releases.md).
+
+## Guided demo foundation
+
+The user reported the previous demo moved smoothly on iPhone Safari, but its setup-step entry was confusing. That report does not validate the new chooser. The foundation adds chooser, free-exploration and keyboard/isolation browser coverage; physical iPhone validation of this revision remains pending. No guided scenario is playable yet.

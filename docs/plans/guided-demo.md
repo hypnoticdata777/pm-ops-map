@@ -1,6 +1,6 @@
 # Guided demo implementation specification
 
-Status: phase 1 specification complete; phases 2–5 not implemented.
+Status: phase 1 specification complete; phase 2 foundation implemented on a review branch; phases 3–5 pending. All production scenarios remain unavailable until their guidance is implemented.
 Date: 2026-11-25.
 
 ## Objective and verified baseline

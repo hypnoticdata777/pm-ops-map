@@ -196,3 +196,7 @@ The definitions are bundled, so the production download works without a server. 
 The hosted application and isolated demo are the current user entry points. A developer can build `dist/` for desktop file-based use, but no packaged GitHub release ZIP is currently published. Do not confuse a source archive with a production build. See [release specification](../releases.md) and [browser validation status](../browser-support.md).
 
 Existing ES-module cycles include `ui.js → launchPlan.js → commit.js → ui.js`. The runtime map above is a startup overview, not proof of an acyclic import graph. Preserve hydration order and avoid eager access to uninitialized imported state.
+
+## Demo chooser
+
+Opening `?demo=1`, including **Show me an example first**, displays five goals labelled **Coming next**. **Explore freely** opens the existing fictional workspace. **Demo choices** returns without discarding edits; reload returns to the chooser. The real setup checklist is hidden in demo mode. Guided maintenance actions are reserved for the next phase.

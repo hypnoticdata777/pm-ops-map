@@ -42,3 +42,7 @@ Use `npm test`, `npm run typecheck`, `npm run build`, `npm run test:e2e`, and `n
 ## Release and rollback
 
 No task identity, business schema, backend, or sync payload changes are required. Keep a normal workspace export before production verification. Reverting the walkthrough commits restores previous UI behavior; unused local preferences are harmless. Restart walkthrough is never a business-data reset. Existing checklist, guide-dismissal, and reset keys remain compatible.
+
+## Demo entry and real setup
+
+The real workspace retains the seven-step checklist. **Show me an example first** opens the isolated demo in a separate tab, preserving the original form. Demo entry now shows a goal chooser rather than selecting an incomplete setup step. All five guided scenarios are marked **Coming next** until implemented; **Explore freely** opens the existing fictional workspace. **Demo choices** and reload return to the chooser without discarding edits. Demo learning never completes real setup. See the [implementation specification](plans/guided-demo.md).

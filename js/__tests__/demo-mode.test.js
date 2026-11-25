@@ -58,7 +58,7 @@ describe('storage isolation', () => {
 
   test('demo mode moves every key under pm-ops-demo-', async () => {
     const { storage } = await load('?demo=1');
-    expect(storage.ALL_STORAGE_KEYS).toHaveLength(15);
+    expect(storage.ALL_STORAGE_KEYS).toHaveLength(16);
     storage.ALL_STORAGE_KEYS.forEach(key => expect(key, key).toMatch(/^pm-ops-demo-/));
     expect(storage.STORAGE_KEY).toBe('pm-ops-demo-data-v1');
   });
@@ -128,7 +128,7 @@ describe('banner and page chrome', () => {
   test('the banner has no way to dismiss it', async () => {
     const banner = document.getElementById('demo-banner');
     const labels = [...banner.querySelectorAll('button, a')].map(el => el.textContent.trim());
-    expect(labels).toEqual(['Reset demo', 'Use your own workspace →']);
+    expect(labels).toEqual(['Demo choices', 'Reset demo', 'Use your own workspace →']);
     expect(banner.querySelector('[aria-label*="lose"], .close')).toBeNull();
   });
 

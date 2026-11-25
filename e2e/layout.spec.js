@@ -43,6 +43,7 @@ for (const width of WIDTHS) {
   test(`no overlapping or overflowing task-row content at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('index.html?demo=1');
+    await page.getByRole('button',{name:'Explore freely',exact:true}).click();
     await page.waitForSelector('#departments .department');
     await clickExpandAll(page);
     await page.waitForTimeout(100);
@@ -54,6 +55,7 @@ for (const width of WIDTHS) {
 test('rows with every kind of chip stay readable: the task name keeps a usable width', async ({ page }) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto('index.html?demo=1');
+    await page.getByRole('button',{name:'Explore freely',exact:true}).click();
   await page.waitForSelector('#departments .department');
   await clickExpandAll(page);
   const narrow = await page.evaluate(() => [...document.querySelectorAll('.department .task-name')]

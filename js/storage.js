@@ -7,7 +7,7 @@ import {
   STATUS_CYCLE, PRIORITY_CYCLE,
 } from './state.js';
 import { _isQuotaError, _slugify } from './utils.js';
-import { namespacedKey } from './demoMode.js';
+import { DEMO_MODE, namespacedKey } from './demoMode.js';
 import {
   applySavedTasks, normalizeTeam, normalizeWorkOrders, normalizePortfolio,
   normalizeAuditLog, sanitizeWorkspace,
@@ -15,6 +15,7 @@ import {
 
 // ── Storage keys ──────────────────────────────────────────────────────────────
 export const STORAGE_KEY     = namespacedKey('pm-ops-data-v1');
+export const DEMO_TOUR_KEY = namespacedKey('pm-ops-tour-v1');
 export const SETUP_KEY = namespacedKey('pm-ops-setup-v1');
 export const COMPANY_KEY     = namespacedKey('pm-ops-company-name');
 export const OPS_PROFILE_KEY = namespacedKey('pm-ops-profile-v1');
@@ -155,6 +156,8 @@ export function closeResetModal() {
 // cannot navigate, and window.location.reload is not mockable).
 export const pageControl = { reload: () => location.reload() };
 
+// A full demo replacement invalidates tour checkpoints.
+export const DEMO_REPLACED_EVENT = 'pm-ops-demo-replaced';
 // Fired just before a local reset so other modules (Team Sync) stop writing to
 // localStorage while keys are being removed.
 export const RESET_EVENT = 'pm-ops-reset';
@@ -166,7 +169,7 @@ export const RESET_EVENT = 'pm-ops-reset';
 export const ALL_STORAGE_KEYS = [
   STORAGE_KEY, COMPANY_KEY, OPS_PROFILE_KEY, NAV_COMPACT_KEY, TEAM_KEY, WORKORDERS_KEY,
   PORTFOLIO_KEY, AUDIT_KEY, GUIDE_KEY, NOTIF_DATE_KEY, LAUNCH_CHECKLIST_KEY, BACKUP_KEY,
-  SYNC_CONFIG_KEY, SETUP_KEY, BACKUP_REMINDER_KEY,
+  SYNC_CONFIG_KEY, SETUP_KEY, BACKUP_REMINDER_KEY, DEMO_TOUR_KEY,
 ];
 
 // Automatic backups are full copies of the workspace (tenant records included),
@@ -452,6 +455,10 @@ export function restoreBackupSnapshot(index) {
     }
 
     saveToStorage();
+    if (DEMO_MODE) {
+      try { localStorage.removeItem(DEMO_TOUR_KEY); } catch { /* preference failure must not invalidate restored data */ }
+      window.dispatchEvent(new Event(DEMO_REPLACED_EVENT));
+    }
     closeBackupsModal();
     _showActionToast('✓ Backup restored', 'save-toast--success');
 

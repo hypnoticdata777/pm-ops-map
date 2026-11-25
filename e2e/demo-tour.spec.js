@@ -1,0 +1,39 @@
+import { test, expect } from '@playwright/test';
+test('phone chooser is the demo entry; all unfinished scenarios are clearly unavailable',async({page})=>{
+  await page.setViewportSize({width:390,height:844});
+  await page.goto('index.html?demo=1');
+  const panel=page.locator('#demo-tour');
+  await expect(panel.getByRole('heading',{name:'What would you like to try?'})).toBeVisible();
+  await expect(panel.locator('article')).toHaveCount(5);
+  await expect(panel.getByText('Coming next',{exact:true})).toHaveCount(5);
+  await expect(panel.getByRole('button',{name:'Try this demo'})).toHaveCount(0);
+  await expect(page.locator('#operation-setup')).toBeHidden();
+  await expect(page.locator('#nav-tabs')).toBeHidden();
+  await expect(page.locator('#tracking-view')).toBeHidden();
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  await panel.getByRole('button',{name:'Explore freely',exact:true}).click();
+  await expect(page.locator('#nav-tabs')).toBeVisible();
+  await page.locator('#wo-tab').click();await expect(page.locator('#workorders-view')).toHaveClass(/active/);
+  await page.locator('#demo-choices').click();await expect(panel).toContainText('What would you like to try?');
+  await expect(page.locator('#controls')).toBeHidden();
+  await page.reload();await expect(panel).toContainText('What would you like to try?');
+});
+test('opening the example from real setup preserves the original form and workspace keys',async({page})=>{
+  await page.goto('index.html');await page.locator('#company-input').fill('Unsaved company');
+  await page.evaluate(()=>localStorage.setItem('pm-ops-company-name','Existing real company'));
+  const before=await page.evaluate(()=>Object.fromEntries(Object.entries(localStorage)));
+  const popupPromise=page.waitForEvent('popup');
+  await page.getByRole('button',{name:'Show me an example first'}).click();const demo=await popupPromise;
+  await expect(demo.locator('#demo-tour')).toContainText('What would you like to try?');
+  await demo.getByRole('button',{name:'Explore freely',exact:true}).click();await demo.locator('#demo-choices').click();
+  const realAfter=await demo.evaluate(()=>Object.fromEntries(Object.entries(localStorage).filter(([k])=>!k.startsWith('pm-ops-demo-'))));
+  expect(realAfter).toEqual(before);await expect(page.locator('#company-input')).toHaveValue('Unsaved company');
+  await expect(page.locator('#demo-tour')).toBeHidden();
+});
+test('keyboard can enter exploration and return to choices with heading focus',async({page})=>{
+  await page.goto('index.html?demo=1');
+  const explore=page.getByRole('button',{name:'Explore freely',exact:true});await explore.focus();await page.keyboard.press('Enter');
+  await expect(page.locator('#demo-tour h2')).toBeFocused();
+  await page.locator('#demo-tour').getByRole('button',{name:'Demo choices',exact:true}).click();
+  await expect(page.locator('#demo-tour h2')).toBeFocused();
+});
