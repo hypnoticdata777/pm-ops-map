@@ -61,7 +61,7 @@ Workspace data is associated with this browser profile and site. It does not aut
 
 ### Option A — Live Demo (no setup)
 
-1. Open the **[live demo](https://hypnoticdata777.github.io/pm-ops-map/?demo=1)** — it opens a goal chooser. Guided scenarios are marked **Coming next**; choose **Explore freely** to use the fictional operation
+1. Open the **[live demo](https://hypnoticdata777.github.io/pm-ops-map/?demo=1)** — it opens a goal chooser. choose **Tighten maintenance flow** for a guided repair example, or **Explore freely** to use the fictional operation
 2. Poke around: reassign an owner, change a status, open the Assign Owners workload bars
 3. Made a mess? **Reset demo** in the purple banner restores it. Ready for your own data? **Use your own workspace →**
 
@@ -104,7 +104,7 @@ Or with Node: `npm install && npm start`
 
 ## The live demo
 
-Open any copy of the site with **`?demo=1`** (for example [`…/pm-ops-map/?demo=1`](https://hypnoticdata777.github.io/pm-ops-map/?demo=1)) and you get a demo goal chooser instead of the real setup checklist. The five guided scenarios are **Coming next** in this foundation release. Choose **Explore freely** to open the populated fictional operation; **Demo choices** returns to the chooser. Reloading also returns to the chooser. What makes it safe to put on a public URL:
+Open any copy of the site with **`?demo=1`** (for example [`…/pm-ops-map/?demo=1`](https://hypnoticdata777.github.io/pm-ops-map/?demo=1)) and you get a demo goal chooser instead of the real setup checklist. **Tighten maintenance flow** is playable; the other four scenarios remain **Coming next**. See the [demo guide](docs/demo-guide.md) for steps, resume, reset and recovery behavior. Choose **Explore freely** to open the populated fictional operation; **Demo choices** returns to the chooser. Reloading also returns to the chooser. What makes it safe to put on a public URL:
 
 - **Always labelled.** A purple banner — *"Fictional data only… please don't enter real tenant information"* — is pinned to the top of every screen. It cannot be dismissed.
 - **Isolated storage.** Demo mode keeps everything under `pm-ops-demo-*` keys. Visiting, editing, or resetting the demo never reads, overwrites, or deletes a real workspace stored under the normal `pm-ops-*` keys on the same site.
@@ -453,6 +453,7 @@ pm-ops-map/
 │   ├── app.js              Entry point — imports all modules, registers window globals
 │   ├── state.js            Shared mutable state, constants, and setters
 │   ├── demoScenarios.js    Demo goal catalogue and future scenario definitions
+│   ├── maintenanceDemo.js Read-only maintenance tour state checks and targets
 │   ├── demoTour.js         Chooser and shared guidance/navigation lifecycle
 │   ├── demoTourPreferences.js Demo-only validated progress with memory fallback
 │   ├── backupReminder.js   Independent JSON backup reminder and browser-local seven-day dismissal

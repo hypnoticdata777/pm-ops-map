@@ -379,10 +379,12 @@ These modules are not imported into the browser app and add no runtime dependenc
 
 ## Guided demo foundation
 
-- `demoScenarios.js`: five goal definitions; all unavailable until their guidance is implemented and verified.
+- `demoScenarios.js`: five goal definitions; maintenance is playable with five ordered steps; four goals remain unavailable.
 - `demoTour.js`: chooser, reusable step controls, injected navigation/state checks, pause/resume, stable target lifecycle and recovery.
 - `demoTourPreferences.js`: validated, versioned demo progress and memory fallback. `DEMO_TOUR_KEY` is centrally registered in storage.js and never written in real mode.
 - `app.js`: initializes the chooser after hydration and provides normal switchView navigation.
 - `views/workorders.js`: stable card IDs and refreshes guidance after rendering.
 
-The shared controller supports future scenarios; no playable guided scenario ships in this phase. Real setup derivation remains separate.
+The shared controller now runs maintenance with read-only adapters in maintenanceDemo.js. Completion acknowledgements are validated local preference data; live conditions are checked again on resume. Real setup derivation remains separate.
+
+`maintenanceDemo.js` locates demo-wo-1, checks current roster assignment and stage, supplies safe summary text, and resolves editor/card targets. It never mutates operational records. Work-order editor open/close and render refresh guidance without replacing form inputs.

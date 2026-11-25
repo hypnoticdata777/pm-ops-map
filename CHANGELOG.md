@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+- Added the five-step Tighten maintenance flow demo, with editor guidance, saved assignment and scheduling checks, recovery, and a separate completion acknowledgement. Four other scenarios remain Coming next.
+- Made the work-order editor scroll within short/mobile viewports so Save and Cancel remain reachable.
+
 - Added a demo goal chooser with five clearly marked Coming next scenarios and Explore freely. Demo choices and reload return to the chooser while preserving demo edits.
 - Added isolated progress storage and reusable tour controls for future guided scenarios. Demo mode no longer presents the real seven-step setup checklist.
 

@@ -2,7 +2,7 @@
 
 The single source of truth for what has shipped, what is in progress, and what comes next. The README's [Roadmap](../README.md#roadmap) section is the short version; this is the detail. Update this file in the same PR that finishes (or re-scopes) a step.
 
-**Last updated:** 2026-11-25 · **Current focus:** Guided-demo phase 2 foundation implemented; maintenance scenario pending. Phase 1C remains in progress.
+**Last updated:** 2026-11-25 · **Current focus:** Guided-demo maintenance scenario implemented; review and fresh iPhone validation pending. Phase 1C remains in progress.
 
 ## Status at a glance
 
@@ -149,8 +149,8 @@ The [guided demo specification](plans/guided-demo.md) defines a goal chooser and
 | Demo phase | Scope | Status |
 |---|---|---|
 | 1 | Verify baseline, define behavior and maintenance acceptance criteria | Specification complete; no runtime changes |
-| 2 | Chooser, isolated tour progress, guidance and navigation | Implemented; review and device validation pending |
-| 3 | Complete maintenance scenario and validate on iPhone | Planned |
+| 2 | Chooser, isolated tour progress, guidance and navigation | Merged in PR #101 |
+| 3 | Complete maintenance scenario and validate on iPhone | Implemented; physical iPhone validation pending after deployment |
 | 4 | Operation overview, ownership, workload and gap scenarios | Planned |
 | 5 | Final documentation, regression and delivery verification | Planned |
 

@@ -5185,3 +5185,11 @@ body[data-ops-focus="compliance"] {
 .demo-tour-target { outline: 3px solid #155e86; outline-offset: 4px; }
 .demo-choosing .content, .demo-choosing #save-toast, .demo-choosing #nav-tabs, .demo-choosing #controls, .demo-choosing .stats, .demo-choosing #nav-toggle-btn { display: none !important; }
 .demo-mode #operation-setup, .demo-mode #welcome-guide, .demo-guided #launch-plan { display: none !important; }
+.demo-modal-guidance { padding: 12px; margin: 12px 0; border-left: 4px solid #155e86; background: #f1f7fb; line-height: 1.5; }
+.demo-modal-guidance[hidden] { display: none; }
+.demo-mode .wo-card, .demo-mode #wo-assignee { scroll-margin-top: 180px; }
+/* Keep work-order actions reachable with a phone keyboard or short viewport. */
+.wo-modal-card { max-height: calc(100vh - 40px); max-height: calc(100dvh - 40px); overflow-y: auto; overscroll-behavior: contain; }
+.demo-tour-options { margin-top: 14px; }
+.demo-tour-options summary { min-height: 44px; cursor: pointer; padding: 10px 0; font-weight: 600; }
+.demo-tour-options .btn { margin: 4px 6px 4px 0; }

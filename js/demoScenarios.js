@@ -1,10 +1,16 @@
 /** @typedef {{id:string, title:string, why:string, notice:string, action:string, result:string, view:string, target?:string, condition?:string}} DemoStep */
 /** @typedef {{id:string, title:string, description:string, available:boolean, steps:DemoStep[]}} DemoScenario */
-/** Only completed, verified scenarios become available. Phase 3 supplies maintenance steps. @type {DemoScenario[]} */
+/** Only implemented scenarios become available; the other goals remain planned. @type {DemoScenario[]} */
 export const DEMO_SCENARIOS = [
   {id:'operation',title:'Set up an operation',description:'See how the company, property, contacts and people connect.',available:false,steps:[]},
   {id:'ownership',title:'Clarify who owns the work',description:'Find an unassigned responsibility and choose an owner.',available:false,steps:[]},
   {id:'workload',title:"Balance the team's workload",description:'Compare assignment counts and review a reassignment. Counts do not measure capacity.',available:false,steps:[]},
-  {id:'maintenance',title:'Tighten maintenance flow',description:'Give an example repair an owner and a visible next step.',available:false,steps:[]},
+  {id:'maintenance',title:'Tighten maintenance flow',description:'Give an example repair an owner and a visible next step.',available:true,steps:[
+    {id:'understand-intake',title:'See the problem',why:'Start here because a repair needs a clear owner and a visible next step.',notice:'This fictional no-hot-water report is waiting for assignment.',action:'Read the example repair, then choose Next.',result:'You can identify the repair and its current stage.',view:'workorders',target:'wo-card-demo-wo-1',condition:'repair-exists'},
+    {id:'assign-repair',title:'Give it an owner',why:'An unassigned repair has no named person responsible for following it through.',notice:'Marcus Reyes is the example maintenance contact. The app does not verify availability or qualifications.',action:'Open Edit on this repair, choose a current roster member, and save.',result:'The saved repair shows its owner. An unsaved selection does not count.',view:'workorders',target:'wo-card-demo-wo-1',condition:'repair-assigned'},
+    {id:'schedule-repair',title:'Make the next stage visible',why:'A visible stage helps the team understand what happens next.',notice:'For this fictional exercise, assume access and timing have been agreed.',action:'Use the repair’s Scheduled action to move it forward.',result:'The repair appears under Scheduled. This does not contact anyone or book a visit.',view:'workorders',target:'wo-card-demo-wo-1',condition:'repair-scheduled'},
+    {id:'follow-through',title:'Understand follow-through',why:'A status records what you selected; follow-up still requires real work.',notice:'Coordinate access, follow up, and verify the repair before marking it completed.',action:'Review the current owner and status, then choose Next.',result:'You understand the follow-up required. No repair needs to be closed for this tour.',view:'workorders',target:'wo-card-demo-wo-1',condition:'repair-scheduled'},
+    {id:'review-result',title:'Review the result',why:'Ownership and a visible stage make the repair easier to follow.',notice:'The current example owner and status are shown below.',action:'Review the result and choose Finish.',result:'This example has not dispatched a technician or verified a repair. Real urgency and response rules remain your responsibility.',view:'workorders',target:'wo-card-demo-wo-1',condition:'repair-scheduled'},
+  ]},
   {id:'gaps',title:'Review operational gaps',description:'Find a gap and understand what to address first. Review indicators do not certify compliance.',available:false,steps:[]},
 ];

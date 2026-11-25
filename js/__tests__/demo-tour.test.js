@@ -17,7 +17,7 @@ beforeEach(()=>{
 });
 afterEach(()=>{tour.destroy();vi.restoreAllMocks();});
 test('production catalogue never advertises unfinished playable steps',()=>{
-  expect(DEMO_SCENARIOS).toHaveLength(5);expect(DEMO_SCENARIOS.every(s=>!s.available&&s.steps.length===0)).toBe(true);
+  expect(DEMO_SCENARIOS).toHaveLength(5);expect(DEMO_SCENARIOS.filter(s=>s.available).map(s=>s.id)).toEqual(['maintenance']);expect(DEMO_SCENARIOS.find(s=>s.id==='maintenance').steps).toHaveLength(5);
 });
 test('read and action steps use explicit Next and actual state; restarting keeps edits',()=>{
   click('Try this demo');expect(navigate).toHaveBeenCalledWith('workorders');
@@ -26,7 +26,7 @@ test('read and action steps use explicit Next and actual state; restarting keeps
   expect(root.querySelector('[data-tour="next"]').disabled).toBe(true);
   assigned=true;tour.refresh();expect(root.textContent).toContain('already satisfied');
   click('Restart guidance (keep demo edits)');expect(assigned).toBe(true);expect(root.textContent).toContain('Step 1 of 2');
-  click('Next');click('Finish');expect(root.textContent).toContain('What would you like to try?');
+  click('Next');click('Finish');expect(root.textContent).toContain('Demo walkthrough complete');expect(prefs.read().completed).toContain('fixture');
 });
 test('manual navigation pauses, return restores and Explore freely removes highlights',()=>{
   tour.start('fixture');tour.viewChanged();expect(root.textContent).toContain('Paused');

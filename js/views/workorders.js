@@ -175,7 +175,9 @@ function openWorkOrderModal(wo = null) {
   document.getElementById('wo-priority').value = wo?.priority || 'medium';
   document.getElementById('wo-assignee').value = wo?.assignee || 'UNASSIGNED';
 
+  if (DEMO_MODE) modal.dataset.workOrderId = wo?.id || '';
   modal.classList.add('visible');
+  refreshDemoTour();
   setTimeout(() => document.getElementById('wo-property').focus(), 50);
 }
 
@@ -183,6 +185,8 @@ export function closeWorkOrderModal() {
   const modal = document.getElementById('wo-modal');
   if (modal) modal.classList.remove('visible');
   editingWorkOrderId = null;
+  if (DEMO_MODE && modal) delete modal.dataset.workOrderId;
+  refreshDemoTour();
 }
 
 const WO_FIELD_LIMITS = { property: 200, unit: 50, tenant: 200, title: 300, notes: 2000, vendor: 200 };

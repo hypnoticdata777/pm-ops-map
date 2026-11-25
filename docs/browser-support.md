@@ -25,4 +25,4 @@ Desktop local builds must retain their assets beside `index.html`. Export before
 
 ## Guided demo foundation
 
-The user reported the previous demo moved smoothly on iPhone Safari, but its setup-step entry was confusing. That report does not validate the new chooser. The foundation adds chooser, free-exploration and keyboard/isolation browser coverage; physical iPhone validation of this revision remains pending. No guided scenario is playable yet.
+The user reported the previous demo moved smoothly on iPhone Safari, but its setup-step entry was confusing. That report does not validate the new chooser. The foundation adds chooser, free-exploration and keyboard/isolation browser coverage; physical iPhone validation of this revision remains pending. Maintenance is now playable on the implementation branch. Physical iPhone validation of its editor scrolling, saved-state checks, resume and finish remains pending after deployment.

@@ -1,15 +1,16 @@
 import { DEMO_MODE } from './demoMode.js';
 import { DEMO_TOUR_KEY } from './storage.js';
 import { DEMO_SCENARIOS } from './demoScenarios.js';
-/** @typedef {{version:1, selected?:string, checkpoints:Record<string,string>}} TourPreferences */
+/** @typedef {{version:1, selected?:string, checkpoints:Record<string,string>, completed?:string[]}} TourPreferences */
 /** @returns {TourPreferences} */
 const blank = () => ({version:1,checkpoints:{}});
 /** @param {unknown} value @param {import('./demoScenarios.js').DemoScenario[]} scenarios @returns {TourPreferences} */
 export function sanitizeTourPreferences(value, scenarios = DEMO_SCENARIOS) {
   const out = blank();
   if (!value || typeof value !== 'object' || !('version' in value) || value.version !== 1) return out;
-  const raw = /** @type {{selected?:unknown,checkpoints?:unknown}} */ (value);
+  const raw = /** @type {{selected?:unknown,checkpoints?:unknown,completed?:unknown}} */ (value);
   for (const scenario of scenarios.filter(s=>s.available && s.steps.length)) {
+    if (Array.isArray(raw.completed) && raw.completed.includes(scenario.id)) (out.completed ||= []).push(scenario.id);
     if (raw.selected === scenario.id) out.selected = scenario.id;
     if (raw.checkpoints && typeof raw.checkpoints === 'object' && Object.hasOwn(raw.checkpoints,scenario.id)) {
       const step = /** @type {Record<string,unknown>} */ (raw.checkpoints)[scenario.id];
