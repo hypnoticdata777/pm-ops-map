@@ -45,4 +45,6 @@ No task identity, business schema, backend, or sync payload changes are required
 
 ## Demo entry and real setup
 
-The real workspace retains the seven-step checklist. **Show me an example first** opens the isolated demo in a separate tab, preserving the original form. Demo entry now shows a goal chooser rather than selecting an incomplete setup step. All five guided scenarios are marked **Coming next** until implemented; **Explore freely** opens the existing fictional workspace. **Demo choices** and reload return to the chooser without discarding edits. Demo learning never completes real setup. See the [implementation specification](plans/guided-demo.md).
+The real workspace retains the seven-step checklist. **Show me an example first** opens the isolated demo in a separate tab, preserving the original form. Demo entry now shows a goal chooser rather than selecting an incomplete setup step. **Tighten maintenance flow** is playable; the other four guided scenarios remain **Coming next**; **Explore freely** opens the existing fictional workspace. **Demo choices** and reload return to the chooser without discarding edits. Demo learning never completes real setup. See the [implementation specification](plans/guided-demo.md).
+
+The [maintenance demo guide](demo-guide.md) describes saved assignment and scheduling checks. Tour completion is a learning acknowledgement and does not change the real checklist.

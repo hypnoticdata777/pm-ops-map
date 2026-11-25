@@ -199,4 +199,4 @@ Existing ES-module cycles include `ui.js → launchPlan.js → commit.js → ui.
 
 ## Demo chooser
 
-Opening `?demo=1`, including **Show me an example first**, displays five goals labelled **Coming next**. **Explore freely** opens the existing fictional workspace. **Demo choices** returns without discarding edits; reload returns to the chooser. The real setup checklist is hidden in demo mode. Guided maintenance actions are reserved for the next phase.
+Opening `?demo=1`, including **Show me an example first**, displays five goals: maintenance is playable and four are **Coming next**. **Explore freely** opens the existing fictional workspace. **Demo choices** returns without discarding edits; reload returns to the chooser. The real setup checklist is hidden in demo mode. The maintenance guide walks through reading, saving an owner, scheduling, follow-through and final review. See [the user guide](../demo-guide.md).

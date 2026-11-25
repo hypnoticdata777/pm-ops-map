@@ -97,4 +97,4 @@ The in-app backup explanation and seven-day export reminder are implemented. The
 
 ## Demo foundation verification
 
-Verify demo entry opens the goal chooser in the production sub-path and file:// build. All five guided scenarios remain Coming next; free exploration and the real setup checklist continue to work in their respective modes. Verify Demo choices, reload, reset confirmation, keyboard focus and real-workspace isolation. A playable maintenance tour and its device validation remain later work.
+Verify demo entry opens the goal chooser in the production sub-path and file:// build. Maintenance is playable; four scenarios remain Coming next; free exploration and the real setup checklist continue to work in their respective modes. Verify Demo choices, reload, reset confirmation, keyboard focus and real-workspace isolation. Verify the maintenance scenario through saved assignment, scheduling and finish without closing the repair. Fresh physical iPhone validation remains pending.

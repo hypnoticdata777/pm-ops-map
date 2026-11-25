@@ -1,6 +1,6 @@
 # Guided demo implementation specification
 
-Status: phase 1 specification complete; phase 2 foundation implemented on a review branch; phases 3–5 pending. All production scenarios remain unavailable until their guidance is implemented.
+Status: phases 1–2 complete, foundation merged in PR #101. Phase 3 maintenance implemented on a review branch; fresh iPhone validation pending. Other four scenarios and phase 5 delivery review remain pending.
 Date: 2026-11-25.
 
 ## Objective and verified baseline

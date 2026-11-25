@@ -5,8 +5,8 @@ test('phone chooser is the demo entry; all unfinished scenarios are clearly unav
   const panel=page.locator('#demo-tour');
   await expect(panel.getByRole('heading',{name:'What would you like to try?'})).toBeVisible();
   await expect(panel.locator('article')).toHaveCount(5);
-  await expect(panel.getByText('Coming next',{exact:true})).toHaveCount(5);
-  await expect(panel.getByRole('button',{name:'Try this demo'})).toHaveCount(0);
+  await expect(panel.getByText('Coming next',{exact:true})).toHaveCount(4);
+  await expect(panel.getByRole('button',{name:'Try this demo'})).toHaveCount(1);
   await expect(page.locator('#operation-setup')).toBeHidden();
   await expect(page.locator('#nav-tabs')).toBeHidden();
   await expect(page.locator('#tracking-view')).toBeHidden();

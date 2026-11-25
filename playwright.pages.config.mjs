@@ -9,7 +9,7 @@ const PREFIX = '/pm-ops-map';
 
 export default defineConfig({
   testDir: 'e2e',
-  testMatch: ['**/smoke.spec.js', '**/demo.spec.js', '**/built-site.spec.js', '**/setup.spec.js', '**/glossary.spec.js', '**/backup-reminder.spec.js', '**/demo-tour.spec.js'],
+  testMatch: ['**/smoke.spec.js', '**/demo.spec.js', '**/built-site.spec.js', '**/setup.spec.js', '**/glossary.spec.js', '**/backup-reminder.spec.js', '**/demo-tour.spec.js', '**/maintenance-demo.spec.js'],
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
