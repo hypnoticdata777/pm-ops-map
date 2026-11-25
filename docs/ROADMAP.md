@@ -2,7 +2,7 @@
 
 The single source of truth for what has shipped, what is in progress, and what comes next. The README's [Roadmap](../README.md#roadmap) section is the short version; this is the detail. Update this file in the same PR that finishes (or re-scopes) a step.
 
-**Last updated:** 2026-11-20 · **Current focus:** Phase 1C continues; operation setup shipped in PR #92
+**Last updated:** 2026-11-25 · **Current focus:** Guided-demo phase 1 specified; application implementation pending. Phase 1C remains in progress.
 
 ## Status at a glance
 
@@ -141,3 +141,17 @@ Anything that turns the map into a system of record, and any feature that requir
 ## Delivery accuracy and release packaging
 
 Delivery documentation now distinguishes hosted use, source builds, and published assets. Versioned ZIP packaging, extracted-artifact checks, checksum-bound test evidence, and draft-only tag automation are implemented; the first release still requires explicit version/tag selection, artifact review, and publication. Backup reminders and physical iPhone Safari verification remain separate follow-up work. See [release packaging](releases.md).
+
+## Guided demo delivery plan
+
+The [guided demo specification](plans/guided-demo.md) defines a goal chooser and separate demo guidance without changing real setup completion. This is a delivery workstream, separate from the numbered architecture phases above.
+
+| Demo phase | Scope | Status |
+|---|---|---|
+| 1 | Verify baseline, define behavior and maintenance acceptance criteria | Specification complete; no runtime changes |
+| 2 | Chooser, isolated tour progress, guidance and navigation | Planned |
+| 3 | Complete maintenance scenario and validate on iPhone | Planned |
+| 4 | Operation overview, ownership, workload and gap scenarios | Planned |
+| 5 | Final documentation, regression and delivery verification | Planned |
+
+Backup guidance PR #100 is merged. Existing iPhone demo responsiveness was reported by the user; the new chooser and guidance require fresh device validation after implementation.
