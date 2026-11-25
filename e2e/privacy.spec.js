@@ -93,15 +93,24 @@ test.describe('Team Sync is labelled as a trusted-team beta', () => {
 
   test('https and localhost addresses do not trigger the warning', async ({ page }) => {
     const seen = await start(page, { dialogs: 'accept' });
+    // Count only handled dialogs; the second attempt must not reuse the first result.
+    page.removeAllListeners('dialog');
+    page.on('dialog', async dialog => {
+      const message = dialog.message();
+      await dialog.accept();
+      seen.push(message);
+    });
     await page.route('http://localhost:4000/**', route => route.abort());
     await page.route('https://sync.example.com/**', route => route.abort());
     await page.locator('#sync-status-pill').click();
     for (const url of ['http://localhost:4000', 'https://sync.example.com']) {
+      const handledBefore = seen.length;
       await page.fill('#sync-server-url', url);
       await page.fill('#sync-workspace', 'privacy-test');
       await page.fill('#sync-passphrase', 'abcd1234');
       await page.click('#sync-connect-btn');
-      await expect.poll(() => seen.join('\n')).toMatch(/Could not reach sync server/);
+      await expect.poll(() => seen.length).toBe(handledBefore + 1);
+      expect(seen.at(-1)).toMatch(/Could not reach sync server/);
     }
     expect(seen.join('\n')).not.toMatch(/not https/);
   });
