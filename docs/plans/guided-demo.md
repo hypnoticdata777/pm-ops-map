@@ -1,6 +1,6 @@
 # Guided demo implementation specification
 
-Status: phases 1–2 complete, foundation merged in PR #101. Phase 3 maintenance implemented on a review branch; fresh iPhone validation pending. Other four scenarios and phase 5 delivery review remain pending.
+Status: phases 1–3 implemented; PR #101 and #102 merged. Operator reports successful maintenance use on iPhone, without independently recorded device/OS or exact deployed revision. Refinement 3A is implemented on a review branch; 3B–3D and the other four scenarios remain pending.
 Date: 2026-11-25.
 
 ## Objective and verified baseline
@@ -125,3 +125,7 @@ Physical iPhone report so far: user found the existing demo responsive and smoot
 This phase changes planning documentation only. During implementation update README, operation-setup.md, contributor instructions, architecture references, changelog, release checks and browser-support evidence alongside actual behavior. Create a user-facing demo-guide.md only when playable guidance exists. Replace screenshots after UI stabilizes. Keep planned scenarios explicitly planned.
 
 No external service or new package dependency is required. Remaining inputs: refine operational copy with the user as needed; validate the maintenance pattern on iPhone before expanding; review detailed steps for the other four scenarios before phase 4. Do not delay phase 2 foundation work for optional wording refinements. Release publication remains a separate reviewed action.
+
+## Phase 3 refinement checkpoint
+
+The operator's successful maintenance test led to the bounded [3A–3D usability loop](demo-usability-refinements.md). 3A strengthens identity and collapses the sticky DEMO explanation, with measured scroll clearance. Quick filters (3B) and practical control help (3C) are separate planned changes. Fresh combined/device validation (3D) gates the return to phase 4. No other scenarios are enabled by 3A.

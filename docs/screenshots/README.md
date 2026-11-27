@@ -1,6 +1,6 @@
 # Screenshot provenance
 
-- `10-demo-chooser.png` and `11-maintenance-demo.png`: maintenance scenario on branch `feat/maintenance-demo`, based on `eb872de`, captured 2026-11-25 at 390 × 844 in Chromium. Maintenance is playable; four goals remain Coming next. These are not physical iPhone captures.
+- `10-demo-chooser.png`, `11-maintenance-demo.png` and `12-demo-details.png`: refinement 3A on `feat/demo-header-disclosure`, based on `a616586`, captured 2026-11-26 at a 390 × 844 Chromium viewport. Show the stronger app identity, compact/expanded disclosure and tour clearance. These are not physical iPhone captures.
 
 - `09-user-glossary.png`: searchable Terms & Help at a 390 × 844 Chromium viewport. This is phone-width emulation, not a physical iPhone Safari capture.
 - `08-operation-setup.png`: current seven-step guide at phone width, captured for PR #92. Refer to this for the setup experience.

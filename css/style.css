@@ -5067,37 +5067,38 @@ body[data-ops-focus="compliance"] {
   position: sticky;
   top: 0;
   z-index: 900;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  padding: 8px 16px;
+  padding: 4px 16px;
   background: #3f2a8c;
-  color: #ffffff;
+  color: #fff;
   font-size: 13px;
-  line-height: 1.4;
-  box-shadow: 0 2px 8px rgba(23, 32, 42, 0.25);
+  line-height: 1.5;
+  box-shadow: 0 2px 8px rgba(23, 32, 42, .2);
 }
 .demo-banner[hidden] { display: none; }
-.demo-banner p { margin: 0; flex: 1 1 260px; }
-.demo-banner strong { color: #ffffff; }
-.demo-banner-badge {
-  padding: 2px 8px;
-  border-radius: 999px;
-  background: #ffd54f;
-  color: #3e2a00;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+.demo-details > summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  width: fit-content;
+  max-width: 100%;
+  padding: 4px 2px;
+  cursor: pointer;
+  list-style: none;
 }
+.demo-details > summary::-webkit-details-marker { display: none; }
+.demo-details > summary:focus-visible { outline: 3px solid #ffd54f; outline-offset: 2px; border-radius: 4px; }
+.demo-banner-brand { font-size: 15px; font-weight: 800; letter-spacing: -.02em; }
+.demo-banner-badge { padding: 2px 8px; border-radius: 999px; background: #ffd54f; color: #3e2a00; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.demo-banner-chevron { width: 8px; height: 8px; margin: -4px 4px 0; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: rotate(45deg); }
+.demo-details[open] .demo-banner-chevron { margin-top: 4px; transform: rotate(225deg); }
+.demo-banner-content { max-height: calc(100vh - 64px); max-height: calc(100dvh - 64px); overflow-y: auto; overscroll-behavior: contain; padding: 10px 2px 14px; border-top: 1px solid rgba(255,255,255,.25); }
+.demo-banner-content p { margin: 0 0 12px; max-width: 74ch; }
+.demo-banner strong { color: #fff; }
 .demo-banner-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-.demo-banner .btn { text-decoration: none; padding: 5px 12px; font-size: 12px; }
-
-@media (max-width: 760px) {
-  .demo-banner { padding: 8px 12px; gap: 8px; }
-  .demo-banner-actions { width: 100%; }
-}
+.demo-banner .btn { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; padding: 8px 12px; font-size: 13px; white-space: normal; }
+.demo-banner .btn:focus-visible { outline: 3px solid #ffd54f; outline-offset: 2px; }
+@media (max-width: 760px) { .demo-banner { padding: 4px 12px; } }
 
 /* One setup guide across all views; updates never replace active work forms. */
 .operation-setup { margin: 18px 0; padding: 22px; border: 1px solid var(--border, #cbd5e1); border-radius: 14px; background: var(--card-bg, #fff); color: var(--text, #263238); }
@@ -5172,7 +5173,7 @@ body[data-ops-focus="compliance"] {
 .backup-reminder :focus-visible, .backup-explanation :focus-visible { outline:3px solid #1976d2; outline-offset:3px; }
 
 /* Demo learning is separate from the real operation setup checklist. */
-.demo-tour { margin: 16px 0; padding: 20px; border: 1px solid #b4c9d8; border-radius: 12px; background: #f1f7fb; scroll-margin-top: 12px; }
+.demo-tour { margin: 16px 0; padding: 20px; border: 1px solid #b4c9d8; border-radius: 12px; background: #f1f7fb; scroll-margin-top: var(--demo-banner-clearance, 12px); }
 .demo-tour[hidden] { display: none; }
 .demo-tour h2, .demo-tour h3 { margin: 0 0 10px; }
 .demo-tour p { line-height: 1.6; margin: 10px 0; }
@@ -5187,9 +5188,21 @@ body[data-ops-focus="compliance"] {
 .demo-mode #operation-setup, .demo-mode #welcome-guide, .demo-guided #launch-plan { display: none !important; }
 .demo-modal-guidance { padding: 12px; margin: 12px 0; border-left: 4px solid #155e86; background: #f1f7fb; line-height: 1.5; }
 .demo-modal-guidance[hidden] { display: none; }
-.demo-mode .wo-card, .demo-mode #wo-assignee { scroll-margin-top: 180px; }
+.demo-mode .wo-card, .demo-tour-target { scroll-margin-top: var(--demo-banner-clearance, 12px); }
 /* Keep work-order actions reachable with a phone keyboard or short viewport. */
 .wo-modal-card { max-height: calc(100vh - 40px); max-height: calc(100dvh - 40px); overflow-y: auto; overscroll-behavior: contain; }
 .demo-tour-options { margin-top: 14px; }
 .demo-tour-options summary { min-height: 44px; cursor: pointer; padding: 10px 0; font-weight: 600; }
 .demo-tour-options .btn { margin: 4px 6px 4px 0; }
+
+/* Application identity remains prominent; only the compact demo strip is sticky. */
+.header { padding: 30px 42px; border-bottom: 4px solid #1ba995; gap: 20px; }
+.app-brand { min-width: 0; }
+.header .app-brand-kicker { margin: 0 0 8px; color: #8ae1d2; opacity: 1; font-size: 11px; font-weight: 750; letter-spacing: .12em; text-transform: uppercase; }
+.header h1 { font-size: clamp(2.1rem, 4.5vw, 3rem); line-height: 1.1; letter-spacing: -.025em; }
+.header p { opacity: 1; line-height: 1.5; }
+@media (max-width: 760px) {
+  .header { padding: 24px 18px; gap: 12px; }
+  .header .app-brand-kicker { font-size: 10px; letter-spacing: .08em; }
+  .header h1 { font-size: 2.1rem; }
+}

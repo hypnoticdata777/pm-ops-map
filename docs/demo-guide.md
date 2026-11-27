@@ -2,6 +2,12 @@
 
 Open the hosted app's **Show me an example first** button, or visit `?demo=1`. The original setup form stays in its tab. The demo uses fictional data and separate browser storage; practicing never completes real setup or copies example records into your operation.
 
+## Recognize the application and demo
+
+The larger **PM Ops Map** header marks the starting point. A compact **PM Ops Map · DEMO ▾** strip stays at the top while you scroll. Tap the strip, or focus its summary and use Enter/Space, to reveal the fictional-data explanation and demo actions. Expanded content scrolls if the screen is short.
+
+Details start collapsed and do not create a saved preference. **Demo choices** returns to the chooser and collapses the details; starting or explicitly returning to a tour step also collapses them. The DEMO badge remains visible. Opening or closing this disclosure does not reset data. **Use your own workspace** opens the normal index.html in hosted and direct desktop file builds without copying example data.
+
 ## Choose a goal
 
 **Tighten maintenance flow** is the first playable scenario. The other four goals remain labelled **Coming next**. **Explore freely** opens every existing demo tool without a tour. **Demo choices** returns to the chooser without deleting edits.
@@ -38,4 +44,4 @@ Completion history is browser-local and excluded from JSON exports, clipboard st
 
 ## Browser evidence
 
-Automated Chromium phone-width checks do not establish actual iPhone Safari compatibility. The user's smooth-demo report covered the earlier demo. This maintenance tour needs a fresh physical iPhone check after deployment: chooser, editor scrolling, Save/Cancel, scheduling, pause/resume, and finish.
+The operator reported that maintenance worked well on iPhone before these orientation refinements. Device/OS and the exact deployed revision were not independently recorded. That observation supports the existing tour's usability, not every browser or recovery path. The compact disclosure and new header still need a fresh physical iPhone check after deployment; Chromium phone-width checks do not establish Safari compatibility.

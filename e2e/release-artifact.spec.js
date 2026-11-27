@@ -1,3 +1,4 @@
+import { openDemoDetails, clickDemoButton } from './helpers/demo.js';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -93,11 +94,13 @@ test('the extracted demo opens its chooser and supports exploration without chan
   await start(page);
   const before=await page.evaluate(()=>Object.fromEntries(Object.entries(localStorage)));
   await page.goto(`${entry()}?demo=1`);
+  await expect(page.locator('#demo-details')).not.toHaveAttribute('open');
+  expect((await page.locator('#demo-banner').boundingBox()).height).toBeLessThanOrEqual(60);
   await expect(page.getByRole('heading',{name:'What would you like to try?'})).toBeVisible();
   await expect(page.locator('#demo-tour').getByText('Coming next',{exact:true})).toHaveCount(4);
   await page.getByRole('button',{name:'Explore freely',exact:true}).click();
   await page.locator('#wo-tab').click();await expect(page.locator('#workorders-view')).toHaveClass(/active/);
-  await page.locator('#demo-choices').click();
+  await clickDemoButton(page, 'Demo choices');
   await page.locator('#demo-tour article').filter({hasText:'Tighten maintenance flow'}).getByRole('button',{name:'Try this demo'}).click();
   const guidance=page.locator('#demo-tour');const repair=page.locator('#wo-card-demo-wo-1');
   await guidance.getByRole('button',{name:'Next',exact:true}).click();

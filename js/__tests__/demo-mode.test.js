@@ -133,7 +133,7 @@ describe('banner and page chrome', () => {
   });
 
   test('"Use your own workspace" links to the page without the demo flag', () => {
-    expect(document.querySelector('#demo-banner a').getAttribute('href')).toBe('./');
+    expect(document.querySelector('#demo-banner a').getAttribute('href')).toBe('index.html');
   });
 
   test('normal mode leaves the banner hidden and the page untouched', async () => {

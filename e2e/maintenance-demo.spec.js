@@ -1,3 +1,4 @@
+import { openDemoDetails, clickDemoButton } from './helpers/demo.js';
 import { test, expect } from '@playwright/test';
 const panel=page=>page.locator('#demo-tour');
 const card=page=>page.locator('#wo-card-demo-wo-1');
@@ -42,9 +43,9 @@ test('reload and navigation pause preserve progress; reversed assignment blocks 
 test('missing example explains recovery; canceled reset preserves data and confirmed reset clears progress',async({page})=>{
  await start(page);await next(page).click();page.on('dialog',d=>d.accept());await card(page).getByRole('button',{name:'✕',exact:true}).click();
  await expect(panel(page)).toContainText('example repair is missing');await expect(next(page)).toBeDisabled();
- page.removeAllListeners('dialog');page.on('dialog',d=>d.dismiss());await page.getByRole('button',{name:'Reset demo',exact:true}).click();
+ page.removeAllListeners('dialog');page.on('dialog',d=>d.dismiss());await clickDemoButton(page, 'Reset demo');
  await expect(panel(page)).toContainText('Step 2 of 5');
- page.removeAllListeners('dialog');page.on('dialog',d=>d.accept());await page.getByRole('button',{name:'Reset demo',exact:true}).click();
+ page.removeAllListeners('dialog');page.on('dialog',d=>d.accept());await clickDemoButton(page, 'Reset demo');
  await expect(panel(page)).toContainText('What would you like to try?');
  expect(await page.evaluate(()=>localStorage.getItem('pm-ops-demo-tour-v1'))).toBeNull();
 });

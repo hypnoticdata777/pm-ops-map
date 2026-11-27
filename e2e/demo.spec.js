@@ -1,3 +1,4 @@
+import { openDemoDetails, clickDemoButton } from './helpers/demo.js';
 // The hosted demo opens a goal chooser, then allows free exploration of fictional data.
 // says so permanently, can be reset in one click, and never touches a real workspace.
 import { test, expect } from '@playwright/test';
@@ -32,7 +33,9 @@ test.describe('opening the demo', () => {
     await expect(banner).toBeVisible();
     await expect(banner).toContainText('Fictional data only');
     await expect(banner).toContainText('nothing leaves your browser');
-    await expect(banner.getByRole('button')).toHaveText(['Demo choices', 'Reset demo']);
+    await expect(page.locator('#demo-details')).not.toHaveAttribute('open');
+    await openDemoDetails(page);
+    await expect(banner.locator('.demo-banner-actions').getByRole('button')).toHaveText(['Demo choices', 'Reset demo']);
     await expect(banner.getByRole('link')).toHaveText([/Use your own workspace/]);
     // Still there after navigating around the app.
     await page.locator('#portfolio-tab').click();
@@ -129,7 +132,7 @@ test.describe('editing and resetting', () => {
     await clickStatus(page, 'leasing', 0);
     await clickPriority(page, 'leasing', 0);
     expect(await firstRowStatus(page)).not.toBe(pristine);
-    await Promise.all([page.waitForEvent('load'), page.getByRole('button', { name: 'Reset demo' }).click()]);
+    await Promise.all([page.waitForEvent('load'), clickDemoButton(page, 'Reset demo')]);
     await page.getByRole('button',{name:'Explore freely',exact:true}).click();
     await page.waitForSelector('#departments .department');
     expect(await firstRowStatus(page)).toBe(pristine);
@@ -142,7 +145,7 @@ test.describe('editing and resetting', () => {
     await openDemo(page);
     await clickStatus(page, 'leasing', 0);
     const edited = await firstRowStatus(page);
-    await page.getByRole('button', { name: 'Reset demo' }).click();
+    await clickDemoButton(page, 'Reset demo');
     await page.waitForTimeout(300);
     expect(await firstRowStatus(page)).toBe(edited);
   });
@@ -168,7 +171,7 @@ test.describe('isolation from a real workspace on the same origin', () => {
     realKeys(realBefore).forEach(key => expect(both[key], key).toBe(realBefore[key]));
 
     // Reset only removes demo keys.
-    await Promise.all([page.waitForEvent('load'), page.getByRole('button', { name: 'Reset demo' }).click()]);
+    await Promise.all([page.waitForEvent('load'), clickDemoButton(page, 'Reset demo')]);
     await page.getByRole('button',{name:'Explore freely',exact:true}).click();
     await page.waitForSelector('#departments .department');
     both = await dump(page);
@@ -182,6 +185,7 @@ test.describe('isolation from a real workspace on the same origin', () => {
 
   test('"Use your own workspace" leaves demo mode', async ({ page }) => {
     await openDemo(page);
+    await openDemoDetails(page);
     await page.getByRole('link', { name: /Use your own workspace/ }).click();
     await expect(page).not.toHaveURL(/demo=/);
     await expect(page.locator('#demo-banner')).toBeHidden();

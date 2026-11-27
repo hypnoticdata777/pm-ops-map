@@ -63,7 +63,7 @@ Workspace data is associated with this browser profile and site. It does not aut
 
 1. Open the **[live demo](https://hypnoticdata777.github.io/pm-ops-map/?demo=1)** — it opens a goal chooser. choose **Tighten maintenance flow** for a guided repair example, or **Explore freely** to use the fictional operation
 2. Poke around: reassign an owner, change a status, open the Assign Owners workload bars
-3. Made a mess? **Reset demo** in the purple banner restores it. Ready for your own data? **Use your own workspace →**
+3. Made a mess? open **DEMO ▾** and choose **Reset demo** to restore it. Ready for your own data? **Use your own workspace →**
 
 The demo is clearly labelled as fictional, keeps its data under separate browser-storage keys (so it can never touch a real workspace opened from the same site), and has Team Sync switched off. See [The live demo](#the-live-demo) below.
 ### Option B — Build a desktop local copy
@@ -106,7 +106,7 @@ Or with Node: `npm install && npm start`
 
 Open any copy of the site with **`?demo=1`** (for example [`…/pm-ops-map/?demo=1`](https://hypnoticdata777.github.io/pm-ops-map/?demo=1)) and you get a demo goal chooser instead of the real setup checklist. **Tighten maintenance flow** is playable; the other four scenarios remain **Coming next**. See the [demo guide](docs/demo-guide.md) for steps, resume, reset and recovery behavior. Choose **Explore freely** to open the populated fictional operation; **Demo choices** returns to the chooser. Reloading also returns to the chooser. What makes it safe to put on a public URL:
 
-- **Always labelled.** A purple banner — *"Fictional data only… please don't enter real tenant information"* — is pinned to the top of every screen. It cannot be dismissed.
+- **Always labelled.** A compact, sticky **PM Ops Map · DEMO ▾** strip identifies the example workspace. Tap or keyboard-activate it for fictional-data details, Demo choices, Reset demo, and the link back to your own workspace. Details start collapsed; the DEMO indicator remains visible.
 - **Isolated storage.** Demo mode keeps everything under `pm-ops-demo-*` keys. Visiting, editing, or resetting the demo never reads, overwrites, or deletes a real workspace stored under the normal `pm-ops-*` keys on the same site.
 - **Confirmed reset.** **Reset demo** asks before discarding demo edits and progress, then reloads the original fictional data. Opening Demo choices preserves edits.
 - **No sync.** Team Sync is hidden and disabled, so the demo can't be pointed at a server.
@@ -454,6 +454,7 @@ pm-ops-map/
 │   ├── state.js            Shared mutable state, constants, and setters
 │   ├── demoScenarios.js    Demo goal catalogue and future scenario definitions
 │   ├── maintenanceDemo.js Read-only maintenance tour state checks and targets
+│   ├── demoLayout.js       Native demo disclosure and measured sticky-banner clearance
 │   ├── demoTour.js         Chooser and shared guidance/navigation lifecycle
 │   ├── demoTourPreferences.js Demo-only validated progress with memory fallback
 │   ├── backupReminder.js   Independent JSON backup reminder and browser-local seven-day dismissal

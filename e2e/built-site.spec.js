@@ -65,6 +65,11 @@ test.describe('opened straight from disk (file://), no server at all', () => {
     await expect(page.locator('#demo-banner')).toBeVisible();
     await expect(page.locator('#company-heading')).toHaveText('DEMO DOOR PROPERTY MANAGEMENT');
     await expect(page.locator('#stat-unowned')).toHaveText('32');
+    await expect(page.locator('#demo-details')).not.toHaveAttribute('open');
+    await page.locator('#demo-details summary').click();
+    await page.locator('#demo-banner').getByRole('link',{name:/Use your own workspace/}).click();
+    await expect(page.locator('#demo-banner')).toBeHidden();
+    await expect(page.locator('#onboarding-modal')).toHaveClass(/visible/);
   });
 });
 
