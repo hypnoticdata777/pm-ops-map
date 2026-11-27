@@ -1,3 +1,4 @@
+import { openDemoDetails, clickDemoButton } from './helpers/demo.js';
 import { test, expect } from '@playwright/test';
 test('phone chooser is the demo entry; all unfinished scenarios are clearly unavailable',async({page})=>{
   await page.setViewportSize({width:390,height:844});
@@ -14,7 +15,7 @@ test('phone chooser is the demo entry; all unfinished scenarios are clearly unav
   await panel.getByRole('button',{name:'Explore freely',exact:true}).click();
   await expect(page.locator('#nav-tabs')).toBeVisible();
   await page.locator('#wo-tab').click();await expect(page.locator('#workorders-view')).toHaveClass(/active/);
-  await page.locator('#demo-choices').click();await expect(panel).toContainText('What would you like to try?');
+  await clickDemoButton(page, 'Demo choices');await expect(panel).toContainText('What would you like to try?');
   await expect(page.locator('#controls')).toBeHidden();
   await page.reload();await expect(panel).toContainText('What would you like to try?');
 });
@@ -25,7 +26,7 @@ test('opening the example from real setup preserves the original form and worksp
   const popupPromise=page.waitForEvent('popup');
   await page.getByRole('button',{name:'Show me an example first'}).click();const demo=await popupPromise;
   await expect(demo.locator('#demo-tour')).toContainText('What would you like to try?');
-  await demo.getByRole('button',{name:'Explore freely',exact:true}).click();await demo.locator('#demo-choices').click();
+  await demo.getByRole('button',{name:'Explore freely',exact:true}).click();await clickDemoButton(demo, 'Demo choices');
   const realAfter=await demo.evaluate(()=>Object.fromEntries(Object.entries(localStorage).filter(([k])=>!k.startsWith('pm-ops-demo-'))));
   expect(realAfter).toEqual(before);await expect(page.locator('#company-input')).toHaveValue('Unsaved company');
   await expect(page.locator('#demo-tour')).toBeHidden();

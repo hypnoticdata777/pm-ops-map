@@ -2,7 +2,7 @@
 
 The single source of truth for what has shipped, what is in progress, and what comes next. The README's [Roadmap](../README.md#roadmap) section is the short version; this is the detail. Update this file in the same PR that finishes (or re-scopes) a step.
 
-**Last updated:** 2026-11-25 · **Current focus:** Guided-demo maintenance scenario implemented; review and fresh iPhone validation pending. Phase 1C remains in progress.
+**Last updated:** 2026-11-26 · **Current focus:** Guided-demo refinement 3A implemented on a review branch; 3B–3D planned before remaining scenarios. Architecture Phase 1C remains in progress.
 
 ## Status at a glance
 
@@ -140,7 +140,7 @@ Anything that turns the map into a system of record, and any feature that requir
 
 ## Delivery accuracy and release packaging
 
-Delivery documentation now distinguishes hosted use, source builds, and published assets. Versioned ZIP packaging, extracted-artifact checks, checksum-bound test evidence, and draft-only tag automation are implemented; the first release still requires explicit version/tag selection, artifact review, and publication. Backup reminders and physical iPhone Safari verification remain separate follow-up work. See [release packaging](releases.md).
+Delivery documentation now distinguishes hosted use, source builds, and published assets. Versioned ZIP packaging, extracted-artifact checks, checksum-bound test evidence, and draft-only tag automation are implemented; the first release still requires explicit version/tag selection, artifact review, and publication. Backup guidance PR #100 is merged. Physical browser verification remains specific to the tested revision and flows. See [release packaging](releases.md).
 
 ## Guided demo delivery plan
 
@@ -150,8 +150,17 @@ The [guided demo specification](plans/guided-demo.md) defines a goal chooser and
 |---|---|---|
 | 1 | Verify baseline, define behavior and maintenance acceptance criteria | Specification complete; no runtime changes |
 | 2 | Chooser, isolated tour progress, guidance and navigation | Merged in PR #101 |
-| 3 | Complete maintenance scenario and validate on iPhone | Implemented; physical iPhone validation pending after deployment |
+| 3 | Complete maintenance scenario and validate on iPhone | Merged in PR #102; operator reports successful maintenance use on iPhone |
 | 4 | Operation overview, ownership, workload and gap scenarios | Planned |
 | 5 | Final documentation, regression and delivery verification | Planned |
 
-Backup guidance PR #100 is merged. Existing iPhone demo responsiveness was reported by the user; the new chooser and guidance require fresh device validation after implementation.
+Before guided-demo phase 4, complete the [phase 3 usability refinement loop](plans/demo-usability-refinements.md):
+
+| Refinement | Scope | Status |
+|---|---|---|
+| 3A | Stronger header, compact sticky DEMO disclosure, measured scroll clearance | Implemented on review branch; fresh device check pending |
+| 3B | Work-order quick filters in app and demo | Planned |
+| 3C | Practical question-mark help | Planned |
+| 3D | Combined validation and fresh iPhone check | Pending 3A–3C |
+
+These are guided-demo subphases, not the architecture phase numbers above. The operator's maintenance report does not validate the new orientation revision. Resume the four remaining scenarios only after the combined 3D gate.

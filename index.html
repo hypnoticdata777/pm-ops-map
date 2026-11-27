@@ -26,24 +26,33 @@
   <link rel="manifest" href="site.webmanifest">
 </head>
 <body>
-<!-- Hosted demo (?demo=1) only: js/demo.js un-hides this. It is deliberately not dismissible. -->
+<!-- Demo-only disclosure: its compact summary remains visible while scrolling. -->
 <div id="demo-banner" class="demo-banner" role="region" aria-label="Demo workspace" hidden>
-  <span class="demo-banner-badge">Demo</span>
-  <p><strong>Fictional data only.</strong> Nothing here is real and nothing leaves your browser &mdash; please don&rsquo;t enter real tenant information.</p>
-  <div class="demo-banner-actions">
-    <button type="button" class="btn btn-secondary" id="demo-choices">Demo choices</button>
-    <button class="btn btn-secondary" onclick="resetDemo()" title="Discard your edits and restore the original fictional workspace">Reset demo</button>
-    <a class="btn btn-secondary" href="./" title="Return to your own workspace; demo data is not copied">Use your own workspace &rarr;</a>
-  </div>
+  <details id="demo-details" class="demo-details">
+    <summary aria-label="Demo details and actions">
+      <span class="demo-banner-brand">PM Ops Map</span>
+      <span class="demo-banner-badge">Demo</span>
+      <span class="demo-banner-chevron" aria-hidden="true"></span>
+    </summary>
+    <div class="demo-banner-content">
+      <p><strong>Fictional data only.</strong> Nothing here is real and nothing leaves your browser &mdash; please don&rsquo;t enter real tenant information.</p>
+      <div class="demo-banner-actions">
+        <button type="button" class="btn btn-secondary" id="demo-choices">Demo choices</button>
+        <button type="button" class="btn btn-secondary" onclick="resetDemo()" title="Discard your edits and restore the original fictional workspace">Reset demo</button>
+        <a class="btn btn-secondary" href="index.html" title="Return to your own workspace; demo data is not copied">Use your own workspace &rarr;</a>
+      </div>
+    </div>
+  </details>
 </div>
 <div class="container">
-  <div class="header">
-    <div>
+  <header class="header" id="app-header">
+    <div class="app-brand">
+      <p class="app-brand-kicker">Property management operations</p>
       <h1>PM Ops Map</h1>
       <p>Set up your operation. Assign responsibility. Keep work moving.</p>
     </div>
     <button class="nav-toggle-btn" id="nav-toggle-btn" onclick="toggleNavCompact()" aria-pressed="false" title="Make navigation less prominent">Hide nav</button>
-  </div>
+  </header>
 
   <div class="nav-tabs" id="nav-tabs">
     <!-- FIX: pass `this` so switchView() receives the clicked element directly,

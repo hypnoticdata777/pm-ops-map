@@ -388,3 +388,7 @@ These modules are not imported into the browser app and add no runtime dependenc
 The shared controller now runs maintenance with read-only adapters in maintenanceDemo.js. Completion acknowledgements are validated local preference data; live conditions are checked again on resume. Real setup derivation remains separate.
 
 `maintenanceDemo.js` locates demo-wo-1, checks current roster assignment and stage, supplies safe summary text, and resolves editor/card targets. It never mutates operational records. Work-order editor open/close and render refresh guidance without replacing form inputs.
+
+## Demo orientation layout
+
+`demoLayout.js` owns native disclosure lifecycle and measured sticky-strip clearance. `initDemoLayout()` observes toggle, banner resize, window resize and visual-viewport changes; reinitialization disconnects old listeners. `revealDemoElement()` is used for explicit tour heading/target navigation and skips modal fields. `closeDemoDetails()` collapses before explicit handoffs. No workspace records or storage keys are introduced. The main application header is shared; the sticky strip is demo-only.

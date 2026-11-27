@@ -3,6 +3,7 @@
 // first visit, shows the permanent "fictional data" banner, and resets the demo.
 //
 // Nothing here runs unless the page was opened with ?demo=1.
+import { initDemoLayout } from './demoLayout.js';
 import { DEMO_MODE } from './demoMode.js';
 import { orgData, setTeamData, setPortfolio, setWorkOrders } from './state.js';
 import {
@@ -42,6 +43,7 @@ export function initDemoMode() {
   document.title = 'PM Ops Map — Demo';
   const banner = document.getElementById('demo-banner');
   if (banner) banner.hidden = false;
+  initDemoLayout();
   const syncButton = document.getElementById('sync-status-pill');
   if (syncButton) syncButton.hidden = true;
 }

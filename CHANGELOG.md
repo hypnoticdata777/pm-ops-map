@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+- Strengthened the PM Ops Map header and replaced the full demo banner with a compact sticky native disclosure. Demo details and existing actions remain available; the DEMO indicator stays visible.
+- Replaced fixed demo scroll offsets with measured clearance for expanded/collapsed and resized layouts. The demo return link now works explicitly with index.html in direct file builds.
+
 - Added the five-step Tighten maintenance flow demo, with editor guidance, saved assignment and scheduling checks, recovery, and a separate completion acknowledgement. Four other scenarios remain Coming next.
 - Made the work-order editor scroll within short/mobile viewports so Save and Cancel remain reachable.
 

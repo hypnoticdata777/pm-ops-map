@@ -200,3 +200,7 @@ Existing ES-module cycles include `ui.js → launchPlan.js → commit.js → ui.
 ## Demo chooser
 
 Opening `?demo=1`, including **Show me an example first**, displays five goals: maintenance is playable and four are **Coming next**. **Explore freely** opens the existing fictional workspace. **Demo choices** returns without discarding edits; reload returns to the chooser. The real setup checklist is hidden in demo mode. The maintenance guide walks through reading, saving an owner, scheduling, follow-through and final review. See [the user guide](../demo-guide.md).
+
+### Compact demo identity
+
+The main PM Ops Map wordmark is more prominent. In demo mode a compact sticky PM Ops Map / DEMO disclosure remains visible; its native summary expands fictional-data details and the existing actions. Details start collapsed. Demo choices and explicit tour-step navigation collapse them before locating the next heading. Live banner measurements prevent the new strip or its expanded state from obscuring tour targets. Filters and contextual help belong to the later 3B/3C refinements.

@@ -1,3 +1,4 @@
+import { closeDemoDetails, revealDemoElement } from './demoLayout.js';
 import { DEMO_MODE } from './demoMode.js';
 import { DEMO_SCENARIOS } from './demoScenarios.js';
 import { createTourPreferences } from './demoTourPreferences.js';
@@ -14,7 +15,7 @@ export function createDemoTour({root,enabled=DEMO_MODE,scenarios=DEMO_SCENARIOS,
   /** @type {Element | null} */ let highlighted=null;
   const button = (action='',text='',disabled=false) => `<button type="button" class="btn ${action==='next'||action==='resume'||action.startsWith('start:')?'btn-primary':'btn-secondary'}" data-tour="${action}" ${disabled?'disabled':''}>${escapeHtml(text)}</button>`;
   function cleanup() { const hint=document.getElementById('demo-wo-guidance');if(hint){hint.hidden=true;hint.textContent='';} highlighted?.classList.remove('demo-tour-target');highlighted=null; }
-  function focusHeading() { root.style.scrollMarginTop=`${(document.getElementById('demo-banner')?.getBoundingClientRect().height||0)+12}px`;root.querySelector('h2')?.focus({preventScroll:true});root.scrollIntoView?.({block:'start',behavior:'instant'}); }
+  function focusHeading() { root.querySelector('h2')?.focus({preventScroll:true});revealDemoElement(root); }
   function render() {
     if (!enabled) return;
     cleanup();root.hidden=false;
@@ -52,6 +53,7 @@ export function createDemoTour({root,enabled=DEMO_MODE,scenarios=DEMO_SCENARIOS,
   }
   function enterStep() {
     const step=active?.steps[index];if(!step)return;
+    closeDemoDetails();
     mode='tour';paused=false;navigating=true;
     try {navigate(step.view);} finally {navigating=false;}
     save();render();focusHeading();
@@ -70,7 +72,7 @@ export function createDemoTour({root,enabled=DEMO_MODE,scenarios=DEMO_SCENARIOS,
     const action=b.dataset.tour||'';
     if(action.startsWith('start:'))return start(action.slice(6));
     if(action==='resume'){const id=preferences.read().selected;if(id)start(id,true);return;}
-    if(action==='locate'){highlighted?.scrollIntoView?.({block:'center',behavior:'instant'});return;}
+    if(action==='locate'){revealDemoElement(highlighted);return;}
     if(action==='return')return enterStep();
     if(action==='recover'&&active){const earliest=active.steps.findIndex(s=>s.condition&&!check(s.condition));if(earliest>=0){index=earliest;enterStep();}return;}
     if(action==='restart'){index=0;return enterStep();}

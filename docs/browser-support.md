@@ -23,6 +23,8 @@ Before expanding the advertised browser support policy, record browser/OS versio
 
 Desktop local builds must retain their assets beside `index.html`. Export before moving or replacing a build; browser storage continuity across file locations and browsers is not guaranteed. A packaged release will need its own extracted-artifact verification under the [release specification](releases.md).
 
-## Guided demo foundation
+## Guided demo and orientation refinements
 
-The user reported the previous demo moved smoothly on iPhone Safari, but its setup-step entry was confusing. That report does not validate the new chooser. The foundation adds chooser, free-exploration and keyboard/isolation browser coverage; physical iPhone validation of this revision remains pending. Maintenance is now playable on the implementation branch. Physical iPhone validation of its editor scrolling, saved-state checks, resume and finish remains pending after deployment.
+Foundation PR #101 and maintenance PR #102 are merged. The operator reported successful maintenance use on iPhone and requested a clearer header and smaller demo strip. Exact device/OS and the tested deployed revision were not independently recorded; this is scoped user feedback, not general Safari certification.
+
+Refinement 3A adds a stronger application header, a collapsed native DEMO disclosure and live sticky-banner clearance. Source/production browser checks cover portrait and short landscape, keyboard toggling, reset/return actions and tour-target visibility. Fresh physical iPhone validation of this revision remains pending after deployment. The later 3B–3D refinements and phase 4 scenarios are not implied by this evidence.

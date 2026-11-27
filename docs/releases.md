@@ -98,3 +98,7 @@ The in-app backup explanation and seven-day export reminder are implemented. The
 ## Demo foundation verification
 
 Verify demo entry opens the goal chooser in the production sub-path and file:// build. Maintenance is playable; four scenarios remain Coming next; free exploration and the real setup checklist continue to work in their respective modes. Verify Demo choices, reload, reset confirmation, keyboard focus and real-workspace isolation. Verify the maintenance scenario through saved assignment, scheduling and finish without closing the repair. Fresh physical iPhone validation remains pending.
+
+### Orientation refinement checks
+
+Verify the compact DEMO summary starts collapsed, opens via touch/keyboard and retains every action. Check headings/targets with expanded and collapsed heights and a short landscape viewport. The normal-workspace link explicitly uses index.html so extracted file builds return to the application. Fresh physical iPhone checks apply to this new revision; the earlier positive maintenance report does not establish them.
