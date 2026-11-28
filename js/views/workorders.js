@@ -1,4 +1,6 @@
 // @ts-nocheck — TODO(types): not converted to checked JSDoc yet. Delete this line and fix what `npm run typecheck` reports.
+import { WORK_ORDER_FILTERS, countWorkOrders, filterWorkOrders } from '../domain/workOrders.js';
+import { getWorkOrderFilter, setWorkOrderFilter } from '../workOrderFilters.js';
 import { DEMO_MODE } from '../demoMode.js';
 import { refreshDemoTour } from '../demoTour.js';
 import { renderSetupGuide } from '../setupGuide.js';
@@ -86,29 +88,30 @@ export function renderWorkOrdersView() {
   const inner = document.getElementById('workorders-view-inner');
   if (!inner) return;
 
-  const openCount       = workOrders.filter(w => w.status !== 'completed').length;
-  const unassignedCount = workOrders.filter(w => w.assignee === 'UNASSIGNED' && w.status !== 'completed').length;
-  const completedCount  = workOrders.filter(w => w.status === 'completed').length;
+  const selected=getWorkOrderFilter();
+  const counts=countWorkOrders(workOrders);
+  const visible=filterWorkOrders(workOrders,selected);
+  const label=WORK_ORDER_FILTERS.find(filter=>filter.id===selected).label;
+  const focused=document.activeElement;
+  const restoreFilterFocus=focused instanceof HTMLElement && focused.matches('button[data-action="filter-work-orders"]');
 
   inner.innerHTML = `
     <div class="wo-toolbar">
       <div class="wo-toolbar-left">
         <h2 class="wo-heading">&#128295; Work Orders</h2>
-        <div class="wo-stats-pills">
-          <span class="wo-stat-pill wo-stat-open">${openCount} open</span>
-          ${unassignedCount > 0
-            ? `<span class="wo-stat-pill wo-stat-warn">${unassignedCount} unassigned</span>`
-            : ''}
-          <span class="wo-stat-pill wo-stat-done">${completedCount} completed</span>
+        <div class="wo-stats-pills" role="group" aria-label="Work-order filters">
+          ${WORK_ORDER_FILTERS.map(filter=>`<button type="button" class="wo-stat-pill wo-stat-${{all:'all',open:'open',unassigned:'warn',completed:'done'}[filter.id]}" data-action="filter-work-orders" data-filter="${filter.id}" aria-pressed="${selected===filter.id}" aria-label="${filter.label} work orders (${counts[filter.id]})">${filter.id==='all'?`All ${counts.all}`:`${counts[filter.id]} ${filter.label.toLowerCase()}`}</button>`).join('')}
         </div>
       </div>
       <button class="btn btn-secondary" onclick="openRecurringModal()" title="Create a batch of work orders from a recurring PM checklist template">&#128197; Recurring Templates</button>
       <button class="btn btn-primary" onclick="showNewWorkOrderModal()">+ New Work Order</button>
     </div>
-
+    <p class="wo-filter-status" id="wo-filter-status" role="status" aria-live="polite">${selected==='all'?`Showing all ${counts.all} work orders.`:`Showing ${visible.length} of ${counts.all} work orders · ${label}.`}</p>
+    <p class="wo-filter-note">Workspace totals · Unassigned is part of Open.</p>
+    ${visible.length===0?`<div class="wo-filter-empty"><p>${selected==='all'?'No work orders yet. Create a work order to get started.':'No work orders match this filter. Your other records are still available.'}</p>${selected!=='all'?'<button type="button" class="btn btn-secondary" data-action="filter-work-orders" data-filter="all">Show all work orders</button>':''}</div>`:''}
     <div class="wo-board">
       ${WO_STATUS_CYCLE.map(status => {
-        const cards = workOrders.filter(w => w.status === status);
+        const cards = visible.filter(w => w.status === status);
         return `
           <div class="wo-column">
             <div class="wo-col-header" style="border-top-color:${WO_STATUS_COLORS[status]}">
@@ -117,12 +120,13 @@ export function renderWorkOrdersView() {
             </div>
             <div class="wo-col-body">
               ${cards.length === 0
-                ? '<div class="wo-col-empty">No work orders</div>'
+                ? `<div class="wo-col-empty">${selected==='all'?'No work orders':'No matching work orders'}</div>`
                 : cards.map(wo => buildWorkOrderCard(wo)).join('')}
             </div>
           </div>`;
       }).join('')}
     </div>`;
+  if(restoreFilterFocus) inner.querySelector(`button[data-filter="${selected}"]`)?.focus({preventScroll:true});
   refreshDemoTour();
 }
 
@@ -289,3 +293,13 @@ export function deleteWorkOrder(id) {
   renderWorkOrdersView();
   updateWorkOrderBeacon();
 }
+
+/** @param {unknown} filter */
+export function selectWorkOrderFilter(filter) {
+  setWorkOrderFilter(filter);
+  renderWorkOrdersView();
+}
+/** New filter controls use the existing delegated action registry. */
+export const workOrderActions = {
+  'filter-work-orders': element => selectWorkOrderFilter(element.dataset.filter),
+};

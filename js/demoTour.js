@@ -2,13 +2,13 @@ import { closeDemoDetails, revealDemoElement } from './demoLayout.js';
 import { DEMO_MODE } from './demoMode.js';
 import { DEMO_SCENARIOS } from './demoScenarios.js';
 import { createTourPreferences } from './demoTourPreferences.js';
-import { checkMaintenanceCondition, maintenanceTarget, maintenanceSummary, maintenanceIssue } from './maintenanceDemo.js';
+import { checkMaintenanceCondition, maintenanceTarget, maintenanceSummary, maintenanceIssue, maintenanceFiltered } from './maintenanceDemo.js';
 import { escapeHtml } from './utils.js';
 /** @typedef {import('./demoScenarios.js').DemoScenario} Scenario */
 /** A navigation/state adapter keeps this controller independent of app.js and business mutations.
- * @param {{root:HTMLElement, enabled?:boolean, scenarios?:Scenario[], preferences?:ReturnType<typeof createTourPreferences>, navigate:(view:string)=>void, check?:(condition:string)=>boolean, target?:(step:import('./demoScenarios.js').DemoStep)=>Element|null, summary?:()=>string, issue?:(condition:string)=>string}} options
+ * @param {{root:HTMLElement, enabled?:boolean, scenarios?:Scenario[], preferences?:ReturnType<typeof createTourPreferences>, navigate:(view:string)=>void, check?:(condition:string)=>boolean, target?:(step:import('./demoScenarios.js').DemoStep)=>Element|null, summary?:()=>string, issue?:(condition:string)=>string, filtered?:()=>boolean}} options
  */
-export function createDemoTour({root,enabled=DEMO_MODE,scenarios=DEMO_SCENARIOS,preferences=createTourPreferences(),navigate,check=()=>false,target=step=>step.target?document.getElementById(step.target):null,summary=()=>'',issue=()=>''}) {
+export function createDemoTour({root,enabled=DEMO_MODE,scenarios=DEMO_SCENARIOS,preferences=createTourPreferences(),navigate,check=()=>false,target=step=>step.target?document.getElementById(step.target):null,summary=()=>'',issue=()=>'',filtered=()=>false}) {
   let mode='chooser', paused=false, navigating=false;
   /** @type {Scenario | undefined} */ let active;
   let index=0;
@@ -38,14 +38,16 @@ export function createDemoTour({root,enabled=DEMO_MODE,scenarios=DEMO_SCENARIOS,
     }
     const step=active?.steps[index];
     if (!active || !step) {mode='chooser';render();return;}
-    const element=target(step);
-    const missing=!!step.target&&!element;
+    const hiddenByFilter=filtered();
+    const element=hiddenByFilter?null:target(step);
+    const unavailable=!!step.target&&!element;
+    const missing=unavailable&&!hiddenByFilter;
     const satisfied=!step.condition||check(step.condition);
     if (!paused && element) {element.classList.add('demo-tour-target');highlighted=element;}
     const hint=document.getElementById('demo-wo-guidance');
     if(!paused && active.id==='maintenance' && step.id==='assign-repair' && element?.id==='wo-assignee' && hint){hint.hidden=false;hint.textContent='Demo: choose a current roster member, then save this repair. Cancel does not save your changes.';}
     const recovery=active.steps.findIndex(s=>s.condition&&!check(s.condition));
-    root.innerHTML=`<h2 tabindex="-1">${escapeHtml(active.title)}</h2><p role="status">Step ${index+1} of ${active.steps.length}${paused?' · Paused':''}</p><h3>${escapeHtml(step.title)}</h3><p>${escapeHtml(step.why)}</p><p><strong>Notice:</strong> ${escapeHtml(step.notice)}</p><p><strong>Try:</strong> ${escapeHtml(step.action)}</p>${warning}${index===active.steps.length-1?`<p>${escapeHtml(summary())}</p>`:''}${step.condition&&issue(step.condition)?`<p role="status">${escapeHtml(issue(step.condition))}</p>`:''}${missing?'<p role="status">The example control is unavailable. Return to this step or explore freely. Reset demo restores fictional examples and discards demo edits.</p>':''}${step.condition&&step.condition!=='repair-exists'&&satisfied?'<p role="status">This condition is already satisfied in the current demo.</p>':''}<div class="demo-tour-actions">${button('back','Back',index===0)}${button('next',index===active.steps.length-1?'Finish':'Next',paused||missing||!satisfied)}${paused?button('return','Return to this step'):''}${element&&!paused?button('locate','Show highlighted control'):''}${recovery>=0&&recovery<index?button('recover',`Return to ${active.steps[recovery].title.toLowerCase()}`):''}</div><details class="demo-tour-options"><summary>Details and tour options</summary><p><strong>Expected result:</strong> ${escapeHtml(step.result)}</p><p>${escapeHtml(summary())}</p>${button('explore','Explore freely')}${button('restart','Restart guidance (keep demo edits)')}${button('choices','Demo choices')}<p>Back and Restart guidance do not undo demo edits.</p></details>`;
+    root.innerHTML=`<h2 tabindex="-1">${escapeHtml(active.title)}</h2><p role="status">Step ${index+1} of ${active.steps.length}${paused?' · Paused':''}</p><h3>${escapeHtml(step.title)}</h3><p>${escapeHtml(step.why)}</p><p><strong>Notice:</strong> ${escapeHtml(step.notice)}</p><p><strong>Try:</strong> ${escapeHtml(step.action)}</p>${warning}${index===active.steps.length-1?`<p>${escapeHtml(summary())}</p>`:''}${step.condition&&issue(step.condition)?`<p role="status">${escapeHtml(issue(step.condition))}</p>`:''}${missing?'<p role="status">The example control is unavailable. Return to this step or explore freely. Reset demo restores fictional examples and discards demo edits.</p>':''}${step.condition&&step.condition!=='repair-exists'&&satisfied?'<p role="status">This condition is already satisfied in the current demo.</p>':''}<div class="demo-tour-actions">${button('back','Back',index===0)}${button('next',index===active.steps.length-1?'Finish':'Next',paused||unavailable||!satisfied)}${paused?button('return','Return to this step'):''}${hiddenByFilter&&!paused?button('return','Show example'):''}${element&&!paused?button('locate','Show highlighted control'):''}${recovery>=0&&recovery<index?button('recover',`Return to ${active.steps[recovery].title.toLowerCase()}`):''}</div><details class="demo-tour-options"><summary>Details and tour options</summary><p><strong>Expected result:</strong> ${escapeHtml(step.result)}</p><p>${escapeHtml(summary())}</p>${button('explore','Explore freely')}${button('restart','Restart guidance (keep demo edits)')}${button('choices','Demo choices')}<p>Back and Restart guidance do not undo demo edits.</p></details>`;
   }
   function save() {
     if(!active)return;
@@ -102,7 +104,7 @@ let tour;
 export function initDemoTour(navigate) {
   if(!DEMO_MODE)return;
   const root=document.getElementById('demo-tour');if(!root)return;
-  tour?.destroy();tour=createDemoTour({root,navigate,check:checkMaintenanceCondition,target:maintenanceTarget,summary:maintenanceSummary,issue:maintenanceIssue});
+  tour?.destroy();tour=createDemoTour({root,navigate,check:checkMaintenanceCondition,target:maintenanceTarget,summary:maintenanceSummary,issue:maintenanceIssue,filtered:maintenanceFiltered});
 }
 export function demoTourViewChanged(){tour?.viewChanged();}
 export function refreshDemoTour(){tour?.refresh();}

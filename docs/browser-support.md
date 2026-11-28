@@ -28,3 +28,7 @@ Desktop local builds must retain their assets beside `index.html`. Export before
 Foundation PR #101 and maintenance PR #102 are merged. The operator reported successful maintenance use on iPhone and requested a clearer header and smaller demo strip. Exact device/OS and the tested deployed revision were not independently recorded; this is scoped user feedback, not general Safari certification.
 
 Refinement 3A adds a stronger application header, a collapsed native DEMO disclosure and live sticky-banner clearance. Source/production browser checks cover portrait and short landscape, keyboard toggling, reset/return actions and tour-target visibility. Fresh physical iPhone validation of this revision remains pending after deployment. The later 3B–3D refinements and phase 4 scenarios are not implied by this evidence.
+
+## Work-order quick filters (3B)
+
+3A is merged in PR #103. 3B adds source/production coverage for all four views, workspace-wide counts, keyboard focus, live edits/deletion, reload, export/import and tour recovery. Physical iPhone validation of this new filter revision remains pending after deployment; prior maintenance feedback is not evidence for these new controls.

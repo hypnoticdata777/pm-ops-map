@@ -102,3 +102,7 @@ Verify demo entry opens the goal chooser in the production sub-path and file:// 
 ### Orientation refinement checks
 
 Verify the compact DEMO summary starts collapsed, opens via touch/keyboard and retains every action. Check headings/targets with expanded and collapsed heights and a short landscape viewport. The normal-workspace link explicitly uses index.html so extracted file builds return to the application. Fresh physical iPhone checks apply to this new revision; the earlier positive maintenance report does not establish them.
+
+### Work-order filter verification
+
+Check all four filters, workspace-wide counts, selected/keyboard focus, empty recovery and live assignment/status updates. Verify filters do not change exports or persist after reload. In the extracted application, filter away the maintenance example, use Show example to reveal it, then complete the existing saved-state journey. Verify normal-workspace data is preserved. No public release is created by implementing filters.

@@ -2,7 +2,7 @@
 
 The single source of truth for what has shipped, what is in progress, and what comes next. The README's [Roadmap](../README.md#roadmap) section is the short version; this is the detail. Update this file in the same PR that finishes (or re-scopes) a step.
 
-**Last updated:** 2026-11-26 · **Current focus:** Guided-demo refinement 3A implemented on a review branch; 3B–3D planned before remaining scenarios. Architecture Phase 1C remains in progress.
+**Last updated:** 2026-11-27 · **Current focus:** Guided-demo 3A merged; 3B quick filters implemented on a review branch; 3C–3D pending before remaining scenarios. Architecture Phase 1C remains in progress.
 
 ## Status at a glance
 
@@ -158,8 +158,8 @@ Before guided-demo phase 4, complete the [phase 3 usability refinement loop](pla
 
 | Refinement | Scope | Status |
 |---|---|---|
-| 3A | Stronger header, compact sticky DEMO disclosure, measured scroll clearance | Implemented on review branch; fresh device check pending |
-| 3B | Work-order quick filters in app and demo | Planned |
+| 3A | Stronger header, compact sticky DEMO disclosure, measured scroll clearance | Merged in PR #103; fresh device evidence pending |
+| 3B | Work-order quick filters in app and demo | Implemented on review branch; fresh device validation pending |
 | 3C | Practical question-mark help | Planned |
 | 3D | Combined validation and fresh iPhone check | Pending 3A–3C |
 

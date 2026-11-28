@@ -1,4 +1,5 @@
 // @ts-nocheck — TODO(types): not converted to checked JSDoc yet. Delete this line and fix what `npm run typecheck` reports.
+import { setWorkOrderFilter } from './workOrderFilters.js';
 import { DEMO_REPLACED_EVENT } from './storage.js';
 import { initDemoTour, demoTourViewChanged, resetDemoTour, showDemoChoices } from './demoTour.js';
 import { initBackupReminder } from './backupReminder.js';
@@ -60,7 +61,7 @@ import {
   openAuditLog, closeAuditLog, clearAuditLog,
 } from './views/team.js';
 import {
-  renderWorkOrdersView,
+  renderWorkOrdersView, workOrderActions,
   showNewWorkOrderModal, closeWorkOrderModal, commitNewWorkOrder,
   advanceWorkOrder, deleteWorkOrder, showEditWorkOrderModal,
 } from './views/workorders.js';
@@ -194,6 +195,7 @@ function initApp() {
   }
 
   initDemoTour(view => {
+    if(view==='workorders')setWorkOrderFilter('all');
     const tab = document.querySelector(`.nav-tab[data-view="${view}"]`);
     if (tab) switchView(view, tab);
   });
@@ -266,6 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // converted; the listeners are installed now, before any picker adds its own click-outside listener, so a
 // control's action always runs first, as its inline handler did.
 registerActions(trackingActions);
+registerActions(workOrderActions);
 installActionDelegation();
 
 Object.assign(window, {

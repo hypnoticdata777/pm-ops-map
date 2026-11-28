@@ -10,8 +10,8 @@ This is the guided-demo delivery workstream, separate from the architecture phas
 
 | Refinement | Scope | State |
 |---|---|---|
-| 3A | Stronger application identity and compact sticky DEMO disclosure | Implemented on a review branch; fresh device check pending after deployment |
-| 3B | All/Open/Unassigned/Completed work-order filters in real app and demo | Planned; separate implementation |
+| 3A | Stronger application identity and compact sticky DEMO disclosure | Merged in PR #103; fresh physical-device evidence not recorded |
+| 3B | All/Open/Unassigned/Completed work-order filters in real app and demo | Implemented on a review branch; tests/review and fresh device check required |
 | 3C | Tap/keyboard question-mark help with purpose and examples | Planned; separate implementation |
 | 3D | Combined regression and fresh iPhone validation of refinements | Pending 3A–3C |
 | 4 | Operation overview, ownership, workload, operational-gap scenarios | Resume after 3D passes |
@@ -49,3 +49,11 @@ Automated results and review status belong in the PR. The checklist is an accept
 3D validates all refinements together on the actual deployed revision, including a fresh iPhone run. Resolve blocking issues here before expanding the scenario catalogue.
 
 Phase 4 proceeds through operation overview, ownership, workload and gap scenarios, with detailed rules, implementation, tests, docs and review for each. Phase 5 reviews the full experience and delivery package. Later backlog work requires separate prioritization; this loop does not authorize merging, tags or release publication automatically.
+
+## 3B implementation checkpoint
+
+`domain/workOrders.js` defines pure filter/count rules. `workOrderFilters.js` holds transient UI selection; it has no persistence. Work Orders uses delegated actions, four count buttons, aria-pressed, active-view text and empty recovery. Totals stay workspace-wide; Unassigned is open AND the normalized UNASSIGNED sentinel, not every name absent from the roster.
+
+`maintenanceDemo.js` checks whether its existing example is hidden by the current filter. The tour offers Show example instead of a deletion/reset warning. Explicit tour navigation uses the normal app adapter to select All before rendering. Ordinary edits/refreshes retain the selected filter. Imports recompute results; reload/restoration reload starts at All. Exports/sync keep the full data model.
+
+Tradeoffs: one filter at a time, no property/priority combination in this phase, empty status columns retained, and no saved filter after reload. These keep the view understandable without expanding schema or backend scope. 3C practical help remains next; 3D validates the complete refinement loop before phase 4.

@@ -102,6 +102,14 @@ Or with Node: `npm install && npm start`
 
 ---
 
+## Work-order quick filters
+
+In **Work Orders**, tap **All**, **Open**, **Unassigned**, or **Completed** to narrow the board. The selected button and “Showing” message identify the current view; **Show all work orders** restores every record when a filter has no matches. These controls work in the real app and demo.
+
+Counts always cover the whole workspace. Unassigned means an open work order with no assignee and is included in Open; completed unassigned records appear under Completed or All. Filtering changes the view, not records or JSON exports. The selection lasts across tab changes and redraws but resets to All on page reload.
+
+Maintenance guidance reveals its example on explicit step navigation. If your filter hides it, **Show example** switches to All without resetting data.
+
 ## The live demo
 
 Open any copy of the site with **`?demo=1`** (for example [`…/pm-ops-map/?demo=1`](https://hypnoticdata777.github.io/pm-ops-map/?demo=1)) and you get a demo goal chooser instead of the real setup checklist. **Tighten maintenance flow** is playable; the other four scenarios remain **Coming next**. See the [demo guide](docs/demo-guide.md) for steps, resume, reset and recovery behavior. Choose **Explore freely** to open the populated fictional operation; **Demo choices** returns to the chooser. Reloading also returns to the chooser. What makes it safe to put on a public URL:
@@ -454,6 +462,7 @@ pm-ops-map/
 │   ├── state.js            Shared mutable state, constants, and setters
 │   ├── demoScenarios.js    Demo goal catalogue and future scenario definitions
 │   ├── maintenanceDemo.js Read-only maintenance tour state checks and targets
+│   ├── workOrderFilters.js Temporary work-order filter state, excluded from storage/export/sync
 │   ├── demoLayout.js       Native demo disclosure and measured sticky-banner clearance
 │   ├── demoTour.js         Chooser and shared guidance/navigation lifecycle
 │   ├── demoTourPreferences.js Demo-only validated progress with memory fallback

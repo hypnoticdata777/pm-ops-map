@@ -24,6 +24,16 @@ Choose **Try this demo** on the maintenance card. The tour opens Work Orders and
 
 The tour enables Next after the required applied state exists; it does not advance automatically. Later stages also satisfy the scheduling exercise. If a condition is already satisfied, the tour says so instead of claiming you just performed the action.
 
+## Work-order quick filters
+
+The counts are buttons in both the demo and real app: All, Open, Unassigned, Completed. Totals cover the whole workspace even when fewer cards are visible. Unassigned is a subset of Open. The status columns remain visible; their counts describe the displayed records.
+
+Choosing a filter preserves your selection through edits and tab changes, but reload starts at All. Assigning a repair can remove it from Unassigned; completing it can remove it from Open. The record still exists. An empty filter offers Show all work orders. JSON export still contains all work orders.
+
+Starting/resuming or explicitly navigating a tour step reveals its example by selecting All. Ordinary redraws keep your filter. If it hides the example, guidance says so and offers Show example. A genuinely deleted record still explains reset/recovery; it is not described as filtered out.
+
+[Selected filter](screenshots/13-work-order-filters.png) · [Empty-result recovery](screenshots/14-work-order-filter-empty.png). These are Chromium phone-width captures.
+
 ## Controls and recovery
 
 - **Details and tour options** contains the expected result, current example summary, exploration and restart controls.
