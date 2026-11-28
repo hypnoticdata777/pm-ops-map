@@ -103,6 +103,12 @@ test('the extracted demo opens its chooser and supports exploration without chan
   await clickDemoButton(page, 'Demo choices');
   await page.locator('#demo-tour article').filter({hasText:'Tighten maintenance flow'}).getByRole('button',{name:'Try this demo'}).click();
   const guidance=page.locator('#demo-tour');const repair=page.locator('#wo-card-demo-wo-1');
+  const filters=page.getByRole('group',{name:'Work-order filters'});
+  await filters.getByRole('button',{name:/^Completed work orders/}).click();
+  await expect(page.locator('.wo-card')).toHaveCount(1);
+  await expect(guidance).toContainText('hidden by your work-order filter');
+  await guidance.getByRole('button',{name:'Show example',exact:true}).click();
+  await expect(filters.getByRole('button',{name:/^All work orders/})).toHaveAttribute('aria-pressed','true');
   await guidance.getByRole('button',{name:'Next',exact:true}).click();
   await repair.getByRole('button',{name:'Edit',exact:true}).click();
   await page.locator('#wo-assignee').selectOption('Marcus Reyes');await page.locator('#wo-submit-btn').click();

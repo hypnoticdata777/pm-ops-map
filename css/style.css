@@ -5206,3 +5206,14 @@ body[data-ops-focus="compliance"] {
   .header .app-brand-kicker { font-size: 10px; letter-spacing: .08em; }
   .header h1 { font-size: 2.1rem; }
 }
+
+/* Work-order filters are temporary views, with workspace-wide counts. */
+button.wo-stat-pill { border: 2px solid transparent; min-height: 44px; cursor: pointer; font: inherit; font-size: 13px; font-weight: 700; }
+.wo-stat-all { background: #edf2f6; color: #284252; }
+button.wo-stat-pill[aria-pressed="true"] { border-color: #284252; box-shadow: inset 0 -3px 0 #284252; }
+button.wo-stat-pill:focus-visible { outline: 3px solid #1976d2; outline-offset: 3px; }
+.wo-filter-status { font-weight: 650; margin: 0 0 4px; }
+.wo-filter-note { color: #526373; font-size: 13px; margin: 0 0 18px; }
+.wo-filter-empty { padding: 16px; margin-bottom: 18px; background: #f1f7fb; border: 1px solid #cbd7df; border-radius: 8px; }
+.wo-filter-empty p { margin-bottom: 10px; }
+.wo-filter-empty .btn { min-height: 44px; }

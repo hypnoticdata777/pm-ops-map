@@ -1,7 +1,10 @@
+import { getWorkOrderFilter } from './workOrderFilters.js';
+import { matchesWorkOrderFilter } from './domain/workOrders.js';
 import { workOrders, teamData } from './state.js';
 /** Read-only adapters: the tour never changes operational records. */
 export const MAINTENANCE_DEMO_ID = 'demo-wo-1';
 const repair = () => workOrders.find(w=>w.id===MAINTENANCE_DEMO_ID);
+export function maintenanceFiltered() { const order=repair();return !!order&&!matchesWorkOrderFilter(order,getWorkOrderFilter()); }
 export function maintenanceAssigned() {
   const order=repair();
   return !!order && order.assignee!=='UNASSIGNED' && teamData.employees.some(p=>p.name===order.assignee);
@@ -16,6 +19,7 @@ export function checkMaintenanceCondition(condition) {
 /** @param {string} condition */
 export function maintenanceIssue(condition) {
   if(!repair())return 'The example repair is missing. Explore freely, try another demo, or use Reset demo to restore the examples. Reset discards all demo edits.';
+  if(maintenanceFiltered())return 'This example is hidden by your work-order filter. Show example switches to All without changing any records.';
   if(condition!=='repair-exists'&&!teamData.employees.length)return 'The demo roster is empty. Add a person in Assign Owners while exploring freely, or confirm Reset demo to restore the examples.';
   if(condition==='repair-scheduled'&&!maintenanceAssigned())return 'This repair needs a current roster owner. Return to assignment before continuing.';
   if(condition==='repair-assigned'&&!maintenanceAssigned())return 'Choose a current roster member and save the work order. An unsaved selection does not count.';

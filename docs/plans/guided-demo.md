@@ -1,6 +1,6 @@
 # Guided demo implementation specification
 
-Status: phases 1–3 implemented; PR #101 and #102 merged. Operator reports successful maintenance use on iPhone, without independently recorded device/OS or exact deployed revision. Refinement 3A is implemented on a review branch; 3B–3D and the other four scenarios remain pending.
+Status: phases 1–3 implemented; PR #101 and #102 merged. Operator reports successful maintenance use on iPhone, without independently recorded device/OS or exact deployed revision. Refinement 3A merged in PR #103. 3B quick filters are implemented on a review branch; 3C–3D and the other four scenarios remain pending.
 Date: 2026-11-25.
 
 ## Objective and verified baseline
@@ -128,4 +128,4 @@ No external service or new package dependency is required. Remaining inputs: ref
 
 ## Phase 3 refinement checkpoint
 
-The operator's successful maintenance test led to the bounded [3A–3D usability loop](demo-usability-refinements.md). 3A strengthens identity and collapses the sticky DEMO explanation, with measured scroll clearance. Quick filters (3B) and practical control help (3C) are separate planned changes. Fresh combined/device validation (3D) gates the return to phase 4. No other scenarios are enabled by 3A.
+The operator's successful maintenance test led to the bounded [3A–3D usability loop](demo-usability-refinements.md). 3A strengthens identity and collapses the sticky DEMO explanation, with measured scroll clearance. Quick filters (3B) are implemented on a review branch; practical control help (3C) remains planned. Fresh combined/device validation (3D) gates the return to phase 4. No other scenarios are enabled by 3A.

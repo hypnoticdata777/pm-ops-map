@@ -204,3 +204,7 @@ Opening `?demo=1`, including **Show me an example first**, displays five goals: 
 ### Compact demo identity
 
 The main PM Ops Map wordmark is more prominent. In demo mode a compact sticky PM Ops Map / DEMO disclosure remains visible; its native summary expands fictional-data details and the existing actions. Details start collapsed. Demo choices and explicit tour-step navigation collapse them before locating the next heading. Live banner measurements prevent the new strip or its expanded state from obscuring tour targets. Filters and contextual help belong to the later 3B/3C refinements.
+
+### Work-order quick filters
+
+Tap All, Open, Unassigned or Completed to narrow the four-column board. Button counts describe the whole workspace; columns show matching records. Unassigned overlaps Open. Empty results provide Show all. Saved edits update results without discarding the selection; reload returns to All. Tour navigation and Show example explicitly reveal the example rather than treating a filter as deletion.

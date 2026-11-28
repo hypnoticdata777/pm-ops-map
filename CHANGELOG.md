@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+- Added All/Open/Unassigned/Completed quick filters to Work Orders in the app and demo, with stable workspace totals, selected-view feedback and empty-result recovery. Selection is temporary and exports retain all records.
+- Maintenance guidance now distinguishes filtered-out examples from deleted records and provides Show example recovery.
+
 - Strengthened the PM Ops Map header and replaced the full demo banner with a compact sticky native disclosure. Demo details and existing actions remain available; the DEMO indicator stays visible.
 - Replaced fixed demo scroll offsets with measured clearance for expanded/collapsed and resized layouts. The demo return link now works explicitly with index.html in direct file builds.
 

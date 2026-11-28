@@ -1,5 +1,7 @@
 # Screenshot provenance
 
+- `13-work-order-filters.png` and `14-work-order-filter-empty.png`: refinement 3B, branch `feat/work-order-quick-filters`, based on `fff1507`, captured 2026-11-27 at 390 × 844 in Chromium. Show selected Unassigned view and recovery after a saved assignment removes the match. Not physical iPhone captures. Earlier 10–12 captures document 3A orientation before quick filters.
+
 - `10-demo-chooser.png`, `11-maintenance-demo.png` and `12-demo-details.png`: refinement 3A on `feat/demo-header-disclosure`, based on `a616586`, captured 2026-11-26 at a 390 × 844 Chromium viewport. Show the stronger app identity, compact/expanded disclosure and tour clearance. These are not physical iPhone captures.
 
 - `09-user-glossary.png`: searchable Terms & Help at a 390 × 844 Chromium viewport. This is phone-width emulation, not a physical iPhone Safari capture.

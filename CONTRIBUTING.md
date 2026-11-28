@@ -266,3 +266,7 @@ Use stable IDs for highlights, refresh after feature rerenders, remove highlight
 ### Demo disclosure and geometry
 
 Use the native details/summary in index.html. demoLayout.js measures the actual strip and updates --demo-banner-clearance; do not reintroduce fixed banner offsets. Keep explicit navigation separate from resize correction, preserve focus, and never scroll the page beneath a modal field. Details have no saved preference. Update keyboard, portrait/landscape, reset/return, isolation and extracted-file checks when changing this component.
+
+### Work-order filters
+
+Keep count/filter rules pure in domain/workOrders.js and transient selection outside portable data. Unassigned means open plus the existing UNASSIGNED sentinel. Filter controls use workOrderActions and the shared action registry. Preserve keyboard focus across redraws and distinguish hidden tour targets from missing data. Explicit tour handoffs select All; ordinary renders do not. Update only the expected work-order DOM portions of characterization baselines for intentional UI changes; confirm model/storage outputs remain unchanged.

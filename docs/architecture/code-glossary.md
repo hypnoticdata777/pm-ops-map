@@ -392,3 +392,11 @@ The shared controller now runs maintenance with read-only adapters in maintenanc
 ## Demo orientation layout
 
 `demoLayout.js` owns native disclosure lifecycle and measured sticky-strip clearance. `initDemoLayout()` observes toggle, banner resize, window resize and visual-viewport changes; reinitialization disconnects old listeners. `revealDemoElement()` is used for explicit tour heading/target navigation and skips modal fields. `closeDemoDetails()` collapses before explicit handoffs. No workspace records or storage keys are introduced. The main application header is shared; the sticky strip is demo-only.
+
+## Work-order filtering
+
+- `domain/workOrders.js`: pure normalized filter rules and workspace-wide overlapping counts; preserves input order and records.
+- `workOrderFilters.js`: transient selection only. No storage key, portable field or sync property.
+- `views/workorders.js`: filter buttons, active/empty views, live counts and keyboard focus restoration; exposes workOrderActions to the existing registry.
+- `app.js`: registers those actions and selects All before explicit tour navigation to Work Orders.
+- `maintenanceDemo.js` / `demoTour.js`: distinguish filtered-out data from missing records and offer explicit Show example recovery. State-based completion rules remain unchanged.
